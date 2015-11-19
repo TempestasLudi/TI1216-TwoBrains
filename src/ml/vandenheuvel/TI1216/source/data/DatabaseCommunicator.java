@@ -1,5 +1,14 @@
 package ml.vandenheuvel.TI1216.source.data;
+
+import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
+
+import javax.sql.DataSource;
+
+import com.mysql.jdbc.jdbc2.optional.MysqlDataSource;
 
 /**
  * Class "DatabseCommunicator" 
@@ -8,26 +17,56 @@ import java.util.ArrayList;
 
 public class DatabaseCommunicator {
 	
-	/**
-	 * Class-instances/variables.
-	 * Temporarily, only a list of known academic faculties is given.
+	/*
+	 * The MySQL username.
 	 */
-	ArrayList<Faculty> listOfFaculties;
+	private static String username = "TI1216";
 	
-	// BEGIN CONSTRUCTORS
-	
-	/**
-	 * Default-constructor
+	/*
+	 * The MySQL password.
 	 */
-	public DatabaseCommunicator(){}
+	private static String password = "3t.uGmL365j2f7B";
 	
-	// END CONSTRUCTORS
-	
-	/**
-	 * Return the most recently updated list of known academic faculties.
-	 * It is a key component in establishing clear 
-	 * @return ArrayList<Faculty>
+	/*
+	 * The database dataSource.
 	 */
-	public ArrayList<Faculty> getFaculties()
-		{return this.listOfFaculties;}
+	private DataSource dataSource;
+	
+	/*
+	 * Constructor, initializes the dataSource.
+	 * 
+	 * @param hostname the database host name
+	 * @param database the database name
+	 */
+	public DatabaseCommunicator(String hostname, String database){
+		MysqlDataSource mysqlDS = null;
+        mysqlDS = new MysqlDataSource();
+        mysqlDS.setURL("jdbc:mysql://" + hostname + "/" + database);
+        mysqlDS.setUser(username);
+        mysqlDS.setPassword(password);
+        this.dataSource = mysqlDS;
+	}
+	
+	public Faculty[] getFaculties(){
+		try {
+			ArrayList<Faculty> faculties = new ArrayList<Faculty>();
+			Connection connection = this.dataSource.getConnection();
+            Statement statement = connection.createStatement();
+            ResultSet resultSet = statement.executeQuery("SELECT * FROM faculty");
+            while(resultSet.next()){
+            	faculties.add(new Faculty(resultSet.getString("name"), new ArrayList<Program>(), resultSet.getString("ID")));
+            }
+            Faculty[] result = new Faculty[faculties.size()];
+            faculties.toArray(result);
+            try {
+            	resultSet.close();
+                statement.close();
+                connection.close();
+            } catch (SQLException e) {}
+            return result;
+		} catch (SQLException e) {
+			e.printStackTrace();
+			return null;
+		}
+	}
 }
