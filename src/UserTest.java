@@ -5,11 +5,10 @@ import org.junit.Test;
 public class UserTest {
 
 	@Test
-	public void testUser() {
+	public void testConstructorUser() {
 		Grade[] g = new Grade[2];
 		User u1 = new User("User", "PC", "descrip", g);
-		
-		assertFalse(u1 == null);
+		assertNotNull(u1);
 	}
 
 	@Test
