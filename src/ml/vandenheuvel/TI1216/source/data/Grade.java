@@ -1,5 +1,4 @@
 package ml.vandenheuvel.TI1216.source.data;
-import Course;
 
 public class Grade 
 {

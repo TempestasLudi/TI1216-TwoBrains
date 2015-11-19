@@ -1,4 +1,4 @@
-import ml.vandenheuvel.TI1216.source.data.Grade;
+package ml.vandenheuvel.TI1216.source.data;
 
 /**
  * Author Callum Holland

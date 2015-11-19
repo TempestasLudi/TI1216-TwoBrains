@@ -1,5 +1,4 @@
 package ml.vandenheuvel.TI1216.source.data;
-import User;
 
 public class Match 
 {
