@@ -1,5 +1,5 @@
 package ml.vandenheuvel.TI1216.source.data;
-import java.util.*;
+import java.util.ArrayList;
 
 /**
  * Class "Faculty"
@@ -33,6 +33,13 @@ public class Faculty {
 	
 	// END CONSTRUCTORS
 	
+	/**
+	 * Returns the id of the faculty.
+	 * @return String
+	 */
+	public String getID()
+		{return this.ID;}
+
 	/**
 	 * Returns the name of the faculty.
 	 * @return String

@@ -46,27 +46,87 @@ public class DatabaseCommunicator {
         mysqlDS.setPassword(password);
         this.dataSource = mysqlDS;
 	}
+
+	/*
+	 * Fetches data from the database.
+	 * 
+	 * @param query the query to be executed
+	 * @return      the data matching the query
+	 */
+	private ResultSet get(String query) throws SQLException{
+		Connection connection = this.dataSource.getConnection();
+        Statement statement = connection.createStatement();
+        return statement.executeQuery(query);
+	}
 	
+	/*
+	 * Executes a MySQL query.
+	 * 
+	 * @param query the query to be executed
+	 */
+	private void execute(String query) throws SQLException{
+		System.out.println(query);
+		Connection connection = this.dataSource.getConnection();
+        Statement statement = connection.createStatement();
+        statement.execute(query);
+	}
+	
+	/*
+	 * Fetches all faculties from the database.
+	 * 
+	 * @return all faculties in the database
+	 */
 	public Faculty[] getFaculties(){
 		try {
 			ArrayList<Faculty> faculties = new ArrayList<Faculty>();
-			Connection connection = this.dataSource.getConnection();
-            Statement statement = connection.createStatement();
-            ResultSet resultSet = statement.executeQuery("SELECT * FROM faculty");
+			ResultSet resultSet = get("SELECT * FROM faculty");
             while(resultSet.next()){
             	faculties.add(new Faculty(resultSet.getString("name"), new ArrayList<Program>(), resultSet.getString("ID")));
             }
             Faculty[] result = new Faculty[faculties.size()];
             faculties.toArray(result);
-            try {
-            	resultSet.close();
-                statement.close();
-                connection.close();
-            } catch (SQLException e) {}
             return result;
 		} catch (SQLException e) {
-			e.printStackTrace();
 			return null;
 		}
 	}
+	
+	/*
+	 * Fetches a faculty from the database.
+	 * 
+	 * @param ID the id of the faculty
+	 * @return   the faculty with the id if found, otherwise null
+	 */
+	public Faculty getFaculty(String ID){
+		try {
+			ResultSet resultSet = this.get("SELECT * FROM faculty WHERE ID = '" + ID + "'");
+            if(resultSet.next()){
+            	return new Faculty(resultSet.getString("name"), new ArrayList<Program>(), resultSet.getString("ID"));
+            }
+		} catch (SQLException e) {}
+        return null;
+	}
+	
+	/*
+	 * Saves a faculty. If it already exists, updates the current record. Otherwise, adds a new one.
+	 * 
+	 * @param faculty the faculty to add
+	 */
+	public void save(Faculty faculty){
+		Faculty existing = this.getFaculty(faculty.getID());
+		try {
+			if (existing == null) {
+				this.execute("INSERT INTO faculty (ID, name) VALUES ('" + faculty.getID() + 
+						"', '" + faculty.getName() + "')");
+			}
+			else {
+				this.execute("UPDATE faculty SET name = '" + faculty.getName() + "' WHERE ID = '" + faculty.getID() + 
+						"'");
+			}
+		}
+		catch (SQLException e) {
+			System.out.println(e.getMessage());
+		}
+	}
+
 }
