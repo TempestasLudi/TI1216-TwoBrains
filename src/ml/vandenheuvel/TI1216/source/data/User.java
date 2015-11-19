@@ -57,7 +57,7 @@ public class User {
 	 * Accessor method to return the array of grades for this user
 	 * @return this user's list of grades in an array
 	 */
-	public Grade[] getGradelist()
+	public Grade[] getGradeList()
 	{
 		return this.gradeList;
 	}

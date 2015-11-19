@@ -1,8 +1,11 @@
 package ml.vandenheuvel.TI1216.test.data;
+
+
 import static org.junit.Assert.*;
 
 import org.junit.Test;
 
+import ml.vandenheuvel.TI1216.source.data.Course;
 import ml.vandenheuvel.TI1216.source.data.Grade;
 import ml.vandenheuvel.TI1216.source.data.User;
 
@@ -20,7 +23,6 @@ public class UserTest {
 		
 		Grade[] g = new Grade[2];
 		User u1 = new User("User", "PC", "descrip", g);
-		
 		assertEquals(u1.getUsername(), "User");
 	}
 
@@ -28,7 +30,6 @@ public class UserTest {
 	public void testGetPostalCode() {
 		Grade[] g = new Grade[2];
 		User u1 = new User("User", "PC", "descrip", g);
-		
 		assertEquals(u1.getPostalCode(), "PC");
 	}
 
@@ -36,16 +37,15 @@ public class UserTest {
 	public void testGetDescription() {
 		Grade[] g = new Grade[2];
 		User u1 = new User("User", "PC", "descrip", g);
-		
 		assertEquals(u1.getDescription(), "descrip");
 	}
 
 	@Test
-	public void testGetGradelist() {
+	public void testGetGradeList() {
 		Grade[] g = new Grade[2];
+		g[0] = new Grade(new Course("OOP","TI1206","Technische Informatica"),5);
 		User u1 = new User("User", "PC", "descrip", g);
-		
-		assertEquals(u1.getGradelist(), g);
+		assertEquals(u1.getGradeList()[0], g[0]);
 	}
 
 	@Test
@@ -53,7 +53,6 @@ public class UserTest {
 		Grade[] g = new Grade[2];
 		User u1 = new User("User", "PC", "descrip", g);
 		u1.setUsername("User2");
-		
 		assertEquals(u1.getUsername(), "User2");
 	}
 
@@ -62,7 +61,6 @@ public class UserTest {
 		Grade[] g = new Grade[2];
 		User u1 = new User("User", "PC", "descrip", g);
 		u1.setPostalCode("PC2");
-		
 		assertEquals(u1.getPostalCode(), "PC2");
 	}
 
@@ -71,37 +69,34 @@ public class UserTest {
 		Grade[] g = new Grade[2];
 		User u1 = new User("User", "PC", "descrip", g);
 		u1.setDescription("descrip2");
-		
 		assertEquals(u1.getDescription(), "descrip2");
 	}
 
 	@Test
 	public void testSetGradeList() {
 		Grade[] g = new Grade[2];
+		g[0] = new Grade(new Course("OOP Project","TI1216","Technische Informatica"),5);
 		Grade[] g2 = new Grade[3];
+		g2[0] = new Grade(new Course("OOP","TI1206","Technische Informatica"),5);
 		User u1 = new User("User", "PC", "descrip", g);
 		u1.setGradeList(g2);
-		
-		assertEquals(u1.getGradelist(), g2);
+		assertEquals(u1.getGradeList()[0], g2[0]);
 	}
 
 	@Test
-	public void testEqualsObject1() {
+	public void testEquals1() {
 		Grade[] g = new Grade[2];
-		//Grade[] g2 = new Grade[3];
 		User u1 = new User("User", "PC", "descrip", g);
 		User u2 = new User("User", "PC", "descrip", g);
-		
 		assertTrue(u1.equals(u2));
 	}
 
 	@Test
-	public void testEqualsObject2() {
+	public void testEquals2() {
 		Grade[] g = new Grade[2];
 		Grade[] g2 = new Grade[3];
 		User u1 = new User("User", "PC", "descrip", g);
 		User u2 = new User("User", "PC", "descrip", g2);
-		
 		assertFalse(u1.equals(u2));
 	}
 }
