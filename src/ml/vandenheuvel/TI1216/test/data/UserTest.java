@@ -4,6 +4,7 @@ import static org.junit.Assert.*;
 import org.junit.Test;
 
 import ml.vandenheuvel.TI1216.source.data.Grade;
+import ml.vandenheuvel.TI1216.source.data.User;
 
 public class UserTest {
 
