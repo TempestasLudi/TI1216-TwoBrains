@@ -8,9 +8,9 @@ public class GradeTest
 {
 
 	@Test
-	public void testGrade() 
+	public void testConstructorGrade() 
 	{
-		Course course = null;
+		Course course = new Course("OOP", "TI1206", "Technische Informatica");
 		Grade test = new Grade(course,8);
 		assertNotNull(test);
 	}
@@ -18,15 +18,15 @@ public class GradeTest
 	@Test
 	public void testGetCourse() 
 	{
-		Course course = null;
+		Course course = new Course("OOP", "TI1206", "Technische Informatica");
 		Grade test = new Grade(course,8);
-		assertEquals(null, test.getCourse());
+		assertEquals(course, test.getCourse());
 	}
 
 	@Test
 	public void testGetGrade() 
 	{
-		Course course = null;
+		Course course = new Course("OOP", "TI1206", "Technische Informatica");
 		Grade test = new Grade(course,8);
 		assertEquals(8, test.getGrade());
 	}
@@ -34,29 +34,37 @@ public class GradeTest
 	@Test
 	public void testSetCourse() 
 	{
-		Course course = null;
-		Grade test = new Grade(course,8);
-		test.setCourse(null);
-		assertEquals(null,test.getCourse());
+		Course course = new Course("OOP", "TI1206", "Technische Informatica");
+		Grade test = new Grade(null,8);
+		test.setCourse(course);
+		assertEquals(course,test.getCourse());
 	}
 
 	@Test
 	public void testSetGrade() 
 	{
-		Course course = null;
-		Grade test = new Grade(course,8);
+		Course course = new Course("OOP", "TI1206", "Technische Informatica");
+		Grade test = new Grade(course,7);
 		test.setGrade(8);
 		assertEquals(8,test.getGrade());
 	}
 
 	@Test
-	public void testEqualsObject() 
+	public void testEqualsPositive() 
 	{
-		Course course = null;
+		Course course = new Course("OOP", "TI1206", "Technische Informatica");
 		Grade test1 = new Grade(course,8);
 		Grade test2 = new Grade(course,8);
-		Grade test3 = new Grade(course,9);
 		assertTrue(test1.equals(test2));
-		assertFalse(test1.equals(test3));
+	}
+	
+	@Test
+	public void testEqualsNegative() 
+	{
+		Course course1 = new Course("OOP", "TI1206", "Technische Informatica");
+		Course course2 = new Course("OOP", "TI1205", "Technische Informatica");
+		Grade test1 = new Grade(course1,8);
+		Grade test2 = new Grade(course2,8);
+		assertFalse(test1.equals(test2));
 	}
 }

@@ -8,10 +8,11 @@ public class MatchTest
 {
 
 	@Test
-	public void testMatch() 
+	public void testConstructorMatch() 
 	{
-		User user1 = null;
-		User user2 = null;
+		Grade[] gradelist = new Grade[2];
+		User user1 = new User("azaidman", "2585KH", "Docent OOP Project", gradelist);
+		User user2 = new User("mveraar", "6433WR", "Docent Reële Analyse", gradelist);
 		Match test = new Match(user1,user2);
 		assertNotNull(test);
 	}
@@ -19,26 +20,29 @@ public class MatchTest
 	@Test
 	public void testGetUser1() 
 	{
-		User user1 = null;
-		User user2 = null;
+		Grade[] gradelist = new Grade[2];
+		User user1 = new User("azaidman", "2585KH", "Docent OOP Project", gradelist);
+		User user2 = new User("mveraar", "6433WR", "Docent Reële Analyse", gradelist);
 		Match test = new Match(user1,user2);
-		assertEquals(null, test.getUser1());
+		assertEquals(user1, test.getUser1());
 	}
 
 	@Test
 	public void testGetUser2() 
 	{
-		User user1 = null;
-		User user2 = null;
+		Grade[] gradelist = new Grade[2];
+		User user1 = new User("azaidman", "2585KH", "Docent OOP Project", gradelist);
+		User user2 = new User("mveraar", "6433WR", "Docent Reële Analyse", gradelist);
 		Match test = new Match(user1,user2);
-		assertEquals(null, test.getUser2());
+		assertEquals(user2, test.getUser2());
 	}
 
 	@Test
-	public void testEqualsObject() 
+	public void testEqualsPositive() 
 	{
-		User user1 = null;
-		User user2 = null;
+		Grade[] gradelist = new Grade[2];
+		User user1 = new User("azaidman", "2585KH", "Docent OOP Project", gradelist);
+		User user2 = new User("mveraar", "6433WR", "Docent Reële Analyse", gradelist);
 		Match test1 = new Match(user1, user2);
 		Match test2 = new Match(user1, user2);
 		assertTrue(test1.equals(test2));
