@@ -3,6 +3,8 @@ import static org.junit.Assert.*;
 
 import org.junit.Test;
 
+import ml.vandenheuvel.TI1216.source.data.Grade;
+
 public class UserTest {
 
 	@Test

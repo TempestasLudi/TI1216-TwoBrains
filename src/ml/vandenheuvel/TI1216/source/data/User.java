@@ -1,4 +1,5 @@
-package ml.vandenheuvel.TI1216.source.data;
+import ml.vandenheuvel.TI1216.source.data.Grade;
+
 /**
  * Author Callum Holland
  * User class in OOP Project:Two Brains
