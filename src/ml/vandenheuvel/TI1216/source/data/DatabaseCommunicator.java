@@ -353,7 +353,6 @@ public class DatabaseCommunicator {
 	public void delete(Course course){
 		try {
 			this.execute("DELETE FROM course WHERE ID = \'"+course.getID()+"\'");
-			// TODO: remove course from its program object?
 		}
 		catch(SQLException e){
 			System.out.println(e.getMessage());
@@ -363,23 +362,129 @@ public class DatabaseCommunicator {
 	/**
 	 * Checks whether a user can create an account or not.
 	 * 
-	 * @param user the user to check
-	 * @return     true if no user is registered with that username, otherwise false.
+	 * @param username the username to check
+	 * @return         true if no user is registered with that username, otherwise false.
 	 */
-	public boolean canRegister(User user){
-		Random random = new Random();
-		return random.nextBoolean();
+	public boolean canRegister(String username){
+		try {
+			ResultSet resultSet = this.get("SELECT * FROM user WHERE name = '" + username + "'");
+			return !resultSet.next();
+		}
+		catch (SQLException e) {
+			System.out.println(e.getMessage());
+		}
+		return false;
 	}
 	
 	/**
 	 * Checks whether a user can login or not.
 	 * 
-	 * @param user the user to check
-	 * @return     true if the user is registered with that username and password, otherwise false.
+	 * @param username the username to check for
+	 * @param password the password to check for
+	 * @return         true if the user is registered with that username and password, otherwise false.
 	 */
-	public boolean canLogin(User user){
-		Random random = new Random();
-		return random.nextBoolean();
+	public boolean canLogin(String username, String password){
+		try {
+			ResultSet resultSet = this.get("SELECT * FROM user WHERE name = '" + username + "' "
+					+ "AND password = '" + this.encryptPassword(password) + "'");
+			return !resultSet.next();
+		}
+		catch (SQLException e) {
+			System.out.println(e.getMessage());
+		}
+		return false;
 	}
 	
+	/**
+	 * Encrypts a password.
+	 * 
+	 * @param password the password to encrypt
+	 * @return         the encrypted password
+	 */
+	private String encryptPassword(String password){
+		return password;
+	}
+
+	/**
+	 * Fetches all users from the database.
+	 * 
+	 * @return all users in the database
+	 */
+	public User[] getUsers(){
+		// TODO: implement grades
+		try {
+			ResultSet resultSet = this.get("SELECT name, postalCode, description FROM user");
+			ArrayList<User> users = new ArrayList<User>();
+			while (resultSet.next()) {
+				users.add(new User(resultSet.getString("name"), resultSet.getString("postalCode"), 
+						resultSet.getString("description"), new Grade[0]));
+			}
+			User[] result = new User[users.size()];
+			users.toArray(result);
+			return result;
+		}
+		catch (SQLException e) {
+			System.out.println(e.getMessage());
+		}
+		return null;
+	}
+	
+	/**
+	 * Fetches a user from the database.
+	 * 
+	 * @param name the name of the user to fetch
+	 * @return     a user in the database with the specified name
+	 */
+	public User getUser(String name){
+		// TODO: implement grades
+		try {
+			ResultSet resultSet = this.get("SELECT * FROM user WHERE name = '" + name + "'");
+			if (resultSet.next()) {
+				return new User(resultSet.getString("name"), resultSet.getString("postalCode"), 
+						resultSet.getString("description"), new Grade[0]);
+			}
+		}
+		catch (SQLException e) {
+			System.out.println(e.getMessage());
+		}
+		return null;
+	}
+
+	/**
+	 * Updates a user if it already exists, otherwise, adds a new one.
+	 * 
+	 * @param user the user to save
+	 */
+	public void save(User user){
+		// TODO: implement grades
+		User existing = this.getUser(user.getUsername());
+		try {
+			if (existing == null) {
+				this.execute("INSERT INTO user (name, postalCode, description) VALUES ('" + user.getUsername() 
+				+ "', '" + user.getPostalCode() + "', '" + user.getDescription() + "')");
+			}
+			else {
+				this.execute("UPDATE user SET postalCode = '" + user.getPostalCode() + "', description = '" + user.getDescription() + "' WHERE name = '" + 
+						user.getUsername() + "'");
+			}
+		}
+		catch (SQLException e) {
+			System.out.println(e.getMessage());
+		}
+	}
+	
+	/**
+	 * Removes a user from the database.
+	 * 
+	 * @param user the user to remove
+	 */
+	public void delete(User user){
+		// TODO: implement grades
+		try {
+			this.execute("DELETE FROM user WHERE name = '" + user.getUsername() + "'");
+		}
+		catch (SQLException e) {
+			System.out.println(e.getMessage());
+		}
+	}
 }
