@@ -34,7 +34,7 @@ public class Course {
 	public Course(String ID, String name, Program program) {
 		this.ID = ID;
 		this.name = name;
-		this.program = program;
+		this.setProgram(program);
 	}
 
 	// END CONSTRUCTORS

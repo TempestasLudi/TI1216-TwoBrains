@@ -46,6 +46,15 @@ public class Program {
 	// END CONSTRUCTORS
 
 	/**
+	 * Returns ID of the program.
+	 * 
+	 * @return String
+	 */
+	public String getID(){
+		return this.ID;
+	}
+	
+	/**
 	 * Returns name of the program.
 	 * 
 	 * @return String
@@ -61,15 +70,6 @@ public class Program {
 	 */
 	public ArrayList<Course> getCourses(){
 		return this.courses;
-	}
-
-	/**
-	 * Returns ID of the program.
-	 * 
-	 * @return String
-	 */
-	public String getID(){
-		return this.ID;
 	}
 
 	/**
