@@ -3,14 +3,23 @@ package ml.vandenheuvel.TI1216.test.data;
 
 import static org.junit.Assert.*;
 
+import java.util.ArrayList;
+
 import org.junit.Test;
 
 import ml.vandenheuvel.TI1216.source.data.Course;
+import ml.vandenheuvel.TI1216.source.data.Faculty;
 import ml.vandenheuvel.TI1216.source.data.Grade;
+import ml.vandenheuvel.TI1216.source.data.Program;
 import ml.vandenheuvel.TI1216.source.data.User;
 
 public class UserTest {
-
+	private Course createCourse(String subject){
+		Faculty faculty = new Faculty("EWI", "Elektrotechniek, wis- en informatica", new ArrayList<Program>());
+		Program program = new Program("TI", "Technische Informatica", faculty, new ArrayList<Course>());
+		return new Course(subject, "OOP", program);
+	}
+	
 	@Test
 	public void testConstructorUser() {
 		Grade[] g = new Grade[2];
@@ -43,7 +52,7 @@ public class UserTest {
 	@Test
 	public void testGetGradeList() {
 		Grade[] g = new Grade[2];
-		g[0] = new Grade(new Course("OOP","TI1206","Technische Informatica"),5);
+		g[0] = new Grade(createCourse("TI1216"),5);
 		User u1 = new User("User", "PC", "descrip", g);
 		assertEquals(u1.getGradeList()[0], g[0]);
 	}
@@ -75,9 +84,9 @@ public class UserTest {
 	@Test
 	public void testSetGradeList() {
 		Grade[] g = new Grade[2];
-		g[0] = new Grade(new Course("OOP Project","TI1216","Technische Informatica"),5);
+		g[0] = new Grade(createCourse("TI1216"),5);
 		Grade[] g2 = new Grade[3];
-		g2[0] = new Grade(new Course("OOP","TI1206","Technische Informatica"),5);
+		g2[0] = new Grade(createCourse("TI1206"),5);
 		User u1 = new User("User", "PC", "descrip", g);
 		u1.setGradeList(g2);
 		assertEquals(u1.getGradeList()[0], g2[0]);
