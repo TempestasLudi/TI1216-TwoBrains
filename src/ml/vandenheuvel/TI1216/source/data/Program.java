@@ -98,7 +98,7 @@ public class Program {
 	 * @param faculty the faculty the course belongs to
 	 */
 	public void setFaculty(Faculty faculty){
-		if (!this.faculty.equals(faculty)) {
+		if (this.faculty == null || !this.faculty.equals(faculty)) {
 			Faculty oldFaculty = this.faculty;
 			this.faculty = faculty;
 			if (oldFaculty != null) {

@@ -83,7 +83,7 @@ public class Course {
 	 * @param program the program the course belongs to
 	 */
 	public void setProgram(Program program){
-		if (!this.program.equals(program)) {
+		if (this.program == null || !this.program.equals(program)) {
 			Program oldProgram = this.program;
 			this.program = program;
 			if (oldProgram != null) {
