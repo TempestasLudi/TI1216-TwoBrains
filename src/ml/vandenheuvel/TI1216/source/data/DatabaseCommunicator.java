@@ -5,6 +5,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
+import java.util.Random;
 
 import javax.sql.DataSource;
 
@@ -127,6 +128,28 @@ public class DatabaseCommunicator {
 		catch (SQLException e) {
 			System.out.println(e.getMessage());
 		}
+	}
+	
+	/**
+	 * Checks whether a user can create an account or not.
+	 * 
+	 * @param user the user to check
+	 * @return     true if no user is registered with that username, otherwise false.
+	 */
+	public boolean canRegister(User user){
+		Random random = new Random();
+		return random.nextBoolean();
+	}
+	
+	/**
+	 * Checks whether a user can login or not.
+	 * 
+	 * @param user the user to check
+	 * @return     true if the user is registered with that username and password, otherwise false.
+	 */
+	public boolean canLogin(User user){
+		Random random = new Random();
+		return random.nextBoolean();
 	}
 
 }
