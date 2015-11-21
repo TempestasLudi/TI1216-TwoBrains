@@ -51,6 +51,22 @@ public class Login {
 	 */
 	public void setSignUp(Boolean bool_in){
 		this.signUp = bool_in;
+	} 
+	
+	/**
+	 * Get method for the username string
+	 * @return The username of the login object
+	 */
+	public String getUsername(){
+		return this.username;
+	}
+	
+	/**
+	 * Get method for the password string
+	 * @return The password of the login object
+	 */
+	public String getPassword(){
+		return this.password;
 	}
 
 }
