@@ -23,7 +23,14 @@ public class User {
 		this.postalCode = postalCode;
 		this.description = description;
 		this.gradeList = gradelist;
-		
+	}
+	
+	/**
+	 * Constructor method for User object
+	 * @param username - String representing User's username
+	 */
+	public User(String username){
+		this.username = username;
 	}
 	
 	/**
