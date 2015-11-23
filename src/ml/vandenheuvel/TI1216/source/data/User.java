@@ -99,6 +99,20 @@ public class User {
 	}
 	
 	/**
+	 * To check if the username is taken or not.
+	 * @param other to run by the database if it is taken or not
+	 * @return boolean if it is taken.
+	 */
+	public boolean isTaken(Object other){
+		if(other instanceof User){
+			User that = (User) other;
+			
+			return this.username.equals(that.username);
+		}
+		return false;
+	}
+	
+	/**
 	 * Equals method for this object (mainly for tests)
 	 * @param other - Object to compare this to
 	 */
