@@ -38,7 +38,7 @@ public class ClientThread extends Thread {
 			// If the user wants to sign up, let him try
 			if (login.getSignUp()) {
 				while (!this.server.getDatabaseCommunicator().canRegister(
-						new User(login.getUsername()))) {
+						new Credentials(login.getUsername(), ""))) {
 					// Feedback: 1 means failed
 					this.outputStream.writeByte(1);
 					login = (Login) inputStream.readObject();
@@ -53,7 +53,7 @@ public class ClientThread extends Thread {
 
 			// Logging in. Password isn't checked here, needs more functionality
 			while (!this.server.getDatabaseCommunicator().canLogin(
-					new User(login.getUsername()))) {
+					new Credentials(login.getUsername(), ""))) {
 				// Feedback: could not log in
 				this.outputStream.writeByte(1);
 			}

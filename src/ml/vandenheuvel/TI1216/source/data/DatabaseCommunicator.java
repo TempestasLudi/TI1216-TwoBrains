@@ -362,12 +362,12 @@ public class DatabaseCommunicator {
 	/**
 	 * Checks whether a user can create an account or not.
 	 * 
-	 * @param username the username to check
-	 * @return         true if no user is registered with that username, otherwise false.
+	 * @param credentials the credentials object containing the username to check
+	 * @return            true if no user is registered with that username, otherwise false.
 	 */
-	public boolean canRegister(String username){
+	public boolean canRegister(Credentials credentials){
 		try {
-			ResultSet resultSet = this.get("SELECT * FROM user WHERE name = '" + username + "'");
+			ResultSet resultSet = this.get("SELECT * FROM user WHERE name = '" + credentials.getUsername() + "'");
 			return !resultSet.next();
 		}
 		catch (SQLException e) {
@@ -379,14 +379,13 @@ public class DatabaseCommunicator {
 	/**
 	 * Checks whether a user can login or not.
 	 * 
-	 * @param username the username to check for
-	 * @param password the password to check for
-	 * @return         true if the user is registered with that username and password, otherwise false.
+	 * @param credentials the username-password pair to check for
+	 * @return            true if the user is registered with that username and password, otherwise false.
 	 */
-	public boolean canLogin(String username, String password){
+	public boolean canLogin(Credentials credentials){
 		try {
-			ResultSet resultSet = this.get("SELECT * FROM user WHERE name = '" + username + "' "
-					+ "AND password = '" + this.encryptPassword(password) + "'");
+			ResultSet resultSet = this.get("SELECT * FROM user WHERE name = '" + credentials.getUsername() + "' "
+					+ "AND password = '" + this.encryptPassword(credentials.getPassword()) + "'");
 			return !resultSet.next();
 		}
 		catch (SQLException e) {
@@ -451,21 +450,36 @@ public class DatabaseCommunicator {
 	}
 
 	/**
-	 * Updates a user if it already exists, otherwise, adds a new one.
+	 * Updates a user if it already exists.
 	 * 
-	 * @param user the user to save
+	 * @param user the user to update
 	 */
 	public void save(User user){
 		// TODO: implement grades
 		User existing = this.getUser(user.getUsername());
 		try {
-			if (existing == null) {
-				this.execute("INSERT INTO user (name, postalCode, description) VALUES ('" + user.getUsername() 
-				+ "', '" + user.getPostalCode() + "', '" + user.getDescription() + "')");
-			}
-			else {
+			if (existing != null) {
 				this.execute("UPDATE user SET postalCode = '" + user.getPostalCode() + "', description = '" + user.getDescription() + "' WHERE name = '" + 
 						user.getUsername() + "'");
+			}
+		}
+		catch (SQLException e) {
+			System.out.println(e.getMessage());
+		}
+	}
+
+	/**
+	 * Adds a new user.
+	 * 
+	 * @param user the user to add
+	 */
+	public void save(User user, Credentials credentials){
+		// TODO: implement grades
+		User existing = this.getUser(user.getUsername());
+		try {
+			if (existing == null) {
+				this.execute("INSERT INTO user (name, password, postalCode, description) VALUES ('" + user.getUsername() 
+				+ "', '" + credentials.getPassword() + "', '" + user.getPostalCode() + "', '" + user.getDescription() + "')");
 			}
 		}
 		catch (SQLException e) {
