@@ -95,15 +95,15 @@ public class DatabaseCommunicator {
 	/**
 	 * Fetches a faculty from the database.
 	 * 
-	 * @param ID the id of the faculty
+	 * @param id the id of the faculty
 	 * @return   the faculty with the id if found, otherwise null
 	 */
-	public Faculty getFaculty(String ID){
+	public Faculty getFaculty(String id){
 		String query = "SELECT f.ID as facultyID, f.name AS facultyName, p.id AS programID, p.name AS programName, c.ID as courseID, c.name AS courseName "
 				+ "FROM faculty AS f "
 				+ "LEFT JOIN program AS p ON f.ID = p.facultyID "
 				+ "LEFT JOIN course AS c ON p.ID = c.programID "
-				+ "WHERE facultyID = '" + ID + "' "
+				+ "WHERE facultyID = '" + id + "' "
 				+ "ORDER BY facultyID ASC, programID ASC ";
 		try {
 			ResultSet resultSet = this.get(query);
@@ -124,7 +124,7 @@ public class DatabaseCommunicator {
 	 * @param resultSet the result set
 	 * @return          a Faculty-Program-Course tree structure from the result set
 	 */
-	private Faculty[] createTree(ResultSet resultSet) throws SQLException{
+	private static Faculty[] createTree(ResultSet resultSet) throws SQLException{
 		ArrayList<Faculty> faculties = new ArrayList<Faculty>();
 		Faculty faculty = null;
 		Program program = null;
@@ -220,17 +220,17 @@ public class DatabaseCommunicator {
 	/**
 	 * Fetches a program from the database.
 	 * 
-	 * @param ID the id of the program
+	 * @param id the id of the program
 	 * @return   the program with the id if found, otherwise null
 	 */
-	public Program getProgram(String ID){
+	public Program getProgram(String id){
 		try {
-			ResultSet resultSet = this.get("SELECT * FROM program WHERE ID = '" + ID + "'");
+			ResultSet resultSet = this.get("SELECT * FROM program WHERE ID = '" + id + "'");
 			if (resultSet.next()) {
 				Faculty faculty = this.getFaculty(resultSet.getString("facultyID"));
 				ArrayList<Program> programs = faculty.getPrograms();
 				for (int i = 0; i < programs.size(); i++) {
-					if (programs.get(i).getID().equals(ID)) {
+					if (programs.get(i).getID().equals(id)) {
 						return programs.get(i);
 					}
 				}
@@ -301,17 +301,17 @@ public class DatabaseCommunicator {
 	/**
 	 * Fetches a course from the database.
 	 * 
-	 * @param ID the id of the course
+	 * @param id the id of the course
 	 * @return   the course with the id if found, otherwise null
 	 */
-	public Course getCourse(String ID){
+	public Course getCourse(String id){
 		try {
-			ResultSet resultSet = this.get("SELECT * FROM program WHERE ID = '" + ID + "'");
+			ResultSet resultSet = this.get("SELECT * FROM program WHERE ID = '" + id + "'");
 			if (resultSet.next()) {
 				Program program = this.getProgram(resultSet.getString("programID"));
 				ArrayList<Course> courses = program.getCourses();
 				for (int i = 0; i < courses.size(); i++) {
-					if (courses.get(i).getID().equals(ID)) {
+					if (courses.get(i).getID().equals(id)) {
 						return courses.get(i);
 					}
 				}
@@ -400,7 +400,7 @@ public class DatabaseCommunicator {
 	 * @param password the password to encrypt
 	 * @return         the encrypted password
 	 */
-	private String encryptPassword(String password){
+	private static String encryptPassword(String password){
 		return password;
 	}
 

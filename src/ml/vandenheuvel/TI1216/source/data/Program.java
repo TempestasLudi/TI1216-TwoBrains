@@ -14,27 +14,25 @@ public class Program {
 	 */
 	private String name;
 	private ArrayList<Course> courses;
-	private String ID;
+	private String id;
 	private Faculty faculty;
 
 	// BEGIN CONSTRUCTORS
 
-	/**
-	 * Default Constructor
-	 */
 	public Program() {
+		//The default constructor
 	}
 
 	/**
 	 * General constructor. All class-instance required for input.
 	 * 
-	 * @param ID
+	 * @param id
 	 * @param name
 	 * @param faculty the faculty the program belongs to
 	 * @param courses
 	 */
-	public Program(String ID, String name, Faculty faculty, ArrayList<Course> courses) {
-		this.ID = ID;
+	public Program(String id, String name, Faculty faculty, ArrayList<Course> courses) {
+		this.id = id;
 		this.name = name;
 		this.setFaculty(faculty);
 		this.courses = courses;
@@ -51,7 +49,7 @@ public class Program {
 	 * @return String
 	 */
 	public String getID(){
-		return this.ID;
+		return this.id;
 	}
 	
 	/**
@@ -142,13 +140,12 @@ public class Program {
 	 * @param Object
 	 * @return boolean
 	 */
+	@Override
 	public boolean equals(Object obj){
 		boolean result = false;
 		if (obj instanceof Program) {
 			Program that = (Program) obj;
-//			result = (this.name.equals(that.name)) && (this.courses.equals(that.courses))
-//					&& (this.ID.equals(that.ID));
-			result = this.ID.equals(that.getID());
+			result = this.id.equals(that.getID());
 		}
 		return result;
 	}

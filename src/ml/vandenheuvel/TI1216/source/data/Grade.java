@@ -1,5 +1,10 @@
 package ml.vandenheuvel.TI1216.source.data;
 
+/**
+ * Objects of this instance are pairs of a course and a grade
+ * @author 
+ *
+ */
 public class Grade 
 {
 	
@@ -58,12 +63,13 @@ public class Grade
 	 * @param other the Object to which the Grade is compared
 	 * @return true if the Grades are equal, otherwise false
 	 */
+	@Override
 	public boolean equals(Object other)
 	{
 		if(other instanceof Grade)
 		{
 			Grade that = (Grade) other;
-			return ((this.course.equals(that.course)) && (this.grade == that.grade));
+			return this.course.equals(that.course) && this.grade == that.grade;
 		}
 		return false;
 	}

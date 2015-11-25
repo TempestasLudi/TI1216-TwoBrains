@@ -1,14 +1,20 @@
 package ml.vandenheuvel.TI1216.source.data;
 
+import java.io.Serializable;
+
 /**
  * Class "ChatMessage".
  * 
- * @author Andreas Theys, OOP Project [TI1216], Project Group A1.2, TU Delft
- *         2015-2016.
+ * @author Andreas Theys, OOP Project [TI1216], Project Group A1.2, TU Delft, 2015-2016.
  */
 
-public class ChatMessage {
+public class ChatMessage implements Serializable {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+	
 	/**
 	 * Class-instances/variables.
 	 */
@@ -18,10 +24,8 @@ public class ChatMessage {
 
 	// BEGIN CONSTRUCTORS
 
-	/**
-	 * Default Constructor
-	 */
 	public ChatMessage() {
+		//The default constructor
 	}
 
 	/**

@@ -18,10 +18,8 @@ public class Login {
 
 	// BEGIN CONSTRUCTORS
 
-	/**
-	 * Default Constructor
-	 */
 	public Login() {
+		//The default contructor
 	}
 
 	/**
@@ -47,10 +45,10 @@ public class Login {
 	
 	/**
 	 * Set method of the signUp boolean
-	 * @param bool_in The wanted value
+	 * @param bool The wanted value
 	 */
-	public void setSignUp(Boolean bool_in){
-		this.signUp = bool_in;
+	public void setSignUp(Boolean bool){
+		this.signUp = bool;
 	} 
 	
 	/**

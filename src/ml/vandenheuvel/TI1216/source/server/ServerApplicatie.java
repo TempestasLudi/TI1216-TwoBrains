@@ -9,6 +9,10 @@ package ml.vandenheuvel.TI1216.source.server;
  */
 
 public class ServerApplicatie {
+	
+	private ServerApplicatie(){
+		//To override the default constructor
+	}
 
 	public static void main(String[] args) {
 		if (args.length != 1) {

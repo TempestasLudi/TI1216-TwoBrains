@@ -16,25 +16,23 @@ public class Faculty {
 	 */
 	private String name;
 	private ArrayList<Program> programs;
-	private String ID;
+	private String id;
 
 	// BEGIN CONSTRUCTORS
-
-	/**
-	 * Default Constructor
-	 */
+	
 	public Faculty() {
+		//The default constructor
 	}
 
 	/**
 	 * General constructor; all class-instances must be given.
 	 * 
-	 * @param ID
+	 * @param id
 	 * @param name
 	 * @param programs
 	 */
-	public Faculty(String ID, String name, ArrayList<Program> programs) {
-		this.ID = ID;
+	public Faculty(String id, String name, ArrayList<Program> programs) {
+		this.id = id;
 		this.name = name;
 		this.programs = programs;
 		for (int i = 0; i < programs.size(); i++) {
@@ -50,7 +48,7 @@ public class Faculty {
 	 * @return String
 	 */
 	public String getID(){
-		return this.ID;
+		return this.id;
 	}
 
 	/**
@@ -114,12 +112,13 @@ public class Faculty {
 	 * @param Object
 	 * @return boolean
 	 */
+	@Override
 	public boolean equals(Object obj){
 		boolean result = false;
 		if (obj instanceof Faculty) {
 			Faculty that = (Faculty) obj;
 			result = (this.name.equals(that.name)) && (this.programs.equals(that.programs))
-					&& (this.ID.equals(that.ID));
+					&& (this.id.equals(that.id));
 		}
 		return result;
 	}

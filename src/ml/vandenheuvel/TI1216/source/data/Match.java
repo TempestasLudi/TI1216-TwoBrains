@@ -40,6 +40,7 @@ public class Match
 	 * @param other the Object to which the Match is compared
 	 * @return true if the Matches are equal, otherwise false
 	 */
+	@Override
 	public boolean equals(Object other)
 	{
 		if(other instanceof Match)

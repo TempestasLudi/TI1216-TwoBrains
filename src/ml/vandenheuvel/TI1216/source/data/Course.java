@@ -13,7 +13,7 @@ public class Course {
 	/**
 	 * The course ID.
 	 */
-	private String ID;
+	private String id;
 	
 	/**
 	 * The course name.
@@ -31,11 +31,11 @@ public class Course {
 	 * General constructor.
 	 * 
 	 * @param name    the course name
-	 * @param ID      the course ID
+	 * @param id      the course ID
 	 * @param program the program the course belongs to
 	 */
-	public Course(String ID, String name, Program program) {
-		this.ID = ID;
+	public Course(String id, String name, Program program) {
+		this.id = id;
 		this.name = name;
 		this.setProgram(program);
 	}
@@ -48,7 +48,7 @@ public class Course {
 	 * @return the ID of the course
 	 */
 	public String getID(){
-		return this.ID;
+		return this.id;
 	}
 	
 	/**
@@ -107,12 +107,12 @@ public class Course {
 	 * @param obj the object to compare with
 	 * @return    true if both objects are the same, otherwise false
 	 */
+	@Override
 	public boolean equals(Object obj){
 		boolean result = false;
 		if (obj instanceof Course) {
 			Course that = (Course) obj;
-//			result = (this.name.equals(that.name)) && (this.ID.equals(that.ID)) && (this.program.equals(that.program));
-			result = this.ID.equals(that.getID());
+			result = this.id.equals(that.getID());
 		}
 		return result;
 	}
