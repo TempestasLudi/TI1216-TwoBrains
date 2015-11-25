@@ -4,30 +4,38 @@ import java.util.Scanner;
 
 import ml.vandenheuvel.TI1216.source.data.Login;
 
+/**
+ * This class contains the main function and is run using two arguments; the
+ * server and the port to use.
+ * 
+ * @author Bram van den Heuvel
+ *
+ */
 public class ClientApplication {
 
 	public static void main(String[] args) {
-		
+
 		if (args.length != 2) {
-			System.out.println("Server address and portnumber should be the only args.");
+			System.out
+					.println("Server address and portnumber should be the only args.");
 			return;
 		}
-		
+
 		Scanner sc = new Scanner(System.in);
-		
+
 		Client client = new Client(args[0], Integer.parseInt(args[1]));
-		if(client.start()) System.out.println("Connected.");
-		
-		//Ask for login credentials
+		if (client.start())
+			System.out.println("Connected.");
+
+		// Ask for login credentials
 		/* Temporary */
 		Login login = null;
 		/* Temporary */
-		Thread clientThread = client.logIn(login);
-		clientThread.start();
+		client.logIn(login);
 		
+		client.getServerListener().start();
 
-		
-		client.close(clientThread);
+		client.close();
 	}
 
 }
