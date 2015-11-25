@@ -32,9 +32,9 @@ public class DatabaseCommunicatorTest{
 		for (int i = 0; i < faculties.length; i++) {
 			System.out.println("<Faculty(Some ID here, " + faculties[i].getName() + ")>");
 		}
-		Faculty thing = new Faculty("Lucht- en ruimtevaart", new ArrayList<Program>(), "LR");
+		Faculty thing = new Faculty("LR", "Lucht- en ruimtevaart", new ArrayList<Program>());
 		communicator.save(thing);
-		thing = new Faculty("3-thing-stuff", new ArrayList<Program>(), "3Me");
+		thing = new Faculty("3Me", "3-thing-stuff", new ArrayList<Program>());
 		communicator.save(thing);
 	}
 

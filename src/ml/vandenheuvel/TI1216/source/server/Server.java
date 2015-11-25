@@ -22,16 +22,14 @@ public class Server {
 	public Server(int portNumber) {
 		this.portNumber = portNumber;
 		this.clientList = new ArrayList<Client>();
-		this.databaseCommunicator = new DatabaseCommunicator("hostname",
-				"database");
+		this.databaseCommunicator = new DatabaseCommunicator("hostname", "database");
 		// Start thread to make the matches
 	}
 
 	public void start() {
 		try {
 			serverSocket = new ServerSocket(this.portNumber);
-			System.out.println("Started with success on port "
-					+ this.portNumber);
+			System.out.println("Started with success on port " + this.portNumber);
 
 			while (true) {
 				Socket clientSocket = serverSocket.accept();
@@ -40,12 +38,10 @@ public class Server {
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
-		}
-		finally{
-			try{
+		} finally {
+			try {
 				serverSocket.close();
-			}
-			catch(Exception e){
+			} catch (Exception e) {
 				e.printStackTrace();
 			}
 		}
@@ -64,7 +60,8 @@ public class Server {
 	 * Stop communicating with a client. Stop it's thread, close it's streams
 	 * and socket. Then remove it from the clientList.
 	 * 
-	 * @param i	The index of the client in the clientList
+	 * @param i
+	 *            The index of the client in the clientList
 	 */
 	public void removeClient(int i) {
 		this.clientList.get(i).stopClient();

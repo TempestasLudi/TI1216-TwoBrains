@@ -1,8 +1,9 @@
 package ml.vandenheuvel.TI1216.source.data;
 
+import java.util.Arrays;
+
 /**
- * Author Callum Holland
- * User class in OOP Project:Two Brains
+ * Author Callum Holland User class in OOP Project:Two Brains
  */
 public class User {
 
@@ -10,113 +11,128 @@ public class User {
 	private String postalCode;
 	private String description;
 	private Grade[] gradeList;
-	
+
 	/**
 	 * Constructor method for User object
-	 * @param username - String representing User's username
-	 * @param postalCode - String representing User's postal code
-	 * @param description - String representing the description of the user
-	 * @param gradelist - Array of grade objects to represent the grades for the user's courses
+	 * 
+	 * @param username
+	 *            - String representing User's username
+	 * @param postalCode
+	 *            - String representing User's postal code
+	 * @param description
+	 *            - String representing the description of the user
+	 * @param gradelist
+	 *            - Array of grade objects to represent the grades for the
+	 *            user's courses
 	 */
-	public User(String username, String postalCode, String description, Grade[] gradelist){
+	public User(String username, String postalCode, String description, Grade[] gradelist) {
 		this.username = username;
 		this.postalCode = postalCode;
 		this.description = description;
 		this.gradeList = gradelist;
 	}
-	
+
 	/**
 	 * Constructor method for User object
-	 * @param username - String representing User's username
+	 * 
+	 * @param username
+	 *            - String representing User's username
 	 */
-	public User(String username){
+	public User(String username) {
 		this.username = username;
 	}
-	
+
 	/**
 	 * Accessor method for username variable
-	 * @return username - String representing User's username 
+	 * 
+	 * @return username - String representing User's username
 	 */
-	public String getUsername()
-	{
+	public String getUsername() {
 		return this.username;
 	}
-	
+
 	/**
 	 * Accessor method for username string
-	 * @return username - String representing User's username 
+	 * 
+	 * @return username - String representing User's username
 	 */
-	public String getPostalCode()
-	{
+	public String getPostalCode() {
 		return this.postalCode;
 	}
-	
+
 	/**
 	 * Accessor method for description string
+	 * 
 	 * @return the user's description in form of a string
 	 */
-	public String getDescription()
-	{
+	public String getDescription() {
 		return this.description;
 	}
-	
+
 	/**
 	 * Accessor method to return the array of grades for this user
+	 * 
 	 * @return this user's list of grades in an array
 	 */
-	public Grade[] getGradeList()
-	{
+	public Grade[] getGradeList() {
 		return this.gradeList;
 	}
-	
+
 	/**
 	 * Mutator method to set the user's username
-	 * @param username - String to change it to
+	 * 
+	 * @param username
+	 *            - String to change it to
 	 */
-	public void setUsername(String username)
-	{
+	public void setUsername(String username) {
 		this.username = username;
 	}
-	
+
 	/**
 	 * Mutator method to set the user's postal code
-	 * @param postalCode - String to change it to
+	 * 
+	 * @param postalCode
+	 *            - String to change it to
 	 */
-	public void setPostalCode(String postalCode)
-	{
+	public void setPostalCode(String postalCode) {
 		this.postalCode = postalCode;
 	}
-	
+
 	/**
 	 * Mutator method to set the user's description
-	 * @param description - String to change it to
+	 * 
+	 * @param description
+	 *            - String to change it to
 	 */
-	public void setDescription(String description)
-	{
+	public void setDescription(String description) {
 		this.description = description;
 	}
-	
+
 	/**
 	 * Mutator method to set the user's gradeList
-	 * @param gradeList - array of grades to change it to
+	 * 
+	 * @param gradeList
+	 *            - array of grades to change it to
 	 */
-	public void setGradeList(Grade[] gradeList)
-	{
+	public void setGradeList(Grade[] gradeList) {
 		this.gradeList = gradeList;
 	}
-	
+
 	/**
 	 * Equals method for this object (mainly for tests)
-	 * @param other - Object to compare this to
+	 * 
+	 * @param other
+	 *            - Object to compare this to
 	 */
-	public boolean equals(Object other)
-	{
-		if(other instanceof User){
+	@Override
+	public boolean equals(Object other) {
+		if (other instanceof User) {
 			User that = (User) other;
-			
-			return (this.username.equals(that.username) && this.postalCode.equals(that.postalCode) && this.description.equals(that.description) && this.gradeList.equals(that.gradeList));
+
+			return this.username.equals(that.username) && this.postalCode.equals(that.postalCode)
+					&& this.description.equals(that.description) && Arrays.equals(this.gradeList, that.gradeList);
 		}
-		
+
 		return false;
 	}
 }
