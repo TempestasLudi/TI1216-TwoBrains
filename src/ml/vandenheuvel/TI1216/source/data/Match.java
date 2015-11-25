@@ -46,7 +46,7 @@ public class Match
 		if(other instanceof Match)
 		{
 			Match that = (Match) other;
-			return ((this.user1.equals(that.user1)) && this.user2.equals(that.user2));
+			return (this.user1.equals(that.user1) && this.user2.equals(that.user2) || (this.user1.equals(that.user2) && this.user2.equals(that.user1)));
 		}
 		return false;
 	}

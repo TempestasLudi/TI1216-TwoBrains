@@ -105,7 +105,7 @@ public class Course {
 	 * Compares Course objects, based on the respective class-instances.
 	 * 
 	 * @param obj the object to compare with
-	 * @return    true if both objects are the same, otherwise false
+	 * @return true if both objects are the same, otherwise false
 	 */
 	@Override
 	public boolean equals(Object obj){

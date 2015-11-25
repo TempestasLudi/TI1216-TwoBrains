@@ -108,13 +108,11 @@ public class Faculty {
 	 * @param Object
 	 * @return boolean
 	 */
-	@Override
 	public boolean equals(Object obj){
 		boolean result = false;
 		if (obj instanceof Faculty) {
 			Faculty that = (Faculty) obj;
-			result = (this.name.equals(that.name)) && (this.programs.equals(that.programs))
-					&& (this.ID.equals(that.getID()));
+			result = this.ID.equals(that.ID);
 		}
 		return result;
 	}
