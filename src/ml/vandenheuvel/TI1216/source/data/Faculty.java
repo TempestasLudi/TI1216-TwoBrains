@@ -31,8 +31,10 @@ public class Faculty {
 		this.ID = ID;
 		this.name = name;
 		this.programs = programs;
-		for (int i = 0; i < programs.size(); i++) {
-			programs.get(i).setFaculty(this);
+		if(this.programs!=null){
+			for (int i = 0; i < programs.size(); i++) {
+				programs.get(i).setFaculty(this);
+			}
 		}
 	}
 

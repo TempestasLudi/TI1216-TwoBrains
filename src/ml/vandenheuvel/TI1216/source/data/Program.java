@@ -29,10 +29,12 @@ public class Program {
 	public Program(String id, String name, Faculty faculty, ArrayList<Course> courses) {
 		this.id = id;
 		this.name = name;
-		this.setFaculty(faculty);
+		this.faculty = faculty;
 		this.courses = courses;
-		for (int i = 0; i < this.courses.size(); i++) {
-			this.courses.get(i).setProgram(this);
+		if(this.courses.size()>0){
+			for (int i = 0; i < this.courses.size(); i++) {
+				this.courses.get(i).setProgram(this);
+			}
 		}
 	}
 
@@ -95,7 +97,7 @@ public class Program {
 			if (oldFaculty != null) {
 				oldFaculty.removeProgram(this);
 			}
-			if (this.faculty != null) {
+			if (this.faculty != null && this.faculty.getPrograms()!=null) {
 				this.faculty.addProgram(this);
 			}
 		}
