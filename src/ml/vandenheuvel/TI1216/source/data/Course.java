@@ -5,31 +5,34 @@ package ml.vandenheuvel.TI1216.source.data;
  * 
  * @author Andreas Theys, OOP Project [TI1216], Project Group A1.2, TU Delft
  *         2015-2016.
+ * @author Arnoud van der Leer
  */
 
 public class Course {
-
+	
 	/**
-	 * Class-instances/variables.
+	 * The course ID.
+	 */
+	private String ID;
+	
+	/**
+	 * The course name.
 	 */
 	private String name;
-	private String ID;
+	
+	/**
+	 * The program of study the course belongs to.
+	 */
 	private Program program;
 
 	// BEGIN CONSTRUCTORS
 
 	/**
-	 * Default Constructor
-	 */
-	public Course() {
-	}
-
-	/**
-	 * General constructor. All class-instance required for input.
+	 * General constructor.
 	 * 
-	 * @param name
-	 * @param ID
-	 * @param program
+	 * @param name    the course name
+	 * @param ID      the course ID
+	 * @param program the program the course belongs to
 	 */
 	public Course(String ID, String name, Program program) {
 		this.ID = ID;
@@ -42,7 +45,7 @@ public class Course {
 	/**
 	 * Gathers the ID of the course.
 	 * 
-	 * @return String
+	 * @return the ID of the course
 	 */
 	public String getID(){
 		return this.ID;
@@ -51,16 +54,16 @@ public class Course {
 	/**
 	 * Gathers the name of the course.
 	 * 
-	 * @return String
+	 * @return the name of the course
 	 */
 	public String getName(){
 		return this.name;
 	}
 
 	/**
-	 * Gathers the program name of the course.
+	 * Gathers the program of the course.
 	 * 
-	 * @return String
+	 * @return the program the course belongs to
 	 */
 	public Program getProgram(){
 		return this.program;
@@ -71,7 +74,7 @@ public class Course {
 	/**
 	 * Changes the name of the course.
 	 * 
-	 * @param name
+	 * @param name the name of the course
 	 */
 	public void setName(String name){
 		this.name = name;
@@ -85,28 +88,31 @@ public class Course {
 	public void setProgram(Program program){
 		if (this.program == null || !this.program.equals(program)) {
 			Program oldProgram = this.program;
-			this.program = program;
+			this.program = null;
 			if (oldProgram != null) {
 				oldProgram.removeCourse(this);
 			}
-			if (this.program != null) {
-				this.program.addCourse(this);
+			this.program = program;
+			if (program != null) {
+				program.addCourse(this);
 			}
 		}
 	}
+	
 	// END MODIFIERS
 
 	/**
-	 * Compares Course-objects, based on the respective class-instances.
+	 * Compares Course objects, based on the respective class-instances.
 	 * 
-	 * @param Object
-	 * @return boolean
+	 * @param obj the object to compare with
+	 * @return    true if both objects are the same, otherwise false
 	 */
 	public boolean equals(Object obj){
 		boolean result = false;
 		if (obj instanceof Course) {
 			Course that = (Course) obj;
-			result = (this.name.equals(that.name)) && (this.ID.equals(that.ID)) && (this.program.equals(that.program));
+//			result = (this.name.equals(that.name)) && (this.ID.equals(that.ID)) && (this.program.equals(that.program));
+			result = this.ID.equals(that.getID());
 		}
 		return result;
 	}

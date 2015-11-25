@@ -146,8 +146,9 @@ public class Program {
 		boolean result = false;
 		if (obj instanceof Program) {
 			Program that = (Program) obj;
-			result = (this.name.equals(that.name)) && (this.courses.equals(that.courses))
-					&& (this.ID.equals(that.ID));
+//			result = (this.name.equals(that.name)) && (this.courses.equals(that.courses))
+//					&& (this.ID.equals(that.ID));
+			result = this.ID.equals(that.getID());
 		}
 		return result;
 	}
