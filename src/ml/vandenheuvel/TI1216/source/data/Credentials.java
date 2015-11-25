@@ -28,18 +28,36 @@ public class Credentials {
 	}
 	
 	/**
-	 * Gets the password.
+	 * Sets the username.
 	 * 
-	 * @return the password
+	 * @param username the username
 	 */
-	public String getUsername(){
-		return this.username;
+	public void setUsername(String username){
+		this.username = username;
+	}
+
+	/**
+	 * Sets the password.
+	 * 
+	 * @param password the password
+	 */
+	public void setPassword(String password){
+		this.password = password;
 	}
 	
 	/**
 	 * Gets the username.
 	 * 
 	 * @return the username
+	 */
+	public String getUsername(){
+		return this.username;
+	}
+	
+	/**
+	 * Gets the password.
+	 * 
+	 * @return the password
 	 */
 	public String getPassword(){
 		return this.password;
