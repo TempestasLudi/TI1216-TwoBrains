@@ -14,7 +14,7 @@ import org.json.JSONObject;
  * 
  * @author Arnoud van der Leer
  */
-public class ApiThread implements Runnable {
+public class ClientCommunicator implements Runnable {
 	/**
 	 * The connection socket.
 	 */
@@ -35,7 +35,7 @@ public class ApiThread implements Runnable {
 	 * 
 	 * @param socket the connection socket.
 	 */
-	public ApiThread(Socket socket) {
+	public ClientCommunicator(Socket socket) {
 		this.socket = socket;
 		try {
 			this.out = new PrintWriter(socket.getOutputStream());

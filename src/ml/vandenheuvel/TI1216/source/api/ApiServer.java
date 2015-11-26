@@ -22,7 +22,7 @@ public class ApiServer {
 			boolean run = true;
 			while (run) {
 				Socket socket = server.accept();
-				new Thread(new ApiThread(socket)).start();
+				new Thread(new ClientCommunicator(socket)).start();
 			}
 			server.close();
 		} catch (IOException e) {
