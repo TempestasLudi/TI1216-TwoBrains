@@ -13,6 +13,10 @@ import ml.vandenheuvel.TI1216.source.data.Login;
  */
 public class ClientApplication {
 
+	private ClientApplication(){
+		//To stop implicit constructor
+	}
+
 	public static void main(String[] args) {
 
 		if (args.length != 2) {
@@ -20,8 +24,6 @@ public class ClientApplication {
 					.println("Server address and portnumber should be the only args.");
 			return;
 		}
-
-		Scanner sc = new Scanner(System.in);
 
 		Client client = new Client(args[0], Integer.parseInt(args[1]));
 		if (client.start())
@@ -31,11 +33,11 @@ public class ClientApplication {
 		/* Temporary */
 		Login login = null;
 		/* Temporary */
+		
 		client.logIn(login);
 		
 		client.getServerListener().start();
 
 		client.close();
 	}
-
 }

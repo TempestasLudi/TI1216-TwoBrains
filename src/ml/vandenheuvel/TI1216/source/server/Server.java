@@ -60,8 +60,7 @@ public class Server {
 	 * Stop communicating with a client. Stop it's thread, close it's streams
 	 * and socket. Then remove it from the clientList.
 	 * 
-	 * @param i
-	 *            The index of the client in the clientList
+	 * @param i The index of the client in the clientList
 	 */
 	public void removeClient(int i) {
 		this.clientList.get(i).stopClient();

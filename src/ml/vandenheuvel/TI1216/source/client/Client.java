@@ -124,6 +124,10 @@ public class Client {
 		}
 	}
 
+	/**
+	 * Send a message to the server via the client's ObjectOutputStream.
+	 * @param chatMessage The chatmessage to be sent
+	 */
 	public void sendMessage(ChatMessage chatMessage) {
 		try {
 			this.outputStream.writeObject(chatMessage);
@@ -132,6 +136,10 @@ public class Client {
 		}
 	}
 	
+	/**
+	 * Get method for the thread that listens to all incoming messages from the server.
+	 * @return The serverListener thread
+	 */
 	public Thread getServerListener(){
 		return this.serverListener;
 	}
