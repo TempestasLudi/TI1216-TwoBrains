@@ -3,9 +3,8 @@ package ml.vandenheuvel.TI1216.source.client;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
+import java.io.Serializable;
 import java.net.Socket;
-import java.rmi.UnknownHostException;
-
 import ml.vandenheuvel.TI1216.source.data.ChatMessage;
 import ml.vandenheuvel.TI1216.source.data.Login;
 import ml.vandenheuvel.TI1216.source.data.User;
@@ -49,13 +48,10 @@ public class Client {
 			}
 			return false;
 		}
-		System.out.println("Connected to " + this.server + " on port "
-				+ this.portNumber);
+		System.out.println("Connected to " + this.server + " on port " + this.portNumber);
 		try {
-			this.inputStream = new ObjectInputStream(
-					this.socket.getInputStream());
-			this.outputStream = new ObjectOutputStream(
-					this.socket.getOutputStream());
+			this.inputStream = new ObjectInputStream(this.socket.getInputStream());
+			this.outputStream = new ObjectOutputStream(this.socket.getOutputStream());
 		} catch (IOException e) {
 			e.printStackTrace();
 			return false;
@@ -126,7 +122,9 @@ public class Client {
 
 	/**
 	 * Send a message to the server via the client's ObjectOutputStream.
-	 * @param chatMessage The chatmessage to be sent
+	 * 
+	 * @param chatMessage
+	 *            The chatmessage to be sent
 	 */
 	public void sendMessage(ChatMessage chatMessage) {
 		try {
@@ -135,12 +133,14 @@ public class Client {
 			e.getMessage();
 		}
 	}
-	
+
 	/**
-	 * Get method for the thread that listens to all incoming messages from the server.
+	 * Get method for the thread that listens to all incoming messages from the
+	 * server.
+	 * 
 	 * @return The serverListener thread
 	 */
-	public Thread getServerListener(){
+	public Thread getServerListener() {
 		return this.serverListener;
 	}
 
