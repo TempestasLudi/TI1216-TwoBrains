@@ -8,7 +8,6 @@ import java.util.ArrayList;
  * @author Arnoud van der Leer
  */
 public class HttpHeader{
-	// TODO: add getter/setter for header line
 	/**
 	 * The HTTP request-line.
 	 */
@@ -61,6 +60,24 @@ public class HttpHeader{
 			}
 		}
 		return null;
+	}
+	
+	/**
+	 * Gets the header line.
+	 * 
+	 * @return the header line
+	 */
+	public HttpHeaderLine getHeaderLine(){
+		return this.headerLine;
+	}
+	
+	/**
+	 * Changes the header line.
+	 * 
+	 * @param headerLine the header line
+	 */
+	public void setHeaderLine(HttpHeaderLine headerLine){
+		this.headerLine = headerLine;
 	}
 	
 	/**

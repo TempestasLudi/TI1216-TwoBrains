@@ -6,22 +6,21 @@ package ml.vandenheuvel.TI1216.source.api;
  * @author Arnoud van der Leer
  */
 public class HttpRequestLine implements HttpHeaderLine {
-	// TODO: add getters/setters
 	/**
 	 * The request method.
 	 */
 	private String method;
-	
+
 	/**
-	 * The request uri.
+	 * The request URI.
 	 */
-	private String uri;
-	
+	private String URI;
+
 	/**
 	 * The HTTP version.
 	 */
 	private String version;
-	
+
 	/**
 	 * Class constructor, reads the data from a line from a HTTP request header.
 	 * 
@@ -30,20 +29,75 @@ public class HttpRequestLine implements HttpHeaderLine {
 	public HttpRequestLine(String line) {
 		String[] parts = line.split(" ");
 		this.method = parts[0].trim().toUpperCase();
-		this.uri = parts[1].trim();
+		this.URI = parts[1].trim();
 		this.version = parts[2].trim();
 	}
-	
+
 	/**
 	 * Class constructor, takes the data as params.
 	 * 
-	 * @param method  the request method
-	 * @param uri     the request uri
+	 * @param method the request method
+	 * @param URI the request URI
 	 * @param version the HTTP version
 	 */
-	public HttpRequestLine(String method, String uri, String version) {
+	public HttpRequestLine(String method, String URI, String version) {
 		this.method = method;
-		this.uri = uri;
+		this.URI = URI;
+		this.version = version;
+	}
+
+	/**
+	 * Gets the request method.
+	 * 
+	 * @return the request method
+	 */
+	public String getMethod() {
+		return this.method;
+	}
+
+	/**
+	 * Gets the request URI.
+	 * 
+	 * @return the request URI
+	 */
+	public String getUri() {
+		return this.URI;
+	}
+
+	/**
+	 * Gets the HTTP version.
+	 * 
+	 * @return the HTTP version
+	 */
+	public String getVersion() {
+		return this.version;
+	}
+
+	/**
+	 * Changes the request method.
+	 * 
+	 * @return the request method
+	 * @param method
+	 */
+	public void setMethod(String method) {
+		this.method = method;
+	}
+
+	/**
+	 * Changes the request URI.
+	 * 
+	 * @param URI the request URI
+	 */
+	public void setUri(String URI) {
+		this.URI = URI;
+	}
+	
+	/**
+	 * Changes the HTTP version.
+	 * 
+	 * @param version the HTTP version
+	 */
+	public void setVersion(String version) {
 		this.version = version;
 	}
 
@@ -53,6 +107,6 @@ public class HttpRequestLine implements HttpHeaderLine {
 	 * @return the request-line in string format
 	 */
 	public String toString(){
-		return this.method + " " + this.uri + " " + this.version + " \r\n";
+		return this.method + " " + this.URI + " " + this.version + " \r\n";
 	}
 }

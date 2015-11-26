@@ -6,7 +6,6 @@ package ml.vandenheuvel.TI1216.source.api;
  * @author Arnoud van der Leer
  */
 public class HttpResponseLine implements HttpHeaderLine {
-	// TODO: add getters/setters
 	/**
 	 * The HTTP version.
 	 */
@@ -47,6 +46,60 @@ public class HttpResponseLine implements HttpHeaderLine {
 		this.status = status;
 	}
 
+	/**
+	 * Gets the HTTP version.
+	 * 
+	 * @return the HTTP version
+	 */
+	public String getVersion() {
+		return this.version;
+	}
+	
+	/**
+	 * Gets the response code.
+	 * 
+	 * @return the response code
+	 */
+	public String getCode() {
+		return this.code;
+	}
+	
+	/**
+	 * Gets the response status.
+	 * 
+	 * @return the response status
+	 */
+	public String getStatus() {
+		return this.status;
+	}
+	
+	/**
+	 * Changes the HTTP version.
+	 * 
+	 * @param version the HTTP version
+	 */
+	public void setVersion(String version) {
+		this.version = version;
+	}
+	
+	/**
+	 * Changes the response code.
+	 * 
+	 * @param code the response code
+	 */
+	public void setCode(String code) {
+		this.code = code;
+	}
+	
+	/**
+	 * Changes the response status.
+	 * 
+	 * @param status the response status
+	 */
+	public void setStatus(String status) {
+		this.status = status;
+	}
+	
 	/**
 	 * Generates the response-line in string format.
 	 * 
