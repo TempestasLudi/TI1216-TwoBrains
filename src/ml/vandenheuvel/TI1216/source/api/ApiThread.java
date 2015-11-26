@@ -78,7 +78,17 @@ public class ApiThread implements Runnable {
 		}
 		
 		JSONObject data = new JSONObject();
-		this.finish(data);
+		String uri = ((HttpRequestLine)header.getHeaderLine()).getUri();
+		data.put("uri", uri);
+		HttpHeader responseHeader = new HttpHeader(null);
+		if (uri.equals("/")) {
+			this.finish(data, responseHeader);
+		}
+		else {
+			responseHeader.setHeaderLine(new HttpResponseLine("HTTP/1.1", "301", "Moved permanently"));
+			responseHeader.addField(new HttpHeaderField("Location", "/"));
+			this.finish(new JSONObject(), responseHeader);
+		}
 	}
 	
 	/**
@@ -134,13 +144,13 @@ public class ApiThread implements Runnable {
 	 * 
 	 * @param data the data to send
 	 */
-	public void finish(JSONObject data) {
+	public void finish(JSONObject data, HttpHeader replaceHeader) {
 		HttpHeader header = new HttpHeader(new HttpResponseLine("HTTP/1.1", "200", "OK"));
-		header.addField(new HttpHeaderField("Status", "200 OK"));
 		header.addField(new HttpHeaderField("Date", new Date().toString()));
 		header.addField(new HttpHeaderField("Connection", "close"));
 		header.addField(new HttpHeaderField("Content-Type", "text/json"));
 		header.addField(new HttpHeaderField("Content-Length", String.valueOf(data.toString().length())));
+		header.merge(replaceHeader);
 		this.out.write(header.toString());
 		this.out.write("\r\n");
 		this.out.write(data.toString());

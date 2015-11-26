@@ -7,17 +7,17 @@ import java.util.ArrayList;
  * 
  * @author Arnoud van der Leer
  */
-public class HttpHeader{
+public class HttpHeader {
 	/**
 	 * The HTTP request-line.
 	 */
 	private HttpHeaderLine headerLine;
-	
+
 	/**
 	 * The fields of the header.
 	 */
 	private ArrayList<HttpHeaderField> fields = new ArrayList<HttpHeaderField>();
-	
+
 	/**
 	 * Class constructor.
 	 * 
@@ -26,7 +26,7 @@ public class HttpHeader{
 	public HttpHeader(HttpHeaderLine headerLine) {
 		this.headerLine = headerLine;
 	}
-	
+
 	/**
 	 * Class constructor.
 	 * 
@@ -37,21 +37,23 @@ public class HttpHeader{
 		this.headerLine = headerLine;
 		this.fields = fields;
 	}
-	
+
 	/**
-	 * Adds a field to the header fields.
+	 * Gets the header fields.
 	 * 
-	 * @param field the field to add
+	 * @return the header fields
 	 */
-	public void addField(HttpHeaderField field) {
-		this.fields.add(field);
+	public HttpHeaderField[] getFields(){
+		HttpHeaderField[] fields = new HttpHeaderField[this.fields.size()];
+		this.fields.toArray(fields);
+		return fields;
 	}
-	
+
 	/**
 	 * Gets a field with a certain name.
 	 * 
 	 * @param name the name of the field to get
-	 * @return     if found, the field with the specified name, otherwise null
+	 * @return if found, the field with the specified name, otherwise null
 	 */
 	public HttpHeaderField getField(String name){
 		for (int i = 0; i < this.fields.size(); i++) {
@@ -61,7 +63,7 @@ public class HttpHeader{
 		}
 		return null;
 	}
-	
+
 	/**
 	 * Gets the header line.
 	 * 
@@ -70,7 +72,21 @@ public class HttpHeader{
 	public HttpHeaderLine getHeaderLine(){
 		return this.headerLine;
 	}
-	
+
+	/**
+	 * Adds a field to the header fields.
+	 * 
+	 * @param field the field to add
+	 */
+	public void addField(HttpHeaderField field){
+		HttpHeaderField existing = this.getField(field.getName());
+		if (existing == null) {
+			this.fields.add(field);
+		} else {
+			existing.setValue(field.getValue());
+		}
+	}
+
 	/**
 	 * Changes the header line.
 	 * 
@@ -78,6 +94,23 @@ public class HttpHeader{
 	 */
 	public void setHeaderLine(HttpHeaderLine headerLine){
 		this.headerLine = headerLine;
+	}
+
+	/**
+	 * Merges this header with another one.
+	 * 
+	 * Replaces the requestLine, adds/overwrites all headers.
+	 * 
+	 * @param header the header to merge with
+	 */
+	public void merge(HttpHeader header){
+		if (header.getHeaderLine() != null) {
+			this.headerLine = header.getHeaderLine();
+		}
+		HttpHeaderField[] fields = header.getFields();
+		for (int i = 0; i < fields.length; i++) {
+			this.addField(fields[i]);
+		}
 	}
 	
 	/**
