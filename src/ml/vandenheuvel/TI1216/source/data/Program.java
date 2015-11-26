@@ -17,36 +17,31 @@ public class Program {
 	private String id;
 	private Faculty faculty;
 
-	// BEGIN CONSTRUCTORS
-
-	public Program() {
-		//The default constructor
-	}
 
 	/**
 	 * General constructor. All class-instance required for input.
 	 * 
-	 * @param id
-	 * @param name
+	 * @param id the unique ID of the program
+	 * @param name the name of the program
 	 * @param faculty the faculty the program belongs to
-	 * @param courses
+	 * @param courses an ArrayList containing all courses of the program
 	 */
 	public Program(String id, String name, Faculty faculty, ArrayList<Course> courses) {
 		this.id = id;
 		this.name = name;
-		this.setFaculty(faculty);
+		this.faculty = faculty;
 		this.courses = courses;
-		for (int i = 0; i < this.courses.size(); i++) {
-			this.courses.get(i).setProgram(this);
+		if(this.courses.size()>0){
+			for (int i = 0; i < this.courses.size(); i++) {
+				this.courses.get(i).setProgram(this);
+			}
 		}
 	}
-
-	// END CONSTRUCTORS
 
 	/**
 	 * Returns ID of the program.
 	 * 
-	 * @return String
+	 * @return the unique ID of the program
 	 */
 	public String getID(){
 		return this.id;
@@ -55,7 +50,7 @@ public class Program {
 	/**
 	 * Returns name of the program.
 	 * 
-	 * @return String
+	 * @return the name of the program
 	 */
 	public String getName(){
 		return this.name;
@@ -64,7 +59,7 @@ public class Program {
 	/**
 	 * Returns the course list of the program.
 	 * 
-	 * @return String
+	 * @return an ArrayList containing all courses of the program
 	 */
 	public ArrayList<Course> getCourses(){
 		return this.courses;
@@ -84,7 +79,7 @@ public class Program {
 	/**
 	 * Changes the name of the program.
 	 * 
-	 * @param name
+	 * @param name the new name of the program
 	 */
 	public void setName(String name){
 		this.name = name;
@@ -93,7 +88,7 @@ public class Program {
 	/**
 	 * Sets the faculty the program belongs to.
 	 * 
-	 * @param faculty the faculty the course belongs to
+	 * @param faculty the new faculty the course belongs to
 	 */
 	public void setFaculty(Faculty faculty){
 		if (this.faculty == null || !this.faculty.equals(faculty)) {
@@ -102,7 +97,7 @@ public class Program {
 			if (oldFaculty != null) {
 				oldFaculty.removeProgram(this);
 			}
-			if (this.faculty != null) {
+			if (this.faculty != null && this.faculty.getPrograms()!=null) {
 				this.faculty.addProgram(this);
 			}
 		}
@@ -135,10 +130,10 @@ public class Program {
 	// END MODIFIERS
 
 	/**
-	 * Compares Course-objects, based on the respective class-instances.
+	 * checks whether two Programs are equal to each other
 	 * 
-	 * @param Object
-	 * @return boolean
+	 * @param obj the object to which the Program is compared
+	 * @return true if the Programs have the same unique ID, otherwise false
 	 */
 	@Override
 	public boolean equals(Object obj){

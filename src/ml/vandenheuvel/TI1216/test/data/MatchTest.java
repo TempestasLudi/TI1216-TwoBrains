@@ -43,8 +43,19 @@ public class MatchTest
 		Grade[] gradelist = new Grade[2];
 		User user1 = new User("azaidman", "2585KH", "Docent OOP Project", gradelist);
 		User user2 = new User("mveraar", "6433WR", "Docent Reële Analyse", gradelist);
-		Match test1 = new Match(user1, user2);
+		Match test1 = new Match(user2, user1);
 		Match test2 = new Match(user1, user2);
 		assertTrue(test1.equals(test2));
+	}
+	
+	@Test
+	public void testEqualsNegative() 
+	{
+		Grade[] gradelist = new Grade[2];
+		User user1 = new User("azaidman", "2585KH", "Docent OOP Project", gradelist);
+		User user2 = new User("mveraar", "6433WR", "Docent Reële Analyse", gradelist);
+		Match test1 = new Match(user1, user2);
+		Match test2 = new Match(user1, user1);
+		assertFalse(test1.equals(test2));
 	}
 }

@@ -34,7 +34,7 @@ public class Client {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		this.clientThread = new ClientThread(this.server, outputStream,
+		this.clientThread = new ClientThread(this.server, this, outputStream,
 				inputStream);
 		clientThread.start();
 	}
@@ -74,6 +74,9 @@ public class Client {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-
+	}
+	
+	public User getUser(){
+		return this.user;
 	}
 }

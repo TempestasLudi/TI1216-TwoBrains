@@ -1,5 +1,6 @@
 package ml.vandenheuvel.TI1216.source.server;
 
+import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 
@@ -14,13 +15,15 @@ import ml.vandenheuvel.TI1216.source.data.*;
  */
 public class ClientThread extends Thread {
 	private Server server;
+	private Client client;
 	private ObjectInputStream inputStream;
 	private ObjectOutputStream outputStream;
 	private volatile boolean running = true;
 
-	ClientThread(Server server, ObjectOutputStream outputStream,
+	ClientThread(Server server, Client client, ObjectOutputStream outputStream,
 			ObjectInputStream inputStream) {
 		this.server = server;
+		this.client = client;
 		this.outputStream = outputStream;
 		this.inputStream = inputStream;
 	}
@@ -62,6 +65,13 @@ public class ClientThread extends Thread {
 			// seen when logged in to the application.
 		} catch (Exception e) {
 			e.printStackTrace();
+		}
+
+		// Sending the userdata
+		try {
+			this.outputStream.writeObject(this.client.getUser());
+		} catch (IOException e1) {
+			e1.printStackTrace();
 		}
 
 		// Everything below runs as long as the client is online.

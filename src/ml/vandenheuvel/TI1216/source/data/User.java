@@ -1,7 +1,5 @@
 package ml.vandenheuvel.TI1216.source.data;
 
-import java.util.Arrays;
-
 /**
  * Author Callum Holland User class in OOP Project:Two Brains
  */
@@ -15,15 +13,10 @@ public class User {
 	/**
 	 * Constructor method for User object
 	 * 
-	 * @param username
-	 *            - String representing User's username
-	 * @param postalCode
-	 *            - String representing User's postal code
-	 * @param description
-	 *            - String representing the description of the user
-	 * @param gradelist
-	 *            - Array of grade objects to represent the grades for the
-	 *            user's courses
+	 * @param username String representing User's username
+	 * @param postalCode String representing User's postal code
+	 * @param description String representing the description of the user
+	 * @param gradelist Array of Grade objects to represent the grades for the user's courses
 	 */
 	public User(String username, String postalCode, String description, Grade[] gradelist) {
 		this.username = username;
@@ -35,17 +28,16 @@ public class User {
 	/**
 	 * Constructor method for User object
 	 * 
-	 * @param username
-	 *            - String representing User's username
+	 * @param username String representing User's username
 	 */
 	public User(String username) {
-		this.username = username;
+		this(username, null, null, null);
 	}
 
 	/**
 	 * Accessor method for username variable
 	 * 
-	 * @return username - String representing User's username
+	 * @return String representing User's username
 	 */
 	public String getUsername() {
 		return this.username;
@@ -54,7 +46,7 @@ public class User {
 	/**
 	 * Accessor method for username string
 	 * 
-	 * @return username - String representing User's username
+	 * @return String representing User's username
 	 */
 	public String getPostalCode() {
 		return this.postalCode;
@@ -81,8 +73,7 @@ public class User {
 	/**
 	 * Mutator method to set the user's username
 	 * 
-	 * @param username
-	 *            - String to change it to
+	 * @param username String to change it to
 	 */
 	public void setUsername(String username) {
 		this.username = username;
@@ -91,8 +82,7 @@ public class User {
 	/**
 	 * Mutator method to set the user's postal code
 	 * 
-	 * @param postalCode
-	 *            - String to change it to
+	 * @param postalCode String to change it to
 	 */
 	public void setPostalCode(String postalCode) {
 		this.postalCode = postalCode;
@@ -101,8 +91,7 @@ public class User {
 	/**
 	 * Mutator method to set the user's description
 	 * 
-	 * @param description
-	 *            - String to change it to
+	 * @param description String to change it to
 	 */
 	public void setDescription(String description) {
 		this.description = description;
@@ -111,26 +100,23 @@ public class User {
 	/**
 	 * Mutator method to set the user's gradeList
 	 * 
-	 * @param gradeList
-	 *            - array of grades to change it to
+	 * @param gradeList array of grades to change it to
 	 */
 	public void setGradeList(Grade[] gradeList) {
 		this.gradeList = gradeList;
 	}
 
 	/**
-	 * Equals method for this object (mainly for tests)
+	 * checks whether two Users are equal to each other
 	 * 
-	 * @param other
-	 *            - Object to compare this to
+	 * @param other the Object to which the User is compared
+	 * @return true if two Users have the same username, otherwise false
 	 */
 	@Override
 	public boolean equals(Object other) {
 		if (other instanceof User) {
 			User that = (User) other;
-
-			return this.username.equals(that.username) && this.postalCode.equals(that.postalCode)
-					&& this.description.equals(that.description) && Arrays.equals(this.gradeList, that.gradeList);
+			return this.username.equals(that.username);
 		}
 
 		return false;

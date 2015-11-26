@@ -96,16 +96,15 @@ public class UserTest {
 	public void testEquals1() {
 		Grade[] g = new Grade[2];
 		User u1 = new User("User", "PC", "descrip", g);
-		User u2 = new User("User", "PC", "descrip", g);
+		User u2 = new User("User", "PC", null, g);
 		assertTrue(u1.equals(u2));
 	}
 
 	@Test
 	public void testEquals2() {
 		Grade[] g = new Grade[2];
-		Grade[] g2 = new Grade[3];
 		User u1 = new User("User", "PC", "descrip", g);
-		User u2 = new User("User", "PC", "descrip", g2);
+		User u2 = new User("User2", "PC", "descrip", g);
 		assertFalse(u1.equals(u2));
 	}
 }

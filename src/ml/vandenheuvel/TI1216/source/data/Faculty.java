@@ -31,8 +31,10 @@ public class Faculty {
 		this.ID = ID;
 		this.name = name;
 		this.programs = programs;
-		for (int i = 0; i < programs.size(); i++) {
-			programs.get(i).setFaculty(this);
+		if(this.programs!=null){
+			for (int i = 0; i < programs.size(); i++) {
+				programs.get(i).setFaculty(this);
+			}
 		}
 	}
 
@@ -108,13 +110,11 @@ public class Faculty {
 	 * @param Object
 	 * @return boolean
 	 */
-	@Override
 	public boolean equals(Object obj){
 		boolean result = false;
 		if (obj instanceof Faculty) {
 			Faculty that = (Faculty) obj;
-			result = (this.name.equals(that.name)) && (this.programs.equals(that.programs))
-					&& (this.ID.equals(that.getID()));
+			result = this.ID.equals(that.ID);
 		}
 		return result;
 	}
