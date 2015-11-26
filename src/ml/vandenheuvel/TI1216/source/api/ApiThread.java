@@ -9,22 +9,45 @@ import java.util.Date;
 
 import org.json.JSONObject;
 
+/**
+ * ApiThread handles one HTTP request.
+ * 
+ * @author Arnoud van der Leer
+ */
 public class ApiThread implements Runnable {
+	/**
+	 * The connection socket.
+	 */
 	private Socket socket;
+	
+	/**
+	 * The output writer.
+	 */
 	private PrintWriter out;
+	
+	/**
+	 * The input reader.
+	 */
 	private DataInputStream in;
 
+	/**
+	 * Class constructor, initializes input and output.
+	 * 
+	 * @param socket the connection socket.
+	 */
 	public ApiThread(Socket socket) {
 		this.socket = socket;
 		try {
 			this.out = new PrintWriter(socket.getOutputStream());
 			this.in = new DataInputStream(socket.getInputStream());
 		} catch (IOException e) {
-//			System.out.println(e.getMessage());
+			System.out.println(e.getMessage());
 		}
-
 	}
 
+	/**
+	 * The runner method, reads all incoming data, processes it and generates output accordingly.
+	 */
 	public void run(){
 		boolean run = true;
 		System.out.println("Incoming:");
@@ -58,40 +81,43 @@ public class ApiThread implements Runnable {
 		this.finish(data);
 	}
 	
+	/**
+	 * Reads one line from the input stream (including \r\n).
+	 * 
+	 * @return one line from the input stream
+	 */
 	private String readLine() {
 		String line = "";
-		int oneLine = 0;
-		while (oneLine < 2) {
+		boolean lineBreak = false;
+		while (!lineBreak) {
 			try {
 				char character = (char) this.in.readByte();
 				line += character;
-				if (character == "\r".charAt(0)) {
-					oneLine = 1;
-				}
-				else {
-					if (oneLine == 1 && character == "\n".charAt(0)) {
-						oneLine = 2;
-					}
-					else {
-						oneLine = 0;
-					}
+				if (line.length() >= 2 && line.substring(line.length()-2).equals("\r\n")) {
+					lineBreak = true;
 				}
 			} catch (EOFException e) {
 				System.out.println(e.getMessage());
-//				e.printStackTrace();
+				e.printStackTrace();
 				return line;
 			} catch (IOException e){
 				System.out.println(e.getMessage());
-//				e.printStackTrace();
+				e.printStackTrace();
 				return line;
 			} 
 		}
 		return line;
 	}
 	
-	private String readBytes(int count) {
+	/**
+	 * Reads n bytes from the input stream.
+	 * 
+	 * @param n the number of bytes to read
+	 * @return      a string of n bytes from the input stream
+	 */
+	private String readBytes(int n) {
 		String line = "";
-		for (int i = 0; i < count; i++) {
+		for (int i = 0; i < n; i++) {
 			try {
 				char character = (char) this.in.readByte();
 				line += character;
@@ -103,6 +129,11 @@ public class ApiThread implements Runnable {
 		return line;
 	}
 	
+	/**
+	 * Sends data and closes the connection.
+	 * 
+	 * @param data the data to send
+	 */
 	public void finish(JSONObject data) {
 		HttpHeader header = new HttpHeader(new HttpResponseLine("HTTP/1.1", "200", "OK"));
 		header.addField(new HttpHeaderField("Status", "200 OK"));
@@ -116,6 +147,9 @@ public class ApiThread implements Runnable {
 		this.close();
 	}
 	
+	/**
+	 * Closes the connection.
+	 */
 	private void close(){
 		this.out.flush();
 		try {
