@@ -11,8 +11,7 @@ public class FacultyTest {
 	@Test
 	public void testConstructorFaculty1() 
 	{
-		ArrayList<Program> list = new ArrayList<Program>();
-		Faculty faculty = new Faculty("EWI", "Electrical Engineering, Mathematics and Computer Science", list);
+		Faculty faculty = new Faculty("EWI", "Electrical Engineering, Mathematics and Computer Science", null);
 		assertEquals("EWI", faculty.getID());
 	}
 	
@@ -25,6 +24,19 @@ public class FacultyTest {
 	}
 	
 	@Test
+	public void testConstructorFaculty3()
+	{
+		ArrayList<Program> list = new ArrayList<Program>();
+		ArrayList<Course> list2 = new ArrayList<Course>();
+		Program program = new Program("TI", "Technische Informatica", null, list2);
+		Program program2 = new Program("TW", "Technische Wiskunde", null, list2);
+		list.add(program);
+		list.add(program2);
+		Faculty faculty = new Faculty("EWI", "Electrical Engineering, Mathematics and Computer Science", list);
+		assertEquals(faculty,program.getFaculty());
+	}
+	
+	@Test
 	public void testGetSetName()
 	{
 		ArrayList<Program> list = new ArrayList<Program>();
@@ -34,20 +46,75 @@ public class FacultyTest {
 	}
 	
 	@Test
-	public void testAddProgram()
+	public void testAddProgram1()
 	{
-		/*ArrayList<Program> list = new ArrayList<Program>();
+		ArrayList<Program> list = new ArrayList<Program>();
 		Faculty faculty = new Faculty("EWI", "Electrical Engineering, Mathematics and Computer Science", list);
 		ArrayList<Course> list2 = new ArrayList<Course>();
-		Program program = new Program(null, null, null, list2);
+		Program program = new Program("TI", "Technische Informatica", faculty, list2);
 		faculty.addProgram(program);
-		assertEquals(program, faculty.getPrograms().get(0));*/
+		assertEquals(program, faculty.getPrograms().get(0));
 	}
 	
 	@Test
-	public void testRemoveProgram()
+	public void testAddProgram2()
 	{
-		//same problem as above, discuss with Andreas
+		ArrayList<Program> list = new ArrayList<Program>();
+		Faculty faculty = new Faculty("EWI", "Electrical Engineering, Mathematics and Computer Science", list);
+		ArrayList<Course> list2 = new ArrayList<Course>();
+		Program program = new Program("TI", "Technische Informatica", faculty, list2);
+		faculty.addProgram(program);
+		faculty.addProgram(program);
+		assertEquals(1,faculty.getPrograms().size());
+	}
+	
+	@Test
+	public void testAddProgram3()
+	{
+		ArrayList<Program> list = new ArrayList<Program>();
+		Faculty faculty = new Faculty("EWI", "Electrical Engineering, Mathematics and Computer Science", list);
+		Faculty faculty2 = new Faculty("INF", "Informatica", list);
+		ArrayList<Course> list2 = new ArrayList<Course>();
+		Program program = new Program("TI", "Technische Informatica", faculty2, list2);
+		faculty.addProgram(program);
+		assertEquals(faculty, program.getFaculty());
+	}
+	
+	@Test
+	public void testRemoveProgram1()
+	{
+		ArrayList<Program> list = new ArrayList<Program>();
+		Faculty faculty = new Faculty("EWI", "Electrical Engineering, Mathematics and Computer Science", list);
+		ArrayList<Course> list2 = new ArrayList<Course>();
+		Program program = new Program("TI", "Technische Informatica", faculty, list2);
+		faculty.addProgram(program);
+		faculty.removeProgram(program);
+		assertEquals(0,faculty.getPrograms().size());
+	}
+	
+	@Test
+	public void testRemoveProgram2()
+	{
+		ArrayList<Program> list = new ArrayList<Program>();
+		Faculty faculty = new Faculty("EWI", "Electrical Engineering, Mathematics and Computer Science", list);
+		ArrayList<Course> list2 = new ArrayList<Course>();
+		Program program = new Program("TI", "Technische Informatica", faculty, list2);
+		faculty.addProgram(program);
+		faculty.removeProgram(program);
+		assertNull(program.getFaculty());
+	}
+	
+	@Test
+	public void testRemoveProgram3()
+	{
+		ArrayList<Program> list = new ArrayList<Program>();
+		Faculty faculty = new Faculty("EWI", "Electrical Engineering, Mathematics and Computer Science", list);
+		ArrayList<Course> list2 = new ArrayList<Course>();
+		Program program = new Program("TI", "Technische Informatica", faculty, list2);
+		Program program2 = new Program("TW", "Technische Wiskunde", faculty, list2);
+		faculty.addProgram(program);
+		faculty.removeProgram(program2);
+		assertEquals(1,faculty.getPrograms().size());
 	}
 	
 	@Test

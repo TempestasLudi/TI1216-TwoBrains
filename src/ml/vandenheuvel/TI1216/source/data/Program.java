@@ -29,7 +29,7 @@ public class Program {
 	public Program(String id, String name, Faculty faculty, ArrayList<Course> courses) {
 		this.id = id;
 		this.name = name;
-		this.faculty = faculty;
+		this.setFaculty(faculty);
 		this.courses = courses;
 		if(this.courses.size()>0){
 			for (int i = 0; i < this.courses.size(); i++) {
@@ -93,13 +93,14 @@ public class Program {
 	public void setFaculty(Faculty faculty){
 		if (this.faculty == null || !this.faculty.equals(faculty)) {
 			Faculty oldFaculty = this.faculty;
-			this.faculty = faculty;
+			this.faculty = null;
 			if (oldFaculty != null) {
 				oldFaculty.removeProgram(this);
 			}
 			if (this.faculty != null && this.faculty.getPrograms()!=null) {
 				this.faculty.addProgram(this);
 			}
+			this.faculty=faculty;
 		}
 	}
 

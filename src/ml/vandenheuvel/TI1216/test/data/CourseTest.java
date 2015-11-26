@@ -107,7 +107,7 @@ public class CourseTest {
 	@Test
 	public void testEqualsNull(){
 		Course course = new Course("a1", null, null);
-		assertNotEquals(null, course);
+		assertFalse(course.equals(1));
 	}
 
 }
