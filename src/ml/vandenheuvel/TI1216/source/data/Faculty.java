@@ -110,6 +110,7 @@ public class Faculty {
 	 * @param Object
 	 * @return boolean
 	 */
+	@Override
 	public boolean equals(Object obj){
 		boolean result = false;
 		if (obj instanceof Faculty) {

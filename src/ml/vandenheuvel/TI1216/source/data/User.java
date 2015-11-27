@@ -1,14 +1,16 @@
 package ml.vandenheuvel.TI1216.source.data;
 
+import java.io.Serializable;
+
 /**
  * Author Callum Holland User class in OOP Project:Two Brains
  */
-public class User {
-
+public class User implements Serializable {
+	private static final long serialVersionUID = 4596303651727773521L;
 	private String username;
 	private String postalCode;
 	private String description;
-	private Grade[] gradeList;
+	private transient Grade[] gradeList;
 
 	/**
 	 * Constructor method for User object

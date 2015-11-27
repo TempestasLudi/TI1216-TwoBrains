@@ -1,7 +1,5 @@
 package ml.vandenheuvel.TI1216.source.client;
 
-import java.util.Scanner;
-
 import ml.vandenheuvel.TI1216.source.data.Login;
 
 /**
