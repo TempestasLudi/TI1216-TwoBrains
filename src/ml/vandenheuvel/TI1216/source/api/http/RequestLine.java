@@ -1,11 +1,11 @@
-package ml.vandenheuvel.TI1216.source.api;
+package ml.vandenheuvel.TI1216.source.api.http;
 
 /**
- * HttpRequestLine represents the request-line of an HTTP request.
+ * RequestLine represents the request-line of an HTTP request.
  * 
  * @author Arnoud van der Leer
  */
-public class HttpRequestLine implements HttpHeaderLine {
+public class RequestLine implements HeaderLine {
 	/**
 	 * The request method.
 	 */
@@ -26,7 +26,7 @@ public class HttpRequestLine implements HttpHeaderLine {
 	 * 
 	 * @param line the line from the HTTP request header
 	 */
-	public HttpRequestLine(String line) {
+	public RequestLine(String line) {
 		String[] parts = line.split(" ");
 		this.method = parts[0].trim().toUpperCase();
 		this.URI = parts[1].trim();
@@ -40,7 +40,7 @@ public class HttpRequestLine implements HttpHeaderLine {
 	 * @param URI the request URI
 	 * @param version the HTTP version
 	 */
-	public HttpRequestLine(String method, String URI, String version) {
+	public RequestLine(String method, String URI, String version) {
 		this.method = method;
 		this.URI = URI;
 		this.version = version;

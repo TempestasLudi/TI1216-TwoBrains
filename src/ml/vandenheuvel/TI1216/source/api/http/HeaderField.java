@@ -1,11 +1,11 @@
-package ml.vandenheuvel.TI1216.source.api;
+package ml.vandenheuvel.TI1216.source.api.http;
 
 /**
  * @author Arnoud van der Leer
  * 
- * HttpHeaderField represents a HTTP header field
+ * HeaderField represents a HTTP header field
  */
-public class HttpHeaderField {
+public class HeaderField {
 	/**
 	 * The name of the field.
 	 */
@@ -21,7 +21,7 @@ public class HttpHeaderField {
 	 * 
 	 * @param line a line from the HTTP request header
 	 */
-	public HttpHeaderField(String line) {
+	public HeaderField(String line) {
 		String[] parts = line.split(":");
 		name = parts[0].trim();
 		value = parts[1].trim();
@@ -33,7 +33,7 @@ public class HttpHeaderField {
 	 * @param name  the name of the field
 	 * @param value the value of the field
 	 */
-	public HttpHeaderField(String name, String value) {
+	public HeaderField(String name, String value) {
 		this.name = name;
 		this.value = value;
 	}

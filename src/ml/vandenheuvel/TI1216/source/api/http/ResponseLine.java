@@ -1,11 +1,11 @@
-package ml.vandenheuvel.TI1216.source.api;
+package ml.vandenheuvel.TI1216.source.api.http;
 
 /**
- * HttpResponseLine represents the response-line of an HTTP response.
+ * ResponseLine represents the response-line of an HTTP response.
  * 
  * @author Arnoud van der Leer
  */
-public class HttpResponseLine implements HttpHeaderLine {
+public class ResponseLine implements HeaderLine {
 	/**
 	 * The HTTP version.
 	 */
@@ -26,7 +26,7 @@ public class HttpResponseLine implements HttpHeaderLine {
 	 * 
 	 * @param line the line from the HTTP response header
 	 */
-	public HttpResponseLine(String line) {
+	public ResponseLine(String line) {
 		String[] parts = line.split(" ");
 		this.version = parts[0].trim().toUpperCase();
 		this.code = parts[1].trim();
@@ -40,7 +40,7 @@ public class HttpResponseLine implements HttpHeaderLine {
 	 * @param code    the response code
 	 * @param status the response status
 	 */
-	public HttpResponseLine(String version, String code, String status) {
+	public ResponseLine(String version, String code, String status) {
 		this.version = version;
 		this.code = code;
 		this.status = status;

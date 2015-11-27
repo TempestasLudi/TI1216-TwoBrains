@@ -1,30 +1,40 @@
-package ml.vandenheuvel.TI1216.source.api;
+package ml.vandenheuvel.TI1216.source.api.http;
 
 import java.util.ArrayList;
+import java.util.Date;
 
 /**
- * HttpHeader represents the header of a HTTP request.
+ * Header represents the header of a HTTP request.
  * 
  * @author Arnoud van der Leer
  */
-public class HttpHeader {
+public class Header {
 	/**
 	 * The HTTP request-line.
 	 */
-	private HttpHeaderLine headerLine;
+	private HeaderLine headerLine;
 
 	/**
 	 * The fields of the header.
 	 */
-	private ArrayList<HttpHeaderField> fields = new ArrayList<HttpHeaderField>();
-
+	private ArrayList<HeaderField> fields = new ArrayList<HeaderField>();
+	 
+	/**
+	 * Class constructor.
+	 */
+	public Header() {
+		this(new ResponseLine("HTTP/1.1", "200", "OK"));
+	}
+	
 	/**
 	 * Class constructor.
 	 * 
 	 * @param headerLine the HTTP header line
 	 */
-	public HttpHeader(HttpHeaderLine headerLine) {
+	public Header(HeaderLine headerLine) {
 		this.headerLine = headerLine;
+		this.addField(new HeaderField("Connection", "close"));
+		this.addField(new HeaderField("Content-Type", "text/json"));
 	}
 
 	/**
@@ -33,7 +43,7 @@ public class HttpHeader {
 	 * @param headerLine the HTTP request-line
 	 * @param headers the fields of the header
 	 */
-	public HttpHeader(HttpRequestLine headerLine, ArrayList<HttpHeaderField> fields) {
+	public Header(RequestLine headerLine, ArrayList<HeaderField> fields) {
 		this.headerLine = headerLine;
 		this.fields = fields;
 	}
@@ -43,8 +53,8 @@ public class HttpHeader {
 	 * 
 	 * @return the header fields
 	 */
-	public HttpHeaderField[] getFields(){
-		HttpHeaderField[] fields = new HttpHeaderField[this.fields.size()];
+	public HeaderField[] getFields(){
+		HeaderField[] fields = new HeaderField[this.fields.size()];
 		this.fields.toArray(fields);
 		return fields;
 	}
@@ -55,7 +65,7 @@ public class HttpHeader {
 	 * @param name the name of the field to get
 	 * @return if found, the field with the specified name, otherwise null
 	 */
-	public HttpHeaderField getField(String name){
+	public HeaderField getField(String name){
 		for (int i = 0; i < this.fields.size(); i++) {
 			if (this.fields.get(i).getName().equals(name)) {
 				return this.fields.get(i);
@@ -69,7 +79,7 @@ public class HttpHeader {
 	 * 
 	 * @return the header line
 	 */
-	public HttpHeaderLine getHeaderLine(){
+	public HeaderLine getHeaderLine(){
 		return this.headerLine;
 	}
 
@@ -78,8 +88,8 @@ public class HttpHeader {
 	 * 
 	 * @param field the field to add
 	 */
-	public void addField(HttpHeaderField field){
-		HttpHeaderField existing = this.getField(field.getName());
+	public void addField(HeaderField field){
+		HeaderField existing = this.getField(field.getName());
 		if (existing == null) {
 			this.fields.add(field);
 		} else {
@@ -92,7 +102,7 @@ public class HttpHeader {
 	 * 
 	 * @param headerLine the header line
 	 */
-	public void setHeaderLine(HttpHeaderLine headerLine){
+	public void setHeaderLine(HeaderLine headerLine){
 		this.headerLine = headerLine;
 	}
 
@@ -103,11 +113,11 @@ public class HttpHeader {
 	 * 
 	 * @param header the header to merge with
 	 */
-	public void merge(HttpHeader header){
+	public void merge(Header header){
 		if (header.getHeaderLine() != null) {
 			this.headerLine = header.getHeaderLine();
 		}
-		HttpHeaderField[] fields = header.getFields();
+		HeaderField[] fields = header.getFields();
 		for (int i = 0; i < fields.length; i++) {
 			this.addField(fields[i]);
 		}

@@ -1,11 +1,11 @@
-package ml.vandenheuvel.TI1216.source.api;
+package ml.vandenheuvel.TI1216.source.api.http;
 
 /**
- * HttpHeaderLine represents the request-line or response-line of a HTTP header.
+ * HeaderLine represents the request-line or response-line of a HTTP header.
  * 
  * @author Arnoud van der Leer
  */
-public interface HttpHeaderLine {
+public interface HeaderLine {
 	/**
 	 * Generates the header line in string format.
 	 * 

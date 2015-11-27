@@ -1,7 +1,6 @@
 package ml.vandenheuvel.TI1216.source.api;
 
 import java.io.DataInputStream;
-import java.io.EOFException;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.net.Socket;
@@ -9,8 +8,15 @@ import java.util.Date;
 
 import org.json.JSONObject;
 
+import ml.vandenheuvel.TI1216.source.api.http.Body;
+import ml.vandenheuvel.TI1216.source.api.http.Header;
+import ml.vandenheuvel.TI1216.source.api.http.HeaderField;
+import ml.vandenheuvel.TI1216.source.api.http.Message;
+import ml.vandenheuvel.TI1216.source.api.http.RequestLine;
+import ml.vandenheuvel.TI1216.source.api.http.ResponseLine;
+
 /**
- * ApiThread handles one HTTP request.
+ * ClientCommunicator handles one HTTP request.
  * 
  * @author Arnoud van der Leer
  */
@@ -49,94 +55,24 @@ public class ClientCommunicator implements Runnable {
 	 * The runner method, reads all incoming data, processes it and generates output accordingly.
 	 */
 	public void run(){
-		boolean run = true;
 		System.out.println("Incoming:");
-		String requestLineString = this.readLine();
-		if (requestLineString.split(" ").length != 3) {
-			return;
-		}
-		HttpRequestLine requestLine = new HttpRequestLine(requestLineString);
 		
-		HttpHeader header = new HttpHeader(requestLine);
-		while (run) {
-			String line = this.readLine();
-			if (line.equals("\r\n")) {
-				run = false;
-				continue;
-			}
-			if (line.contains(":")) {
-				header.addField(new HttpHeaderField(line));
-			}
-		}
-		System.out.println(header);
-		HttpHeaderField contentLength = header.getField("Content-Length");
-		if (contentLength != null && Integer.valueOf(contentLength.getValue()) > 0) {
-			String line = this.readBytes(Integer.valueOf(contentLength.getValue()));
-			System.out.println(line);
-			System.out.println();
-			System.out.println();
-		}
+		Message message = Message.read(this.in);
+		
+		System.out.print(message);
 		
 		JSONObject data = new JSONObject();
-		String uri = ((HttpRequestLine)header.getHeaderLine()).getUri();
-		data.put("uri", uri);
-		HttpHeader responseHeader = new HttpHeader(null);
-		if (uri.equals("/")) {
-			this.finish(data, responseHeader);
+		String uri = "/";
+		if (message != null) {
+			uri = ((RequestLine)message.getHeader().getHeaderLine()).getUri();
+			data.put("uri", uri);
 		}
-		else {
-			responseHeader.setHeaderLine(new HttpResponseLine("HTTP/1.1", "301", "Moved permanently"));
-			responseHeader.addField(new HttpHeaderField("Location", "/"));
-			this.finish(new JSONObject(), responseHeader);
+		Message response = new Message(new Header(null), new Body(data.toString()));
+		if (message != null && !uri.equals("/")) {
+			response.getHeader().setHeaderLine(new ResponseLine("HTTP/1.1", "301", "Moved permanently"));
+			response.getHeader().addField(new HeaderField("Location", "/"));
 		}
-	}
-	
-	/**
-	 * Reads one line from the input stream (including \r\n).
-	 * 
-	 * @return one line from the input stream
-	 */
-	private String readLine() {
-		String line = "";
-		boolean lineBreak = false;
-		while (!lineBreak) {
-			try {
-				char character = (char) this.in.readByte();
-				line += character;
-				if (line.length() >= 2 && line.substring(line.length()-2).equals("\r\n")) {
-					lineBreak = true;
-				}
-			} catch (EOFException e) {
-				System.out.println(e.getMessage());
-				e.printStackTrace();
-				return line;
-			} catch (IOException e){
-				System.out.println(e.getMessage());
-				e.printStackTrace();
-				return line;
-			} 
-		}
-		return line;
-	}
-	
-	/**
-	 * Reads n bytes from the input stream.
-	 * 
-	 * @param n the number of bytes to read
-	 * @return      a string of n bytes from the input stream
-	 */
-	private String readBytes(int n) {
-		String line = "";
-		for (int i = 0; i < n; i++) {
-			try {
-				char character = (char) this.in.readByte();
-				line += character;
-			} catch (IOException e) {
-				System.out.println(e.getMessage());
-				e.printStackTrace();
-			}
-		}
-		return line;
+		this.finish(response);
 	}
 	
 	/**
@@ -144,16 +80,12 @@ public class ClientCommunicator implements Runnable {
 	 * 
 	 * @param data the data to send
 	 */
-	public void finish(JSONObject data, HttpHeader replaceHeader) {
-		HttpHeader header = new HttpHeader(new HttpResponseLine("HTTP/1.1", "200", "OK"));
-		header.addField(new HttpHeaderField("Date", new Date().toString()));
-		header.addField(new HttpHeaderField("Connection", "close"));
-		header.addField(new HttpHeaderField("Content-Type", "text/json"));
-		header.addField(new HttpHeaderField("Content-Length", String.valueOf(data.toString().length())));
-		header.merge(replaceHeader);
-		this.out.write(header.toString());
-		this.out.write("\r\n");
-		this.out.write(data.toString());
+	public void finish(Message message) {
+		Header header = new Header();
+		Body body = new Body("");
+		Message outputMessage = new Message(header, body);
+		outputMessage.merge(message);
+		this.out.write(outputMessage.toString());
 		this.close();
 	}
 	
