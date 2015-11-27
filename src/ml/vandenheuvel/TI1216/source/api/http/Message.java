@@ -131,8 +131,7 @@ public class Message {
 					lineBreak = true;
 				}
 			} catch (EOFException e) {
-				System.out.println(e.getMessage());
-				e.printStackTrace();
+				System.out.println("Another end of file.");
 				return line;
 			} catch (IOException e) {
 				System.out.println(e.getMessage());

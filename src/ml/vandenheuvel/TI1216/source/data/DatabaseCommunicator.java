@@ -15,6 +15,8 @@ import com.mysql.jdbc.jdbc2.optional.MysqlDataSource;
  * 
  * @author Andreas Theys, OOP Project [TI1216], Project Group A1.2, TU Delft
  *         2015-2016.
+ * @author Arnoud van der Leer, OOP Project [TI1216], Project Group A1.2, TU Delft 
+ * 		   2015-2016. 
  */
 
 public class DatabaseCommunicator {
@@ -103,9 +105,11 @@ public class DatabaseCommunicator {
 	 */
 	public Faculty getFaculty(String id) {
 		String query = "SELECT f.ID as facultyID, f.name AS facultyName, p.id AS programID, p.name AS programName, c.ID as courseID, c.name AS courseName "
-				+ "FROM faculty AS f " + "LEFT JOIN program AS p ON f.ID = p.facultyID "
-				+ "LEFT JOIN course AS c ON p.ID = c.programID " + "WHERE facultyID = '" + id + "' "
-				+ "ORDER BY facultyID ASC, programID ASC ";
+				+ "FROM faculty AS f "
+				+ "LEFT JOIN program AS p ON f.ID = p.facultyID "
+				+ "LEFT JOIN course AS c ON p.ID = c.programID "
+				+ "WHERE facultyID = '" + id + "' "
+				+ "ORDER BY programID ASC ";
 		try {
 			ResultSet resultSet = this.get(query);
 			Faculty[] faculties = createTree(resultSet);
@@ -250,7 +254,8 @@ public class DatabaseCommunicator {
 	 * @param program
 	 *            the faculty to add
 	 */
-	public void save(Program program) {
+	public void save(Program program){
+		//TODO: courses
 		Program existing = this.getProgram(program.getID());
 		try {
 			if (existing == null) {
@@ -403,7 +408,8 @@ public class DatabaseCommunicator {
 	 *            the password to encrypt
 	 * @return the encrypted password
 	 */
-	private static String encryptPassword(String password) {
+	private static String encryptPassword(String password){
+		//TODO: encryption
 		return password;
 	}
 
