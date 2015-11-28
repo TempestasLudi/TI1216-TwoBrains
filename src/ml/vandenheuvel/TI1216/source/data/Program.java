@@ -97,10 +97,10 @@ public class Program {
 			if (oldFaculty != null) {
 				oldFaculty.removeProgram(this);
 			}
+			this.faculty=faculty;
 			if (this.faculty != null && this.faculty.getPrograms()!=null) {
 				this.faculty.addProgram(this);
 			}
-			this.faculty=faculty;
 		}
 	}
 
