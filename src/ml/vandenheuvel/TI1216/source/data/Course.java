@@ -1,5 +1,7 @@
 package ml.vandenheuvel.TI1216.source.data;
 
+import org.json.JSONObject;
+
 /**
  * Class "Course".
  * 
@@ -97,6 +99,30 @@ public class Course {
 				program.addCourse(this);
 			}
 		}
+	}
+	
+	/**
+	 * Creates a JSON object based on the Course object.
+	 * 
+	 * @return a JSON object based on the Course object
+	 */
+	public JSONObject toJSON() {
+		JSONObject result = new JSONObject();
+		result.put("id", this.id);
+		result.put("name", this.name);
+		result.put("program", this.program.getID());
+		return result;
+	}
+	
+	/**
+	 * Creates a Course object based on a JSON object.
+	 * 
+	 * @param json the JSON object
+	 * @param data a container containing the additional objects
+	 * @return a Course object based on the JSON object
+	 */
+	public static Course fromJSON(JSONObject json, Container data) {
+		return new Course(json.getString("id"), json.getString("name"), data.getProgram(json.getString("program")));
 	}
 	
 	// END MODIFIERS
