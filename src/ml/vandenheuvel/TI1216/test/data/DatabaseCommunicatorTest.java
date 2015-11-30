@@ -1,6 +1,3 @@
-/**
- * 
- */
 package ml.vandenheuvel.TI1216.test.data;
 
 import static org.junit.Assert.*;
