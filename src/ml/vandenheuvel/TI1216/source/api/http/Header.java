@@ -1,7 +1,7 @@
 package ml.vandenheuvel.TI1216.source.api.http;
 
 import java.util.ArrayList;
-import java.util.Date;
+import java.util.List;
 
 /**
  * Header represents the header of a HTTP request.
@@ -17,7 +17,7 @@ public class Header {
 	/**
 	 * The fields of the header.
 	 */
-	private ArrayList<HeaderField> fields = new ArrayList<HeaderField>();
+	private List<HeaderField> fields = new ArrayList<HeaderField>();
 	 
 	/**
 	 * Class constructor.
@@ -43,7 +43,7 @@ public class Header {
 	 * @param headerLine the HTTP request-line
 	 * @param headers the fields of the header
 	 */
-	public Header(RequestLine headerLine, ArrayList<HeaderField> fields) {
+	public Header(RequestLine headerLine, List<HeaderField> fields) {
 		this.headerLine = headerLine;
 		this.fields = fields;
 	}
@@ -54,9 +54,9 @@ public class Header {
 	 * @return the header fields
 	 */
 	public HeaderField[] getFields(){
-		HeaderField[] fields = new HeaderField[this.fields.size()];
-		this.fields.toArray(fields);
-		return fields;
+		HeaderField[] fieldsArray = new HeaderField[this.fields.size()];
+		this.fields.toArray(fieldsArray);
+		return fieldsArray;
 	}
 
 	/**
@@ -117,9 +117,9 @@ public class Header {
 		if (header.getHeaderLine() != null) {
 			this.headerLine = header.getHeaderLine();
 		}
-		HeaderField[] fields = header.getFields();
-		for (int i = 0; i < fields.length; i++) {
-			this.addField(fields[i]);
+		HeaderField[] newFields = header.getFields();
+		for (int i = 0; i < newFields.length; i++) {
+			this.addField(newFields[i]);
 		}
 	}
 	
@@ -128,6 +128,7 @@ public class Header {
 	 * 
 	 * @return the HTTP header string
 	 */
+	@Override
 	public String toString(){
 		String result = this.headerLine.toString();
 		for (int i = 0; i < this.fields.size(); i++) {

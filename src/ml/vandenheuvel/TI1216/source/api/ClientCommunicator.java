@@ -4,7 +4,6 @@ import java.io.DataInputStream;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.net.Socket;
-import java.util.Date;
 
 import org.json.JSONObject;
 
@@ -54,6 +53,7 @@ public class ClientCommunicator implements Runnable {
 	/**
 	 * The runner method, reads all incoming data, processes it and generates output accordingly.
 	 */
+	@Override
 	public void run(){
 		System.out.println("Incoming:");
 		
@@ -61,17 +61,18 @@ public class ClientCommunicator implements Runnable {
 		
 		System.out.print(message);
 		
-		JSONObject data = new JSONObject();
-		String uri = "/";
-		if (message != null) {
-			uri = ((RequestLine)message.getHeader().getHeaderLine()).getUri();
-			data.put("uri", uri);
-		}
-		Message response = new Message(new Header(null), new Body(data.toString()));
-		if (message != null && !uri.equals("/")) {
-			response.getHeader().setHeaderLine(new ResponseLine("HTTP/1.1", "301", "Moved permanently"));
-			response.getHeader().addField(new HeaderField("Location", "/"));
-		}
+		Message response = new Processor().process(message);
+//		JSONObject data = new JSONObject();
+//		String uri = "/";
+//		if (message != null) {
+//			uri = ((RequestLine)message.getHeader().getHeaderLine()).getUri();
+//			data.put("uri", uri);
+//		}
+//		Message response = new Message(new Header(null), new Body(data.toString()));
+//		if (message != null && !("/".equals(uri))){
+//			response.getHeader().setHeaderLine(new ResponseLine("HTTP/1.1", "301", "Moved permanently"));
+//			response.getHeader().addField(new HeaderField("Location", "/"));
+//		}
 		this.finish(response);
 	}
 	

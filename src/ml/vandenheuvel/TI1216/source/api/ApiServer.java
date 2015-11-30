@@ -11,6 +11,10 @@ import java.net.Socket;
  */
 public class ApiServer {
 	
+	private ApiServer(){
+		
+	}
+	
 	/**
 	 * Runner method; starts the serverSocket and assigns threads.
 	 * 
