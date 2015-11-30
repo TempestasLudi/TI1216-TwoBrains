@@ -66,20 +66,72 @@ public class ProgramTest {
 	}
 	
 	@Test
-	public void testAddCourse()
+	public void testAddCourse1()
 	{
-		/*Course course = new Course(null, null, null);
+		Course course = new Course("TI1216", "OOP Project", null);
 		ArrayList<Course> list = new ArrayList<Course>();
 		Faculty faculty = new Faculty("EWI", "Electrical Engineering, Mathematics and Computer Science", null);
 		Program program = new Program("TI", "Technische Informatica", faculty, list);
 		program.addCourse(course);
-		assertEquals(course, program.getCourses().get(0));*/
+		assertEquals(course, program.getCourses().get(0));
 	}
 	
 	@Test
-	public void testRemoveCourse()
+	public void testAddCourse2()
 	{
-		//same problem as above, discuss with Andreas
+		Course course = new Course("TI1216", "OOP Project", null);
+		ArrayList<Course> list = new ArrayList<Course>();
+		Faculty faculty = new Faculty("EWI", "Electrical Engineering, Mathematics and Computer Science", null);
+		Program program = new Program("TI", "Technische Informatica", faculty, list);
+		program.addCourse(course);
+		program.addCourse(course);
+		assertEquals(1, program.getCourses().size());
+	}
+	
+	@Test
+	public void testAddCourse3()
+	{
+		Course course = new Course("TI1216", "OOP Project", null);
+		ArrayList<Course> list = new ArrayList<Course>();
+		Faculty faculty = new Faculty("EWI", "Electrical Engineering, Mathematics and Computer Science", null);
+		Program program = new Program("TI", "Technische Informatica", faculty, list);
+		program.addCourse(course);
+		assertEquals(program, course.getProgram());
+	}
+	
+	@Test
+	public void testRemoveCourse1()
+	{
+		Course course = new Course("TI1216", "OOP Project", null);
+		ArrayList<Course> list = new ArrayList<Course>();
+		Faculty faculty = new Faculty("EWI", "Electrical Engineering, Mathematics and Computer Science", null);
+		Program program = new Program("TI", "Technische Informatica", faculty, list);
+		program.addCourse(course);
+		program.removeCourse(course);
+		assertEquals(0, program.getCourses().size());
+	}
+	
+	@Test
+	public void testRemoveCourse2()
+	{
+		Course course = new Course("TI1216", "OOP Project", null);
+		ArrayList<Course> list = new ArrayList<Course>();
+		Faculty faculty = new Faculty("EWI", "Electrical Engineering, Mathematics and Computer Science", null);
+		Program program = new Program("TI", "Technische Informatica", faculty, list);
+		program.addCourse(course);
+		program.removeCourse(course);
+		assertNull(course.getProgram());
+	}
+	
+	@Test
+	public void testRemoveCourse3()
+	{
+		Course course = new Course("TI1216", "OOP Project", null);
+		ArrayList<Course> list = new ArrayList<Course>();
+		Faculty faculty = new Faculty("EWI", "Electrical Engineering, Mathematics and Computer Science", null);
+		Program program = new Program("TI", "Technische Informatica", faculty, list);
+		program.removeCourse(course);
+		assertEquals(0, program.getCourses().size());
 	}
 	
 	@Test

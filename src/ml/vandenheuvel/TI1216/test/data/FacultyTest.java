@@ -72,8 +72,9 @@ public class FacultyTest {
 	public void testAddProgram3()
 	{
 		ArrayList<Program> list = new ArrayList<Program>();
+		ArrayList<Program> list3 = new ArrayList<Program>();
 		Faculty faculty = new Faculty("EWI", "Electrical Engineering, Mathematics and Computer Science", list);
-		Faculty faculty2 = new Faculty("INF", "Informatica", list);
+		Faculty faculty2 = new Faculty("INF", "Informatica", list3);
 		ArrayList<Course> list2 = new ArrayList<Course>();
 		Program program = new Program("TI", "Technische Informatica", faculty2, list2);
 		faculty.addProgram(program);
