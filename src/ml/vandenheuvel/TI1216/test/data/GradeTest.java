@@ -67,12 +67,39 @@ public class GradeTest
 	}
 	
 	@Test
-	public void testEqualsNegative() 
+	public void testEqualsNegative1() 
 	{
 		Course course1 = createCourse("TI1206");
 		Course course2 = createCourse("TI1205");
 		Grade test1 = new Grade(course1,8);
 		Grade test2 = new Grade(course2,8);
+		assertFalse(test1.equals(test2));
+	}
+	
+	@Test
+	public void testEqualsNegative2() 
+	{
+		Course course1 = createCourse("TI1206");
+		Grade test1 = new Grade(course1,8);
+		assertFalse(test1.equals(76));
+	}
+	
+	@Test
+	public void testEqualsNegative3() 
+	{
+		Course course1 = createCourse("TI1206");
+		Grade test1 = new Grade(course1,8);
+		Grade test2 = new Grade(course1,9);
+		assertFalse(test1.equals(test2));
+	}
+	
+	@Test
+	public void testEqualsNegative4() 
+	{
+		Course course1 = createCourse("TI1206");
+		Course course2 = createCourse("TI1205");
+		Grade test1 = new Grade(course1,8);
+		Grade test2 = new Grade(course2,5);
 		assertFalse(test1.equals(test2));
 	}
 }

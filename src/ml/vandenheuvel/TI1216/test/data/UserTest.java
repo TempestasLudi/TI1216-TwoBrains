@@ -21,9 +21,15 @@ public class UserTest {
 	}
 	
 	@Test
-	public void testConstructorUser() {
+	public void testConstructorUser1() {
 		Grade[] g = new Grade[2];
 		User u1 = new User("User", "PC", "descrip", g);
+		assertNotNull(u1);
+	}
+	
+	@Test
+	public void testConstructorUser2() {
+		User u1 = new User("User");
 		assertNotNull(u1);
 	}
 
@@ -106,5 +112,12 @@ public class UserTest {
 		User u1 = new User("User", "PC", "descrip", g);
 		User u2 = new User("User2", "PC", "descrip", g);
 		assertFalse(u1.equals(u2));
+	}
+	
+	@Test
+	public void testEquals3() {
+		Grade[] g = new Grade[2];
+		User u1 = new User("User", "PC", "descrip", g);
+		assertFalse(u1.equals(5));
 	}
 }
