@@ -2,6 +2,8 @@ package ml.vandenheuvel.TI1216.source.data;
 
 import java.util.ArrayList;
 
+import org.json.JSONObject;
+
 /**
  * Class "Faculty"
  * 
@@ -16,7 +18,7 @@ public class Faculty {
 	 */
 	private String name;
 	private ArrayList<Program> programs;
-	private String ID;
+	private String id;
 
 	// BEGIN CONSTRUCTORS
 	
@@ -28,7 +30,7 @@ public class Faculty {
 	 * @param programs
 	 */
 	public Faculty(String ID, String name, ArrayList<Program> programs){
-		this.ID = ID;
+		this.id = ID;
 		this.name = name;
 		this.programs = programs;
 		if(this.programs!=null){
@@ -46,7 +48,7 @@ public class Faculty {
 	 * @return String
 	 */
 	public String getID(){
-		return this.ID;
+		return this.id;
 	}
 
 	/**
@@ -101,6 +103,29 @@ public class Faculty {
 			program.setFaculty(null);
 		}
 	}
+	
+	/**
+	 * Creates a JSON object based on the Faculty object.
+	 * 
+	 * @return a JSON object based on the Faculty object
+	 */
+	public JSONObject toJSON() {
+		JSONObject result = new JSONObject();
+		result.put("id", this.id);
+		result.put("name", this.name);
+		return result;
+	}
+	
+	/**
+	 * Creates a Faculty object based on a JSON object.
+	 * 
+	 * @param json the JSON object
+	 * @param data a container containing the additional objects
+	 * @return a Faculty object based on the JSON object
+	 */
+	public static Faculty fromJSON(JSONObject json, Container data) {
+		return new Faculty(json.getString("id"), json.getString("name"), new ArrayList<Program>());
+	}
 
 	// END MODIFIERS
 
@@ -115,7 +140,7 @@ public class Faculty {
 		boolean result = false;
 		if (obj instanceof Faculty) {
 			Faculty that = (Faculty) obj;
-			result = this.ID.equals(that.ID);
+			result = this.id.equals(that.id);
 		}
 		return result;
 	}
