@@ -6,8 +6,7 @@ import java.util.ArrayList;
 
 import org.junit.Test;
 
-import ml.vandenheuvel.TI1216.source.data.Course;
-import ml.vandenheuvel.TI1216.source.data.Program;
+import ml.vandenheuvel.TI1216.source.data.*;
 
 public class CourseTest {
 
@@ -88,6 +87,17 @@ public class CourseTest {
 		Course course = new Course("a2", null, program1);
 		course.setProgram(program2);
 		assertFalse(program1.getCourses().contains(course));
+	}
+	
+	@Test
+	public void testFromToJSON1()
+	{
+		ArrayList<Program> programlist = new ArrayList<Program>();
+		Faculty faculty = new Faculty("EWI", "Elektrotechniek, wiskunde en informatica", programlist);
+		ArrayList<Course> courselist = new ArrayList<Course>();
+		Program program = new Program("TI", "Technische Informatica", faculty, courselist);
+		Course course = new Course("TI1216", "OOP Project", program);
+		assertEquals(course, Course.fromJSON(course.toJSON(), new Container()));
 	}
 
 	@Test
