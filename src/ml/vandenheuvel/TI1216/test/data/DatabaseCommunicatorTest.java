@@ -47,9 +47,9 @@ public class DatabaseCommunicatorTest {
 		}
 		
 		// Insert Users
-		Credentials c1 = new Credentials("Credentials 1", "Pass 1");
+		Credentials c1 = new Credentials("Credentials 1", "Pass 1", true);
 		User u1 = new User("User 1", "Pc1", "This is a first description.", new Grade[0]);
-		Credentials c2 = new Credentials("Credentials 2", "Pass 2");
+		Credentials c2 = new Credentials("Credentials 2", "Pass 2", true);
 		User u2 = new User("User 2", "Pc2", "This is a second description.", new Grade[0]);
 		communicator.save(u1, c1);
 		communicator.save(u2, c2);
