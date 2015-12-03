@@ -5,8 +5,8 @@ import java.util.List;
 
 public class Container {
 
-	private List<Program> programs;// = new ArrayList<Program>();
-	private List<Faculty> faculties;// = new ArrayList<Faculty>();
+	private List<Program> programs;
+	private List<Faculty> faculties;
 	
 	public Container() {
 		programs = new ArrayList<Program>();
