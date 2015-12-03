@@ -24,8 +24,8 @@ public class GradeTest {
 	@Test
 	public void testSetCourse() {
 		Grade test = new Grade("TI1216", 8);
-		test.setCourse("TI1216");
-		assertEquals("TI1216", test.getCourse());
+		test.setCourseId("TI1216");
+		assertEquals("TI1216", test.getCourseId());
 	}
 
 	@Test
