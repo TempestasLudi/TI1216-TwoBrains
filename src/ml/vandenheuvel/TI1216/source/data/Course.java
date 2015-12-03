@@ -95,8 +95,8 @@ public class Course {
 				oldProgram.removeCourse(this);
 			}
 			this.program = program;
-			if (program != null) {
-				program.addCourse(this);
+			if (this.program != null) {
+				this.program.addCourse(this);
 			}
 		}
 	}

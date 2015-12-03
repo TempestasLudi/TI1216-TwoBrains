@@ -32,11 +32,14 @@ public class Program {
 		this.id = id;
 		this.name = name;
 		this.setFaculty(faculty);
-		this.courses = courses;
-		if(this.courses.size()>0){
-			for (int i = 0; i < this.courses.size(); i++) {
-				this.courses.get(i).setProgram(this);
-			}
+		if(courses==null){
+			this.courses = new ArrayList<Course>();
+		}
+		else{
+			this.courses = courses;
+		}
+		for (int i = 0; i < this.courses.size(); i++) {
+			this.courses.get(i).setProgram(this);
 		}
 	}
 
@@ -100,7 +103,7 @@ public class Program {
 				oldFaculty.removeProgram(this);
 			}
 			this.faculty=faculty;
-			if (this.faculty != null && this.faculty.getPrograms()!=null) {
+			if (this.faculty != null) {
 				this.faculty.addProgram(this);
 			}
 		}

@@ -10,9 +10,8 @@ public class ProgramTest {
 	@Test
 	public void testConstructorProgram1() 
 	{
-		ArrayList<Course> list = new ArrayList<Course>();
 		Faculty faculty = new Faculty("EWI", "Electrical Engineering, Mathematics and Computer Science", null);
-		Program program = new Program("TI", "Technische Informatica", faculty, list);
+		Program program = new Program("TI", "Technische Informatica", faculty, null);
 		assertEquals("TI", program.getID());
 	}
 	

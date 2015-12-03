@@ -32,11 +32,14 @@ public class Faculty {
 	public Faculty(String ID, String name, ArrayList<Program> programs){
 		this.id = ID;
 		this.name = name;
-		this.programs = programs;
-		if(this.programs!=null){
-			for (int i = 0; i < programs.size(); i++) {
-				programs.get(i).setFaculty(this);
-			}
+		if(programs==null){
+			this.programs = new ArrayList<Program>();
+		}
+		else{
+			this.programs = programs;
+		}
+		for (int i = 0; i < this.programs.size(); i++) {
+			this.programs.get(i).setFaculty(this);
 		}
 	}
 
@@ -130,10 +133,10 @@ public class Faculty {
 	// END MODIFIERS
 
 	/**
-	 * Compares Course-objects, based on the respective class-instances.
+	 * Compares Faculty-objects, based on the respective class-instances.
 	 * 
-	 * @param Object
-	 * @return boolean
+	 * @param obj the Object to which the Faculty is compared
+	 * @return true if the two Faculties are equal, otherwise false
 	 */
 	@Override
 	public boolean equals(Object obj){
