@@ -8,14 +8,14 @@ import javafx.scene.layout.GridPane;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 
-public class LoginGUI 
+public class MenuGUI 
 {
 
 	public static void display()
 	{
 		Stage window = new Stage();
 		window.initModality(Modality.APPLICATION_MODAL);
-		window.setTitle("LoginGUI");
+		window.setTitle("MenuGUI");
 		window.setMinWidth(250);
 		
 		GridPane grid = new GridPane();

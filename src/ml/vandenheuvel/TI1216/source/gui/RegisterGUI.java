@@ -8,14 +8,14 @@ import javafx.scene.layout.GridPane;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 
-public class LoginGUI 
+public class RegisterGUI 
 {
 
 	public static void display()
 	{
 		Stage window = new Stage();
 		window.initModality(Modality.APPLICATION_MODAL);
-		window.setTitle("LoginGUI");
+		window.setTitle("RegisterGUI");
 		window.setMinWidth(250);
 		
 		GridPane grid = new GridPane();
@@ -30,14 +30,21 @@ public class LoginGUI
 		nameInput.setPromptText("Username");
 		GridPane.setConstraints(nameInput, 1, 0);
 		
-		Label passLabel = new Label("Password: ");
-		GridPane.setConstraints(passLabel, 0, 1);
+		Label passLabel1 = new Label("Password: ");
+		GridPane.setConstraints(passLabel1, 0, 1);
 		
-		PasswordField passInput = new PasswordField();
-		passInput.setPromptText("Password");
-		GridPane.setConstraints(passInput, 1, 1);
+		PasswordField passInput1 = new PasswordField();
+		passInput1.setPromptText("Password");
+		GridPane.setConstraints(passInput1, 1, 1);
 		
-		Button loginButton = new Button("Log in");
+		Label passLabel2 = new Label("Confirm Password: ");
+		GridPane.setConstraints(passLabel2, 0, 2);
+		
+		PasswordField passInput2 = new PasswordField();
+		passInput2.setPromptText("Password");
+		GridPane.setConstraints(passInput2, 1, 2);
+		
+		Button loginButton = new Button("Register");
 		loginButton.setOnAction(new EventHandler<ActionEvent>() 
 		{
 			 @Override
@@ -46,21 +53,9 @@ public class LoginGUI
 			    	MenuGUI.display();
 			    }
 		});
-		GridPane.setConstraints(loginButton, 1, 2);
+		GridPane.setConstraints(loginButton, 1, 3);
 		
-		Hyperlink registerLink = new Hyperlink();
-		registerLink.setText("Not a member yet? Register now!");
-		registerLink.setOnAction(new EventHandler<ActionEvent>() 
-		{
-		    @Override
-		    public void handle(ActionEvent e) 
-		    {
-		    	RegisterGUI.display();
-		    }
-		});
-		GridPane.setConstraints(registerLink, 1, 3);
-		
-		grid.getChildren().addAll(nameLabel, nameInput, passLabel, passInput, loginButton, registerLink);
+		grid.getChildren().addAll(nameLabel, nameInput, passLabel1, passInput1, passLabel2, passInput2, loginButton);
 		
 		Scene scene = new Scene(grid, 350, 200);
 		window.setScene(scene);
