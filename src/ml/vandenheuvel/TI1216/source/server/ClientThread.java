@@ -56,7 +56,7 @@ public class ClientThread extends Thread {
 
 			// Logging in. Password isn't checked here, needs more functionality
 			while (!this.server.getDatabaseCommunicator().canLogin(
-					new Credentials(credentials.getUsername(), "", true))) {
+					new Credentials(credentials.getUsername(), "", false))) {
 				// Feedback: could not log in
 				this.outputStream.writeByte(1);
 			}
