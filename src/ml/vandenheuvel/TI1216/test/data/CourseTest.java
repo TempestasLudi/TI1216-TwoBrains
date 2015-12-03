@@ -99,6 +99,30 @@ public class CourseTest {
 		Course course = new Course("TI1216", "OOP Project", program);
 		assertEquals(course, Course.fromJSON(course.toJSON(), new Container()));
 	}
+	
+	@Test
+	public void testFromToJSON2()
+	{
+		ArrayList<Program> programlist = new ArrayList<Program>();
+		Faculty faculty = new Faculty("EWI", "Elektrotechniek, wiskunde en informatica", programlist);
+		ArrayList<Course> courselist = new ArrayList<Course>();
+		Program program = new Program("TI", "Technische Informatica", faculty, courselist);
+		Course course = new Course("TI1216", "OOP Project", program);
+		assertEquals(course.getName(), Course.fromJSON(course.toJSON(), new Container()).getName());
+	}
+	
+	@Test
+	public void testFromToJSON3()
+	{
+		ArrayList<Program> programlist = new ArrayList<Program>();
+		Faculty faculty = new Faculty("EWI", "Elektrotechniek, wiskunde en informatica", programlist);
+		ArrayList<Course> courselist = new ArrayList<Course>();
+		Program program = new Program("TI", "Technische Informatica", faculty, courselist);
+		Course course = new Course("TI1216", "OOP Project", program);
+		Container container = new Container();
+		container.addProgram(program);
+		assertEquals(course.getProgram(), Course.fromJSON(course.toJSON(), container).getProgram());
+	}
 
 	@Test
 	public void testEqualsPositive(){

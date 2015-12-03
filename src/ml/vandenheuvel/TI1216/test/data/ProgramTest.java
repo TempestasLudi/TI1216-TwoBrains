@@ -144,6 +144,27 @@ public class ProgramTest {
 	}
 	
 	@Test
+	public void testFromToJSON2()
+	{
+		ArrayList<Course> list = new ArrayList<Course>();
+		Faculty faculty = new Faculty("EWI", "Electrical Engineering, Mathematics and Computer Science", null);
+		Program program = new Program("TI", "Technische Informatica", faculty, list);
+		assertEquals(program.getName(), Program.fromJSON(program.toJSON(), new Container()).getName());
+	}
+	
+	@Test
+	public void testFromToJSON3()
+	{
+		ArrayList<Course> list = new ArrayList<Course>();
+		ArrayList<Program> list2 = new ArrayList<Program>();
+		Faculty faculty = new Faculty("EWI", "Electrical Engineering, Mathematics and Computer Science", list2);
+		Program program = new Program("TI", "Technische Informatica", faculty, list);
+		Container container = new Container();
+		container.addFaculty(faculty);
+		assertEquals(program.getFaculty(), Program.fromJSON(program.toJSON(), container).getFaculty());
+	}
+	
+	@Test
 	public void testEqualsPositive()
 	{
 		ArrayList<Course> list = new ArrayList<Course>();
