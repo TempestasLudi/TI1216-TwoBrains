@@ -107,6 +107,26 @@ public class DatabaseCommunicatorTest {
 		return new Faculty[]{f1, f2};
 	}
 	
+	private static Program[] referencePrograms() {
+		Faculty[] faculties = referenceFaculties();
+		Program[] programs = new Program[3];
+		programs[0] = faculties[0].getPrograms().get(0);
+		programs[1] = faculties[0].getPrograms().get(1);
+		programs[2] = faculties[1].getPrograms().get(0);
+		return programs;
+	}
+	
+	private static Course[] referenceCourses() {
+		Program[] programs = referencePrograms();
+		Course[] courses = new Course[5];
+		courses[0] = programs[0].getCourses().get(0);
+		courses[1] = programs[0].getCourses().get(1);
+		courses[2] = programs[0].getCourses().get(2);
+		courses[3] = programs[0].getCourses().get(3);
+		courses[4] = programs[2].getCourses().get(0);
+		return courses;
+	}
+	
 	@Test
 	public void testGetFaculties() {
 		Faculty[] dbFaculties = this.communicator.getFaculties();
@@ -126,7 +146,7 @@ public class DatabaseCommunicatorTest {
 	@Test
 	public void testGetFacultyNull() {
 		Faculty faculty = this.communicator.getFaculty("F3");
-		assertEquals(null, faculty);
+		assertNull(faculty);
 	}
 	
 	@Test
@@ -178,4 +198,119 @@ public class DatabaseCommunicatorTest {
 //		this.communicator.delete(lr);
 //		this.communicator.delete(me);
 //	}
+	
+	@Test
+	public void testGetPrograms() 
+	{
+		Program[] databasePrograms = this.communicator.getPrograms();
+		Program[] referencePrograms = referencePrograms();
+		for(int i=0;i<3;i++)
+		{
+			assertEquals(referencePrograms[i],databasePrograms[i]);
+		}
+	}
+	
+	@Test
+	public void testGetProgramExists() 
+	{
+		Program[] referencePrograms = referencePrograms();
+		Program p11 = this.communicator.getProgram("P1.1");
+		Program p12 = this.communicator.getProgram("P1.2");
+		Program p21 = this.communicator.getProgram("P2.1");
+		assertEquals(referencePrograms[0],p11);
+		assertEquals(referencePrograms[1],p12);
+		assertEquals(referencePrograms[2],p21);
+	}
+	
+	@Test
+	public void testGetProgramNull() 
+	{
+		Program program = this.communicator.getProgram("RandomID");
+		assertNull(program);
+	}
+	
+	@Test
+	public void testDeleteAddProgram()
+	{
+		Program[] referencePrograms = referencePrograms();
+		assertNotNull(this.communicator.getProgram("P1.1"));
+		this.communicator.delete(referencePrograms[0]);
+		assertNull(this.communicator.getProgram("P1.1"));
+		this.communicator.save(referencePrograms[0]);
+		assertNotNull(this.communicator.getProgram("P1.1"));
+	}
+	
+	@Test
+	public void testSaveProgram()
+	{
+		Program program = referencePrograms()[0];
+		program.removeCourse(program.getCourses().get(0));
+		program.setName("RandomProgram");
+		this.communicator.save(program);
+		Program databaseProgram = this.communicator.getProgram(program.getID());
+		assertEquals(program,databaseProgram);
+		program = referencePrograms()[0];
+		this.communicator.save(program);
+		databaseProgram = this.communicator.getProgram(program.getID());
+		assertEquals(program,databaseProgram);
+	}
+	
+	@Test
+	public void testGetCourses() 
+	{
+		Course[] databaseCourses = this.communicator.getCourses();
+		Course[] referenceCourses = referenceCourses();
+		for(int i=0;i<5;i++)
+		{
+			assertEquals(referenceCourses[i],databaseCourses[i]);
+		}
+	}
+	
+	@Test
+	public void testGetCourseExists() 
+	{
+		Course[] referenceCourses = referenceCourses();
+		Course c111 = this.communicator.getCourse("C1.1.1");
+		Course c112 = this.communicator.getCourse("C1.1.2");
+		Course c113 = this.communicator.getCourse("C1.1.3");
+		Course c114 = this.communicator.getCourse("C1.1.4");
+		Course c211 = this.communicator.getCourse("C2.1.1");
+		assertEquals(referenceCourses[0],c111);
+		assertEquals(referenceCourses[1],c112);
+		assertEquals(referenceCourses[2],c113);
+		assertEquals(referenceCourses[3],c114);
+		assertEquals(referenceCourses[4],c211);
+	}
+	
+	@Test
+	public void testGetCourseNull() 
+	{
+		Course course = this.communicator.getCourse("RandomID");
+		assertNull(course);
+	}
+	
+	@Test
+	public void testDeleteAddCourse()
+	{
+		Course[] referenceCourses = referenceCourses();
+		assertNotNull(this.communicator.getCourse("C1.1.1"));
+		this.communicator.delete(referenceCourses[0]);
+		assertNull(this.communicator.getCourse("C1.1.1"));
+		this.communicator.save(referenceCourses[0]);
+		assertNotNull(this.communicator.getCourse("C1.1.1"));
+	}
+	
+	@Test
+	public void testSaveCourse()
+	{
+		Course course = referenceCourses()[0];
+		course.setName("RandomCourse");
+		this.communicator.save(course);
+		Course databaseCourse = this.communicator.getCourse(course.getID());
+		assertEquals(course,databaseCourse);
+		course = referenceCourses()[0];
+		this.communicator.save(course);
+		databaseCourse = this.communicator.getCourse(course.getID());
+		assertEquals(course,databaseCourse);
+	}
 }
