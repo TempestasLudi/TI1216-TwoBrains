@@ -2,104 +2,70 @@ package ml.vandenheuvel.TI1216.test.data;
 
 import static org.junit.Assert.*;
 
-import java.util.ArrayList;
-
+import org.json.JSONObject;
 import org.junit.Test;
+
 import ml.vandenheuvel.TI1216.source.data.*;
 
-public class GradeTest 
-{
-	private Course createCourse(String subject){
-		Faculty faculty = new Faculty("EWI", "Elektrotechniek, wis- en informatica", new ArrayList<Program>());
-		Program program = new Program("TI", "Technische Informatica", faculty, new ArrayList<Course>());
-		return new Course(subject, "OOP", program);
-	}
+public class GradeTest {
 
 	@Test
-	public void testConstructorGrade() 
-	{
-		Course course = createCourse("TI1206");
-		Grade test = new Grade(course,8);
+	public void testConstructorGrade() {
+		Grade test = new Grade("TI1216", 8);
 		assertNotNull(test);
 	}
 
 	@Test
-	public void testGetCourse() 
-	{
-		Course course = createCourse("TI1206");
-		Grade test = new Grade(course,8);
-		assertEquals(course, test.getCourse());
-	}
-
-	@Test
-	public void testGetGrade() 
-	{
-		Course course = createCourse("TI1206");
-		Grade test = new Grade(course,8);
+	public void testGetGrade() {
+		Grade test = new Grade("TI1216", 8);
 		assertEquals(8, test.getGrade());
 	}
 
 	@Test
-	public void testSetCourse() 
-	{
-		Course course = createCourse("TI1206");
-		Grade test = new Grade(null,8);
-		test.setCourse(course);
-		assertEquals(course,test.getCourse());
+	public void testSetCourse() {
+		Grade test = new Grade("TI1216", 8);
+		test.setCourse("TI1216");
+		assertEquals("TI1216", test.getCourse());
 	}
 
 	@Test
-	public void testSetGrade() 
-	{
-		Course course = createCourse("TI1206");
-		Grade test = new Grade(course,7);
+	public void testSetGrade() {
+		Grade test = new Grade("TI1216", 8);
 		test.setGrade(8);
-		assertEquals(8,test.getGrade());
+		assertEquals(8, test.getGrade());
 	}
 
 	@Test
-	public void testEqualsPositive() 
-	{
-		Course course = createCourse("TI1206");
-		Grade test1 = new Grade(course,8);
-		Grade test2 = new Grade(course,8);
+	public void testJSON() {
+		Grade test1 = new Grade("TI1216", 8);
+		JSONObject jsonObject1 = test1.toJSON();
+		assertTrue(Grade.fromJSON(jsonObject1).equals(test1));
+	}
+
+	@Test
+	public void testEqualsPositive() {
+		Grade test1 = new Grade("TI1216", 8);
+		Grade test2 = new Grade("TI1216", 8);
 		assertTrue(test1.equals(test2));
 	}
-	
+
 	@Test
-	public void testEqualsNegative1() 
-	{
-		Course course1 = createCourse("TI1206");
-		Course course2 = createCourse("TI1205");
-		Grade test1 = new Grade(course1,8);
-		Grade test2 = new Grade(course2,8);
+	public void testEqualsNegative1() {
+		Grade test1 = new Grade("TI1216", 8);
+		Grade test2 = new Grade("TI1216", 7);
 		assertFalse(test1.equals(test2));
 	}
-	
+
 	@Test
-	public void testEqualsNegative2() 
-	{
-		Course course1 = createCourse("TI1206");
-		Grade test1 = new Grade(course1,8);
-		assertFalse(test1.equals(76));
+	public void testEqualsNegative2() {
+		Grade test = new Grade("TI1216", 8);
+		assertFalse(test.equals(76));
 	}
-	
+
 	@Test
-	public void testEqualsNegative3() 
-	{
-		Course course1 = createCourse("TI1206");
-		Grade test1 = new Grade(course1,8);
-		Grade test2 = new Grade(course1,9);
-		assertFalse(test1.equals(test2));
-	}
-	
-	@Test
-	public void testEqualsNegative4() 
-	{
-		Course course1 = createCourse("TI1206");
-		Course course2 = createCourse("TI1205");
-		Grade test1 = new Grade(course1,8);
-		Grade test2 = new Grade(course2,5);
+	public void testEqualsNegative3() {
+		Grade test1 = new Grade("TI1216", 8);
+		Grade test2 = new Grade("TI1214", 8);
 		assertFalse(test1.equals(test2));
 	}
 }

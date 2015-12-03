@@ -1,75 +1,103 @@
 package ml.vandenheuvel.TI1216.source.data;
 
+import org.json.JSONObject;
+
 /**
  * Objects of this instance are pairs of a course and a grade
- * @author 
+ * 
+ * @author
  *
  */
-public class Grade 
-{
-	
-	private Course course;
+public class Grade {
+
+	private String courseId;
 	private int grade;
-	
+
 	/**
 	 * creates a new Grade
-	 * @param course the Course to which the Grade belongs
-	 * @param grade an integer that represents the Grade
+	 * 
+	 * @param courseId
+	 *            the courseId to which the Grade belongs
+	 * @param grade
+	 *            an integer that represents the Grade
 	 */
-	public Grade(Course course, int grade)
-	{
-		this.course = course;
+	public Grade(String courseId, int grade) {
+		this.courseId = courseId;
 		this.grade = grade;
 	}
-	
+
 	/**
 	 * gets the Course to which the Grade belongs
+	 * 
 	 * @return the Course to which the Grade belongs
 	 */
-	public Course getCourse()
-	{
-		return this.course;
+	public String getCourse() {
+		return this.courseId;
 	}
-	
+
 	/**
 	 * gets the integer that represents the Grade
+	 * 
 	 * @return the integer that represents the Grade
 	 */
-	public int getGrade()
-	{
+	public int getGrade() {
 		return this.grade;
 	}
-	
+
 	/**
 	 * sets the Course to which the Grade belongs
-	 * @param course the new Course of the Grade
+	 * 
+	 * @param course
+	 *            the new Course of the Grade
 	 */
-	public void setCourse(Course course)
-	{
-		this.course = course;
+	public void setCourse(String courseId) {
+		this.courseId = courseId;
 	}
-	
+
 	/**
 	 * sets the integer that represents the Grade
-	 * @param grade the new integer of the Grade
+	 * 
+	 * @param grade
+	 *            the new integer of the Grade
 	 */
-	public void setGrade(int grade)
-	{
+	public void setGrade(int grade) {
 		this.grade = grade;
 	}
-	
+
+	/**
+	 * Creates a JSON object out of a Grade object.
+	 * 
+	 * @return a JSON object out of a Grade object
+	 */
+	public JSONObject toJSON() {
+		return new JSONObject().put("grade", Integer.toString(this.grade)).put(
+				"courseId", this.courseId);
+	}
+
+	/**
+	 * Creates Grade object out of a JSON object
+	 * 
+	 * @param json the JSON object
+	 * @return a Grade object
+	 */
+	public static Grade fromJSON(JSONObject jsonObject) {
+		return new Grade(jsonObject.getString("courseId"),
+				Integer.parseInt(jsonObject.getString("grade")));
+	}
+
 	/**
 	 * checks whether two Grades are equal to each other
-	 * @param other the Object to which the Grade is compared
+	 * 
+	 * @param other
+	 *            the Object to which the Grade is compared
 	 * @return true if the Grades are equal, otherwise false
 	 */
 	@Override
-	public boolean equals(Object other)
-	{
-		if(other instanceof Grade)
-		{
+	public boolean equals(Object other) {
+		if (other instanceof Grade) {
 			Grade that = (Grade) other;
-			return this.course.equals(that.course) && this.grade == that.grade;
+			return this.courseId.equals(that.courseId)
+					&& this.grade == that.grade;
 		}
 		return false;
 	}

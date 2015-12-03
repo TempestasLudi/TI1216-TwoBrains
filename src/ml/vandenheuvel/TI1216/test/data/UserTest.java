@@ -58,7 +58,7 @@ public class UserTest {
 	@Test
 	public void testGetGradeList() {
 		Grade[] g = new Grade[2];
-		g[0] = new Grade(createCourse("TI1216"),5);
+		g[0] = new Grade("TI1216",5);
 		User u1 = new User("User", "PC", "descrip", g);
 		assertEquals(u1.getGradeList()[0], g[0]);
 	}
@@ -90,9 +90,9 @@ public class UserTest {
 	@Test
 	public void testSetGradeList() {
 		Grade[] g = new Grade[2];
-		g[0] = new Grade(createCourse("TI1216"),5);
+		g[0] = new Grade("TI1216",7);
 		Grade[] g2 = new Grade[3];
-		g2[0] = new Grade(createCourse("TI1206"),5);
+		g2[0] = new Grade("TI1206", 7);
 		User u1 = new User("User", "PC", "descrip", g);
 		u1.setGradeList(g2);
 		assertEquals(u1.getGradeList()[0], g2[0]);
