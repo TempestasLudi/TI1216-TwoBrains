@@ -6,7 +6,7 @@ import java.io.ObjectOutputStream;
 import java.io.Serializable;
 import java.net.Socket;
 import ml.vandenheuvel.TI1216.source.data.ChatMessage;
-import ml.vandenheuvel.TI1216.source.data.Login;
+import ml.vandenheuvel.TI1216.source.data.Credentials;
 import ml.vandenheuvel.TI1216.source.data.User;
 
 /**
@@ -20,7 +20,7 @@ public class Client {
 	private String server;
 	private int portNumber;
 	private User user;
-	private Login login;
+	private Credentials credentials;
 	private Socket socket;
 	private ObjectInputStream inputStream;
 	private ObjectOutputStream outputStream;
@@ -69,12 +69,12 @@ public class Client {
 	 * @return A thread which listens to all objects which are sent to the
 	 *         client via the ObjectStream.
 	 */
-	public boolean logIn(Login login) {
+	public boolean logIn(Credentials credentials) {
 		// Authentication
 		int response = 1;
 		do {
 			try {
-				this.outputStream.writeObject(login);
+				this.outputStream.writeObject(credentials);
 			} catch (IOException e) {
 				e.printStackTrace();
 				return false;
@@ -86,7 +86,7 @@ public class Client {
 			}
 			// edit the login object
 		} while (response != 0);
-		this.login = login;
+		this.credentials = credentials;
 		try {
 			this.user = (User) this.inputStream.readObject();
 		} catch (IOException e) {
