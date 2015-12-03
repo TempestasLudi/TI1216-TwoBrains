@@ -24,10 +24,6 @@ public class ChatMessage implements Serializable {
 
 	// BEGIN CONSTRUCTORS
 
-	public ChatMessage() {
-		//The default constructor
-	}
-
 	/**
 	 * General constructor.
 	 * 

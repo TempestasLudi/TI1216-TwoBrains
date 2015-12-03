@@ -20,10 +20,6 @@ public class Login implements Serializable {
 
 	// BEGIN CONSTRUCTORS
 
-	public Login() {
-		// The default contructor
-	}
-
 	/**
 	 * General constructor. All instances given.
 	 * 
