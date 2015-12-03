@@ -5,11 +5,12 @@ import java.util.List;
 
 public class Container {
 
-	private List<Program> programs = new ArrayList<Program>();
-	private List<Faculty> faculties = new ArrayList<Faculty>();
+	private List<Program> programs;// = new ArrayList<Program>();
+	private List<Faculty> faculties;// = new ArrayList<Faculty>();
 	
 	public Container() {
-		
+		programs = new ArrayList<Program>();
+		faculties = new ArrayList<Faculty>();
 	}
 
 	public Program getProgram(String id) {
@@ -28,6 +29,22 @@ public class Container {
 			}
 		}
 		return null;
+	}
+	
+	public void addProgram(Program program)
+	{
+		if(!programs.contains(program))
+		{
+			programs.add(program);
+		}
+	}
+	
+	public void addFaculty(Faculty faculty)
+	{
+		if(!faculties.contains(faculty))
+		{
+			faculties.add(faculty);
+		}
 	}
 	
 }
