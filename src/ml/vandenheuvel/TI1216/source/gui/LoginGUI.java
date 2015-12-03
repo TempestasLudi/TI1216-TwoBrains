@@ -7,17 +7,27 @@ import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
-
+/**
+ * Login window of the GUI
+ * @author 
+ *
+ */
 public class LoginGUI extends Application
 {
 
 	Stage window;
 	
+	/**
+	 * main to start the application
+	 * @param args
+	 */
 	public static void main(String[] args) 
 	{
 		launch(args);
 	}
-
+	/**
+	 * creates all elements that are part of the logic screen, and sets their properties
+	 */
 	@Override
 	public void start(Stage primaryStage) throws Exception 
 	{
