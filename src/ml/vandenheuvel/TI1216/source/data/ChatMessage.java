@@ -25,11 +25,6 @@ public class ChatMessage implements Serializable {
 	String message;
 	String receiver;
 
-<<<<<<< HEAD
-=======
-	// BEGIN CONSTRUCTORS
-
->>>>>>> 4681d5d855b3b1d06d71b199ecc4458e0f003701
 	/**
 	 * General constructor.
 	 * 
