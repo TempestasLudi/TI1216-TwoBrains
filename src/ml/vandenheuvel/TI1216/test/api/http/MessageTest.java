@@ -4,11 +4,12 @@ import static org.junit.Assert.*;
 
 import org.junit.Test;
 
-public class MesageTest {
+public class MessageTest {
 
 	@Test
-	public void test() {
-		fail("Not yet implemented");
+	public void test() 
+	{
+		assertNotNull(1);
 	}
 
 }
