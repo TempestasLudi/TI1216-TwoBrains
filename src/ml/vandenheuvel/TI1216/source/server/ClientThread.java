@@ -36,15 +36,15 @@ public class ClientThread extends Thread {
 	public void run() {
 
 		try {
-			Login login = (Login) inputStream.readObject();
+			Credentials credentials = (Credentials) inputStream.readObject();
 
 			// If the user wants to sign up, let him try
-			if (login.getSignUp()) {
+			if (credentials.getSignUp()) {
 				while (!this.server.getDatabaseCommunicator().canRegister(
-						new Credentials(login.getUsername(), ""))) {
+						new Credentials(credentials.getUsername(), "", true))) {
 					// Feedback: 1 means failed
 					this.outputStream.writeByte(1);
-					login = (Login) inputStream.readObject();
+					credentials = (Credentials) inputStream.readObject();
 				}
 				// Feedback: 0 means success
 				this.outputStream.writeByte(0);
@@ -56,7 +56,7 @@ public class ClientThread extends Thread {
 
 			// Logging in. Password isn't checked here, needs more functionality
 			while (!this.server.getDatabaseCommunicator().canLogin(
-					new Credentials(login.getUsername(), ""))) {
+					new Credentials(credentials.getUsername(), "", true))) {
 				// Feedback: could not log in
 				this.outputStream.writeByte(1);
 			}
