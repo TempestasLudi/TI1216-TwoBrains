@@ -136,5 +136,19 @@ public class Header {
 		}
 		return result;
 	}
+	
+	/**
+	 * Equals method to compare object with this instance
+	 */
+	@Override
+	public boolean equals(Object other){
+		if(other instanceof Header){
+			Header that = (Header) other;
+			
+			return (this.getHeaderLine().equals(that.getHeaderLine()));
+		}
+		
+		return false;
+	}
 
 }
