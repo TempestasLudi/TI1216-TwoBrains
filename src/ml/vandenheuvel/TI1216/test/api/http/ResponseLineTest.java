@@ -102,7 +102,7 @@ public class ResponseLineTest {
 		ResponseLine testLine = new ResponseLine("HTTP/1.1", "200", "OK");
 		assertEquals("200", testLine.getCode());
 		
-		testLine.setVersion("201");
+		testLine.setCode("201");
 		assertEquals("201", testLine.getCode());
 		}
 	
@@ -110,7 +110,7 @@ public class ResponseLineTest {
 	public void testSetCode2() {
 		ResponseLine testLine = new ResponseLine("HTTP/1.1", "200", "OK");
 		assertEquals("200", testLine.getCode());
-		testLine.setVersion("201");
+		testLine.setCode("201");
 		assertFalse("200".equals(testLine.getCode()));
 		}
 	
