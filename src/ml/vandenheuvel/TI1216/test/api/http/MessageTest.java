@@ -8,7 +8,7 @@ import ml.vandenheuvel.TI1216.source.api.http.Body;
 import ml.vandenheuvel.TI1216.source.api.http.Header;
 import ml.vandenheuvel.TI1216.source.api.http.Message;
 
-public class MesageTest {
+public class MessageTest {
 
 	@Test
 	public void testConstructorHeader() {
