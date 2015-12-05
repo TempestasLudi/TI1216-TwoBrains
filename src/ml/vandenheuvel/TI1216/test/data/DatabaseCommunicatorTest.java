@@ -2,6 +2,7 @@ package ml.vandenheuvel.TI1216.test.data;
 
 import static org.junit.Assert.*;
 
+import java.sql.SQLException;
 import java.util.ArrayList;
 
 import org.junit.BeforeClass;
@@ -20,11 +21,8 @@ import ml.vandenheuvel.TI1216.source.data.User;
  *
  */
 public class DatabaseCommunicatorTest {
-	/*
-	 * /private DatabaseCommunicator communicator = new
-	 * DatabaseCommunicator("192.168.1.111", "TI1216");/
-	 */
-	private DatabaseCommunicator communicator = new DatabaseCommunicator("85.151.128.10", "TI1216-test");/**/
+	//private DatabaseCommunicator communicator = new DatabaseCommunicator("192.168.1.111", "TI1216");
+	private DatabaseCommunicator communicator = new DatabaseCommunicator("85.151.128.10", "TI1216-test");
 
 	/**
 	 * "Tests" the constructor and cleans the database (or at least tries to..).
@@ -319,5 +317,12 @@ public class DatabaseCommunicatorTest {
 		this.communicator.save(course);
 		databaseCourse = this.communicator.getCourse(course.getID());
 		assertEquals(course, databaseCourse);
+	}
+	
+	@Test(expected=SQLException.class)
+	public void testSQLExceptionConstructor() throws SQLException
+	{
+		DatabaseCommunicator dbCommunicator = new DatabaseCommunicator("192.168.1.111", "TI1206");
+		assertNotNull(dbCommunicator);
 	}
 }
