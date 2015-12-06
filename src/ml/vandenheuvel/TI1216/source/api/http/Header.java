@@ -139,13 +139,15 @@ public class Header {
 	
 	/**
 	 * Equals method to compare object with this instance
+	 * @param other Object to compare this instance to
+	 * @return true if equals and false if not
 	 */
 	@Override
 	public boolean equals(Object other){
 		if(other instanceof Header){
 			Header that = (Header) other;
 			
-			return (this.getHeaderLine().equals(that.getHeaderLine()));
+			return this.getHeaderLine().equals(that.getHeaderLine());
 		}
 		
 		return false;
