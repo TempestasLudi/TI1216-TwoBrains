@@ -385,6 +385,10 @@ public class DatabaseCommunicator {
 	 */
 	public boolean canRegister(Credentials credentials){
 		try {
+			if (credentials.getUsername() == null || "".equals(credentials.getUsername()) || 
+					credentials.getPassword() == null || "".equals(credentials.getPassword())) {
+				return false;
+			}
 			ResultSet resultSet = this.get("SELECT * FROM user WHERE name = '" + credentials.getUsername() + "'");
 			return !resultSet.next();
 		} catch (SQLException e) {
@@ -515,7 +519,7 @@ public class DatabaseCommunicator {
 		User existing = this.getUser(user.getUsername());
 		try {
 			if (existing == null) {
-				this.execute("INSERT INTO user (name, password, postalCode, description) VALUES ('" + user.getUsername()
+				this.execute("INSERT INTO user (name, password, postalCode, description) VALUES ('" + credentials.getUsername()
 						+ "', '" + credentials.getPassword() + "', '" + user.getPostalCode() + "', '"
 						+ user.getDescription() + "')");
 			}

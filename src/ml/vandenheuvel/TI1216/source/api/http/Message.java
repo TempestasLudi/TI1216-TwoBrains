@@ -169,8 +169,11 @@ public class Message {
 	 * @return the HTTP message in string format
 	 */
 	public String toString(){
-		this.header.addField(new HeaderField("Content-Length", 
-				String.valueOf(body.getContent().length())));
+		if (!(this.header.getHeaderLine() instanceof ResponseLine) || "200".equals(((ResponseLine)this.header.getHeaderLine()).getCode())) {
+			this.header.addField(new HeaderField("Content-Length", 
+					String.valueOf(body.getContent().length())));
+			this.header.addField(new HeaderField("Content-Type", "text/json"));
+		}
 		this.header.addField(new HeaderField("Date", 
 				new Date().toString()));
 		String result = this.header.toString() + "\r\n" + this.body.toString();

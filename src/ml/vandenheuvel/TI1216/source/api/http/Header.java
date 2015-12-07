@@ -33,8 +33,9 @@ public class Header {
 	 */
 	public Header(HeaderLine headerLine) {
 		this.headerLine = headerLine;
-		this.addField(new HeaderField("Connection", "close"));
-		this.addField(new HeaderField("Content-Type", "text/json"));
+		if (headerLine instanceof ResponseLine) {
+			this.addField(new HeaderField("Connection", "close"));
+		}
 	}
 
 	/**
