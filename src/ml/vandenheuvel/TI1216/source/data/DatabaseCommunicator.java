@@ -420,14 +420,36 @@ public class DatabaseCommunicator {
 	 * @return all users in the database
 	 */
 	public User[] getUsers(){
-		// TODO: implement grades
 		try {
-			ResultSet resultSet = this.get("SELECT name, postalCode, description FROM user");
+			String query = "SELECT u.ID AS username, u.postalCode, u.description AS userDescription, IF(g.ID IS NULL, -1, g.ID) AS gradeId, g.courseId, g.value AS gradeValue, "
+					+ "FROM user AS u"
+					+ "JOIN RIGHT grade AS g"
+					+ "ON g.username = u.ID";
+			ResultSet resultSet = this.get(query);
 			ArrayList<User> users = new ArrayList<User>();
+			User user = null;
+			ArrayList<Grade> grades = new ArrayList<Grade>();
 			while (resultSet.next()) {
-				users.add(new User(resultSet.getString("name"), resultSet.getString("postalCode"),
-						resultSet.getString("description"), new Grade[0]));
+				if (user == null) {
+					user = new User(resultSet.getString("username"), resultSet.getString("postalCode"),
+							resultSet.getString("description"), new Grade[0]);
+					users.add(user);
+				}
+				else if (resultSet.getString("username") != user.getUsername()) {
+					Grade[] gradeArray = new Grade[grades.size()];
+					grades.toArray(gradeArray);
+					user.setGradeList(gradeArray);
+					grades = new ArrayList<Grade>();
+					users.add(new User(resultSet.getString("username"), resultSet.getString("postalCode"),
+							resultSet.getString("description"), new Grade[0]));
+				}
+				if (resultSet.getInt("gradeId") != -1) {
+					grades.add(new Grade(resultSet.getString("courseId"), resultSet.getInt("gradeValue")));
+				}
 			}
+			Grade[] gradeArray = new Grade[grades.size()];
+			grades.toArray(gradeArray);
+			user.setGradeList(gradeArray);
 			User[] result = new User[users.size()];
 			users.toArray(result);
 			return result;
