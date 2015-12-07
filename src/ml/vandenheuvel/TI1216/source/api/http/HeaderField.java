@@ -82,4 +82,17 @@ public class HeaderField {
 	public String toString(){
 		return this.name + ": " + this.value + " \r\n";
 	}
+	
+	/**
+	 * Equals method to compare object with this instance
+	 */
+	public boolean equals(Object other){
+		if(other instanceof HeaderField){
+			HeaderField that = (HeaderField) other;
+			
+			return (this.getName().equals(that.getName()) && 
+					this.getValue().equals(that.getValue()));
+			}
+		return false;
+		}
 }

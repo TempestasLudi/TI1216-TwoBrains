@@ -108,4 +108,21 @@ public class ResponseLine implements HeaderLine {
 	public String toString(){
 		return this.version + " " + this.code + " " + this.status + " \r\n";
 	}
+	
+	/**
+	 * Compares two objects to see if they are equal
+	 * @param other Object to compare this instance to
+	 * @return true if equal false if not
+	 */
+	@Override
+	public boolean equals(Object other) {
+		if(other instanceof ResponseLine){
+			ResponseLine that = (ResponseLine) other;
+			return (this.getVersion().equals(that.getVersion()) && 
+					this.getCode().equals(that.getCode()) && 
+					this.getStatus().equals(that.getStatus()));
+		}
+		
+		return false;
+	}
 }

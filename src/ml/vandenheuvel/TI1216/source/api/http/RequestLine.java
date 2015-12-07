@@ -109,4 +109,22 @@ public class RequestLine implements HeaderLine {
 	public String toString(){
 		return this.method + " " + this.URI + " " + this.version + " \r\n";
 	}
+	
+	
+	/**
+	 * Compares two objects to see if they are equal
+	 * @param other Object to compare this instance to
+	 * @return true if equal false if not
+	 */
+	@Override
+	public boolean equals(Object other) {
+		if(other instanceof RequestLine){
+			RequestLine that = (RequestLine) other;
+			return (this.getMethod().equals(that.getMethod()) && 
+					this.getUri().equals(that.getUri()) && 
+					this.getVersion().equals(that.getVersion()));
+		}
+		
+		return false;
+	}
 }

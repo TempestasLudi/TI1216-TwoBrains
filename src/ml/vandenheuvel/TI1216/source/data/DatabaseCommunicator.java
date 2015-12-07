@@ -88,6 +88,10 @@ public class DatabaseCommunicator {
 		String query = "SELECT f.ID as facultyID, f.name AS facultyName, p.id AS programID, p.name AS programName, c.ID as courseID, c.name AS courseName "
 				+ "FROM faculty AS f " + "LEFT JOIN program AS p ON f.ID = p.facultyID "
 				+ "LEFT JOIN course AS c ON p.ID = c.programID " + "ORDER BY facultyID ASC, programID ASC ";
+		return getFaculties(query);
+	}
+	
+	public Faculty[] getFaculties(String query) {
 		try {
 			ResultSet resultSet = this.get(query);
 			return createFPCTree(resultSet);
@@ -108,6 +112,10 @@ public class DatabaseCommunicator {
 				+ "FROM faculty AS f " + "LEFT JOIN program AS p ON f.ID = p.facultyID "
 				+ "LEFT JOIN course AS c ON p.ID = c.programID " + "WHERE f.ID = '" + id + "' "
 				+ "ORDER BY programID ASC ";
+		return getFaculty(id, query);
+	}
+	
+	public Faculty getFaculty(String id, String query) {
 		try {
 			ResultSet resultSet = this.get(query);
 			Faculty[] faculties = createFPCTree(resultSet);

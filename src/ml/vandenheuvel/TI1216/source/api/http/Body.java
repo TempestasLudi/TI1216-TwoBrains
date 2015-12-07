@@ -47,5 +47,17 @@ public class Body {
 	public String toString(){
 		return this.content;
 	}
+	
+	/**
+	 * Equals method to compare object with this instance
+	 */
+	public boolean equals(Object other){
+		if(other instanceof Body){
+			Body that = (Body) other;
+			return (this.getContent().equals(that.getContent()));
+		}
+		return false;
+		
+	}
 
 }
