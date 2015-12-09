@@ -29,6 +29,7 @@ public class MainGUI extends Application
 			    public void handle(ActionEvent e) 
 			    {
 			    	LoginGUI.display();
+			    	//window.close();
 			    }
 		});
 		

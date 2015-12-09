@@ -9,6 +9,7 @@ import javafx.stage.Modality;
 import javafx.stage.Stage;
 import ml.vandenheuvel.TI1216.source.data.Credentials;
 import ml.vandenheuvel.TI1216.source.data.DatabaseCommunicator;
+import ml.vandenheuvel.TI1216.source.data.User;
 
 public class RegisterGUI 
 {
@@ -62,12 +63,15 @@ public class RegisterGUI
 				 		//error message
 				 	}
 				 	Credentials cred = new Credentials(username, password);
+				 	User u1 = new User(username);
 				 	if(dbCommunicator.canRegister(cred)){
+				 		dbCommunicator.save(u1, cred);
 				 		MenuGUI.display();
-				 		window.close();
+				 		//window.close();
 				 	}
 				 	else{
 				 		//error message
+				 		System.out.println("Can't register");
 				 	}
 			    	
 			    }

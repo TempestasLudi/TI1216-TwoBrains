@@ -48,14 +48,7 @@ public class LoginGUI
 			    {	
 				 	String username = nameInput.toString();
 				 	String password = passInput.toString();
-				 	Credentials cred = new Credentials(username, password);
-				 	if(dbCommunicator.canLogin(cred)){
-				 		MenuGUI.display();
-				 		window.close();
-				 	}
-				 	else{
-				 		//error message
-				 	}
+				 	logIn(username, password);
 			    
 			    }
 		});
@@ -78,6 +71,18 @@ public class LoginGUI
 		Scene scene = new Scene(grid, 350, 200);
 		window.setScene(scene);
 		window.showAndWait();
+	}
+	
+	public static void logIn(String username, String password){
+		Credentials cred = new Credentials(username, password);
+	 	if(dbCommunicator.canLogin(cred)){
+	 		MenuGUI.display();
+	 		//window.close();
+	 	}
+	 	else{
+	 		//error message
+	 		System.out.println("Can't log in");
+	 	}
 	}
 
 }
