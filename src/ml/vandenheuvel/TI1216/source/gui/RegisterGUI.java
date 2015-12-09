@@ -7,9 +7,12 @@ import javafx.scene.control.*;
 import javafx.scene.layout.GridPane;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
+import ml.vandenheuvel.TI1216.source.data.Credentials;
+import ml.vandenheuvel.TI1216.source.data.DatabaseCommunicator;
 
 public class RegisterGUI 
 {
+	static DatabaseCommunicator dbCommunicator = new DatabaseCommunicator("192.168.1.111", "TI1206");
 
 	public static void display()
 	{
@@ -50,7 +53,23 @@ public class RegisterGUI
 			 @Override
 			    public void handle(ActionEvent e) 
 			    {
-			    	MenuGUI.display();
+				 	String username = nameInput.toString();
+				 	String password = null;
+				 	if(passInput1.toString().equals(passInput2.toString())){
+				 		password = passInput1.toString();
+				 	}
+				 	else{
+				 		//error message
+				 	}
+				 	Credentials cred = new Credentials(username, password);
+				 	if(dbCommunicator.canRegister(cred)){
+				 		MenuGUI.display();
+				 		window.close();
+				 	}
+				 	else{
+				 		//error message
+				 	}
+			    	
 			    }
 		});
 		GridPane.setConstraints(loginButton, 1, 3);
