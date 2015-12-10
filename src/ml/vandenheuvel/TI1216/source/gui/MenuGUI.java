@@ -19,6 +19,13 @@ public class MenuGUI
 		
 		HBox topMenu = new HBox();
 		Button settingsButton = new Button("Settings");
+		settingsButton.setOnAction(new EventHandler<ActionEvent>()
+		{
+				public void handle(ActionEvent e)
+				{
+					SettingsGUI.display();
+				}
+		});
 		Button logoutButton = new Button("Log out");
 		logoutButton.setOnAction(new EventHandler<ActionEvent>()
 		{
