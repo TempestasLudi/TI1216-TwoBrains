@@ -1,6 +1,6 @@
 package ml.vandenheuvel.TI1216.source.client;
 
-import ml.vandenheuvel.TI1216.source.data.Login;
+import ml.vandenheuvel.TI1216.source.data.Credentials;
 
 /**
  * This class contains the main function and is run using two arguments; the
@@ -29,10 +29,10 @@ public class ClientApplication {
 
 		// Ask for login credentials
 		/* Temporary */
-		Login login = null;
+		Credentials credentials = null;
 		/* Temporary */
 		
-		client.logIn(login);
+		client.logIn(credentials);
 		
 		client.getServerListener().start();
 
