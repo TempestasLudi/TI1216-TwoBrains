@@ -3,23 +3,12 @@ package ml.vandenheuvel.TI1216.test.data;
 
 import static org.junit.Assert.*;
 
-import java.util.ArrayList;
-
 import org.junit.Test;
 
-import ml.vandenheuvel.TI1216.source.data.Course;
-import ml.vandenheuvel.TI1216.source.data.Faculty;
 import ml.vandenheuvel.TI1216.source.data.Grade;
-import ml.vandenheuvel.TI1216.source.data.Program;
 import ml.vandenheuvel.TI1216.source.data.User;
 
-public class UserTest {
-	private Course createCourse(String subject){
-		Faculty faculty = new Faculty("EWI", "Elektrotechniek, wis- en informatica", new ArrayList<Program>());
-		Program program = new Program("TI", "Technische Informatica", faculty, new ArrayList<Course>());
-		return new Course(subject, "OOP", program);
-	}
-	
+public class UserTest {	
 	@Test
 	public void testConstructorUser1() {
 		Grade[] g = new Grade[2];
