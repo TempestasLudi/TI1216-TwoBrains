@@ -472,12 +472,24 @@ public class DatabaseCommunicator {
 	 * @return a user in the database with the specified name
 	 */
 	public User getUser(String name){
-		// TODO: implement grades
 		try {
-			ResultSet resultSet = this.get("SELECT * FROM user WHERE name = '" + name + "'");
+			ResultSet resultSet = this.get("SELECT u.name AS username, u.postalCode, u.description AS userDescription, IF(g.ID IS NULL, -1, g.ID) AS gradeId, g.courseId, g.value AS gradeValue "
+					+ "FROM user AS u "
+					+ "RIGHT JOIN grade AS g "
+					+ "ON g.username = username "
+					+ "WHERE username = '" + name + "'");
 			if (resultSet.next()) {
-				return new User(resultSet.getString("name"), resultSet.getString("postalCode"),
+				ArrayList<Grade> gradeList = new ArrayList<Grade>();
+				User user = new User(resultSet.getString("name"), resultSet.getString("postalCode"),
 						resultSet.getString("description"), new Grade[0]);
+				do {
+					gradeList.add(new Grade(resultSet.getString("courseId"), resultSet.getInt("gradeValue")));
+				}
+				while (resultSet.next());
+				Grade[] gradeArray = new Grade[gradeList.size()];
+				gradeList.toArray(gradeArray);
+				user.setGradeList(gradeArray);
+				return user;
 			}
 		} catch (SQLException e) {
 			System.out.println(e.getMessage());
@@ -491,12 +503,22 @@ public class DatabaseCommunicator {
 	 * @param user the user to update
 	 */
 	public void save(User user){
-		// TODO: implement grades
 		User existing = this.getUser(user.getUsername());
 		try {
 			if (existing != null) {
 				this.execute("UPDATE user SET postalCode = '" + user.getPostalCode() + "', description = '"
 						+ user.getDescription() + "' WHERE name = '" + user.getUsername() + "'");
+				this.execute("DELETE FROM grade WHERE username = '" + user.getUsername() + "'");
+				String addQuery = "INSERT INTO grade (courseID, username, value) VALUES ";
+				Grade[] gradeList = user.getGradeList();
+				for (int i = 0; i < gradeList.length; i++) {
+					Grade grade = gradeList[i];
+					addQuery += "('" + grade.getCourse() + "', '" + user.getUsername() + "', " + grade.getGrade() + ")";
+					if (i != gradeList.length - 1) {
+						addQuery += ", ";
+					}
+				}
+				this.execute(addQuery);
 			}
 		} catch (SQLException e) {
 			System.out.println(e.getMessage());
@@ -509,13 +531,22 @@ public class DatabaseCommunicator {
 	 * @param user the user to add
 	 */
 	public void save(User user, Credentials credentials){
-		// TODO: implement grades
 		User existing = this.getUser(user.getUsername());
 		try {
 			if (existing == null) {
 				this.execute("INSERT INTO user (name, password, postalCode, description) VALUES ('" + credentials.getUsername()
 						+ "', '" + credentials.getPassword() + "', '" + user.getPostalCode() + "', '"
 						+ user.getDescription() + "')");
+				String addQuery = "INSERT INTO grade (courseID, username, value) VALUES ";
+				Grade[] gradeList = user.getGradeList();
+				for (int i = 0; i < gradeList.length; i++) {
+					Grade grade = gradeList[i];
+					addQuery += "('" + grade.getCourse() + "', '" + user.getUsername() + "', " + grade.getGrade() + ")";
+					if (i != gradeList.length - 1) {
+						addQuery += ", ";
+					}
+				}
+				this.execute(addQuery);
 			}
 		} catch (SQLException e) {
 			System.out.println(e.getMessage());
@@ -528,9 +559,9 @@ public class DatabaseCommunicator {
 	 * @param user the user to remove
 	 */
 	public void delete(User user){
-		// TODO: implement grades
 		try {
 			this.execute("DELETE FROM user WHERE name = '" + user.getUsername() + "'");
+			this.execute("DELETE FROM grade WHERE username = '" + user.getUsername() + "'");
 		} catch (SQLException e) {
 			System.out.println(e.getMessage());
 		}
