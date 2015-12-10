@@ -7,21 +7,18 @@ import javafx.scene.control.*;
 import javafx.scene.layout.GridPane;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
-import java.awt.event.*;
 
 public class EditProfileGUI {
 
 	static String username = "Default"; //databasecommunicator.getUser().getUsername();
 	static String postcode = "Default";//databasecommunicator.getUser().getPostCode();
 	static String description = "Default";//databasecommunicator.getUser().getDescription();
-	static int editCounter = 0;
 	
 	public static void display(){
 		Stage window = new Stage();
 		window.initModality(Modality.APPLICATION_MODAL);
 		window.setTitle("EditProfileGUI");
-		window.setMinWidth(500);
-		window.setMinHeight(500);
+		
 		
 		GridPane grid = new GridPane();
 		grid.setPadding(new Insets(10, 10, 10, 10));
@@ -37,8 +34,14 @@ public class EditProfileGUI {
 		Label postCodeLabel = new Label("Postcode: "); //pull postcode from database
 		GridPane.setConstraints(postCodeLabel, 0, 1);
 		
+		Label setPCLabel = new Label(postcode);
+		GridPane.setConstraints(setPCLabel, 1, 1);
+		
 		Label descrLabel = new Label("Description: "); //pull description from database
 		GridPane.setConstraints(descrLabel, 0, 2);
+		
+		Label setDescrLabel = new Label(description);
+		GridPane.setConstraints(setDescrLabel, 1, 2);
 		
 		Button editName = new Button("Edit");
 		editName.setOnAction(new EventHandler<ActionEvent>() 
@@ -46,20 +49,12 @@ public class EditProfileGUI {
 			 @Override
 			    public void handle(ActionEvent e) 
 			    {	
-				 	editCounter++;
 				 TextField nameInput = new TextField();
 					nameInput.setPromptText("Edit username");
 					GridPane.setConstraints(nameInput, 2, 0);
-					grid.getChildren().add(nameInput);
-					
-					if(editCounter % 2 == 0)
-					{
-						username = nameInput.getText();
-						
-						setNameLabel.setText(username);
-						
-						
-					}
+					grid.getChildren().add(nameInput);	
+					username = nameInput.getText();
+					setNameLabel.setText(username);
 			    
 			    }
 		});
@@ -73,12 +68,14 @@ public class EditProfileGUI {
 			    {	
 				 TextField postCodeInput = new TextField();
 					postCodeInput.setPromptText("Edit postcode");
-					GridPane.setConstraints(postCodeInput, 1, 1);
+					GridPane.setConstraints(postCodeInput, 2, 1);
 					grid.getChildren().add(postCodeInput);
+					postcode = postCodeInput.getText();
+					setPCLabel.setText(postcode);
 			    
 			    }
 		});
-		GridPane.setConstraints(editPostCode, 2, 1);
+		GridPane.setConstraints(editPostCode, 3, 1);
 		
 		Button editDescr = new Button("Edit");
 		editDescr.setOnAction(new EventHandler<ActionEvent>() 
@@ -87,18 +84,24 @@ public class EditProfileGUI {
 			    public void handle(ActionEvent e) 
 			    {	
 				 TextField descrInput = new TextField();
-					descrInput.setPromptText("Edit description");
-					GridPane.setConstraints(descrInput, 1, 2);
+				 descrInput.setPrefSize(245, 245);
+					//descrInput.setPromptText("Edit description");
+					descrInput.setText(description);
+					GridPane.setConstraints(descrInput, 2, 2);
+					
 					grid.getChildren().add(descrInput);
-			    
+					
+					description = descrInput.getText();
+					setDescrLabel.setText(description);
 			    }
 		});
-		GridPane.setConstraints(editDescr, 2, 2);
+		GridPane.setConstraints(editDescr, 3, 2);
+		GridPane.setConstraints(setDescrLabel, 1, 2);
 		
 			
-		grid.getChildren().addAll(nameLabel, setNameLabel, postCodeLabel, descrLabel, editName, editPostCode, editDescr);
+		grid.getChildren().addAll(nameLabel, setNameLabel, postCodeLabel, setPCLabel, descrLabel, setDescrLabel, editName, editPostCode, editDescr);
 		
-		Scene scene = new Scene(grid, 350, 200);
+		Scene scene = new Scene(grid, 500, 500);
 		window.setScene(scene);
 		window.showAndWait();
 	}
