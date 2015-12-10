@@ -133,12 +133,6 @@ public class DatabaseCommunicatorTest {
 		Faculty[] referenceFaculties = referenceFaculties();
 		compareFPCTrees(dbFaculties, referenceFaculties);
 	}
-	
-	@Test
-	public void testGetFacultiesException() {
-		Faculty[] dbFaculties = this.communicator.getFaculties("SELECT * FROM faculties");
-		assertNotNull(dbFaculties);
-	}
 
 	@Test
 	public void testGetFacultyExists() {
@@ -152,13 +146,6 @@ public class DatabaseCommunicatorTest {
 	@Test
 	public void testGetFacultyNull() {
 		Faculty faculty = this.communicator.getFaculty("F3");
-		assertNull(faculty);
-	}
-	
-	@Test
-	public void testGetFacultyException()
-	{
-		Faculty faculty = this.communicator.getFaculty("F1", "SELECT * FROM faculties");
 		assertNull(faculty);
 	}
 
@@ -331,10 +318,4 @@ public class DatabaseCommunicatorTest {
 		assertEquals(course, databaseCourse);
 	}
 	
-	@Test
-	public void testSQLExceptionConstructor()
-	{
-		DatabaseCommunicator dbCommunicator = new DatabaseCommunicator("192.168.1.111", "TI1206");
-		assertNotNull(dbCommunicator);
-	}
 }
