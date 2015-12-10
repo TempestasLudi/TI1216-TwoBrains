@@ -27,6 +27,7 @@ public class LogoutGUI
 				public void handle(ActionEvent e)
 				{
 					LoginGUI.display();
+					window.close();
 				}
 		});
 		vbox.setAlignment(Pos.CENTER);
