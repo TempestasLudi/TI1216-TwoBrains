@@ -309,4 +309,67 @@ public class DatabaseCommunicatorTest {
 		assertEquals(course, databaseCourse);
 	}
 	
+	@Test
+	public void testCanRegister1()
+	{
+		Credentials credentials = new Credentials(null, null);
+		assertFalse(this.communicator.canRegister(credentials));
+	}
+	
+	@Test
+	public void testCanRegister2()
+	{
+		Credentials credentials = new Credentials("", "");
+		assertFalse(this.communicator.canRegister(credentials));
+	}
+	
+	@Test
+	public void testCanRegister3()
+	{
+		Credentials credentials = new Credentials("yinghaodai", "wachtwoord");
+		assertTrue(this.communicator.canRegister(credentials));
+	}
+	
+	@Test
+	public void testCanRegister4()
+	{
+		Credentials credentials = new Credentials("yinghaodai", "");
+		assertFalse(this.communicator.canRegister(credentials));
+	}
+	
+	@Test
+	public void testCanRegister5()
+	{
+		Credentials credentials = new Credentials("", "wachtwoord");
+		assertFalse(this.communicator.canRegister(credentials));
+	}
+	
+	@Test
+	public void testCanRegister6()
+	{
+		Credentials credentials = new Credentials("Credentials 1", "Pass 1");
+		assertFalse(this.communicator.canRegister(credentials));
+	}
+	
+	@Test
+	public void testCanRegister7()
+	{
+		Credentials credentials = new Credentials("Credentials 1", null);
+		assertFalse(this.communicator.canRegister(credentials));
+	}
+	
+	@Test
+	public void testCanLogin1()
+	{
+		Credentials credentials = new Credentials("yinghaodai", "wachtwoord");
+		assertFalse(this.communicator.canLogin(credentials));
+	}
+	
+	@Test
+	public void testCanLogin2()
+	{
+		Credentials credentials = new Credentials("Credentials 1", "Pass 1");
+		assertTrue(this.communicator.canLogin(credentials));
+	}
+	
 }
