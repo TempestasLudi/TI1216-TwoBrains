@@ -425,10 +425,10 @@ public class DatabaseCommunicator {
 	 */
 	public User[] getUsers(){
 		try {
-			String query = "SELECT u.ID AS username, u.postalCode, u.description AS userDescription, IF(g.ID IS NULL, -1, g.ID) AS gradeId, g.courseId, g.value AS gradeValue "
+			String query = "SELECT u.name AS username, u.postalCode, u.description AS userDescription, IF(g.ID IS NULL, -1, g.ID) AS gradeId, g.courseId, g.value AS gradeValue "
 					+ "FROM user AS u "
 					+ "RIGHT JOIN grade AS g "
-					+ "ON g.username = u.ID";
+					+ "ON g.username = username";
 			ResultSet resultSet = this.get(query);
 			ArrayList<User> users = new ArrayList<User>();
 			User user = null;
