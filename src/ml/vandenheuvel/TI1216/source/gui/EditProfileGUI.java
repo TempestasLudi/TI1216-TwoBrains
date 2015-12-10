@@ -95,11 +95,23 @@ public class EditProfileGUI {
 					setDescrLabel.setText(description);
 			    }
 		});
+		
+		Button menuButton = new Button("Return back to menu");
+		menuButton.setOnAction(new EventHandler<ActionEvent>()
+		{
+				public void handle(ActionEvent e)
+				{
+					MenuGUI.display();
+					window.close();
+				}
+		});
 		GridPane.setConstraints(editDescr, 3, 2);
 		GridPane.setConstraints(setDescrLabel, 1, 2);
+		GridPane.setConstraints(menuButton, 0, 4);
+	
 		
 			
-		grid.getChildren().addAll(nameLabel, setNameLabel, postCodeLabel, setPCLabel, descrLabel, setDescrLabel, editName, editPostCode, editDescr);
+		grid.getChildren().addAll(nameLabel, setNameLabel, postCodeLabel, setPCLabel, descrLabel, setDescrLabel, editName, editPostCode, editDescr, menuButton);
 		
 		Scene scene = new Scene(grid, 500, 500);
 		window.setScene(scene);
