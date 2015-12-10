@@ -427,7 +427,7 @@ public class DatabaseCommunicator {
 		try {
 			String query = "SELECT u.name AS username, u.postalCode, u.description AS userDescription, IF(g.ID IS NULL, -1, g.ID) AS gradeId, g.courseId, g.value AS gradeValue "
 					+ "FROM user AS u "
-					+ "RIGHT JOIN grade AS g "
+					+ "LEFT JOIN grade AS g "
 					+ "ON g.username = username";
 			ResultSet resultSet = this.get(query);
 			ArrayList<User> users = new ArrayList<User>();
@@ -436,7 +436,7 @@ public class DatabaseCommunicator {
 			while (resultSet.next()) {
 				if (user == null) {
 					user = new User(resultSet.getString("username"), resultSet.getString("postalCode"),
-							resultSet.getString("description"), new Grade[0]);
+							resultSet.getString("userDescription"), new Grade[0]);
 					users.add(user);
 				}
 				else if (resultSet.getString("username") != user.getUsername()) {
@@ -445,7 +445,7 @@ public class DatabaseCommunicator {
 					user.setGradeList(gradeArray);
 					grades = new ArrayList<Grade>();
 					users.add(new User(resultSet.getString("username"), resultSet.getString("postalCode"),
-							resultSet.getString("description"), new Grade[0]));
+							resultSet.getString("userDescription"), new Grade[0]));
 				}
 				if (resultSet.getInt("gradeId") != -1) {
 					grades.add(new Grade(resultSet.getString("courseId"), resultSet.getInt("gradeValue")));
@@ -475,13 +475,13 @@ public class DatabaseCommunicator {
 		try {
 			ResultSet resultSet = this.get("SELECT u.name AS username, u.postalCode, u.description AS userDescription, IF(g.ID IS NULL, -1, g.ID) AS gradeId, g.courseId, g.value AS gradeValue "
 					+ "FROM user AS u "
-					+ "RIGHT JOIN grade AS g "
+					+ "LEFT JOIN grade AS g "
 					+ "ON g.username = username "
 					+ "WHERE username = '" + name + "'");
 			if (resultSet.next()) {
 				ArrayList<Grade> gradeList = new ArrayList<Grade>();
 				User user = new User(resultSet.getString("name"), resultSet.getString("postalCode"),
-						resultSet.getString("description"), new Grade[0]);
+						resultSet.getString("userDescription"), new Grade[0]);
 				do {
 					gradeList.add(new Grade(resultSet.getString("courseId"), resultSet.getInt("gradeValue")));
 				}
@@ -509,18 +509,21 @@ public class DatabaseCommunicator {
 				this.execute("UPDATE user SET postalCode = '" + user.getPostalCode() + "', description = '"
 						+ user.getDescription() + "' WHERE name = '" + user.getUsername() + "'");
 				this.execute("DELETE FROM grade WHERE username = '" + user.getUsername() + "'");
-				String addQuery = "INSERT INTO grade (courseID, username, value) VALUES ";
 				Grade[] gradeList = user.getGradeList();
-				for (int i = 0; i < gradeList.length; i++) {
-					Grade grade = gradeList[i];
-					addQuery += "('" + grade.getCourse() + "', '" + user.getUsername() + "', " + grade.getGrade() + ")";
-					if (i != gradeList.length - 1) {
-						addQuery += ", ";
+				if (gradeList.length > 0) {
+					String addQuery = "INSERT INTO grade (courseID, username, value) VALUES ";
+					for (int i = 0; i < gradeList.length; i++) {
+						Grade grade = gradeList[i];
+						addQuery += "('" + grade.getCourse() + "', '" + user.getUsername() + "', " + grade.getGrade() + ")";
+						if (i != gradeList.length - 1) {
+							addQuery += ", ";
+						}
 					}
+					this.execute(addQuery);
 				}
-				this.execute(addQuery);
 			}
 		} catch (SQLException e) {
+			e.printStackTrace();
 			System.out.println(e.getMessage());
 		}
 	}
@@ -537,18 +540,21 @@ public class DatabaseCommunicator {
 				this.execute("INSERT INTO user (name, password, postalCode, description) VALUES ('" + credentials.getUsername()
 						+ "', '" + credentials.getPassword() + "', '" + user.getPostalCode() + "', '"
 						+ user.getDescription() + "')");
-				String addQuery = "INSERT INTO grade (courseID, username, value) VALUES ";
 				Grade[] gradeList = user.getGradeList();
-				for (int i = 0; i < gradeList.length; i++) {
-					Grade grade = gradeList[i];
-					addQuery += "('" + grade.getCourse() + "', '" + user.getUsername() + "', " + grade.getGrade() + ")";
-					if (i != gradeList.length - 1) {
-						addQuery += ", ";
+				if (gradeList.length > 0) {
+					String addQuery = "INSERT INTO grade (courseID, username, value) VALUES ";
+					for (int i = 0; i < gradeList.length; i++) {
+						Grade grade = gradeList[i];
+						addQuery += "('" + grade.getCourse() + "', '" + user.getUsername() + "', " + grade.getGrade() + ")";
+						if (i != gradeList.length - 1) {
+							addQuery += ", ";
+						}
 					}
+					this.execute(addQuery);
 				}
-				this.execute(addQuery);
 			}
 		} catch (SQLException e) {
+			e.printStackTrace();
 			System.out.println(e.getMessage());
 		}
 	}
@@ -563,6 +569,7 @@ public class DatabaseCommunicator {
 			this.execute("DELETE FROM user WHERE name = '" + user.getUsername() + "'");
 			this.execute("DELETE FROM grade WHERE username = '" + user.getUsername() + "'");
 		} catch (SQLException e) {
+			e.printStackTrace();
 			System.out.println(e.getMessage());
 		}
 	}
