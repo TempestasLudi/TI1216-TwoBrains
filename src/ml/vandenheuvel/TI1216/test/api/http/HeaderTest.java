@@ -21,9 +21,8 @@ public class HeaderTest {
 		Header h = new Header();
 		String hHeaderLine = h.getHeaderLine().toString();
 		String hHeaderField = h.getField("Connection").toString();
-		
-		boolean evaluate = rString.equals(hHeaderLine) && rHeaderFieldString.equals(hHeaderField) ;
-		assertTrue(evaluate);
+		assertTrue(rString.equals(hHeaderLine));
+		assertTrue(rHeaderFieldString.equals(hHeaderField));
 	}
 	
 	
@@ -39,8 +38,8 @@ public class HeaderTest {
 		String hHeaderLine = h.getHeaderLine().toString();
 		String hHeaderField = h.getField("Connection").toString();
 		
-		boolean evaluate = hlString.equals(hHeaderLine) && hfString.equals(hHeaderField);
-		assertTrue(evaluate);
+		assertTrue(hlString.equals(hHeaderLine));
+		assertTrue(hfString.equals(hHeaderField));
 	}
 	
 	
@@ -50,8 +49,8 @@ public class HeaderTest {
 		HeaderField hf = new HeaderField("Connection","close"); 
 		Header h = new Header(hl);
 
-		boolean evaluate = hl.equals(h.getHeaderLine()) && hf.equals(h.getField("Connection"));
-		assertTrue(evaluate);
+		assertTrue(hl.equals(h.getHeaderLine()));
+		assertTrue(hf.equals(h.getField("Connection")));
 	}
 	
 	
@@ -64,8 +63,8 @@ public class HeaderTest {
 		Header h = new Header(hl);
 		String hHeaderLine = h.getHeaderLine().toString();
 		
-		boolean evaluate = hlString.equals(hHeaderLine) && h.getFields().equals(new HeaderField[0]);
-		assertTrue(evaluate);
+		assertTrue(hlString.equals(hHeaderLine));
+		assertTrue(h.getFields().equals(new HeaderField[0]));
 	}
 	
 	
@@ -74,8 +73,8 @@ public class HeaderTest {
 		HeaderLine hl = new RequestLine("method", "URI", "version");
 		Header h = new Header(hl);
 		
-		boolean evaluate = hl.equals(h.getHeaderLine())&& h.getFields().equals(new HeaderField[0]);
-		assertTrue(evaluate);
+		assertTrue(hl.equals(h.getHeaderLine()));
+		assertTrue(h.getFields().equals(new HeaderField[0]));
 	}
 	
 	// To do --> Andreas
