@@ -20,8 +20,8 @@ public class LogoutGUI
 		
 		
 		VBox vbox = new VBox();
-		Label logoutLabel = new Label("Bedankt voor het gebruiken van onze applicatie!");
-		Button loginButton = new Button("Terug naar Login");
+		Label logoutLabel = new Label("Thank you for using our application!");
+		Button loginButton = new Button("Back to Login");
 		loginButton.setOnAction(new EventHandler<ActionEvent>()
 		{
 				public void handle(ActionEvent e)
