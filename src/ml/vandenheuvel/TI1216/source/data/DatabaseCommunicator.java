@@ -451,9 +451,11 @@ public class DatabaseCommunicator {
 					grades.add(new Grade(resultSet.getString("courseId"), resultSet.getInt("gradeValue")));
 				}
 			}
-			Grade[] gradeArray = new Grade[grades.size()];
-			grades.toArray(gradeArray);
-			user.setGradeList(gradeArray);
+			if (user != null) {
+				Grade[] gradeArray = new Grade[grades.size()];
+				grades.toArray(gradeArray);
+				user.setGradeList(gradeArray);
+			}
 			User[] result = new User[users.size()];
 			users.toArray(result);
 			return result;
