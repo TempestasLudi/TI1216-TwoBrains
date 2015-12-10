@@ -47,12 +47,10 @@ public class DatabaseCommunicatorTest {
 		}
 
 		// Insert Users
-		Credentials c1 = new Credentials("Credentials 1", "Pass 1");
-		User u1 = new User("User 1", "Pc1", "This is a first description.", new Grade[0]);
-		Credentials c2 = new Credentials("Credentials 2", "Pass 2");
-		User u2 = new User("User 2", "Pc2", "This is a second description.", new Grade[0]);
-		communicator.save(u1, c1);
-		communicator.save(u2, c2);
+		Credentials[] referenceCredentials = referenceCredentials();
+		User[] referenceUsers = referenceUsers();
+		communicator.save(referenceUsers[0], referenceCredentials[0]);
+		communicator.save(referenceUsers[1], referenceCredentials[1]);
 	}
 
 	private static void compareFPCTrees(Faculty[] dbFaculties, Faculty[] referenceFaculties) {
@@ -125,6 +123,22 @@ public class DatabaseCommunicatorTest {
 		courses[3] = programs[0].getCourses().get(3);
 		courses[4] = programs[2].getCourses().get(0);
 		return courses;
+	}
+	
+	private static User[] referenceUsers()
+	{
+		User[] users = new User[2];
+		users[0] = new User("User 1", "Pc1", "This is a first description.", new Grade[0]);
+		users[1] = new User("User 2", "Pc2", "This is a second description.", new Grade[0]);
+		return users;
+	}
+	
+	private static Credentials[] referenceCredentials()
+	{
+		Credentials[] credentials = new Credentials[2];
+		credentials[0] = new Credentials("User 1", "Pass 1");
+		credentials[1] = new Credentials("User 2", "Pass 2");
+		return credentials;
 	}
 
 	@Test
@@ -347,14 +361,14 @@ public class DatabaseCommunicatorTest {
 	@Test
 	public void testCanRegister6()
 	{
-		Credentials credentials = new Credentials("Credentials 1", "Pass 1");
+		Credentials credentials = new Credentials("User 1", "Pass 1");
 		assertFalse(this.communicator.canRegister(credentials));
 	}
 	
 	@Test
 	public void testCanRegister7()
 	{
-		Credentials credentials = new Credentials("Credentials 1", null);
+		Credentials credentials = new Credentials("User 1", null);
 		assertFalse(this.communicator.canRegister(credentials));
 	}
 	
@@ -368,8 +382,17 @@ public class DatabaseCommunicatorTest {
 	@Test
 	public void testCanLogin2()
 	{
-		Credentials credentials = new Credentials("Credentials 1", "Pass 1");
+		Credentials credentials = new Credentials("User 1", "Pass 1");
 		assertTrue(this.communicator.canLogin(credentials));
+	}
+	
+	@Test
+	public void testGetUsers()
+	{
+		User[] databaseUsers = this.communicator.getUsers();
+		User[] referenceUsers = referenceUsers();
+		assertEquals(referenceUsers[0],databaseUsers[0]);
+		assertEquals(referenceUsers[1],databaseUsers[1]);
 	}
 	
 }
