@@ -2,10 +2,9 @@ package ml.vandenheuvel.TI1216.test.api.http;
 
 
 import static org.junit.Assert.*;
-
 import org.junit.Test;
-
 import ml.vandenheuvel.TI1216.source.api.http.*;
+import java.util.*;
 
 
 public class HeaderTest {
@@ -79,7 +78,21 @@ public class HeaderTest {
 	
 	// To do --> Andreas
 	@Test
-	public void testSecondConstructor1(){}
+	public void testSecondConstructor1(){
+		RequestLine rl = new RequestLine("method", "URI", "version");
+		HeaderField hf = new HeaderField("Connection","close"); 
+		
+		List<HeaderField> fields = new ArrayList<HeaderField>();
+		fields.add(hf);
+		
+		HeaderField[] afields = new HeaderField[fields.size()];
+		fields.toArray(afields);
+		
+		Header h = new Header(rl, fields);
+		boolean evaluate = true;
+		
+		
+	}
 
 	
 	// To do --> Andreas

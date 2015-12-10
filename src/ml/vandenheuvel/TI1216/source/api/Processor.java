@@ -2,7 +2,6 @@ package ml.vandenheuvel.TI1216.source.api;
 
 import java.nio.charset.StandardCharsets;
 import java.util.Base64;
-import java.util.Random;
 
 import org.json.JSONObject;
 

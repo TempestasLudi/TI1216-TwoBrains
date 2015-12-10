@@ -133,12 +133,6 @@ public class DatabaseCommunicatorTest {
 		Faculty[] referenceFaculties = referenceFaculties();
 		compareFPCTrees(dbFaculties, referenceFaculties);
 	}
-	
-	@Test
-	public void testGetFacultiesException() {
-		Faculty[] dbFaculties = this.communicator.getFaculties("SELECT * FROM faculties");
-		assertNotNull(dbFaculties);
-	}
 
 	@Test
 	public void testGetFacultyExists() {
@@ -152,13 +146,6 @@ public class DatabaseCommunicatorTest {
 	@Test
 	public void testGetFacultyNull() {
 		Faculty faculty = this.communicator.getFaculty("F3");
-		assertNull(faculty);
-	}
-	
-	@Test
-	public void testGetFacultyException()
-	{
-		Faculty faculty = this.communicator.getFaculty("F1", "SELECT * FROM faculties");
 		assertNull(faculty);
 	}
 
@@ -189,33 +176,6 @@ public class DatabaseCommunicatorTest {
 		compareFPCTrees(new Faculty[] { referenceFaculty }, new Faculty[] { dbFaculty });
 	}
 
-	// @Test
-	// public void testFaculties() {
-	// System.out.println("Fetch 1:");
-	// Faculty[] faculties = this.communicator.getFaculties();
-	// for (int i = 0; i < faculties.length; i++) {
-	// System.out.println("<Faculty(" + faculties[i].getID() + ", " +
-	// faculties[i].getName() + ")>");
-	// }
-	//
-	// Faculty lr = new Faculty("LR", "Lucht- en ruimtevaart", new
-	// ArrayList<Program>());
-	// this.communicator.save(lr);
-	// Faculty me = new Faculty("3Me", "3-thing-stuff", new
-	// ArrayList<Program>());
-	// this.communicator.save(me);
-	//
-	// System.out.println("Fetch 2:");
-	// faculties = this.communicator.getFaculties();
-	// for (int i = 0; i < faculties.length; i++) {
-	// System.out.println("<Faculty(" + faculties[i].getID() + ", " +
-	// faculties[i].getName() + ")>");
-	// }
-	//
-	// this.communicator.delete(lr);
-	// this.communicator.delete(me);
-	// }
-
 	@Test
 	public void testGetPrograms() 
 	{
@@ -244,6 +204,24 @@ public class DatabaseCommunicatorTest {
 	{
 		Program program = this.communicator.getProgram("RandomID");
 		assertNull(program);
+	}
+	
+	@Test
+	public void testGetProgramEmpty()
+	{
+		Program[] referencePrograms = referencePrograms();
+		this.communicator.delete(referencePrograms[0]);
+		this.communicator.delete(referencePrograms[1]);
+		this.communicator.delete(referencePrograms[2]);
+		assertNull(this.communicator.getProgram("P1.1"));
+		assertNull(this.communicator.getProgram("P1.2"));
+		assertNull(this.communicator.getProgram("P2.1"));
+		this.communicator.save(referencePrograms[0]);
+		this.communicator.save(referencePrograms[1]);
+		this.communicator.save(referencePrograms[2]);
+		assertNotNull(this.communicator.getProgram("P1.1"));
+		assertNotNull(this.communicator.getProgram("P1.2"));
+		assertNotNull(this.communicator.getProgram("P2.1"));
 	}
 
 	@Test
@@ -332,9 +310,66 @@ public class DatabaseCommunicatorTest {
 	}
 	
 	@Test
-	public void testSQLExceptionConstructor()
+	public void testCanRegister1()
 	{
-		DatabaseCommunicator dbCommunicator = new DatabaseCommunicator("192.168.1.111", "TI1206");
-		assertNotNull(dbCommunicator);
+		Credentials credentials = new Credentials(null, null);
+		assertFalse(this.communicator.canRegister(credentials));
 	}
+	
+	@Test
+	public void testCanRegister2()
+	{
+		Credentials credentials = new Credentials("", "");
+		assertFalse(this.communicator.canRegister(credentials));
+	}
+	
+	@Test
+	public void testCanRegister3()
+	{
+		Credentials credentials = new Credentials("yinghaodai", "wachtwoord");
+		assertTrue(this.communicator.canRegister(credentials));
+	}
+	
+	@Test
+	public void testCanRegister4()
+	{
+		Credentials credentials = new Credentials("yinghaodai", "");
+		assertFalse(this.communicator.canRegister(credentials));
+	}
+	
+	@Test
+	public void testCanRegister5()
+	{
+		Credentials credentials = new Credentials("", "wachtwoord");
+		assertFalse(this.communicator.canRegister(credentials));
+	}
+	
+	@Test
+	public void testCanRegister6()
+	{
+		Credentials credentials = new Credentials("Credentials 1", "Pass 1");
+		assertFalse(this.communicator.canRegister(credentials));
+	}
+	
+	@Test
+	public void testCanRegister7()
+	{
+		Credentials credentials = new Credentials("Credentials 1", null);
+		assertFalse(this.communicator.canRegister(credentials));
+	}
+	
+	@Test
+	public void testCanLogin1()
+	{
+		Credentials credentials = new Credentials("yinghaodai", "wachtwoord");
+		assertFalse(this.communicator.canLogin(credentials));
+	}
+	
+	@Test
+	public void testCanLogin2()
+	{
+		Credentials credentials = new Credentials("Credentials 1", "Pass 1");
+		assertTrue(this.communicator.canLogin(credentials));
+	}
+	
 }
