@@ -24,6 +24,7 @@ public class MenuGUI
 				public void handle(ActionEvent e)
 				{
 					SettingsGUI.display();
+					window.close();
 				}
 		});
 		Button logoutButton = new Button("Log out");
@@ -32,6 +33,7 @@ public class MenuGUI
 				public void handle(ActionEvent e)
 				{
 					LogoutGUI.display();
+					window.close();
 				}
 		});
 		topMenu.setAlignment(Pos.CENTER_RIGHT);
@@ -46,6 +48,7 @@ public class MenuGUI
 			    public void handle(ActionEvent e) 
 			    {	
 				 	EditProfileGUI.display();
+				 	window.close();
 			    }
 		});
 		Button chatButton = new Button("Open chat");
@@ -54,6 +57,7 @@ public class MenuGUI
 				public void handle(ActionEvent e)
 				{
 					ChatGUI.display();
+					window.close();
 				}
 			
 		});

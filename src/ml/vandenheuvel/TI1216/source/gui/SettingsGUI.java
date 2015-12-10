@@ -1,4 +1,6 @@
 package ml.vandenheuvel.TI1216.source.gui;
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
@@ -26,11 +28,23 @@ public class SettingsGUI
 		CheckBox checkbox2 = new CheckBox();
 		Label noti3Label = new Label("Are we allowed to use your location?        ");
 		CheckBox checkbox3 = new CheckBox();
+		Button menuButton = new Button("Return back to menu");
+		menuButton.setOnAction(new EventHandler<ActionEvent>()
+		{
+				public void handle(ActionEvent e)
+				{
+					MenuGUI.display();
+					window.close();
+				}
+		});
+		hbox1.setAlignment(Pos.TOP_CENTER);
+		hbox2.setAlignment(Pos.TOP_CENTER);
+		hbox3.setAlignment(Pos.TOP_CENTER);
+		vbox.setAlignment(Pos.TOP_CENTER);
 		hbox1.getChildren().addAll(noti1Label, checkbox1);
 		hbox2.getChildren().addAll(noti2Label, checkbox2);
 		hbox3.getChildren().addAll(noti3Label, checkbox3);
-		vbox.setAlignment(Pos.TOP_CENTER);
-		vbox.getChildren().addAll(hbox1, hbox2, hbox3);
+		vbox.getChildren().addAll(hbox1, hbox2, hbox3, menuButton);
 		
 		BorderPane borderPane = new BorderPane();
 		borderPane.setCenter(vbox);
