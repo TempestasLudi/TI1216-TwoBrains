@@ -400,7 +400,7 @@ public class DatabaseCommunicator {
 		try {
 			ResultSet resultSet = this.get("SELECT * FROM user WHERE name = '" + credentials.getUsername() + "' "
 					+ "AND password = '" + DatabaseCommunicator.encryptPassword(credentials.getPassword()) + "'");
-			return !resultSet.next();
+			return resultSet.next();
 		} catch (SQLException e) {
 			System.out.println(e.getMessage());
 		}
