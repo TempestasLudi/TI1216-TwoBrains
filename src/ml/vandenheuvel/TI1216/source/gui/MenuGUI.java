@@ -1,11 +1,12 @@
 package ml.vandenheuvel.TI1216.source.gui;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
-import javafx.geometry.Insets;
+import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
-import javafx.scene.layout.GridPane;
-import javafx.stage.Modality;
+import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.HBox;
+import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
 public class MenuGUI 
@@ -14,55 +15,70 @@ public class MenuGUI
 	public static void display()
 	{
 		Stage window = new Stage();
-		window.initModality(Modality.APPLICATION_MODAL);
 		window.setTitle("MenuGUI");
-		window.setMinWidth(250);
 		
-		GridPane grid = new GridPane();
-		grid.setPadding(new Insets(10, 10, 10, 10));
-		grid.setVgap(8);
-		grid.setHgap(10);
-		
-		Label nameLabel = new Label("Username: ");
-		GridPane.setConstraints(nameLabel, 0, 0);
-		
-		TextField nameInput = new TextField();
-		nameInput.setPromptText("Username");
-		GridPane.setConstraints(nameInput, 1, 0);
-		
-		Label passLabel = new Label("Password: ");
-		GridPane.setConstraints(passLabel, 0, 1);
-		
-		PasswordField passInput = new PasswordField();
-		passInput.setPromptText("Password");
-		GridPane.setConstraints(passInput, 1, 1);
-		
-		Button editProfile = new Button("Edit profile");
-		editProfile.setOnAction(new EventHandler<ActionEvent>()
+		HBox topMenu = new HBox();
+		Button settingsButton = new Button("Settings");
+		Button logoutButton = new Button("Log out");
+		logoutButton.setOnAction(new EventHandler<ActionEvent>()
 		{
-			public void handle(ActionEvent e)
-			{
-				EditProfileGUI.display();
-			}
+				public void handle(ActionEvent e)
+				{
+					LogoutGUI.display();
+				}
 		});
-		GridPane.setConstraints(editProfile, 1, 2);
-				
+		topMenu.setAlignment(Pos.CENTER_RIGHT);
+		topMenu.getChildren().addAll(settingsButton, logoutButton);
+	
 		
-		Hyperlink registerLink = new Hyperlink();
-		registerLink.setText("Not a member yet? Register now!");
-		registerLink.setOnAction(new EventHandler<ActionEvent>() 
+		VBox leftMenu = new VBox();
+		Button editButton = new Button("Edit profile");
+		editButton.setOnAction(new EventHandler<ActionEvent>() 
 		{
-		    @Override
-		    public void handle(ActionEvent e) 
-		    {
-		    	RegisterGUI.display();
-		    }
+			 @Override
+			    public void handle(ActionEvent e) 
+			    {	
+				 	EditProfileGUI.display();
+			    }
 		});
-		GridPane.setConstraints(registerLink, 1, 3);
+		Button chatButton = new Button("Open chat");
+		chatButton.setOnAction(new EventHandler<ActionEvent>()
+		{
+				public void handle(ActionEvent e)
+				{
+					ChatGUI.display();
+				}
+			
+		});
+		leftMenu.setPrefWidth(200);
+		leftMenu.getChildren().addAll(editButton, chatButton);
 		
-		grid.getChildren().addAll(nameLabel, nameInput, passLabel, passInput, editProfile, registerLink);
+		VBox centerMenu = new VBox();
+		Label matchLabel = new Label("All matches: ");
+		Label match1Label = new Label("Match1");
+		Label match2Label = new Label("Match2");
+	    centerMenu.setPrefWidth(200);
+		centerMenu.getChildren().addAll(matchLabel, match1Label, match2Label);
+
+		VBox rightMenu = new VBox();
+		HBox rightMenu2 = new HBox();
+		Label chatLabel = new Label("");
+		chatLabel.setStyle("-fx-background-color: white");
+		chatLabel.setMinSize(300, 250);
+		TextField chatInput = new TextField("Type your text");
+		chatInput.setPrefWidth(245);
+		Button sendButton = new Button("Send");
+		rightMenu2.getChildren().addAll(chatInput, sendButton);
+		rightMenu.setPrefWidth(300);
+		rightMenu.getChildren().addAll(chatLabel, rightMenu2);
 		
-		Scene scene = new Scene(grid, 350, 200);
+		BorderPane borderPane = new BorderPane();
+		borderPane.setTop(topMenu);
+		borderPane.setLeft(leftMenu);
+		borderPane.setCenter(centerMenu);
+		borderPane.setRight(rightMenu);
+		
+		Scene scene = new Scene(borderPane, 700, 400);
 		window.setScene(scene);
 		window.showAndWait();
 	}

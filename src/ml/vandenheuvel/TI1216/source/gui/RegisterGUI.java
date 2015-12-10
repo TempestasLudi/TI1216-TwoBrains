@@ -13,7 +13,7 @@ import ml.vandenheuvel.TI1216.source.data.User;
 
 public class RegisterGUI 
 {
-	static DatabaseCommunicator dbCommunicator = new DatabaseCommunicator("192.168.1.111", "TI1206");
+	//static DatabaseCommunicator dbCommunicator = new DatabaseCommunicator("192.168.1.111", "TI1206");
 
 	public static void display()
 	{
@@ -54,25 +54,25 @@ public class RegisterGUI
 			 @Override
 			    public void handle(ActionEvent e) 
 			    {
-				 	String username = nameInput.toString();
-				 	String password = null;
-				 	if(passInput1.toString().equals(passInput2.toString())){
-				 		password = passInput1.toString();
-				 	}
-				 	else{
+				 	//String username = nameInput.toString();
+				 	//String password = null;
+				 	//if(passInput1.toString().equals(passInput2.toString())){
+				 		//password = passInput1.toString();
+				 	//}
+				 	//else{
 				 		//error message
-				 	}
-				 	Credentials cred = new Credentials(username, password);
-				 	User u1 = new User(username);
-				 	if(dbCommunicator.canRegister(cred)){
-				 		dbCommunicator.save(u1, cred);
+				 	//}
+				 	//Credentials cred = new Credentials(username, password);
+				 	//User u1 = new User(username);
+				 	//if(dbCommunicator.canRegister(cred)){
+				 		//dbCommunicator.save(u1, cred);
 				 		MenuGUI.display();
 				 		//window.close();
-				 	}
-				 	else{
+				 	//}
+				 	//else{
 				 		//error message
-				 		System.out.println("Can't register");
-				 	}
+				 		//System.out.println("Can't register");
+				 	//}
 			    	
 			    }
 		});
