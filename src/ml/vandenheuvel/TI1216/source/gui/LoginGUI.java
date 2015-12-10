@@ -12,7 +12,7 @@ import ml.vandenheuvel.TI1216.source.data.DatabaseCommunicator;
 
 public class LoginGUI 
 {
-	static DatabaseCommunicator dbCommunicator = new DatabaseCommunicator("192.168.1.111", "TI1206");
+	//static DatabaseCommunicator dbCommunicator = new DatabaseCommunicator("192.168.1.111", "TI1206");
 
 	public static void display()
 	{
@@ -46,10 +46,10 @@ public class LoginGUI
 			 @Override
 			    public void handle(ActionEvent e) 
 			    {	
-				 	String username = nameInput.toString();
-				 	String password = passInput.toString();
-				 	logIn(username, password);
-			    
+				 	//String username = nameInput.toString();
+				 	//String password = passInput.toString();
+				 	//logIn(username, password);
+				 	MenuGUI.display();
 			    }
 		});
 		GridPane.setConstraints(loginButton, 1, 2);
@@ -73,16 +73,16 @@ public class LoginGUI
 		window.showAndWait();
 	}
 	
-	public static void logIn(String username, String password){
-		Credentials cred = new Credentials(username, password);
-	 	if(dbCommunicator.canLogin(cred)){
-	 		MenuGUI.display();
+	//public static void logIn(String username, String password){
+		//Credentials cred = new Credentials(username, password);
+	 	//if(dbCommunicator.canLogin(cred)){
+	 		//MenuGUI.display();
 	 		//window.close();
-	 	}
-	 	else{
+	 	//}
+	 	//else{
 	 		//error message
-	 		System.out.println("Can't log in");
-	 	}
-	}
+	 		//System.out.println("Can't log in");
+	 	//}
+	//}
 
 }
