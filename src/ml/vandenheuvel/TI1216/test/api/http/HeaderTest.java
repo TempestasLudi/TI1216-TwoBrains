@@ -62,8 +62,8 @@ public class HeaderTest {
 		Header h = new Header(hl);
 		String hHeaderLine = h.getHeaderLine().toString();
 		
-		assertTrue(hlString.equals(hHeaderLine));
-		assertTrue(h.getFields().equals(new HeaderField[0]));
+		boolean evaluate = hlString.equals(hHeaderLine);
+		assertTrue(evaluate);
 	}
 	
 	
@@ -72,9 +72,11 @@ public class HeaderTest {
 		HeaderLine hl = new RequestLine("method", "URI", "version");
 		Header h = new Header(hl);
 		
-		assertTrue(hl.equals(h.getHeaderLine()));
-		assertTrue(h.getFields().equals(new HeaderField[0]));
+		boolean evaluate = hl.equals(h.getHeaderLine());
+		assertTrue(evaluate);
+	
 	}
+	
 	
 	// To do --> Andreas
 	@Test
@@ -89,8 +91,15 @@ public class HeaderTest {
 		fields.toArray(afields);
 		
 		Header h = new Header(rl, fields);
-		boolean evaluate = true;
+		boolean evaluate1 = h.getHeaderLine().equals(rl);
 		
+		boolean evaluate2 = true;
+		for(int i=0; i<fields.size();i++){
+			evaluate2 = evaluate2 && fields.get(i).equals();
+		}
+		
+		
+		assertTrue();
 		
 	}
 
