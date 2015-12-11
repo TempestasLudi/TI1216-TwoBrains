@@ -7,13 +7,7 @@ import java.util.ArrayList;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
-import ml.vandenheuvel.TI1216.source.data.Course;
-import ml.vandenheuvel.TI1216.source.data.Credentials;
-import ml.vandenheuvel.TI1216.source.data.DatabaseCommunicator;
-import ml.vandenheuvel.TI1216.source.data.Faculty;
-import ml.vandenheuvel.TI1216.source.data.Grade;
-import ml.vandenheuvel.TI1216.source.data.Program;
-import ml.vandenheuvel.TI1216.source.data.User;
+import ml.vandenheuvel.TI1216.source.data.*;
 
 /**
  * @author Arnoud van der Leer
@@ -128,6 +122,7 @@ public class DatabaseCommunicatorTest {
 	private static User[] referenceUsers()
 	{
 		User[] users = new User[2];
+		//users[0] = new User("User 1", "Pc1", "This is a first description.", new Grade[] {new Grade("TI1216",10),new Grade("TI1506",9)});
 		users[0] = new User("User 1", "Pc1", "This is a first description.", new Grade[0]);
 		users[1] = new User("User 2", "Pc2", "This is a second description.", new Grade[0]);
 		return users;
@@ -393,6 +388,23 @@ public class DatabaseCommunicatorTest {
 		User[] referenceUsers = referenceUsers();
 		assertEquals(referenceUsers[0],databaseUsers[0]);
 		assertEquals(referenceUsers[1],databaseUsers[1]);
+	}
+	
+	@Test
+	public void testGetUserExists()
+	{
+		User[] referenceUsers = referenceUsers();
+		User user1 = this.communicator.getUser("User 1");
+		User user2 = this.communicator.getUser("User 2");
+		assertEquals(referenceUsers[0],user1);
+		assertEquals(referenceUsers[1],user2);
+	}
+	
+	@Test
+	public void testGetUserNull()
+	{
+		User user = this.communicator.getUser("Non-existing User");
+		assertNull(user);
 	}
 	
 }
