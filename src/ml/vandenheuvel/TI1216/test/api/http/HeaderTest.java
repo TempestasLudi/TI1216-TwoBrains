@@ -356,29 +356,75 @@ public class HeaderTest {
 		assertFalse(evaluate);
 	}
 	
-	// To do --> Andreas
+
+	
 	@Test
-	public void testGetField1(){}
+	public void testGetField1(){
+		HeaderLine hl = new ResponseLine("HTTP/1.1", "200", "OK");
+		Header h = new Header(hl);
+		
+		HeaderField hf1 = new HeaderField("Connection","close");
+		HeaderField hf2 = h.getField("Connection");
+		
+		boolean evaluate = (hf1.toString().equals(hf2.toString()));
+		
+		assertTrue(evaluate);
+	}
 	
 	
-	// To do --> Andreas
 	@Test
-	public void testGetField2(){}
+	public void testGetField2(){
+		HeaderLine hl = new ResponseLine("HTTP/1.1", "200", "OK");
+		Header h = new Header(hl);
+		
+		HeaderField hf1 = new HeaderField("Connection","close");
+		HeaderField hf2 = h.getField("Connection");
+		
+		boolean evaluate = (hf1.equals(hf2));
+		
+		assertTrue(evaluate);
+	}
 	
 	
-	// To do --> Andreas
 	@Test
-	public void testGetField3(){}
+	public void testGetField3(){
+		HeaderLine hl = new ResponseLine("HTTP/1.1", "200", "OK");
+		Header h = new Header(hl);
+		
+		HeaderField hf1 = new HeaderField("Connection","close");
+		HeaderField hf2 = h.getField("Network");
+		
+		boolean evaluate = (hf1.toString().equals(hf2));
+		
+		assertFalse(evaluate);
+	}
 	
 	
-	// To do --> Andreas
 	@Test
-	public void testGetField4(){}
+	public void testGetField4(){
+		HeaderLine hl = new ResponseLine("HTTP/1.1", "200", "OK");
+		Header h = new Header(hl);
+		
+		HeaderField hf1 = new HeaderField("Connection","close");
+		HeaderField hf2 = h.getField("Network");
+		
+		boolean evaluate = (hf1.equals(hf2));
+		
+		assertFalse(evaluate);
+	}
 	
 	
-	// To do --> Andreas
 	@Test
-	public void testGetField5(){}
+	public void testGetField5(){
+		HeaderLine hl = new ResponseLine("HTTP/1.1", "200", "OK");
+		Header h = new Header(hl);
+		
+		HeaderField hf1 = h.getField("Random");
+		
+		boolean evaluate = (hf1==null);
+		
+		assertTrue(evaluate);
+	}
 	
 	
 	// To do --> Andreas

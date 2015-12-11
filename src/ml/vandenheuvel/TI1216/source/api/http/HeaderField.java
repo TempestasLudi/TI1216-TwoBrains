@@ -39,6 +39,13 @@ public class HeaderField {
 	}
 	
 	/**
+	 * Default constructor.
+	 * 
+	 * @param no input parameters required for this type of constructor.
+	 */
+	public HeaderField() {}
+
+	/**
 	 * Gets the name of the field.
 	 * 
 	 * @return the name of the field
