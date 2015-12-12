@@ -199,7 +199,7 @@ public class HeaderTest {
 		RequestLine rl = new RequestLine("method", "URI", "version");
 		HeaderField hf1 = new HeaderField("Connection","close"); 
 		HeaderField hf2 = new HeaderField("Server","working"); 
-		HeaderField hf3 = new HeaderField("Server","lazy"); 
+		HeaderField hf3 = new HeaderField("Thread","lazy"); 
 		
 		List<HeaderField> fields = new ArrayList<HeaderField>();
 		fields.add(hf1);
@@ -226,8 +226,8 @@ public class HeaderTest {
 		RequestLine rl = new RequestLine("method", "URI", "version");
 		HeaderField hf1 = new HeaderField("Connection","close"); 
 		HeaderField hf2 = new HeaderField("Server","working"); 
-		HeaderField hf3 = new HeaderField("Server","lazy"); 
-		HeaderField hf4 = new HeaderField("Server","wrong");
+		HeaderField hf3 = new HeaderField("Socket","lazy"); 
+		HeaderField hf4 = new HeaderField("ServerSocket","wrong");
 		
 		List<HeaderField> fields = new ArrayList<HeaderField>();
 		fields.add(hf1);
@@ -253,7 +253,7 @@ public class HeaderTest {
 		RequestLine rl = new RequestLine("method", "URI", "version");
 		HeaderField hf1 = new HeaderField("Connection","close"); 
 		HeaderField hf2 = new HeaderField("Server","working"); 
-		HeaderField hf3 = new HeaderField("Server","lazy"); 
+		HeaderField hf3 = new HeaderField("Thread","lazy"); 
 		
 		List<HeaderField> fields = new ArrayList<HeaderField>();
 		fields.add(hf1);
@@ -280,8 +280,8 @@ public class HeaderTest {
 		RequestLine rl = new RequestLine("method", "URI", "version");
 		HeaderField hf1 = new HeaderField("Connection","close"); 
 		HeaderField hf2 = new HeaderField("Server","working"); 
-		HeaderField hf3 = new HeaderField("Server","lazy"); 
-		HeaderField hf4 = new HeaderField("Server","wrong");
+		HeaderField hf3 = new HeaderField("Socket","lazy"); 
+		HeaderField hf4 = new HeaderField("Thread","wrong");
 		
 		List<HeaderField> fields = new ArrayList<HeaderField>();
 		fields.add(hf1);
@@ -307,8 +307,8 @@ public class HeaderTest {
 		RequestLine rl = new RequestLine("method", "URI", "version");
 		HeaderField hf1 = new HeaderField("Connection","close"); 
 		HeaderField hf2 = new HeaderField("Server","working"); 
-		HeaderField hf3 = new HeaderField("Server","lazy"); 
-		HeaderField hf4 = new HeaderField("Server","wrong");
+		HeaderField hf3 = new HeaderField("Socket","lazy"); 
+		HeaderField hf4 = new HeaderField("Thread","wrong");
 		
 		List<HeaderField> fields = new ArrayList<HeaderField>();
 		fields.add(hf1);
@@ -334,8 +334,8 @@ public class HeaderTest {
 	public void testGetFields10(){
 		RequestLine rl = new RequestLine("method", "URI", "version");
 		HeaderField hf1 = new HeaderField("Connection","close"); 
-		HeaderField hf2 = new HeaderField("Server","working"); 
-		HeaderField hf3 = new HeaderField("Server","lazy"); 
+		HeaderField hf2 = new HeaderField("Socket","working"); 
+		HeaderField hf3 = new HeaderField("Thread","lazy"); 
 		HeaderField hf4 = new HeaderField("Server","wrong");
 		
 		List<HeaderField> fields = new ArrayList<HeaderField>();
@@ -427,14 +427,180 @@ public class HeaderTest {
 	}
 	
 	
-	// To do --> Andreas
 	@Test
-	public void testGetField6(){}
+	public void testGetField6(){
+		HeaderLine hl = new RequestLine("method", "URI", "version");
+		Header h = new Header(hl);
+		
+		HeaderField hf1 = h.getField("Random");
+		
+		boolean evaluate = (hf1==null);
+		
+		assertTrue(evaluate);	
+	}
 	
 	
-	// To do --> Andreas
 	@Test
-	public void testGetField7(){}
+	public void testGetField7(){
+		RequestLine rl = new RequestLine("method", "URI", "version");
+		HeaderField hf1 = new HeaderField("Connection","close"); 
+		HeaderField hf2 = new HeaderField("Server","working"); 
+		HeaderField hf3 = new HeaderField("Socket","lazy"); 
+		HeaderField hf4 = new HeaderField("Thread","wrong");
+		
+		List<HeaderField> fields = new ArrayList<HeaderField>();
+		fields.add(hf1);
+		fields.add(hf2);
+		fields.add(hf3);
+		fields.add(hf4);
+		
+		Header h = new Header(rl, fields);
+		
+		HeaderField hfs1 = h.getField("Connection");
+		HeaderField hfs2 = h.getField("Server");
+		HeaderField hfs3 = h.getField("Socket");
+		HeaderField hfs4 = h.getField("Thread");
+		
+		boolean evaluate = hf1.equals(hfs1) && hf2.equals(hfs2) 
+							&& hf3.equals(hfs3) && hf4.equals(hfs4);
+		
+		assertTrue(evaluate);
+	}
 	
+	
+	@Test
+	public void testGetField8(){
+		RequestLine rl = new RequestLine("method", "URI", "version");
+		HeaderField hf1 = new HeaderField("Connection","close"); 
+		HeaderField hf2 = new HeaderField("Server","working"); 
+		HeaderField hf3 = new HeaderField("Socket","lazy"); 
+		HeaderField hf4 = new HeaderField("Thread","wrong");
+		
+		List<HeaderField> fields = new ArrayList<HeaderField>();
+		fields.add(hf1);
+		fields.add(hf2);
+		fields.add(hf3);
+		
+		Header h = new Header(rl, fields);
+		
+		HeaderField hfs1 = h.getField("Connection");
+		HeaderField hfs2 = h.getField("Server");
+		HeaderField hfs3 = h.getField("Socket");
+		HeaderField hfs4 = h.getField("Thread");
+		
+		boolean evaluate = hf1.equals(hfs1) && hf2.equals(hfs2) 
+							&& hf3.equals(hfs3) && hf4.equals(hfs4);
+		
+		assertFalse(evaluate);
+	}
+	
+	
+	@Test
+	public void testGetHeaderLine1(){
+		HeaderLine hl1 = new ResponseLine("HTTP/1.1", "200", "OK");
+		Header h = new Header(hl1);
+		
+		HeaderLine hl2 = h.getHeaderLine();
+		
+		boolean evaluate = (hl1.toString().equals(hl2.toString()));
+		
+		assertTrue(evaluate);
+	}
+
+	
+	@Test
+	public void testGetHeaderLine2(){
+		HeaderLine hl1 = new ResponseLine("HTTP/1.1", "200", "OK");
+		Header h = new Header(hl1);
+		
+		HeaderLine hl2 = h.getHeaderLine();
+		
+		boolean evaluate = (hl1.equals(hl2));
+		
+		assertTrue(evaluate);
+	}
+	
+	
+	@Test
+	public void testGetHeaderLine3(){
+		HeaderLine hl1 = new RequestLine("method", "URI", "version");
+
+		Header h = new Header(hl1);
+		HeaderLine hl2 = h.getHeaderLine();
+		
+		boolean evaluate = hl1.toString().equals(hl2.toString());
+		
+		assertTrue(evaluate);
+	}
+	
+	
+	@Test
+	public void testGetHeaderLine4(){
+		HeaderLine hl1 = new RequestLine("method", "URI", "version");
+		
+		Header h = new Header(hl1);
+		HeaderLine hl2 = h.getHeaderLine();
+		
+		boolean evaluate = hl1.equals(hl2);
+		
+		assertTrue(evaluate);
+	}
+	
+	
+	@Test
+	public void testGetHeaderLine5(){
+		HeaderLine hl1 = new RequestLine("method", "URI", "version");
+		HeaderField hf1 = new HeaderField("Connection","close"); 
+		HeaderField hf2 = new HeaderField("Server","working"); 
+		List<HeaderField> fields = new ArrayList<HeaderField>();
+		fields.add(hf1);
+		fields.add(hf2);
+
+		
+		Header h = new Header(hl1);
+		HeaderLine hl2 = h.getHeaderLine();
+		
+		boolean evaluate = hl1.toString().equals(hl2.toString());
+		
+		assertTrue(evaluate);
+	}
+	
+	
+	@Test
+	public void testGetHeaderLine6(){
+		RequestLine rl1 = new RequestLine("method", "URI", "version");
+		HeaderField hf1 = new HeaderField("Connection","close"); 
+		HeaderField hf2 = new HeaderField("Server","working"); 
+		List<HeaderField> fields = new ArrayList<HeaderField>();
+		fields.add(hf1);
+		fields.add(hf2);
+
+		
+		Header h = new Header(rl1);
+		HeaderLine rl2 = h.getHeaderLine();
+		
+		boolean evaluate = rl1.toString().equals(rl2.toString());
+		
+		assertTrue(evaluate);
+	}
+	
+	
+	@Test
+	public void testGetHeaderLine7(){
+		RequestLine rl1 = new RequestLine("method", "URI", "version");
+		HeaderField hf1 = new HeaderField("Connection","close"); 
+		HeaderField hf2 = new HeaderField("Server","working"); 
+		List<HeaderField> fields = new ArrayList<HeaderField>();
+		fields.add(hf1);
+		fields.add(hf2);
+
+		
+		Header h = new Header(rl1);
+		HeaderLine rl2 = h.getHeaderLine();
+		
+		boolean evaluate = rl1.equals(rl2);
+		
+		assertTrue(evaluate);
+	}
 
 }
