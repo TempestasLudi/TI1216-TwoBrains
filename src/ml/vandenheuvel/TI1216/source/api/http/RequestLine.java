@@ -106,6 +106,7 @@ public class RequestLine implements HeaderLine {
 	 * 
 	 * @return the request-line in string format
 	 */
+	@Override
 	public String toString(){
 		return this.method + " " + this.URI + " " + this.version + " \r\n";
 	}
@@ -120,9 +121,9 @@ public class RequestLine implements HeaderLine {
 	public boolean equals(Object other) {
 		if(other instanceof RequestLine){
 			RequestLine that = (RequestLine) other;
-			return (this.getMethod().equals(that.getMethod()) && 
+			return this.getMethod().equals(that.getMethod()) && 
 					this.getUri().equals(that.getUri()) && 
-					this.getVersion().equals(that.getVersion()));
+					this.getVersion().equals(that.getVersion());
 		}
 		
 		return false;

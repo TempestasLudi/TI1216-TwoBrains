@@ -11,5 +11,6 @@ public interface HeaderLine {
 	 * 
 	 * @return the header line in string format
 	 */
+	@Override
 	public String toString();
 }

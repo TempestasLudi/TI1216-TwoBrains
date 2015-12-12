@@ -105,6 +105,7 @@ public class ResponseLine implements HeaderLine {
 	 * 
 	 * @return the response-line in string format
 	 */
+	@Override
 	public String toString(){
 		return this.version + " " + this.code + " " + this.status + " \r\n";
 	}
@@ -118,9 +119,9 @@ public class ResponseLine implements HeaderLine {
 	public boolean equals(Object other) {
 		if(other instanceof ResponseLine){
 			ResponseLine that = (ResponseLine) other;
-			return (this.getVersion().equals(that.getVersion()) && 
+			return this.getVersion().equals(that.getVersion()) && 
 					this.getCode().equals(that.getCode()) && 
-					this.getStatus().equals(that.getStatus()));
+					this.getStatus().equals(that.getStatus());
 		}
 		
 		return false;

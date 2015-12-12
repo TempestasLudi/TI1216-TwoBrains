@@ -43,7 +43,9 @@ public class HeaderField {
 	 * 
 	 * @param no input parameters required for this type of constructor.
 	 */
-	public HeaderField() {}
+	public HeaderField() {
+		//This default constructor requires no arguments.
+	}
 
 	/**
 	 * Gets the name of the field.
@@ -86,6 +88,7 @@ public class HeaderField {
 	 * 
 	 * @return the header field in string format
 	 */
+	@Override
 	public String toString(){
 		return this.name + ": " + this.value + " \r\n";
 	}
@@ -93,12 +96,13 @@ public class HeaderField {
 	/**
 	 * Equals method to compare object with this instance
 	 */
+	@Override
 	public boolean equals(Object other){
 		if(other instanceof HeaderField){
 			HeaderField that = (HeaderField) other;
 			
-			return (this.getName().equals(that.getName()) && 
-					this.getValue().equals(that.getValue()));
+			return this.getName().equals(that.getName()) && 
+					this.getValue().equals(that.getValue());
 			}
 		return false;
 		}

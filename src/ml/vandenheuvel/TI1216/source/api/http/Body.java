@@ -44,6 +44,7 @@ public class Body {
 	 * 
 	 * @return a string representation of the body
 	 */
+	@Override
 	public String toString(){
 		return this.content;
 	}
@@ -51,10 +52,11 @@ public class Body {
 	/**
 	 * Equals method to compare object with this instance
 	 */
+	@Override
 	public boolean equals(Object other){
 		if(other instanceof Body){
 			Body that = (Body) other;
-			return (this.getContent().equals(that.getContent()));
+			return this.getContent().equals(that.getContent());
 		}
 		return false;
 		

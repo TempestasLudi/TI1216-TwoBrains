@@ -98,7 +98,7 @@ public class Message {
 		boolean read = true;
 		while (read) {
 			String line = readLine(in);
-			if (line.equals("\r\n")) {
+			if ("\r\n".equals(line)) {
 				read = false;
 				continue;
 			}
@@ -126,8 +126,8 @@ public class Message {
 		while (!lineBreak) {
 			try {
 				char character = (char) in.readByte();
-				line += character;
-				if (line.length() >= 2 && line.substring(line.length() - 2).equals("\r\n")) {
+				line += Character.toString(character);
+				if (line.length() >= 2 && "\r\n".equals(line.substring(line.length() - 2))) {
 					lineBreak = true;
 				}
 			} catch (EOFException e) {
@@ -168,6 +168,7 @@ public class Message {
 	 * 
 	 * @return the HTTP message in string format
 	 */
+	@Override
 	public String toString(){
 		if (!(this.header.getHeaderLine() instanceof ResponseLine) || "200".equals(((ResponseLine)this.header.getHeaderLine()).getCode())) {
 			this.header.addField(new HeaderField("Content-Length", 
