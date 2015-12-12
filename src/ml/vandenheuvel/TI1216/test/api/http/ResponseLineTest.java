@@ -146,9 +146,23 @@ public class ResponseLineTest {
 	}
 	
 	@Test
-	public void testEqualsFalse(){
+	public void testEqualsFalse1(){
+		ResponseLine testLine = new ResponseLine("HTTP/1.1", "200", "OK");
+		ResponseLine testLine2 = new ResponseLine("HTTP/1.2 200 OK");		
+		assertFalse(testLine.equals(testLine2));				
+	}
+	
+	@Test
+	public void testEqualsFalse2(){
 		ResponseLine testLine = new ResponseLine("HTTP/1.1", "200", "OK");
 		ResponseLine testLine2 = new ResponseLine("HTTP/1.1 201 OK");		
+		assertFalse(testLine.equals(testLine2));				
+	}
+	
+	@Test
+	public void testEqualsFalse3(){
+		ResponseLine testLine = new ResponseLine("HTTP/1.1", "200", "OK");
+		ResponseLine testLine2 = new ResponseLine("HTTP/1.1 200 KK");		
 		assertFalse(testLine.equals(testLine2));				
 	}
 	

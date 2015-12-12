@@ -145,12 +145,25 @@ public class RequestLineTest {
 	}
 	
 	@Test
-	public void testEqualsFalse(){
+	public void testEqualsFalse1(){
 		RequestLine testLine = new RequestLine("GET", "/uri", "HTTP/1.1");
 		RequestLine testLine2 = new RequestLine("POST", "/uri", "HTTP/1.1");		
 		assertFalse(testLine.equals(testLine2));				
 	}
 	
+	@Test
+	public void testEqualsFalse2(){
+		RequestLine testLine = new RequestLine("GET", "/uri", "HTTP/1.1");
+		RequestLine testLine2 = new RequestLine("GET", "/chat", "HTTP/1.1");		
+		assertFalse(testLine.equals(testLine2));				
+	}
+	
+	@Test
+	public void testEqualsFalse3(){
+		RequestLine testLine = new RequestLine("GET", "/uri", "HTTP/1.1");
+		RequestLine testLine2 = new RequestLine("GET", "/uri", "HTTP/1.2");		
+		assertFalse(testLine.equals(testLine2));				
+	}
 	@Test
 	public void testEqualsNotRL(){
 		RequestLine testLine = new RequestLine("GET", "/uri", "HTTP/1.1");

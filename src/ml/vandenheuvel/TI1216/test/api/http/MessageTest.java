@@ -11,6 +11,9 @@ import ml.vandenheuvel.TI1216.source.api.http.Header;
 import ml.vandenheuvel.TI1216.source.api.http.HeaderField;
 import ml.vandenheuvel.TI1216.source.api.http.Message;
 import ml.vandenheuvel.TI1216.source.api.http.RequestLine;
+import ml.vandenheuvel.TI1216.source.api.http.ResponseLine;
+
+import java.util.Date;
 
 public class MessageTest {
 
@@ -90,5 +93,68 @@ public class MessageTest {
 		testMessage1.merge(testMessage2);
 		assertEquals(testMessage1.getHeader(), header2);
 		
+	}
+	
+	@Test
+	public void testToString1() {
+		RequestLine reqLine = new RequestLine("GET /chat HTTP/1.1");
+		ArrayList<HeaderField> hField = new ArrayList<HeaderField>();
+		Header header = new Header(reqLine, hField);
+		Body body = new Body("Content");
+		Message testMessage1 = new Message(header, body);
+		
+		assertEquals(testMessage1.toString(), "GET /chat HTTP/1.1 \r\n"
+				+ "Content-Length: 7 \r\n"
+				+ "Content-Type: text/json \r\n"
+				+ "Date: " + new  Date().toString() +" "
+				+ "\r\n\r\n"
+				+ "Content\r\n\r\n");
+	}
+	
+	@Test
+	public void testToString2() {
+		ResponseLine resLine = new ResponseLine("HTTP/1.1 200 OK");
+		Header header = new Header(resLine);
+		Body body = new Body("Content");
+		Message testMessage1 = new Message(header, body);
+		
+		assertEquals(testMessage1.toString(), "HTTP/1.1 200 OK \r\n"
+				+ "Connection: close \r\n"
+				+ "Content-Length: 7 \r\n"
+				+ "Content-Type: text/json \r\n"
+				+ "Date: " + new  Date().toString() +" "
+				+ "\r\n\r\n"
+				+ "Content\r\n\r\n");
+	
+	}
+	
+	@Test
+	public void testToString3() {
+		ResponseLine resLine = new ResponseLine("HTTP/1.1", "404", "File Not Found");
+		Header header = new Header(resLine);
+		Body body = new Body("Content");
+		Message testMessage1 = new Message(header, body);
+		assertEquals(testMessage1.toString(), "HTTP/1.1 404 File Not Found \r\n"
+				+ "Connection: close \r\n"
+				+ "Date: " + new  Date().toString() +" "
+				+ "\r\n\r\n"
+				+ "Content\r\n\r\n");
+	
+	}
+	
+	@Test
+	public void testToString4() {
+		ResponseLine resLine = new ResponseLine("HTTP/1.1 200 OK");
+		Header header = new Header(resLine);
+		Body body = new Body("");
+		Message testMessage1 = new Message(header, body);
+		
+		assertEquals(testMessage1.toString(), "HTTP/1.1 200 OK \r\n"
+				+ "Connection: close \r\n"
+				+ "Content-Length: 0 \r\n"
+				+ "Content-Type: text/json \r\n"
+				+ "Date: " + new  Date().toString() +" "
+				+ "\r\n\r\n");
+	
 	}
 }
