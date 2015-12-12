@@ -5,6 +5,7 @@ import static org.junit.Assert.*;
 import org.junit.Test;
 
 import ml.vandenheuvel.TI1216.source.api.http.RequestLine;
+import ml.vandenheuvel.TI1216.source.api.http.ResponseLine;
 
 public class RequestLineTest {
 	
@@ -134,5 +135,27 @@ public class RequestLineTest {
 	public void testToString() {
 		RequestLine testLine = new RequestLine("GET", "/uri", "HTTP/1.1");
 		assertEquals("GET /uri HTTP/1.1 \r\n", testLine.toString());
+	}
+	
+	@Test
+	public void testEqualsTrue(){
+		RequestLine testLine = new RequestLine("GET", "/uri", "HTTP/1.1");
+		RequestLine testLine2 = new RequestLine("GET", "/uri", "HTTP/1.1");
+		assertEquals(testLine, testLine2);
+	}
+	
+	@Test
+	public void testEqualsFalse(){
+		RequestLine testLine = new RequestLine("GET", "/uri", "HTTP/1.1");
+		RequestLine testLine2 = new RequestLine("POST", "/uri", "HTTP/1.1");		
+		assertFalse(testLine.equals(testLine2));				
+	}
+	
+	@Test
+	public void testEqualsNotRL(){
+		RequestLine testLine = new RequestLine("GET", "/uri", "HTTP/1.1");
+		ResponseLine testLine2 = new ResponseLine("HTTP/1.1 200 OK");	
+		assertFalse(testLine.equals(testLine2));
+		
 	}
 }
