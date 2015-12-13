@@ -1,26 +1,35 @@
 package ml.vandenheuvel.TI1216.source.data;
 
-import java.io.Serializable;
+import org.json.JSONArray;
+import org.json.JSONObject;
 
 /**
- * Author Callum Holland User class in OOP Project:Two Brains
+ * The User class contains all information of a user, except for it's password.
+ * 
+ * @author Bram van den Heuvel
+ *
  */
-public class User implements Serializable {
-	private static final long serialVersionUID = 4596303651727773521L;
+public class User {
 	private String username;
 	private String postalCode;
 	private String description;
-	private transient Grade[] gradeList;
+	private Grade[] gradeList;
 
 	/**
 	 * Constructor method for User object
 	 * 
-	 * @param username String representing User's username
-	 * @param postalCode String representing User's postal code
-	 * @param description String representing the description of the user
-	 * @param gradelist Array of Grade objects to represent the grades for the user's courses
+	 * @param username
+	 *            String representing User's username
+	 * @param postalCode
+	 *            String representing User's postal code
+	 * @param description
+	 *            String representing the description of the user
+	 * @param gradelist
+	 *            Array of Grade objects to represent the grades for the user's
+	 *            courses
 	 */
-	public User(String username, String postalCode, String description, Grade[] gradelist) {
+	public User(String username, String postalCode, String description,
+			Grade[] gradelist) {
 		this.username = username;
 		this.postalCode = postalCode;
 		this.description = description;
@@ -30,7 +39,8 @@ public class User implements Serializable {
 	/**
 	 * Constructor method for User object
 	 * 
-	 * @param username String representing User's username
+	 * @param username
+	 *            String representing User's username
 	 */
 	public User(String username) {
 		this(username, null, null, null);
@@ -75,7 +85,8 @@ public class User implements Serializable {
 	/**
 	 * Mutator method to set the user's username
 	 * 
-	 * @param username String to change it to
+	 * @param username
+	 *            String to change it to
 	 */
 	public void setUsername(String username) {
 		this.username = username;
@@ -84,7 +95,8 @@ public class User implements Serializable {
 	/**
 	 * Mutator method to set the user's postal code
 	 * 
-	 * @param postalCode String to change it to
+	 * @param postalCode
+	 *            String to change it to
 	 */
 	public void setPostalCode(String postalCode) {
 		this.postalCode = postalCode;
@@ -93,7 +105,8 @@ public class User implements Serializable {
 	/**
 	 * Mutator method to set the user's description
 	 * 
-	 * @param description String to change it to
+	 * @param description
+	 *            String to change it to
 	 */
 	public void setDescription(String description) {
 		this.description = description;
@@ -102,16 +115,52 @@ public class User implements Serializable {
 	/**
 	 * Mutator method to set the user's gradeList
 	 * 
-	 * @param gradeList array of grades to change it to
+	 * @param gradeList
+	 *            array of grades to change it to
 	 */
 	public void setGradeList(Grade[] gradeList) {
 		this.gradeList = gradeList;
 	}
 
 	/**
+	 * Creates a JSON representation of this User object.
+	 * 
+	 * @return a JSON representation of this User object
+	 */
+	public JSONObject toJSON() {
+		return new JSONObject().put("username", this.username)
+				.put("postalCode", this.postalCode)
+				.put("description", this.description)
+				.put("gradeList", new JSONArray(this.gradeList));
+	}
+
+	/**
+	 * Creates a User object out of a JSON file.
+	 * 
+	 * @return a User object out of a JSON file
+	 */
+	public static User fromJSON(JSONObject jsonObject) {
+		JSONArray tempJSONGradeList = jsonObject.getJSONArray("gradeList");
+		Grade[] tempGradeList = new Grade[tempJSONGradeList.length()];
+		if (tempJSONGradeList != null) {
+			for (int i = 0; i < tempJSONGradeList.length(); i++) {
+				if (!tempJSONGradeList.get(i).toString().equals("null")) {
+					tempGradeList[i] = Grade
+							.fromJSON((JSONObject) tempJSONGradeList.get(i));
+				} else
+					tempGradeList[i] = null;
+			}
+		}
+		return new User(jsonObject.getString("username"),
+				jsonObject.getString("postalCode"),
+				jsonObject.getString("description"), tempGradeList);
+	}
+
+	/**
 	 * checks whether two Users are equal to each other
 	 * 
-	 * @param other the Object to which the User is compared
+	 * @param other
+	 *            the Object to which the User is compared
 	 * @return true if two Users have the same username, otherwise false
 	 */
 	@Override

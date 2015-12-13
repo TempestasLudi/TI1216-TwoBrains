@@ -31,7 +31,7 @@ public class Grade {
 	 * 
 	 * @return the Course to which the Grade belongs
 	 */
-	public String getCourse() {
+	public String getCourseId() {
 		return this.courseId;
 	}
 
@@ -50,7 +50,7 @@ public class Grade {
 	 * @param course
 	 *            the new Course of the Grade
 	 */
-	public void setCourse(String courseId) {
+	public void setCourseId(String courseId) {
 		this.courseId = courseId;
 	}
 
@@ -77,12 +77,16 @@ public class Grade {
 	/**
 	 * Creates Grade object out of a JSON object
 	 * 
-	 * @param json the JSON object
+	 * @param json
+	 *            the JSON object
 	 * @return a Grade object
 	 */
 	public static Grade fromJSON(JSONObject jsonObject) {
-		return new Grade(jsonObject.getString("courseId"),
-				Integer.parseInt(jsonObject.getString("grade")));
+		if (jsonObject != null) {
+			return new Grade(jsonObject.getString("courseId"),
+					/*Integer.parseInt(jsonObject.getString("grade")*/(int)jsonObject.get("grade"));
+		}
+		return null;
 	}
 
 	/**
