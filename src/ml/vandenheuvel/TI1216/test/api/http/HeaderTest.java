@@ -602,5 +602,435 @@ public class HeaderTest {
 		
 		assertTrue(evaluate);
 	}
+	
+	
+	
+	@Test
+	public void testAddField1(){
+		HeaderLine hl = new RequestLine("method", "URI", "version");
+		 
+		HeaderField hf1 = new HeaderField("Connection","closed");
+		HeaderField hf2 = new HeaderField("Connection","open");
+		HeaderField hf3 = new HeaderField("Network","open");
+		
+		Header h = new Header(hl);
+		h.addField(hf2);
+		h.addField(hf3);
 
+		boolean evaluate1 = h.getField("Connection").equals(hf2);
+		boolean evaluate2 = h.getField("Connection").equals(hf1);
+		boolean evaluate3 = h.getField("Network").equals(hf3);
+		
+		
+		
+		assertTrue(evaluate1&&!evaluate2&&evaluate3);
+	}
+	
+	
+	@Test
+	public void testAddField2(){
+		HeaderLine hl = new RequestLine("method", "URI", "version");
+		 
+		HeaderField hf1 = new HeaderField("Connection","closed");
+		HeaderField hf2 = new HeaderField("Connection","open");
+		HeaderField hf3 = new HeaderField("Network","open");
+		HeaderField hf4 = new HeaderField("Network","done");
+		HeaderField hf5 = new HeaderField("Network","revived");
+		
+		Header h = new Header(hl);
+		h.addField(hf2);
+		h.addField(hf3);
+
+		boolean evaluate1 = h.getField("Network").equals(hf3);
+		
+		h.addField(hf4);
+		h.addField(hf1);
+		
+		boolean evaluate2 = h.getField("Connection").equals(hf1);
+		boolean evaluate3 = h.getField("Network").equals(hf4);
+		
+		h.addField(hf5);
+		h.addField(hf2);
+		
+		boolean evaluate4 = h.getField("Connection").equals(hf2);
+		boolean evaluate5 = h.getField("Network").equals(hf5);
+		
+		h.addField(hf3);
+		
+		boolean evaluate6 = h.getField("Network").equals(hf3);
+		
+		boolean evaluate = evaluate1 && evaluate2 && evaluate3 && 
+						   evaluate4 && evaluate5 && evaluate6;
+		
+		assertTrue(evaluate);
+	}
+	
+
+	@Test
+	public void testAddField3(){
+		HeaderLine hl = new ResponseLine("HTTP/1.1", "200", "OK");
+		
+		HeaderField hf1 = new HeaderField("Connection","closed");
+		HeaderField hf2 = new HeaderField("Connection","open");
+		HeaderField hf3 = new HeaderField("Network","open");
+		HeaderField hf4 = new HeaderField("Network","done");
+		HeaderField hf5 = new HeaderField("Network","revived");
+		
+		Header h = new Header(hl);
+		
+		boolean evaluate0 = h.getField("Connection").equals(hf1);
+		
+		h.addField(hf2);
+		h.addField(hf3);
+
+		boolean evaluate1 = h.getField("Network").equals(hf3);
+		
+		h.addField(hf4);
+		h.addField(hf1);
+		
+		boolean evaluate2 = h.getField("Connection").equals(hf1);
+		boolean evaluate3 = h.getField("Network").equals(hf4);
+		
+		h.addField(hf5);
+		h.addField(hf2);
+		
+		boolean evaluate4 = h.getField("Connection").equals(hf2);
+		boolean evaluate5 = h.getField("Network").equals(hf5);
+		
+		h.addField(hf3);
+		
+		boolean evaluate6 = h.getField("Network").equals(hf3);
+		
+		boolean evaluate = evaluate1 && evaluate2 && evaluate3 && 
+						   evaluate4 && evaluate5 && evaluate6;
+		
+		assertTrue(evaluate);
+	}
+	
+	
+	@Test
+	public void testAddField4(){
+		RequestLine rl = new RequestLine("method", "URI", "version");
+		List <HeaderField> fields = new ArrayList<HeaderField> ();
+		
+		HeaderField hf1 = new HeaderField("Connection","closed");
+		HeaderField hf2 = new HeaderField("Network","open");
+		fields.add(hf1);
+		fields.add(hf2);
+		
+		Header h = new Header(rl,fields);
+		
+		HeaderField hf3 = new HeaderField("Connection","open");
+		HeaderField hf4 = new HeaderField("Network","done");
+		HeaderField hf5 = new HeaderField("Network","revived");
+		
+		boolean evaluate0 = h.getField("Connection").equals(hf1);
+		
+		h.addField(hf3);
+		h.addField(hf4);
+
+		boolean evaluate1 = h.getField("Network").equals(hf4);
+		
+		h.addField(hf5);
+		h.addField(hf1);
+		
+		boolean evaluate2 = h.getField("Connection").equals(hf1);
+		boolean evaluate3 = h.getField("Network").equals(hf5);
+		
+		h.addField(hf1);
+		h.addField(hf2);
+		
+		boolean evaluate4 = h.getField("Connection").equals(hf1);
+		boolean evaluate5 = h.getField("Network").equals(hf2);
+		
+		h.addField(hf3);
+		
+		boolean evaluate6 = h.getField("Connection").equals(hf3);
+		
+		boolean evaluate = evaluate1 && evaluate2 && evaluate3 && 
+						   evaluate4 && evaluate5 && evaluate6;
+		
+		assertTrue(evaluate);
+	}
+	
+
+	@Test
+	public void testSetHeaderLine1(){
+		HeaderLine hl1 = new RequestLine("method", "URI", "version");
+		Header h = new Header(hl1);
+		
+		HeaderLine hl2 = new RequestLine("table", "URL", "vista");
+		h.setHeaderLine(hl2);
+		
+		boolean evaluate = h.getHeaderLine().equals(hl2);
+		
+		assertTrue(evaluate);
+	}
+
+	
+	@Test
+	public void testSetHeaderLine2(){
+		HeaderLine hl1 = new RequestLine("method", "URI", "version");
+		Header h = new Header(hl1);
+		
+		HeaderLine hl2 = new ResponseLine("1", "200", "okay");
+		h.setHeaderLine(hl2);
+		
+		boolean evaluate = h.getHeaderLine().equals(hl2);
+		
+		assertTrue(evaluate);
+	}
+	
+	
+	@Test
+	public void testSetHeaderLine3(){
+		HeaderLine hl1 = new ResponseLine("method", "URI", "version");
+		Header h = new Header(hl1);
+		
+		HeaderLine hl2 = new ResponseLine("1", "200", "okay");
+		h.setHeaderLine(hl2);
+		
+		boolean evaluate = h.getHeaderLine().equals(hl2);
+		
+		assertTrue(evaluate);
+	}
+	
+	
+	@Test
+	public void testSetHeaderLine4(){
+		HeaderLine hl1 = new ResponseLine("method", "URI", "version");
+		Header h = new Header(hl1);
+		
+		HeaderLine hl2 = new RequestLine("1", "200", "okay");
+		h.setHeaderLine(hl2);
+		
+		boolean evaluate = h.getHeaderLine().equals(hl2);
+		
+		assertTrue(evaluate);
+	}
+	
+	// To do --> Andreas
+	@Test
+	public void testMerge1(){
+		HeaderLine hl1 = new ResponseLine("method", "URI", "version");
+		Header h1 = new Header(hl1);
+		
+		HeaderLine hl2 = new ResponseLine("method", "URI", "version");
+		Header h2 = new Header(hl2);
+		
+		HeaderField hf1 = new HeaderField("Connection","closed");
+		h1.merge(h2);
+		
+		boolean evaluate1 = h1.getHeaderLine().equals(hl2);
+		
+		
+		
+	}
+
+	
+	// To do --> Andreas
+	@Test
+	public void testMerge2(){
+		HeaderLine hl1 = new ResponseLine("method", "URI", "version");
+		Header h1 = new Header(hl1);
+		
+		HeaderLine hl2 = new RequestLine("method", "URI", "version");
+		Header h2 = new Header(hl2);
+		
+	}
+	
+	
+	// To do --> Andreas
+	@Test
+	public void testMerge3(){
+		HeaderLine hl1 = new ResponseLine("method", "URI", "version");
+		Header h1 = new Header(hl1);
+		
+		RequestLine rl1 = new RequestLine("method", "URI", "version");
+		List<HeaderField> fields = new ArrayList<HeaderField>();
+		
+		HeaderField hf1 = new HeaderField("Connection","closed");
+		HeaderField hf2 = new HeaderField("Network","open");
+		fields.add(hf1);
+		fields.add(hf2);
+		
+		Header h2 = new Header(rl1, fields);
+	}
+	
+	
+	// To do --> Andreas
+	@Test
+	public void testMerge4(){
+		HeaderLine hl1 = new RequestLine("method", "URI", "version");
+		Header h1 = new Header(hl1);
+		
+		HeaderLine hl2 = new ResponseLine("method", "URI", "version");
+		Header h2 = new Header(hl2);
+		
+		HeaderField hf1 = new HeaderField("Connection","closed");
+		
+		h1.merge(h2);
+		
+		boolean evaluate1 = h1.getHeaderLine().equals(hl2);
+	
+		
+	}
+	
+	
+	// To do --> Andreas
+	@Test
+	public void testMerge5(){
+		HeaderLine hl1 = new RequestLine("method", "URI", "version");
+		Header h1 = new Header(hl1);
+		
+		HeaderLine hl2 = new RequestLine("method", "URI", "version");
+		Header h2 = new Header(hl2);
+		
+	}
+	
+	
+	// To do --> Andreas
+	@Test
+	public void testMerge6(){
+		HeaderLine hl1 = new RequestLine("method", "URI", "version");
+		Header h1 = new Header(hl1);
+		
+		RequestLine rl1 = new RequestLine("method", "URI", "version");
+		List<HeaderField> fields = new ArrayList<HeaderField>();
+		
+		HeaderField hf1 = new HeaderField("Connection","closed");
+		HeaderField hf2 = new HeaderField("Network","open");
+		fields.add(hf1);
+		fields.add(hf2);
+		
+		Header h2 = new Header(rl1, fields);
+		
+	}
+	
+	
+	// To do --> Andreas
+	@Test
+	public void testMerge7(){
+		RequestLine rl1 = new RequestLine("method", "URI", "version");
+		List<HeaderField> fields = new ArrayList<HeaderField>();
+		
+		HeaderField hf1 = new HeaderField("Connection","closed");
+		HeaderField hf2 = new HeaderField("Network","open");
+		fields.add(hf1);
+		fields.add(hf2);
+		
+		Header h1 = new Header(rl1, fields);
+		
+		HeaderLine hl2 = new ResponseLine("method", "URI", "version");
+		Header h2 = new Header(hl2);
+		
+		
+	}
+	
+	
+	// To do --> Andreas
+	@Test
+	public void testMerge8(){
+		RequestLine rl1 = new RequestLine("method", "URI", "version");
+		List<HeaderField> fields = new ArrayList<HeaderField>();
+		
+		HeaderField hf1 = new HeaderField("Connection","closed");
+		HeaderField hf2 = new HeaderField("Network","open");
+		fields.add(hf1);
+		fields.add(hf2);
+		
+		Header h1 = new Header(rl1, fields);
+		
+		HeaderLine hl2 = new RequestLine("method", "URI", "version");
+		Header h2 = new Header(hl2);
+		
+	}
+
+	
+	// To do --> Andreas
+	@Test
+	public void testMerge9(){
+		RequestLine rl1 = new RequestLine("method", "URI", "version");
+		List<HeaderField> fields1 = new ArrayList<HeaderField>();
+		
+		HeaderField hf1 = new HeaderField("Connection","closed");
+		HeaderField hf2 = new HeaderField("Network","open");
+		fields1.add(hf1);
+		fields1.add(hf2);
+		
+		Header h1 = new Header(rl1, fields1);
+		
+		RequestLine rl2 = new RequestLine("method", "URI", "version");
+		List<HeaderField> fields2 = new ArrayList<HeaderField>();
+		
+		HeaderField hf3 = new HeaderField("Connection","closed");
+		HeaderField hf4 = new HeaderField("Network","open");
+		HeaderField hf5 = new HeaderField("Socket","working");
+		fields2.add(hf3);
+		fields2.add(hf4);
+		fields2.add(hf5);
+		
+		Header h2 = new Header(rl2, fields2);
+	}
+	
+	
+	// To do --> Andreas
+	@Test
+	public void testToString1(){}
+	
+	
+	// To do --> Andreas
+	@Test
+	public void testToString2(){}
+	
+	
+	// To do --> Andreas
+	@Test
+	public void testToString3(){}
+	
+	
+	// To do --> Andreas
+	@Test
+	public void testEquals1(){}
+
+	
+	// To do --> Andreas
+	@Test
+	public void testEquals2(){}
+	
+	
+	// To do --> Andreas
+	@Test
+	public void testEquals3(){}
+	
+	
+	// To do --> Andreas
+	@Test
+	public void testEquals4(){}
+
+	
+	// To do --> Andreas
+	@Test
+	public void testEquals5(){}
+	
+	
+	// To do --> Andreas
+	@Test
+	public void testEquals6(){}
+	
+	
+	
+	// To do --> Andreas
+	@Test
+	public void testEquals7(){}
+
+	
+	// To do --> Andreas
+	@Test
+	public void testEquals8(){}
+	
+	
+	// To do --> Andreas
+	@Test
+	public void testEquals9(){}
 }
