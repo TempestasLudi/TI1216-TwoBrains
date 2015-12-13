@@ -509,7 +509,7 @@ public class DatabaseCommunicator {
 					String addQuery = "INSERT INTO grade (courseID, username, value) VALUES ";
 					for (int i = 0; i < gradeList.length; i++) {
 						Grade grade = gradeList[i];
-						addQuery += "('" + grade.getCourse() + "', '" + user.getUsername() + "', " + grade.getGrade()
+						addQuery += "('" + grade.getCourseId() + "', '" + user.getUsername() + "', " + grade.getGrade()
 								+ ")";
 						if (i != gradeList.length - 1) {
 							addQuery += ", ";
@@ -541,7 +541,7 @@ public class DatabaseCommunicator {
 					String addQuery = "INSERT INTO grade (courseID, username, value) VALUES ";
 					for (int i = 0; i < gradeList.length; i++) {
 						Grade grade = gradeList[i];
-						addQuery += "('" + grade.getCourse() + "', '" + user.getUsername() + "', " + grade.getGrade()
+						addQuery += "('" + grade.getCourseId() + "', '" + user.getUsername() + "', " + grade.getGrade()
 								+ ")";
 						if (i != gradeList.length - 1) {
 							addQuery += ", ";
