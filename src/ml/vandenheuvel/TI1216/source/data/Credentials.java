@@ -10,7 +10,6 @@ import org.json.JSONObject;
 public class Credentials {
 	private String username;
 	private String password;
-	private boolean signUp;
 
 	/**
 	 * @param username
@@ -20,10 +19,9 @@ public class Credentials {
 	 * @param signUp
 	 *            is true if the user wants to sign up, false otherwise
 	 */
-	public Credentials(String username, String password, boolean signUp) {
+	public Credentials(String username, String password) {
 		this.username = username;
 		this.password = password;
-		this.signUp = signUp;
 	}
 
 	/**
@@ -65,32 +63,13 @@ public class Credentials {
 	}
 
 	/**
-	 * The set method for the signUp boolean.
-	 * 
-	 * @param signUp
-	 *            the boolean to set
-	 */
-	public void setSignUp(boolean signUp) {
-		this.signUp = signUp;
-	}
-
-	/**
-	 * The get method for the signUp boolean.
-	 * 
-	 * @return the signUp boolean
-	 */
-	public boolean getSignUp() {
-		return this.signUp;
-	}
-
-	/**
 	 * Turns this Credentials object into a JSON object
 	 * 
 	 * @return a JSON object that represents this Credentials object
 	 */
 	public JSONObject toJSON() {
 		return new JSONObject().put("username", this.username)
-				.put("password", this.password).put("signUp", this.signUp);
+				.put("password", this.password);
 	}
 
 	/**
@@ -102,8 +81,7 @@ public class Credentials {
 	 */
 	public static Credentials fromJSON(JSONObject jsonObject) {
 		return new Credentials(jsonObject.getString("username"),
-				jsonObject.getString("password"),
-				jsonObject.getBoolean("signUp"));
+				jsonObject.getString("password"));
 	}
 
 	@Override
@@ -111,8 +89,7 @@ public class Credentials {
 		if (object instanceof Credentials && object != null) {
 			Credentials that = (Credentials) object;
 			if (this.getUsername().equals(that.getUsername())
-					&& this.getPassword().equals(that.getPassword())
-					&& this.getSignUp() == that.getSignUp()) {
+					&& this.getPassword().equals(that.getPassword())) {
 				return true;
 			}
 		}
