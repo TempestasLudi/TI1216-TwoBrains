@@ -46,7 +46,9 @@ public class Header {
 	 */
 	public Header(RequestLine headerLine, List<HeaderField> fields) {
 		this.headerLine = headerLine;
-		this.fields = fields;
+		for(int i=0; i<fields.size();i++){
+			this.addField(fields.get(i));
+		}
 	}
 
 	/**
