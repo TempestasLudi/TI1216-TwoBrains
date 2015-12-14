@@ -84,7 +84,7 @@ public class Grade {
 	public static Grade fromJSON(JSONObject jsonObject) {
 		if (jsonObject != null) {
 			return new Grade(jsonObject.getString("courseId"),
-					/*Integer.parseInt(jsonObject.getString("grade")*/(int)jsonObject.get("grade"));
+					Integer.parseInt(jsonObject.getString("grade")));
 		}
 		return null;
 	}

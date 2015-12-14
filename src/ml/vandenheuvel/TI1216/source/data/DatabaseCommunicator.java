@@ -426,7 +426,7 @@ public class DatabaseCommunicator {
 	public User[] getUsers(){
 		try {
 			String query = "SELECT u.name AS username, u.postalCode, u.description AS userDescription, IF(g.ID IS NULL, -1, g.ID) AS gradeId, g.courseId, g.value AS gradeValue "
-					+ "FROM user AS u " + "LEFT JOIN grade AS g " + "ON g.username = username";
+					+ "FROM user AS u " + "LEFT JOIN grade AS g " + "ON g.username = u.name";
 			ResultSet resultSet = this.get(query);
 			ArrayList<User> users = new ArrayList<User>();
 			User user = null;
@@ -472,11 +472,11 @@ public class DatabaseCommunicator {
 		try {
 			ResultSet resultSet = this
 					.get("SELECT u.name AS username, u.postalCode, u.description AS userDescription, IF(g.ID IS NULL, -1, g.ID) AS gradeId, g.courseId, g.value AS gradeValue "
-							+ "FROM user AS u " + "LEFT JOIN grade AS g " + "ON g.username = username "
-							+ "WHERE username = '" + name + "'");
+							+ "FROM user AS u " + "LEFT JOIN grade AS g " + "ON g.username = u.name "
+							+ "WHERE u.name = '" + name + "'");
 			if (resultSet.next()) {
 				ArrayList<Grade> gradeList = new ArrayList<Grade>();
-				User user = new User(resultSet.getString("name"), resultSet.getString("postalCode"),
+				User user = new User(resultSet.getString("username"), resultSet.getString("postalCode"),
 						resultSet.getString("userDescription"), new Grade[0]);
 				do {
 					gradeList.add(new Grade(resultSet.getString("courseId"), resultSet.getInt("gradeValue")));
