@@ -41,8 +41,10 @@ public class DatabaseCommunicator {
 	/**
 	 * Constructor, initializes the dataSource.
 	 * 
-	 * @param hostname the database host name
-	 * @param database the database name
+	 * @param hostname
+	 *            the database host name
+	 * @param database
+	 *            the database name
 	 */
 	public DatabaseCommunicator(String hostname, String database) {
 		MysqlDataSource mysqlDS = null;
@@ -61,10 +63,11 @@ public class DatabaseCommunicator {
 	/**
 	 * Fetches data from the database.
 	 * 
-	 * @param query the query to be executed
+	 * @param query
+	 *            the query to be executed
 	 * @return the data matching the query
 	 */
-	private ResultSet get(String query) throws SQLException{
+	private ResultSet get(String query) throws SQLException {
 		Statement statement = this.connection.createStatement();
 		return statement.executeQuery(query);
 	}
@@ -72,9 +75,10 @@ public class DatabaseCommunicator {
 	/**
 	 * Executes a MySQL query.
 	 * 
-	 * @param query the query to be executed
+	 * @param query
+	 *            the query to be executed
 	 */
-	private void execute(String query) throws SQLException{
+	private void execute(String query) throws SQLException {
 		Statement statement = this.connection.createStatement();
 		statement.execute(query);
 	}
@@ -84,7 +88,7 @@ public class DatabaseCommunicator {
 	 * 
 	 * @return all faculties in the database
 	 */
-	public Faculty[] getFaculties(){
+	public Faculty[] getFaculties() {
 		String query = "SELECT f.ID as facultyID, f.name AS facultyName, p.id AS programID, p.name AS programName, c.ID as courseID, c.name AS courseName "
 				+ "FROM faculty AS f " + "LEFT JOIN program AS p ON f.ID = p.facultyID "
 				+ "LEFT JOIN course AS c ON p.ID = c.programID " + "ORDER BY facultyID ASC, programID ASC ";
@@ -100,10 +104,11 @@ public class DatabaseCommunicator {
 	/**
 	 * Fetches a faculty from the database.
 	 * 
-	 * @param id the id of the faculty
+	 * @param id
+	 *            the id of the faculty
 	 * @return the faculty with the id if found, otherwise null
 	 */
-	public Faculty getFaculty(String id){
+	public Faculty getFaculty(String id) {
 		String query = "SELECT f.ID as facultyID, f.name AS facultyName, p.id AS programID, p.name AS programName, c.ID as courseID, c.name AS courseName "
 				+ "FROM faculty AS f " + "LEFT JOIN program AS p ON f.ID = p.facultyID "
 				+ "LEFT JOIN course AS c ON p.ID = c.programID " + "WHERE f.ID = '" + id + "' "
@@ -123,10 +128,11 @@ public class DatabaseCommunicator {
 	/**
 	 * Creates a Faculty-Program-Course tree structure from a MySQL result set.
 	 * 
-	 * @param resultSet the result set
+	 * @param resultSet
+	 *            the result set
 	 * @return a Faculty-Program-Course tree structure from the result set
 	 */
-	private Faculty[] createFPCTree(ResultSet resultSet) throws SQLException{
+	private Faculty[] createFPCTree(ResultSet resultSet) throws SQLException {
 		ArrayList<Faculty> faculties = new ArrayList<Faculty>();
 		Faculty faculty = null;
 		Program program = null;
@@ -154,9 +160,10 @@ public class DatabaseCommunicator {
 	 * Updates a faculty if it already exists, otherwise, adds a new one. Also,
 	 * the programs of the faculty are saved.
 	 * 
-	 * @param faculty the faculty to add
+	 * @param faculty
+	 *            the faculty to save
 	 */
-	public void save(Faculty faculty){
+	public void save(Faculty faculty) {
 		Faculty existing = this.getFaculty(faculty.getID());
 		try {
 			ArrayList<Program> programs = faculty.getPrograms();
@@ -187,9 +194,10 @@ public class DatabaseCommunicator {
 	/**
 	 * Removes a faculty from the database.
 	 * 
-	 * @param faculty the faculty to remove
+	 * @param faculty
+	 *            the faculty to remove
 	 */
-	public void delete(Faculty faculty){
+	public void delete(Faculty faculty) {
 		try {
 			this.execute("DELETE FROM faculty WHERE ID = \'" + faculty.getID() + "\'");
 			ArrayList<Program> programs = faculty.getPrograms();
@@ -206,7 +214,7 @@ public class DatabaseCommunicator {
 	 * 
 	 * @return all programs in the database
 	 */
-	public Program[] getPrograms(){
+	public Program[] getPrograms() {
 		ArrayList<Program> programs = new ArrayList<Program>();
 		Faculty[] faculties = this.getFaculties();
 		for (int i = 0; i < faculties.length; i++) {
@@ -220,10 +228,11 @@ public class DatabaseCommunicator {
 	/**
 	 * Fetches a program from the database.
 	 * 
-	 * @param id the id of the program
+	 * @param id
+	 *            the id of the program
 	 * @return the program with the id if found, otherwise null
 	 */
-	public Program getProgram(String id){
+	public Program getProgram(String id) {
 		try {
 			ResultSet resultSet = this.get("SELECT * FROM program WHERE ID = '" + id + "'");
 			if (resultSet.next()) {
@@ -245,9 +254,10 @@ public class DatabaseCommunicator {
 	 * Saves a program. If it already exists, updates the current record.
 	 * Otherwise, adds a new one.
 	 * 
-	 * @param program the faculty to add
+	 * @param program
+	 *            the faculty to save
 	 */
-	public void save(Program program){
+	public void save(Program program) {
 		Program existing = this.getProgram(program.getID());
 		try {
 			ArrayList<Course> courses = program.getCourses();
@@ -280,9 +290,10 @@ public class DatabaseCommunicator {
 	/**
 	 * Removes a program from the database.
 	 * 
-	 * @param program the program to remove
+	 * @param program
+	 *            the program to remove
 	 */
-	public void delete(Program program){
+	public void delete(Program program) {
 		try {
 			this.execute("DELETE FROM program WHERE ID = \'" + program.getID() + "\'");
 			ArrayList<Course> courses = program.getCourses();
@@ -299,7 +310,7 @@ public class DatabaseCommunicator {
 	 * 
 	 * @return all courses in the database
 	 */
-	public Course[] getCourses(){
+	public Course[] getCourses() {
 		ArrayList<Course> courses = new ArrayList<Course>();
 		Program[] programs = this.getPrograms();
 		for (int i = 0; i < programs.length; i++) {
@@ -313,10 +324,11 @@ public class DatabaseCommunicator {
 	/**
 	 * Fetches a course from the database.
 	 * 
-	 * @param id the id of the course
+	 * @param id
+	 *            the id of the course
 	 * @return the course with the id if found, otherwise null
 	 */
-	public Course getCourse(String id){
+	public Course getCourse(String id) {
 		try {
 			ResultSet resultSet = this.get("SELECT * FROM course WHERE ID = '" + id + "'");
 			if (resultSet.next()) {
@@ -337,9 +349,10 @@ public class DatabaseCommunicator {
 	/**
 	 * Updates a course if it already exists, otherwise, adds a new one.
 	 * 
-	 * @param course the course to add
+	 * @param course
+	 *            the course to save
 	 */
-	public void save(Course course){
+	public void save(Course course) {
 		Course existing = this.getCourse(course.getID());
 		try {
 			if (existing == null) {
@@ -357,9 +370,10 @@ public class DatabaseCommunicator {
 	/**
 	 * Removes a course from the database.
 	 * 
-	 * @param course the course to remove
+	 * @param course
+	 *            the course to remove
 	 */
-	public void delete(Course course){
+	public void delete(Course course) {
 		try {
 			this.execute("DELETE FROM course WHERE ID = \'" + course.getID() + "\'");
 		} catch (SQLException e) {
@@ -370,12 +384,12 @@ public class DatabaseCommunicator {
 	/**
 	 * Checks whether a user can create an account or not.
 	 * 
-	 * @param credentials the credentials object containing the username to
-	 *            check
+	 * @param credentials
+	 *            the credentials object containing the username to check
 	 * @return true if no user is registered with that username, otherwise
 	 *         false.
 	 */
-	public boolean canRegister(Credentials credentials){
+	public boolean canRegister(Credentials credentials) {
 		try {
 			if (credentials.getUsername() == null || "".equals(credentials.getUsername())
 					|| credentials.getPassword() == null || "".equals(credentials.getPassword())) {
@@ -392,11 +406,12 @@ public class DatabaseCommunicator {
 	/**
 	 * Checks whether a user can login or not.
 	 * 
-	 * @param credentials the username-password pair to check for
+	 * @param credentials
+	 *            the username-password pair to check for
 	 * @return true if the user is registered with that username and password,
 	 *         otherwise false.
 	 */
-	public boolean canLogin(Credentials credentials){
+	public boolean canLogin(Credentials credentials) {
 		try {
 			ResultSet resultSet = this.get("SELECT * FROM user WHERE name = '" + credentials.getUsername() + "' "
 					+ "AND password = '" + DatabaseCommunicator.encryptPassword(credentials.getPassword()) + "'");
@@ -410,10 +425,11 @@ public class DatabaseCommunicator {
 	/**
 	 * Encrypts a password.
 	 * 
-	 * @param password the password to encrypt
+	 * @param password
+	 *            the password to encrypt
 	 * @return the encrypted password
 	 */
-	private static String encryptPassword(String password){
+	private static String encryptPassword(String password) {
 		// TODO: encryption
 		return password;
 	}
@@ -423,7 +439,7 @@ public class DatabaseCommunicator {
 	 * 
 	 * @return all users in the database
 	 */
-	public User[] getUsers(){
+	public User[] getUsers() {
 		try {
 			String query = "SELECT u.name AS username, u.postalCode, u.description AS userDescription, IF(g.ID IS NULL, -1, g.ID) AS gradeId, g.courseId, g.value AS gradeValue "
 					+ "FROM user AS u " + "LEFT JOIN grade AS g " + "ON g.username = u.name";
@@ -465,10 +481,11 @@ public class DatabaseCommunicator {
 	/**
 	 * Fetches a user from the database.
 	 * 
-	 * @param name the name of the user to fetch
+	 * @param name
+	 *            the name of the user to fetch
 	 * @return a user in the database with the specified name
 	 */
-	public User getUser(String name){
+	public User getUser(String name) {
 		try {
 			ResultSet resultSet = this
 					.get("SELECT u.name AS username, u.postalCode, u.description AS userDescription, IF(g.ID IS NULL, -1, g.ID) AS gradeId, g.courseId, g.value AS gradeValue "
@@ -495,9 +512,10 @@ public class DatabaseCommunicator {
 	/**
 	 * Updates a user if it already exists.
 	 * 
-	 * @param user the user to update
+	 * @param user
+	 *            the user to update
 	 */
-	public void save(User user){
+	public void save(User user) {
 		User existing = this.getUser(user.getUsername());
 		try {
 			if (existing != null) {
@@ -527,9 +545,10 @@ public class DatabaseCommunicator {
 	/**
 	 * Adds a new user.
 	 * 
-	 * @param user the user to add
+	 * @param user
+	 *            the user to add
 	 */
-	public void save(User user, Credentials credentials){
+	public void save(User user, Credentials credentials) {
 		User existing = this.getUser(user.getUsername());
 		try {
 			if (existing == null) {
@@ -559,9 +578,10 @@ public class DatabaseCommunicator {
 	/**
 	 * Removes a user from the database.
 	 * 
-	 * @param user the user to remove
+	 * @param user
+	 *            the user to remove
 	 */
-	public void delete(User user){
+	public void delete(User user) {
 		try {
 			this.execute("DELETE FROM user WHERE name = '" + user.getUsername() + "'");
 			this.execute("DELETE FROM grade WHERE username = '" + user.getUsername() + "'");
@@ -571,8 +591,84 @@ public class DatabaseCommunicator {
 		}
 	}
 
-	public Match[] getMatches(){
+	/**
+	 * Fetches all matches from the database.
+	 * 
+	 * @return all matches from the database
+	 */
+	public Match[] getMatches() {
+		try {
+			ResultSet resultSet = this.get("SELECT * FROM match WHERE username >= matchUsername");
+			ArrayList<Match> matches = new ArrayList<Match>();
+			while (resultSet.next()) {
+				matches.add(new Match(-1, resultSet.getString("username"), resultSet.getString("matchUsername")));
+			}
+			Match[] result = new Match[matches.size()];
+			matches.toArray(result);
+			return result;
+		} catch (SQLException e) {
+			e.printStackTrace();
+			System.out.println(e.getMessage());
+		}
 		return null;
+	}
+
+	/**
+	 * Fetches all matches for a certain user.
+	 * 
+	 * @param username
+	 *            the username to fetch matches for
+	 * @return all matches for the user
+	 */
+	public Match[] getMatches(String username) {
+		try {
+			ResultSet resultSet = this.get("SELECT * FROM match WHERE username = '" + username + "'");
+			ArrayList<Match> matches = new ArrayList<Match>();
+			while (resultSet.next()) {
+				matches.add(new Match(-1, resultSet.getString("username"), resultSet.getString("matchUsername")));
+			}
+			Match[] result = new Match[matches.size()];
+			matches.toArray(result);
+			return result;
+		} catch (SQLException e) {
+			e.printStackTrace();
+			System.out.println(e.getMessage());
+		}
+		return null;
+	}
+
+	/**
+	 * Updates a match if it already exists, otherwise, adds a new one.
+	 * 
+	 * @param match
+	 *            the match to save
+	 */
+	public void save(Match match) {
+		try {
+			if (match.getId() < 0 || !this.get("SELECT * FROM match WHERE ID = " + match.getId()).next()) {
+				this.execute("INSERT INTO match (username, matchUsername) VALUES ('" + match.getUsername1() + "', '"
+						+ match.getUsername2() + "')");
+			} else {
+				this.execute("UPDATE course SET username = '" + match.getUsername1() + "', matchUsername = '"
+						+ match.getUsername2() + "' WHERE ID = '" + match.getId() + "'");
+			}
+		} catch (SQLException e) {
+			System.out.println(e.getMessage());
+		}
+	}
+
+	/**
+	 * Removes a match from the database.
+	 * 
+	 * @param match
+	 *            the match to delete
+	 */
+	public void delete(Match match) {
+		try {
+			this.execute("DELETE FROM match WHERE ID = " + match.getId());
+		} catch (SQLException e) {
+			System.out.println(e.getMessage());
+		}
 	}
 
 }
