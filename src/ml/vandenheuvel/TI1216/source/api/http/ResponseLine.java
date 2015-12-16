@@ -107,7 +107,7 @@ public class ResponseLine implements HeaderLine {
 	 */
 	@Override
 	public String toString(){
-		return this.version + " " + this.code + " " + this.status + " \r\n";
+		return this.version + " " + this.code + " " + this.status + "\r\n";
 	}
 	
 	/**

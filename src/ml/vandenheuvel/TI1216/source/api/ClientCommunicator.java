@@ -57,7 +57,7 @@ public class ClientCommunicator implements Runnable {
 	public void run(){
 		System.out.println("Incoming:");
 		
-		Message message = Message.read(this.in);
+		Message message = Message.read(this.in, true);
 		
 		System.out.print(message);
 		

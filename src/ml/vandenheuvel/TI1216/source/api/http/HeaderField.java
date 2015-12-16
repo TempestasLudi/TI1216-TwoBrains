@@ -90,7 +90,7 @@ public class HeaderField {
 	 */
 	@Override
 	public String toString(){
-		return this.name + ": " + this.value + " \r\n";
+		return this.name + ": " + this.value + "\r\n";
 	}
 	
 	/**

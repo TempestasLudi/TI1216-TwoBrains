@@ -43,7 +43,10 @@ public class User {
 	 *            String representing User's username
 	 */
 	public User(String username) {
-		this(username, null, null, null);
+		this.username = username;
+		this.postalCode = "";
+		this.description = "";
+		this.gradeList = new Grade[0];
 	}
 
 	/**
@@ -128,10 +131,14 @@ public class User {
 	 * @return a JSON representation of this User object
 	 */
 	public JSONObject toJSON() {
+		JSONArray jsonGradeList = new JSONArray();
+		for (int i = 0; i < this.gradeList.length; i++) {
+			jsonGradeList.put(this.gradeList[i].toJSON());
+		}
 		return new JSONObject().put("username", this.username)
 				.put("postalCode", this.postalCode)
 				.put("description", this.description)
-				.put("gradeList", new JSONArray(this.gradeList));
+				.put("gradeList", jsonGradeList);
 	}
 
 	/**

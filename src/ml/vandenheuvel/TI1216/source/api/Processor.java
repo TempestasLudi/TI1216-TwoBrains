@@ -39,7 +39,7 @@ public class Processor {
 			}
 			if (!checkAuth(request)) {
 				response.getHeader().setHeaderLine(new ResponseLine("HTTP/1.1 401 Unauthorized"));
-				response.getHeader().addField(new HeaderField("WWW-Authenticate", "Basic realm=\"myRealm\""));
+				response.getHeader().addField(new HeaderField("WWW-Authenticate", "Basic realm=\"MCRealms\""));
 				return response;
 			}
 			switch (uriParts[1]) {
@@ -60,9 +60,13 @@ public class Processor {
 		if (authorization == null) {
 			return null;
 		}
-		String[] unp = Base64.getEncoder().encodeToString(
-				authorization.getValue().getBytes(StandardCharsets.UTF_8)).split(":");
-		Credentials credentials = new Credentials(unp[0], unp[1]);
+		String[] typeCredentials = authorization.getValue().split(" ");
+		String[] usernamePassword = new String(Base64.getDecoder().decode(
+				typeCredentials[1].getBytes(StandardCharsets.UTF_8))).split(":");
+		if (usernamePassword.length < 2) {
+			return null;
+		}
+		Credentials credentials = new Credentials(usernamePassword[0], usernamePassword[1]);
 		return credentials;
 	}
 	
@@ -72,17 +76,25 @@ public class Processor {
 		if ("PUT".equals(headerLine.getMethod())) {
 			Credentials credentials = getCredentials(request);
 			JSONObject userData = new JSONObject(request.getBody().getContent());
-			String name = userData.getString("username");
-			String postalCode = userData.getString("postalCode");
-			String description = userData.getString("description");
-			User newUser = new User(name, postalCode, description, new Grade[0]);
-			if (this.communicator.canRegister(credentials)) {
+			User newUser = User.fromJSON(userData);
+			if (credentials != null && this.communicator.canRegister(credentials)) {
 				this.communicator.save(newUser, credentials);
 				response.getBody().setContent("{\"success\":true}");
 				return response;
 			}
 			response.getBody().setContent("{\"success\":false,\"reason\":\"You are not allowed to "
 					+ "register with those credentials.\"}");
+			return response;
+		}
+		if ("GET".equals(headerLine.getMethod())) {
+			Credentials credentials = getCredentials(request);
+			if (credentials == null || !this.communicator.canLogin(credentials)) {
+				response.getHeader().setHeaderLine(new ResponseLine("HTTP/1.1 401 Unauthorized"));
+				response.getHeader().addField(new HeaderField("WWW-Authenticate", "Basic realm=\"MCRealms\""));
+				return response;
+			}
+			User user = this.communicator.getUser(credentials.getUsername());
+			response.getBody().setContent(new JSONObject().put("success", true).put("user", user.toJSON()).toString());
 			return response;
 		}
 		response.getHeader().setHeaderLine(new ResponseLine("HTTP/1.1 405 Method Not Allowed"));

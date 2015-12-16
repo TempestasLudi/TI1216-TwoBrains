@@ -108,7 +108,7 @@ public class RequestLine implements HeaderLine {
 	 */
 	@Override
 	public String toString(){
-		return this.method + " " + this.URI + " " + this.version + " \r\n";
+		return this.method + " " + this.URI + " " + this.version + "\r\n";
 	}
 	
 	

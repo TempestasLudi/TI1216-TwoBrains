@@ -85,16 +85,23 @@ public class Message {
 	 * Creates a new message from a data input stream.
 	 * 
 	 * @param in the input stream to read from
+	 * @param response TODO
 	 * @return a new message based on the data from the input stream
 	 */
-	public static Message read(DataInputStream in){
-		String requestLineString = readLine(in);
+	public static Message read(DataInputStream in, boolean request){
+		String requestLineString = readLine(in).trim();
 		if (requestLineString.split(" ").length != 3) {
 			return null;
 		}
-		RequestLine requestLine = new RequestLine(requestLineString);
+		HeaderLine headerLine;
+		if (request) {
+			headerLine = new RequestLine(requestLineString);
+		}
+		else {
+			headerLine = new ResponseLine(requestLineString);
+		}
 
-		Header header = new Header(requestLine);
+		Header header = new Header(headerLine);
 		boolean read = true;
 		while (read) {
 			String line = readLine(in);
