@@ -19,6 +19,7 @@ public class Match {
 	 *            the second User of the Match
 	 */
 	public Match(int id, String username1, String username2) {
+		this.id = id;
 		this.username1 = username1;
 		this.username2 = username2;
 	}

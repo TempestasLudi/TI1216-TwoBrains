@@ -149,7 +149,7 @@ public class User {
 	public static User fromJSON(JSONObject jsonObject) {
 		JSONArray tempJSONGradeList = jsonObject.getJSONArray("gradeList");
 		Grade[] tempGradeList = new Grade[tempJSONGradeList.length()];
-		if (tempJSONGradeList != null) {
+		//if (tempJSONGradeList != null) {
 			for (int i = 0; i < tempJSONGradeList.length(); i++) {
 				if (!tempJSONGradeList.get(i).toString().equals("null")) {
 					tempGradeList[i] = Grade
@@ -157,7 +157,7 @@ public class User {
 				} else
 					tempGradeList[i] = null;
 			}
-		}
+		//}
 		return new User(jsonObject.getString("username"),
 				jsonObject.getString("postalCode"),
 				jsonObject.getString("description"), tempGradeList);
