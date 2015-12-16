@@ -109,4 +109,48 @@ public class UserTest {
 		User u1 = new User("User", "PC", "descrip", g);
 		assertFalse(u1.equals(5));
 	}
+	
+	@Test
+	public void testFromToJSON1()
+	{
+		Grade[] gradelist = new Grade[3];
+		User user = new User("azaidman", "postcode", "slimme man", gradelist);
+		assertEquals(user,User.fromJSON(user.toJSON()));
+	}
+	
+	@Test
+	public void testFromToJSON2()
+	{
+		Grade[] gradelist = new Grade[3];
+		User user = new User("azaidman", "postcode", "slimme man", gradelist);
+		assertEquals(user.getDescription(),User.fromJSON(user.toJSON()).getDescription());
+	}
+	
+	@Test
+	public void testFromToJSON3()
+	{
+		Grade[] gradelist = new Grade[3];
+		User user = new User("azaidman", "AndyAntwerpen", "slimme man", gradelist);
+		assertEquals(user.getPostalCode(),User.fromJSON(user.toJSON()).getPostalCode());
+	}
+	
+	@Test
+	public void testFromToJSON4()
+	{
+		Grade grade1 = new Grade("TI1216",9);
+		Grade grade2 = new Grade("TI1206",10);
+		Grade[] gradelist = new Grade[3];
+		gradelist[0] = grade1;
+		gradelist[1] = grade2;
+		User user = new User("azaidman", "AndyAntwerpen", "slimme man", gradelist);
+		assertEquals(gradelist[0],User.fromJSON(user.toJSON()).getGradeList()[0]);
+		assertEquals(gradelist[1],User.fromJSON(user.toJSON()).getGradeList()[1]);
+	}
+	
+	/*@Test
+	public void testFromToJSON5()
+	{
+		User user = new User("azaidman", "postcode", "slimme man", null);
+		assertEquals(user,User.fromJSON(user.toJSON()));
+	}*/
 }
