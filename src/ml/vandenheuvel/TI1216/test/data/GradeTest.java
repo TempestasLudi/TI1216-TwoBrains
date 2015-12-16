@@ -41,6 +41,11 @@ public class GradeTest {
 		JSONObject jsonObject1 = test1.toJSON();
 		assertTrue(Grade.fromJSON(jsonObject1).equals(test1));
 	}
+	
+	@Test
+	public void testFromJSONNull() {
+		assertNull(Grade.fromJSON(null));
+	}
 
 	@Test
 	public void testEqualsPositive() {

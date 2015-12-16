@@ -15,6 +15,13 @@ public class MatchTest
 	}
 
 	@Test
+	public void testGetId() 
+	{
+		Match match = new Match(5,"username1", "username2");
+		assertEquals(5, match.getId());
+	}
+	
+	@Test
 	public void testGet() 
 	{
 		Match test = new Match(-1,"username1", "username2");
@@ -65,5 +72,12 @@ public class MatchTest
 		Match test1 = new Match(-1, "username2", "username2");
 		Match test2 = new Match(-1, "username1", "username1");
 		assertFalse(test1.equals(test2));
+	}
+	
+	@Test
+	public void testFromToJSON()
+	{
+		Match match = new Match(3, "azaidman", "bzaidman");
+		assertEquals(match,Match.fromJSON(match.toJSON()));
 	}
 }
