@@ -7,6 +7,8 @@ import javafx.scene.control.*;
 import javafx.scene.layout.GridPane;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
+import ml.vandenheuvel.TI1216.source.client.ServerCommunicator;
+import ml.vandenheuvel.TI1216.source.data.Credentials;
 
 public class LoginGUI 
 {
@@ -35,15 +37,22 @@ public class LoginGUI
 		PasswordField passInput = new PasswordField();
 		passInput.setPromptText("Password");
 		GridPane.setConstraints(passInput, 1, 1);
-		
 		Button loginButton = new Button("Log in");
 		loginButton.setOnAction(new EventHandler<ActionEvent>() 
 		{
 			 @Override
 			    public void handle(ActionEvent e) 
 			    {	
-				 	MenuGUI.display();
-				 	window.close();
+				 	Credentials credentials = new Credentials(nameInput.getText(), passInput.getText());
+			    	if(ServerCommunicator.login(credentials)!= null)
+			    	{
+			    		MenuGUI.display();
+			    		window.close();
+			    	}
+			    	else
+			    	{
+			    		System.out.println("Your credentials are not registered");
+			    	}
 			    }
 		});
 		GridPane.setConstraints(loginButton, 1, 2);
