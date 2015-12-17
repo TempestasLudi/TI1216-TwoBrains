@@ -452,7 +452,7 @@ public class DatabaseCommunicator {
 					user = new User(resultSet.getString("username"), resultSet.getString("postalCode"),
 							resultSet.getString("userDescription"), new Grade[0]);
 					users.add(user);
-				} else if (resultSet.getString("username") != user.getUsername()) {
+				} else if (!resultSet.getString("username").equals(user.getUsername())) {
 					Grade[] gradeArray = new Grade[grades.size()];
 					grades.toArray(gradeArray);
 					user.setGradeList(gradeArray);
