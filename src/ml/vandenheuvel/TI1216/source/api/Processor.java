@@ -22,7 +22,7 @@ import ml.vandenheuvel.TI1216.source.data.User;
  * @author Arnoud van der Leer
  */
 public class Processor {
-	/*/private DatabaseCommunicator communicator = new DatabaseCommunicator("85.151.128.10", "TI1216");/*/
+	/**/private DatabaseCommunicator communicator = new DatabaseCommunicator("85.151.128.10", "TI1216");/*/
 	private DatabaseCommunicator communicator = new DatabaseCommunicator("192.168.1.111", "TI1216");/**/
 	
 	public Message process(Message request) {

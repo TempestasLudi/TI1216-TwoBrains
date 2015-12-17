@@ -46,6 +46,7 @@ public class LoginGUI
 				 	Credentials credentials = new Credentials(nameInput.getText(), passInput.getText());
 			    	if(ServerCommunicator.login(credentials)!= null)
 			    	{
+			    		System.out.println("You are successfully connected");
 			    		MenuGUI.display();
 			    		window.close();
 			    	}

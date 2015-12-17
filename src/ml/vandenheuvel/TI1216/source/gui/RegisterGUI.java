@@ -89,7 +89,8 @@ public class RegisterGUI
 				 	User user = new User(nameInput.getText(), postalInput.getText(), descriptionInput.getText(), gradelist);
 			    	if (ServerCommunicator.register(credentials, user))
 			    	{
-			    	 	MenuGUI.display();
+			    	 	System.out.println("You are successfully registered");
+			    		LoginGUI.display();
 			    	 	window.close();
 			    	}
 			    	else
