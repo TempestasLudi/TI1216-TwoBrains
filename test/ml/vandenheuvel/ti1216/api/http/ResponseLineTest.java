@@ -135,7 +135,7 @@ public class ResponseLineTest {
 	@Test
 	public void testToString() {
 		ResponseLine testLine = new ResponseLine("HTTP/1.1", "200", "OK");
-		assertEquals("HTTP/1.1 200 OK \r\n", testLine.toString());
+		assertEquals("HTTP/1.1 200 OK\r\n", testLine.toString());
 	}
 	
 	@Test

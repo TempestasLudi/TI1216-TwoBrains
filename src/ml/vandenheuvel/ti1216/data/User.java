@@ -133,7 +133,10 @@ public class User {
 	public JSONObject toJSON() {
 		JSONArray jsonGradeList = new JSONArray();
 		for (int i = 0; i < this.gradeList.length; i++) {
-			jsonGradeList.put(this.gradeList[i].toJSON());
+			if(this.gradeList[i]!=null)
+			{
+				jsonGradeList.put(this.gradeList[i].toJSON());
+			}
 		}
 		return new JSONObject().put("username", this.username)
 				.put("postalCode", this.postalCode)

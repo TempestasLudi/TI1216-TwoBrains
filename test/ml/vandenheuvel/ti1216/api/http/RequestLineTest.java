@@ -134,7 +134,7 @@ public class RequestLineTest {
 	@Test
 	public void testToString() {
 		RequestLine testLine = new RequestLine("GET", "/uri", "HTTP/1.1");
-		assertEquals("GET /uri HTTP/1.1 \r\n", testLine.toString());
+		assertEquals("GET /uri HTTP/1.1\r\n", testLine.toString());
 	}
 	
 	@Test

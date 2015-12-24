@@ -103,12 +103,12 @@ public class MessageTest {
 		Body body = new Body("Content");
 		Message testMessage1 = new Message(header, body);
 		
-		assertEquals(testMessage1.toString(), "GET /chat HTTP/1.1 \r\n"
-				+ "Content-Length: 7 \r\n"
-				+ "Content-Type: text/json \r\n"
-				+ "Date: " + new  Date().toString() +" "
+		assertEquals("GET /chat HTTP/1.1\r\n"
+				+ "Content-Length: 7\r\n"
+				+ "Content-Type: text/json\r\n"
+				+ "Date: " + new Date().toString()
 				+ "\r\n\r\n"
-				+ "Content\r\n\r\n");
+				+ "Content\r\n\r\n", testMessage1.toString());
 	}
 	
 	@Test
@@ -118,13 +118,13 @@ public class MessageTest {
 		Body body = new Body("Content");
 		Message testMessage1 = new Message(header, body);
 		
-		assertEquals(testMessage1.toString(), "HTTP/1.1 200 OK \r\n"
-				+ "Connection: close \r\n"
-				+ "Content-Length: 7 \r\n"
-				+ "Content-Type: text/json \r\n"
-				+ "Date: " + new  Date().toString() +" "
+		assertEquals("HTTP/1.1 200 OK\r\n"
+				+ "Connection: close\r\n"
+				+ "Content-Length: 7\r\n"
+				+ "Content-Type: text/json\r\n"
+				+ "Date: " + new Date().toString()
 				+ "\r\n\r\n"
-				+ "Content\r\n\r\n");
+				+ "Content\r\n\r\n", testMessage1.toString());
 	
 	}
 	
@@ -134,11 +134,11 @@ public class MessageTest {
 		Header header = new Header(resLine);
 		Body body = new Body("Content");
 		Message testMessage1 = new Message(header, body);
-		assertEquals(testMessage1.toString(), "HTTP/1.1 404 File Not Found \r\n"
-				+ "Connection: close \r\n"
-				+ "Date: " + new  Date().toString() +" "
+		assertEquals("HTTP/1.1 404 File Not Found\r\n"
+				+ "Connection: close\r\n"
+				+ "Date: " + new Date().toString()
 				+ "\r\n\r\n"
-				+ "Content\r\n\r\n");
+				+ "Content\r\n\r\n", testMessage1.toString());
 	
 	}
 	
@@ -149,12 +149,12 @@ public class MessageTest {
 		Body body = new Body("");
 		Message testMessage1 = new Message(header, body);
 		
-		assertEquals(testMessage1.toString(), "HTTP/1.1 200 OK \r\n"
-				+ "Connection: close \r\n"
-				+ "Content-Length: 0 \r\n"
-				+ "Content-Type: text/json \r\n"
-				+ "Date: " + new  Date().toString() +" "
-				+ "\r\n\r\n");
+		assertEquals("HTTP/1.1 200 OK\r\n"
+				+ "Connection: close\r\n"
+				+ "Content-Length: 0\r\n"
+				+ "Content-Type: text/json\r\n"
+				+ "Date: " + new Date().toString()
+				+ "\r\n\r\n", testMessage1.toString());
 	
 	}
 }

@@ -56,7 +56,7 @@ public class HeaderFieldTest {
 	public void testToString()
 	{
 		HeaderField headerfield = new HeaderField("Content-length: 10 ");
-		assertEquals("Content-length: 10 \r\n", headerfield.toString());
+		assertEquals("Content-length: 10\r\n", headerfield.toString());
 	}
 	
 	@Test

@@ -113,7 +113,7 @@ public class UserTest {
 	@Test
 	public void testFromToJSON1()
 	{
-		Grade[] gradelist = new Grade[3];
+		Grade[] gradelist = new Grade[0];
 		User user = new User("azaidman", "postcode", "slimme man", gradelist);
 		assertEquals(user,User.fromJSON(user.toJSON()));
 	}
