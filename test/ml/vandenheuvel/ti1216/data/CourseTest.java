@@ -6,8 +6,6 @@ import java.util.ArrayList;
 
 import org.junit.Test;
 
-import ml.vandenheuvel.ti1216.data.*;
-
 public class CourseTest {
 
 	@Test

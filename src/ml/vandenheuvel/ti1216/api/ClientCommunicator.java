@@ -5,14 +5,7 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.net.Socket;
 
-import org.json.JSONObject;
-
-import ml.vandenheuvel.ti1216.api.http.Body;
-import ml.vandenheuvel.ti1216.api.http.Header;
-import ml.vandenheuvel.ti1216.api.http.HeaderField;
-import ml.vandenheuvel.ti1216.api.http.Message;
-import ml.vandenheuvel.ti1216.api.http.RequestLine;
-import ml.vandenheuvel.ti1216.api.http.ResponseLine;
+import ml.vandenheuvel.ti1216.api.http.*;
 
 /**
  * ClientCommunicator handles one HTTP request.

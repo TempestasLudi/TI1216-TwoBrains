@@ -7,8 +7,6 @@ import java.util.ArrayList;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
-import ml.vandenheuvel.ti1216.data.*;
-
 /**
  * @author Arnoud van der Leer
  *

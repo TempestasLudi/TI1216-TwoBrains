@@ -5,8 +5,6 @@ import static org.junit.Assert.*;
 import org.json.JSONObject;
 import org.junit.Test;
 
-import ml.vandenheuvel.ti1216.data.*;
-
 public class GradeTest {
 
 	@Test

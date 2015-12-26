@@ -4,8 +4,6 @@ package ml.vandenheuvel.ti1216.api.http;
 import static org.junit.Assert.*;
 import org.junit.Test;
 
-import ml.vandenheuvel.ti1216.api.http.*;
-
 import java.util.*;
 
 
@@ -680,8 +678,6 @@ public class HeaderTest {
 		
 		Header h = new Header(hl);
 		
-		boolean evaluate0 = h.getField("Connection").equals(hf1);
-		
 		h.addField(hf2);
 		h.addField(hf3);
 
@@ -749,7 +745,7 @@ public class HeaderTest {
 		
 		boolean evaluate6 = h.getField("Connection").equals(hf3);
 		
-		boolean evaluate = evaluate1 && evaluate2 && evaluate3 && 
+		boolean evaluate = evaluate0 && evaluate1 && evaluate2 && evaluate3 && 
 						   evaluate4 && evaluate5 && evaluate6;
 		
 		assertTrue(evaluate);

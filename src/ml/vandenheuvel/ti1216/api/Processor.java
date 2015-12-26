@@ -5,16 +5,8 @@ import java.util.Base64;
 
 import org.json.JSONObject;
 
-import ml.vandenheuvel.ti1216.api.http.Body;
-import ml.vandenheuvel.ti1216.api.http.Header;
-import ml.vandenheuvel.ti1216.api.http.HeaderField;
-import ml.vandenheuvel.ti1216.api.http.Message;
-import ml.vandenheuvel.ti1216.api.http.RequestLine;
-import ml.vandenheuvel.ti1216.api.http.ResponseLine;
-import ml.vandenheuvel.ti1216.data.Credentials;
-import ml.vandenheuvel.ti1216.data.DatabaseCommunicator;
-import ml.vandenheuvel.ti1216.data.Grade;
-import ml.vandenheuvel.ti1216.data.User;
+import ml.vandenheuvel.ti1216.api.http.*;
+import ml.vandenheuvel.ti1216.data.*;
 
 /**
  * Processor processes API requests and generates output for those.

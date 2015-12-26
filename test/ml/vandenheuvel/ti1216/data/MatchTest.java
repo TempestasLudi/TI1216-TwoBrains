@@ -3,8 +3,6 @@ package ml.vandenheuvel.ti1216.data;
 import static org.junit.Assert.*;
 import org.junit.Test;
 
-import ml.vandenheuvel.ti1216.data.*;
-
 public class MatchTest 
 {
 
