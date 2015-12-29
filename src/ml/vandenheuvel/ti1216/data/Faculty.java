@@ -48,7 +48,7 @@ public class Faculty {
 	/**
 	 * Returns the id of the faculty.
 	 * 
-	 * @return String
+	 * @return the id of the faculty
 	 */
 	public String getID(){
 		return this.id;
@@ -57,13 +57,13 @@ public class Faculty {
 	/**
 	 * Returns the name of the faculty.
 	 * 
-	 * @return String
+	 * @return the name of the faculty
 	 */
 	public String getName(){
 		return this.name;
 	}
 
-	/*
+	/**
 	 * Returns the programs of the faculty.
 	 * 
 	 * @return the programs of the faculty
@@ -77,7 +77,7 @@ public class Faculty {
 	/**
 	 * Changes the name-instance of the faculty.
 	 * 
-	 * @param name
+	 * @param name the new name of the faculty
 	 */
 	public void setName(String name){
 		this.name = name;
