@@ -2,48 +2,132 @@ package ml.vandenheuvel.ti1216.data;
 
 import org.json.JSONObject;
 
+/**
+ * Match represents a match between two users.
+ */
 public class Match {
-
+	
+	/**
+	 * The id of the match.
+	 */
 	private int id;
-	private String username1;
-	private String username2;
+	
+	/**
+	 * The name of the user the match belongs to.
+	 */
+	private String username;
+	
+	/**
+	 * The name of the user that is matched.
+	 */
+	private String matchUsername;
+	
+	/**
+	 * Whether the match has already been seen or not by its user.
+	 */
+	private boolean seen;
+	
+	/**
+	 * Whether the match has been approved or not by its user.
+	 */
+	private boolean approved;
 
 	/**
-	 * creates a new Match
+	 * Class constructor.
 	 * 
-	 * @param id
-	 *            the id of the match
-	 * @param username1
-	 *            the first User of the Match
-	 * @param username2
-	 *            the second User of the Match
+	 * @param id the id of the match
+	 * @param username the name of the user the match belongs to
+	 * @param matchUsername the name of the user that is matched
+	 * @param seen whether the match has already been seen or not by its user
+	 * @param approved whether the match has been approved or not by its user
 	 */
-	public Match(int id, String username1, String username2) {
+	public Match(int id, String username, String matchUsername, boolean seen, boolean approved) {
 		this.id = id;
-		this.username1 = username1;
-		this.username2 = username2;
+		this.username = username;
+		this.matchUsername = matchUsername;
+		this.seen = seen;
+		this.approved = approved;
 	}
 	
+	/**
+	 * Gets the id of the match.
+	 * 
+	 * @return the id of the match
+	 */
 	public int getId() {
 		return this.id;
 	}
-
+	
 	/**
-	 * gets the first User of the Match
+	 * Gets the name of the user the match belongs to.
 	 * 
-	 * @return the first User of the Match
+	 * @return the name of the user the match belongs to
 	 */
-	public String getUsername1() {
-		return this.username1;
+	public String getUsername() {
+		return username;
+	}
+	
+	/**
+	 * Gets the name of the user that is matched.
+	 * 
+	 * @return the name of the user that is matched
+	 */
+	public String getMatchUsername() {
+		return matchUsername;
 	}
 
 	/**
-	 * gets the second User of the Match
+	 * Checks whether the match has already been seen or not by its user.
 	 * 
-	 * @return the second User of the Match
+	 * @return true if the match has been seen, otherwise false
 	 */
-	public String getUsername2() {
-		return this.username2;
+	public boolean isSeen() {
+		return seen;
+	}
+
+	/**
+	 * Checks whether the match has been approved or not by its user.
+	 * 
+	 * @return true if the match has been approved, otherwise false
+	 */
+	public boolean isApproved() {
+		return approved;
+	}
+	
+	/**
+	 * Sets the name of the user the match belongs to.
+	 * 
+	 * @param username the name of the user the match belongs to
+	 */
+	public void setUsername(String username) {
+		this.username = username;
+	}
+	
+	/**
+	 * Sets the name of the user that is matched.
+	 * 
+	 * @param matchUsername the name of the user that is matched
+	 */
+	public void setMatchUsername(String matchUsername) {
+		this.matchUsername = matchUsername;
+	}
+
+	/**
+	 * Sets whether the match has already been seen or not by its user.
+	 * 
+	 * @param seen true if the match has been seen, otherwise false
+	 */
+	public void setSeen(boolean seen) {
+		this.seen = seen;
+	}
+
+	/**
+	 * Sets whether the match has been approved or not by its user.
+	 * 
+	 * @param approved true if the match has been approved, otherwise false
+	 */
+	public void setApproved(boolean approved) {
+		this.approved = approved;
 	}
 
 	/**
@@ -52,11 +136,11 @@ public class Match {
 	 * @return a JSONObject that represents a Match object
 	 */
 	public JSONObject toJSON() {
-		return new JSONObject().put("username1", this.getUsername1()).put("username2", this.getUsername2()).put("id", this.id);
+		return new JSONObject().put("id", this.id).put("username", this.username).put("matchUsername", this.matchUsername).put("seen", this.seen).put("approved", this.approved);
 	}
 
 	public static Match fromJSON(JSONObject jsonObject) {
-		return new Match(jsonObject.getInt("id"), jsonObject.getString("username1"), jsonObject.getString("username2"));
+		return new Match(jsonObject.getInt("id"), jsonObject.getString("username"), jsonObject.getString("matchUsername"), jsonObject.getBoolean("seen"), jsonObject.getBoolean("approved"));
 	}
 
 	/**
@@ -70,8 +154,7 @@ public class Match {
 	public boolean equals(Object other) {
 		if (other instanceof Match) {
 			Match that = (Match) other;
-			return ((this.username1.equals(that.username1) && this.username2.equals(that.username2))
-					|| (this.username1.equals(that.username2) && this.username2.equals(that.username1)));
+			return this.username.equals(that.getUsername()) && this.matchUsername.equals(that.getMatchUsername());
 		}
 		return false;
 	}

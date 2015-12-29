@@ -598,10 +598,12 @@ public class DatabaseCommunicator {
 	 */
 	public Match[] getMatches() {
 		try {
-			ResultSet resultSet = this.get("SELECT * FROM match WHERE username >= matchUsername");
+			ResultSet resultSet = this.get("SELECT * FROM match");
 			ArrayList<Match> matches = new ArrayList<Match>();
 			while (resultSet.next()) {
-				matches.add(new Match(-1, resultSet.getString("username"), resultSet.getString("matchUsername")));
+				matches.add(new Match(resultSet.getInt("id"), resultSet.getString("username"),
+						resultSet.getString("matchUsername"), resultSet.getBoolean("seen"),
+						resultSet.getBoolean("approved")));
 			}
 			Match[] result = new Match[matches.size()];
 			matches.toArray(result);
@@ -617,7 +619,7 @@ public class DatabaseCommunicator {
 	 * Fetches all matches for a certain user.
 	 * 
 	 * @param username
-	 *            the username to fetch matches for
+	 *            the name of the user to fetch matches for
 	 * @return all matches for the user
 	 */
 	public Match[] getMatches(String username) {
@@ -625,7 +627,9 @@ public class DatabaseCommunicator {
 			ResultSet resultSet = this.get("SELECT * FROM match WHERE username = '" + username + "'");
 			ArrayList<Match> matches = new ArrayList<Match>();
 			while (resultSet.next()) {
-				matches.add(new Match(-1, resultSet.getString("username"), resultSet.getString("matchUsername")));
+				matches.add(new Match(resultSet.getInt("id"), resultSet.getString("username"),
+						resultSet.getString("matchUsername"), resultSet.getBoolean("seen"),
+						resultSet.getBoolean("approved")));
 			}
 			Match[] result = new Match[matches.size()];
 			matches.toArray(result);
@@ -646,11 +650,12 @@ public class DatabaseCommunicator {
 	public void save(Match match) {
 		try {
 			if (match.getId() < 0 || !this.get("SELECT * FROM match WHERE ID = " + match.getId()).next()) {
-				this.execute("INSERT INTO match (username, matchUsername) VALUES ('" + match.getUsername1() + "', '"
-						+ match.getUsername2() + "')");
+				this.execute("INSERT INTO match (username, matchUsername) VALUES ('" + match.getUsername() + "', '"
+						+ match.getMatchUsername() + "')");
 			} else {
-				this.execute("UPDATE course SET username = '" + match.getUsername1() + "', matchUsername = '"
-						+ match.getUsername2() + "' WHERE ID = '" + match.getId() + "'");
+				this.execute("UPDATE course SET username = '" + match.getUsername() + "', matchUsername = '"
+						+ match.getMatchUsername() + "', seen=" + match.isSeen() + ", approved=" + match.isApproved()
+						+ " WHERE ID = '" + match.getId() + "'");
 			}
 		} catch (SQLException e) {
 			System.out.println(e.getMessage());
