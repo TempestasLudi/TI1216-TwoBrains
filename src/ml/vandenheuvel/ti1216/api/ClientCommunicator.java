@@ -27,6 +27,11 @@ public class ClientCommunicator implements Runnable {
 	 * The input reader.
 	 */
 	private DataInputStream in;
+	
+	/**
+	 * The processor for processing the requests.
+	 */
+	private static Processor processor = new Processor();
 
 	/**
 	 * Class constructor, initializes input and output.
@@ -54,7 +59,7 @@ public class ClientCommunicator implements Runnable {
 		
 		System.out.print(message);
 		
-		Message response = new Processor().process(message);
+		Message response = processor.process(message);
 		this.finish(response);
 	}
 	
