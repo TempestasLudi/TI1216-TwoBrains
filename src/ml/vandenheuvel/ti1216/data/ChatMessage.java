@@ -1,7 +1,5 @@
 package ml.vandenheuvel.ti1216.data;
 
-import java.io.Serializable;
-
 import org.json.JSONObject;
 
 /**
@@ -10,21 +8,74 @@ import org.json.JSONObject;
  * @author Andreas Theys, OOP Project [TI1216], Project Group A1.2, TU Delft,
  *         2015-2016.
  */
-
-public class ChatMessage implements Serializable {
-
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = 1L;
+/**
+ * ChatMessage represents a chat message.
+ */
+public class ChatMessage {
 
 	/**
 	 * Class-instances/variables.
 	 */
-	String sender;
-	String message;
-	String receiver;
+	private String sender;
+	private String message;
+	private String receiver;
+	
+	/**
+	 * Gets the sender of the chat message.
+	 * 
+	 * @return the sender of the chat message
+	 */
+	public String getSender() {
+		return sender;
+	}
 
+	/**
+	 * Gets the contents of the chat message.
+	 * 
+	 * @return the contents of the chat message
+	 */
+
+	public String getMessage() {
+		return message;
+	}
+
+	/**
+	 * Gets the receiver of the chat message.
+	 * 
+	 * @return the receiver of the chat message
+	 */
+
+	public String getReceiver() {
+		return receiver;
+	}
+	
+	/**
+	 * Changes the sender of the chat message.
+	 * 
+	 * @param sender the sender to change to
+	 */
+	public void setSender(String sender) {
+		this.sender = sender;
+	}
+
+	/**
+	 * Changes the contents of the chat message.
+	 * 
+	 * @param message the contents to change to
+	 */
+	public void setMessage(String message) {
+		this.message = message;
+	}
+
+	/**
+	 * Changes the receiver of the chat message.
+	 * 
+	 * @param receiver the receiver to change to
+	 */
+	public void setReceiver(String receiver) {
+		this.receiver = receiver;
+	}
+	
 	/**
 	 * General constructor.
 	 * 
