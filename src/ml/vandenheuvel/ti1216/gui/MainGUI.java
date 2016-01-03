@@ -17,27 +17,7 @@ public class MainGUI extends Application
 	}
 
 	@Override
-	public void start(Stage primaryStage) throws Exception 
-	{
-//		window = primaryStage;
-//		window.setTitle("MainGUI");
-//
-//		Button button = new Button("Go to Login");
-//		button.setOnAction(new EventHandler<ActionEvent>() 
-//		{
-//			 @Override
-//			    public void handle(ActionEvent e) 
-//			    {
-			    	LoginGUI.display();
-//			    	window.close();
-//			    }
-//		});
-//		
-//		StackPane layout = new StackPane();
-//		layout.getChildren().add(button);
-//		Scene scene = new Scene(layout, 350, 200);
-//		window.setScene(scene);
-//		window.show();
+	public void start(Stage primaryStage) throws Exception {
+		LoginGUI.display();
 	}
-
 }

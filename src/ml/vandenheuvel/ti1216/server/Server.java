@@ -1,29 +1,27 @@
-package ml.vandenheuvel.ti1216.server;
+package ml.vandenheuvel.ti1216.api;
 
+import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
-import java.util.ArrayList;
-
-import ml.vandenheuvel.ti1216.data.*;
 
 /**
- * The actual server, this code runs until the server is stopped. As soon as it
- * starts the server is ready to accept client connections.
+ * ApiServer is a HTTP server to handle API requests.
  * 
  * @author Bram van den Heuvel
- *
  */
 public class Server {
 
 	private int portNumber;
 	private ArrayList<Client> clientList;
-	private DatabaseCommunicator databaseCommunicator;
+	private DatabaseCommunicator communicator;
 	private ServerSocket serverSocket;
+	private Processor processor;
 
-	public Server(int portNumber) {
+	public Server(int portNumber, String databaseAddress, String databaseName, String databaseUsername, String databasePassword, Processor processor) {
 		this.portNumber = portNumber;
 		this.clientList = new ArrayList<Client>();
-		this.databaseCommunicator = new DatabaseCommunicator("hostname", "database");
+		this.communicator = new DatabaseCommunicator(databaseAddress, databaseName, databaseUsername, databasePassword);
+		this.processor = processor;
 		// Start thread to make the matches
 	}
 
