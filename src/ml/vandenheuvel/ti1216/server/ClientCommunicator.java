@@ -1,11 +1,11 @@
-package ml.vandenheuvel.ti1216.api;
+package ml.vandenheuvel.ti1216.server;
 
 import java.io.DataInputStream;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.net.Socket;
 
-import ml.vandenheuvel.ti1216.api.http.*;
+import ml.vandenheuvel.ti1216.http.*;
 
 /**
  * ClientCommunicator handles one HTTP request.
@@ -13,6 +13,11 @@ import ml.vandenheuvel.ti1216.api.http.*;
  * @author Arnoud van der Leer
  */
 public class ClientCommunicator implements Runnable {
+
+	/**
+	 * The parent client for which the communication is handled.
+	 */
+	private Client client;
 	/**
 	 * The connection socket.
 	 */
@@ -27,18 +32,14 @@ public class ClientCommunicator implements Runnable {
 	 * The input reader.
 	 */
 	private DataInputStream in;
-	
-	/**
-	 * The processor for processing the requests.
-	 */
-	private static Processor processor = new Processor();
 
 	/**
 	 * Class constructor, initializes input and output.
 	 * 
 	 * @param socket the connection socket.
 	 */
-	public ClientCommunicator(Socket socket) {
+	public ClientCommunicator(Client client, Socket socket) {
+		this.client = client;
 		this.socket = socket;
 		try {
 			this.out = new PrintWriter(socket.getOutputStream());
@@ -52,14 +53,14 @@ public class ClientCommunicator implements Runnable {
 	 * The runner method, reads all incoming data, processes it and generates output accordingly.
 	 */
 	@Override
-	public void run(){
+	public void run() {
 		System.out.println("Incoming:");
 		
 		Message message = Message.read(this.in, true);
 		
 		System.out.print(message);
 		
-		Message response = processor.process(message);
+		Message response = this.client.getServer().getProcessor().process(message);
 		this.finish(response);
 	}
 	
@@ -80,7 +81,7 @@ public class ClientCommunicator implements Runnable {
 	/**
 	 * Closes the connection.
 	 */
-	private void close(){
+	public void close() {
 		this.out.flush();
 		try {
 			this.in.close();

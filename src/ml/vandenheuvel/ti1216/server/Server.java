@@ -4,26 +4,26 @@ import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.ArrayList;
 
-import ml.vandenheuvel.ti1216.data.*;
+import ml.vandenheuvel.ti1216.data.DatabaseCommunicator;
 
 /**
- * The actual server, this code runs until the server is stopped. As soon as it
- * starts the server is ready to accept client connections.
+ * ApiServer is a HTTP server to handle API requests.
  * 
  * @author Bram van den Heuvel
- *
  */
 public class Server {
 
 	private int portNumber;
 	private ArrayList<Client> clientList;
-	private DatabaseCommunicator databaseCommunicator;
+	private DatabaseCommunicator getDatabaseCommunicator;
 	private ServerSocket serverSocket;
+	private Processor processor;
 
-	public Server(int portNumber) {
+	public Server(int portNumber, String databaseAddress, String databaseName, String databaseUsername, String databasePassword) {
 		this.portNumber = portNumber;
 		this.clientList = new ArrayList<Client>();
-		this.databaseCommunicator = new DatabaseCommunicator("hostname", "database");
+		this.getDatabaseCommunicator = new DatabaseCommunicator(databaseAddress, databaseName, databaseUsername, databasePassword);
+		this.processor = new Processor(this);
 		// Start thread to make the matches
 	}
 
@@ -51,10 +51,19 @@ public class Server {
 	/**
 	 * Get method for the databaseCommunicator object of this server.
 	 * 
-	 * @return The databaseCommunicator object
+	 * @return the databaseCommunicator object
 	 */
 	public DatabaseCommunicator getDatabaseCommunicator() {
-		return this.databaseCommunicator;
+		return this.getDatabaseCommunicator;
+	}
+	
+	/**
+	 * Get method for the processor object of this server
+	 * 
+	 * @return the processor object
+	 */
+	public Processor getProcessor() {
+		return this.processor;
 	}
 
 	/**
