@@ -18,8 +18,7 @@ public class ClientApplication {
 	public static void main(String[] args) {
 
 		if (args.length != 2) {
-			System.out
-					.println("Server address and portnumber should be the only args.");
+			System.out.println("Server address and portnumber should be the only args.");
 			return;
 		}
 

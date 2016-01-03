@@ -22,16 +22,6 @@ import com.mysql.jdbc.jdbc2.optional.MysqlDataSource;
 public class DatabaseCommunicator {
 
 	/**
-	 * The MySQL username.
-	 */
-	private static String username = "TI1216";
-
-	/**
-	 * The MySQL password.
-	 */
-	private static String password = "3t.uGmL365j2f7B";
-
-	/**
 	 * The database dataSource.
 	 */
 	private DataSource dataSource;
@@ -46,12 +36,12 @@ public class DatabaseCommunicator {
 	 * @param database
 	 *            the database name
 	 */
-	public DatabaseCommunicator(String hostname, String database) {
+	public DatabaseCommunicator(String hostname, String database, String username, String password) {
 		MysqlDataSource mysqlDS = null;
 		mysqlDS = new MysqlDataSource();
 		mysqlDS.setURL("jdbc:mysql://" + hostname + "/" + database);
-		mysqlDS.setUser(DatabaseCommunicator.username);
-		mysqlDS.setPassword(DatabaseCommunicator.password);
+		mysqlDS.setUser(username);
+		mysqlDS.setPassword(password);
 		this.dataSource = mysqlDS;
 		try {
 			this.connection = this.dataSource.getConnection();
