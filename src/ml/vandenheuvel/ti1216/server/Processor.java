@@ -1,4 +1,4 @@
-package ml.vandenheuvel.ti1216.api;
+package ml.vandenheuvel.ti1216.server;
 
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
@@ -7,7 +7,7 @@ import java.util.Base64;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
-import ml.vandenheuvel.ti1216.api.http.*;
+import ml.vandenheuvel.ti1216.http.*;
 import ml.vandenheuvel.ti1216.data.*;
 
 /**
@@ -67,7 +67,7 @@ public class Processor {
 	 */
 	private boolean checkAuth(Message request) {
 		Credentials credentials = getCredentials(request);
-		return credentials != null && this.server.communicator.canLogin(credentials);
+		return credentials != null && this.server.getDatabaseCommunicator().canLogin(credentials);
 	}
 	
 	/**
@@ -104,8 +104,8 @@ public class Processor {
 			Credentials credentials = getCredentials(request);
 			JSONObject userData = new JSONObject(request.getBody().getContent());
 			User newUser = User.fromJSON(userData);
-			if (credentials != null && this.server.communicator.canRegister(credentials)) {
-				this.server.communicator.save(newUser, credentials);
+			if (credentials != null && this.server.getDatabaseCommunicator().canRegister(credentials)) {
+				this.server.getDatabaseCommunicator().save(newUser, credentials);
 				response.getBody().setContent("{\"success\":true}");
 				return response;
 			}
@@ -115,25 +115,25 @@ public class Processor {
 		}
 		if ("GET".equals(headerLine.getMethod())) {
 			Credentials credentials = getCredentials(request);
-			if (credentials == null || !this.server.communicator.canLogin(credentials)) {
+			if (credentials == null || !this.server.getDatabaseCommunicator().canLogin(credentials)) {
 				response.getHeader().setHeaderLine(new ResponseLine("HTTP/1.1 401 Unauthorized"));
 				response.getHeader().addField(new HeaderField("WWW-Authenticate", "Basic realm=\"MCRealms\""));
 				return response;
 			}
-			User user = this.server.communicator.getUser(credentials.getUsername());
+			User user = this.server.getDatabaseCommunicator().getUser(credentials.getUsername());
 			response.getBody().setContent(new JSONObject().put("success", true).put("user", user.toJSON()).toString());
 			return response;
 		}
 		if ("UPDATE".equals(headerLine.getMethod())) {
 			Credentials credentials = getCredentials(request);
-			if (credentials == null || !this.server.communicator.canLogin(credentials)) {
+			if (credentials == null || !this.server.getDatabaseCommunicator().canLogin(credentials)) {
 				response.getHeader().setHeaderLine(new ResponseLine("HTTP/1.1 401 Unauthorized"));
 				response.getHeader().addField(new HeaderField("WWW-Authenticate", "Basic realm=\"MCRealms\""));
 				return response;
 			}
 			User user = User.fromJSON(new JSONObject(request.getBody().getContent()));
 			user.setUsername(credentials.getUsername());
-			this.server.communicator.save(user);
+			this.server.getDatabaseCommunicator().save(user);
 			return response;
 		}
 		response.getHeader().setHeaderLine(new ResponseLine("HTTP/1.1 405 Method Not Allowed"));

@@ -1,11 +1,11 @@
-package ml.vandenheuvel.ti1216.api;
+package ml.vandenheuvel.ti1216.server;
 
 import java.io.DataInputStream;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.net.Socket;
 
-import ml.vandenheuvel.ti1216.api.http.*;
+import ml.vandenheuvel.ti1216.http.*;
 
 /**
  * ClientCommunicator handles one HTTP request.
@@ -60,7 +60,7 @@ public class ClientCommunicator implements Runnable {
 		
 		System.out.print(message);
 		
-		Message response = this.client.server.processor.process(message);
+		Message response = this.client.getServer().getProcessor().process(message);
 		this.finish(response);
 	}
 	
@@ -81,7 +81,7 @@ public class ClientCommunicator implements Runnable {
 	/**
 	 * Closes the connection.
 	 */
-	private void close() {
+	public void close() {
 		this.out.flush();
 		try {
 			this.in.close();

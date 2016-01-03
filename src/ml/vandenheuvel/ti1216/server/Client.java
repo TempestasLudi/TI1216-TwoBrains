@@ -1,11 +1,6 @@
 package ml.vandenheuvel.ti1216.server;
 
-import java.io.IOException;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
 import java.net.Socket;
-
-import ml.vandenheuvel.ti1216.data.*;
 
 /**
  * Every connection is kept track of in this client class. A thread that listens
@@ -29,9 +24,13 @@ public class Client {
 	 * Stops the client entirely. First tries to stop the thread and then removes it's self from the parent server's clientList.
 	 */
 	public void stopClient() {
-		this.communicator.close();
 		this.communicator.interrupt();
+		//TODO: Close properly
 		//TODO: Remove this client from the arraylist it's in.
+	}
+	
+	public Server getServer(){
+		return this.server;
 	}
 
 }

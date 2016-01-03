@@ -1,4 +1,4 @@
-package ml.vandenheuvel.ti1216.api;
+package ml.vandenheuvel.ti1216.server;
 
 public class ServerApplication {
 
