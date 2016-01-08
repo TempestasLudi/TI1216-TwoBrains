@@ -118,11 +118,10 @@ public class Course {
 	 * Creates a Course object based on a JSON object.
 	 * 
 	 * @param json the JSON object
-	 * @param data a container containing the additional objects
 	 * @return a Course object based on the JSON object
 	 */
-	public static Course fromJSON(JSONObject json, Container data) {
-		return new Course(json.getString("id"), json.getString("name"), data.getProgram(json.getString("program")));
+	public static Course fromJSON(JSONObject json) {
+		return new Course(json.getString("id"), json.getString("name"), null);
 	}
 	
 	// END MODIFIERS

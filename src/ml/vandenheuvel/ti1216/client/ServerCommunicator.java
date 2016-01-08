@@ -13,6 +13,7 @@ import org.json.JSONObject;
 import ml.vandenheuvel.ti1216.api.http.*;
 import ml.vandenheuvel.ti1216.data.ChatMessage;
 import ml.vandenheuvel.ti1216.data.Credentials;
+import ml.vandenheuvel.ti1216.data.Faculty;
 import ml.vandenheuvel.ti1216.data.User;
 
 /**
@@ -117,13 +118,14 @@ public class ServerCommunicator {
 	}
 
 	/**
-	 * Tries to fetch a chat message.
+	 * Tries to fetch a faculty.
 	 * 
 	 * @param credentials the credentials of the user
-	 * @return an arrayList of chat messages if they could be fetched, otherwise an empty arrayList
+	 * @param facultyId the id of the faculty to fetch
+	 * @return a faculty if found, otherwise null
 	 */
-	public static ArrayList<ChatMessage> fetchChats(Credentials credentials) {
-		Header header = new Header(new RequestLine("PUT /user HTTP/1.1"));
+	public static Faculty fetchFaculty(Credentials credentials, int facultyId) {
+		Header header = new Header(new RequestLine("PUT /faculty/" + facultyId + " HTTP/1.1"));
 		header.addField(new HeaderField("Authorization", "Basic " + Base64.getEncoder()
 				.encodeToString((credentials.getUsername() + ":" + credentials.getPassword()).getBytes())));
 		Message request = new Message(header, new Body(""));
@@ -131,15 +133,36 @@ public class ServerCommunicator {
 		ResponseLine responseLine = (ResponseLine) response.getHeader().getHeaderLine();
 		String statusCode = responseLine.getCode();
 		if (!("200".equals(statusCode))){
-			return new ArrayList<ChatMessage>();
+			return null;
 		}
 		JSONObject body = new JSONObject(response.getBody().getContent());
-		JSONArray messages = body.getJSONArray("messages");
-		ArrayList<ChatMessage> result = new ArrayList<ChatMessage>();
-		for (int i = 0; i < messages.length(); i++) {
-			result.add(ChatMessage.fromJSON(messages.getJSONObject(i)));
+		return Faculty.fromJSON(body.getJSONObject("faculty"));
+	}
+
+	/**
+	 * Tries to fetch all faculties.
+	 * 
+	 * @param credentials the credentials of the user
+	 * @return a faculty if found, otherwise null
+	 */
+	public static ArrayList<Faculty> fetchFaculties(Credentials credentials) {
+		Header header = new Header(new RequestLine("PUT /faculty HTTP/1.1"));
+		header.addField(new HeaderField("Authorization", "Basic " + Base64.getEncoder()
+				.encodeToString((credentials.getUsername() + ":" + credentials.getPassword()).getBytes())));
+		Message request = new Message(header, new Body(""));
+		Message response = send(request);
+		ResponseLine responseLine = (ResponseLine) response.getHeader().getHeaderLine();
+		String statusCode = responseLine.getCode();
+		if (!("200".equals(statusCode))){
+			return new ArrayList<Faculty>();
 		}
-		return result;
+		JSONObject body = new JSONObject(response.getBody().getContent());
+		ArrayList<Faculty> faculties = new ArrayList<Faculty>();
+		JSONArray facultyData = body.getJSONArray("faculties");
+		for (int i = 0; i < facultyData.length(); i++) {
+			faculties.add(Faculty.fromJSON(facultyData.getJSONObject(i)));
+		}
+		return faculties;
 	}
 	
 	/**

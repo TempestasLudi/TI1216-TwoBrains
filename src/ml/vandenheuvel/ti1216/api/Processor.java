@@ -16,7 +16,7 @@ import ml.vandenheuvel.ti1216.data.*;
  * @author Arnoud van der Leer
  */
 public class Processor {
-	/**/private DatabaseCommunicator communicator = new DatabaseCommunicator("85.151.128.10", "TI1216");/*/
+	/**/private DatabaseCommunicator communicator = new DatabaseCommunicator("tempestasludi.com", "TI1216");/*/
 	private DatabaseCommunicator communicator = new DatabaseCommunicator("192.168.1.111", "TI1216");/**/
 	
 	/**
@@ -48,8 +48,10 @@ public class Processor {
 				return response;
 			}
 			switch (uriParts[1]) {
-				case "chat":
-					return processChat(request);
+			case "chat":
+				return processChat(request);
+			case "faculty":
+				return processFaculty(request);
 			}
 		}
 		return response;
@@ -133,7 +135,7 @@ public class Processor {
 			return response;
 		}
 		response.getHeader().setHeaderLine(new ResponseLine("HTTP/1.1 405 Method Not Allowed"));
-		response.getHeader().addField(new HeaderField("Allow", "PUT"));
+		response.getHeader().addField(new HeaderField("Allow", "PUT, GET, UPDATE"));
 		return response;
 	}
 
@@ -167,8 +169,47 @@ public class Processor {
 			return response;
 		}
 		response.getHeader().setHeaderLine(new ResponseLine("HTTP/1.1 405 Method Not Allowed"));
-		response.getHeader().addField(new HeaderField("Allow", "PUT"));
+		response.getHeader().addField(new HeaderField("Allow", "PUT, GET"));
 		return response;
 	}
-	
+
+	/**
+	 * Processes a HTTP request to the /faculty endpoint.
+	 * 
+	 * @param request the request to process
+	 * @return the response to the request
+	 */
+	private Message processFaculty(Message request) {
+		RequestLine headerLine = (RequestLine)request.getHeader().getHeaderLine();
+		Message response = new Message(new Header(), new Body(""));
+		String[] uriParts = headerLine.getUri().split("/");
+		if ("GET".equals(headerLine.getMethod())) {
+			if (uriParts.length < 3) {
+				JSONArray faculties = new JSONArray();
+				Faculty[] facultyData = this.communicator.getFaculties();
+				JSONObject result = new JSONObject();
+				for (int i = 0; i < facultyData.length; i++) {
+					faculties.put(facultyData[i].toJSON());
+				}
+				result.put("faculties", faculties);
+				response.getBody().setContent(result.toString());
+			}
+			else {
+				String id = uriParts[2];
+				Faculty faculty = this.communicator.getFaculty(id);
+				if (faculty == null) {
+					response.getHeader().setHeaderLine(new ResponseLine("HTTP/1.1 404 Not Found"));
+				}
+				else {
+					JSONObject result = new JSONObject();
+					result.put("faculty", faculty.toJSON());
+					response.getBody().setContent(result.toString());
+				}
+			}
+			return response;
+		}
+		response.getHeader().setHeaderLine(new ResponseLine("HTTP/1.1 405 Method Not Allowed"));
+		response.getHeader().addField(new HeaderField("Allow", "GET"));
+		return response;
+	}	
 }

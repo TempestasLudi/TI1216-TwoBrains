@@ -12,8 +12,8 @@ import org.junit.Test;
  *
  */
 public class DatabaseCommunicatorTest {
-	//private DatabaseCommunicator communicator = new DatabaseCommunicator("192.168.1.111", "TI1216");
-	private DatabaseCommunicator communicator = new DatabaseCommunicator("85.151.128.10", "TI1216-test");
+	/*/private DatabaseCommunicator communicator = new DatabaseCommunicator("192.168.1.111", "TI1216-test");/*/
+	private DatabaseCommunicator communicator = new DatabaseCommunicator("tempestasludi.com", "TI1216-test");/**/
 
 	/**
 	 * "Tests" the constructor and cleans the database (or at least tries to..).
@@ -21,7 +21,8 @@ public class DatabaseCommunicatorTest {
 	@BeforeClass
 	public static void testConstructor() {
 		// Clear FPC
-		DatabaseCommunicator communicator = new DatabaseCommunicator("85.151.128.10", "TI1216-test");
+		/*/DatabaseCommunicator communicator = new DatabaseCommunicator("192.168.1.111", "TI1216-test");/*/
+		DatabaseCommunicator communicator = new DatabaseCommunicator("tempestasludi.com", "TI1216-test");/**/
 		Faculty[] faculties = communicator.getFaculties();
 		for (int i = 0; i < faculties.length; i++) {
 			communicator.delete(faculties[i]);
@@ -94,6 +95,7 @@ public class DatabaseCommunicatorTest {
 		new Course("C1.1.3", "Course 1.1.3", p11);
 		new Course("C1.1.4", "Course 1.1.4", p11);
 		new Course("C2.1.1", "Course 2.1.1", p21);
+		
 		return new Faculty[] { f1, f2 };
 	}
 

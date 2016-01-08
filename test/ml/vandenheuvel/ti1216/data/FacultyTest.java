@@ -120,14 +120,14 @@ public class FacultyTest {
 	{
 		ArrayList<Program> list = new ArrayList<Program>();
 		Faculty faculty = new Faculty("EWI", "Electrical Engineering, Mathematics and Computer Science", list);
-		assertEquals(faculty, Faculty.fromJSON(faculty.toJSON(), new Container()));
+		assertEquals(faculty, Faculty.fromJSON(faculty.toJSON()));
 	}
 	
 	@Test
 	public void testFromToJSON2()
 	{
 		Faculty faculty = new Faculty("EWI", "Electrical Engineering, Mathematics and Computer Science", null);
-		assertEquals(faculty, Faculty.fromJSON(faculty.toJSON(), new Container()));
+		assertEquals(faculty, Faculty.fromJSON(faculty.toJSON()));
 	}
 	
 	@Test
@@ -135,7 +135,7 @@ public class FacultyTest {
 	{
 		ArrayList<Program> list = new ArrayList<Program>();
 		Faculty faculty = new Faculty("EWI", "Electrical Engineering, Mathematics and Computer Science", list);
-		assertEquals(faculty.getName(), Faculty.fromJSON(faculty.toJSON(), new Container()).getName());
+		assertEquals(faculty.getName(), Faculty.fromJSON(faculty.toJSON()).getName());
 	}
 	
 	@Test

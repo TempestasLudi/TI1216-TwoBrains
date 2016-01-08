@@ -2,6 +2,7 @@ package ml.vandenheuvel.ti1216.data;
 
 import java.util.ArrayList;
 
+import org.json.JSONArray;
 import org.json.JSONObject;
 
 /**
@@ -116,6 +117,11 @@ public class Faculty {
 		JSONObject result = new JSONObject();
 		result.put("id", this.id);
 		result.put("name", this.name);
+		JSONArray programs = new JSONArray();
+		for (int i = 0; i < this.programs.size(); i++) {
+			programs.put(this.programs.get(i).toJSON());
+		}
+		result.put("programs", programs);
 		return result;
 	}
 	
@@ -123,11 +129,15 @@ public class Faculty {
 	 * Creates a Faculty object based on a JSON object.
 	 * 
 	 * @param json the JSON object
-	 * @param data a container containing the additional objects
 	 * @return a Faculty object based on the JSON object
 	 */
-	public static Faculty fromJSON(JSONObject json, Container data) {
-		return new Faculty(json.getString("id"), json.getString("name"), new ArrayList<Program>());
+	public static Faculty fromJSON(JSONObject json) {
+		JSONArray programsJSON = json.getJSONArray("programs");
+		ArrayList<Program> programs = new ArrayList<Program>();
+		for (int i = 0; i < programsJSON.length(); i++) {
+			programs.add(Program.fromJSON(programsJSON.getJSONObject(i)));
+		}
+		return new Faculty(json.getString("id"), json.getString("name"), programs);
 	}
 
 	// END MODIFIERS
