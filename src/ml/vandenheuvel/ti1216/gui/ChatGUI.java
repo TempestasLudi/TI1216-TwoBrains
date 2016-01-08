@@ -1,4 +1,5 @@
 package ml.vandenheuvel.ti1216.gui;
+
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.layout.BorderPane;
@@ -6,12 +7,10 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 
 import javafx.stage.Stage;
+import ml.vandenheuvel.ti1216.data.ChatMessage;
 
-
-public class ChatGUI 
-{
-	public static void display()
-	{
+public class ChatGUI {
+	public static void display() {
 		Stage window = new Stage();
 		window.setTitle("ChatGUI");
 
@@ -26,13 +25,17 @@ public class ChatGUI
 		hbox.getChildren().addAll(chatInput, sendButton);
 		vbox.setPrefWidth(300);
 		vbox.getChildren().addAll(chatLabel, hbox);
-		
+
 		BorderPane borderPane = new BorderPane();
 		borderPane.setCenter(vbox);
-		
-		
+
 		Scene scene = new Scene(borderPane, 300, 280);
 		window.setScene(scene);
 		window.showAndWait();
+	}
+
+	public static void incoming(ChatMessage message) {
+		System.out.println(message.getMessage());
+		// TODO: do something useful
 	}
 }

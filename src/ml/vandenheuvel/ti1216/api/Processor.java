@@ -154,6 +154,7 @@ public class Processor {
 		}
 		if ("GET".equals(headerLine.getMethod())) {
 			JSONArray messages = new JSONArray();
+			JSONObject result = new JSONObject();
 			for (int i = 0; i < this.chatMessages.size(); i++) {
 				if (this.chatMessages.get(i).getReceiver().equals(credentials.getUsername())) {
 					messages.put(this.chatMessages.get(i).toJSON());
@@ -161,7 +162,8 @@ public class Processor {
 					i--;
 				}
 			}
-			response.getBody().setContent(messages.toString());
+			result.put("messages", messages);
+			response.getBody().setContent(result.toString());
 			return response;
 		}
 		response.getHeader().setHeaderLine(new ResponseLine("HTTP/1.1 405 Method Not Allowed"));

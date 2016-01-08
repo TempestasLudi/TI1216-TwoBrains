@@ -23,7 +23,7 @@ public class LoginGUI
 		grid.setPadding(new Insets(10, 10, 10, 10));
 		grid.setVgap(8);
 		grid.setHgap(10);
-		
+
 		Label nameLabel = new Label("Username: ");
 		GridPane.setConstraints(nameLabel, 0, 0);
 		
