@@ -81,15 +81,15 @@ public class Grade {
 	 */
 	public static Grade fromJSON(JSONObject jsonObject) {
 		if (jsonObject != null) {
-			if(jsonObject.get("grade") instanceof String) {
+			//if(jsonObject.get("grade") instanceof String) {
 				return new Grade(jsonObject.getString("courseId"),
 						Integer.parseInt(jsonObject.getString("grade")));
 			}
-			else {
+			/*else {
 				return new Grade(jsonObject.getString("courseId"),
 						(int)jsonObject.get("grade"));
 			}
-		}
+		}*/
 		return null;
 	}
 

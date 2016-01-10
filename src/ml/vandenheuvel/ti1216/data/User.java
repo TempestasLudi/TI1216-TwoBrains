@@ -152,12 +152,12 @@ public class User {
 		Grade[] tempGradeList = new Grade[tempJSONGradeList.length()];
 		//if (tempJSONGradeList != null) {
 			for (int i = 0; i < tempJSONGradeList.length(); i++) {
-				if (!tempJSONGradeList.get(i).toString().equals("null")) {
+				//if (!tempJSONGradeList.get(i).toString().equals("null")) {
 					tempGradeList[i] = Grade
 							.fromJSON((JSONObject) tempJSONGradeList.get(i));
-				} else
+				} /*else
 					tempGradeList[i] = null;
-			}
+			}*/
 		//}
 		return new User(jsonObject.getString("username"),
 				jsonObject.getString("postalCode"),

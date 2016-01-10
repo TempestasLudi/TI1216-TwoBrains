@@ -12,8 +12,7 @@ public class DatabaseCommunicatorTest {
 	 * /private DatabaseCommunicator communicator = new
 	 * DatabaseCommunicator("192.168.1.111", "TI1216-test");/
 	 */
-	private DatabaseCommunicator communicator = new DatabaseCommunicator("tempestasludi.com", "TI1216-test", "TI1216",
-			"3t.uGmL365j2f7B");/**/
+	private DatabaseCommunicator communicator = new DatabaseCommunicator("tempestasludi.com", "TI1216-test", "TI1216", "3t.uGmL365j2f7B");
 
 	/**
 	 * "Tests" the constructor and cleans the database (or at least tries to..).
