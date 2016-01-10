@@ -104,4 +104,21 @@ public class ChatMessage {
 		return new ChatMessage(json.getString("sender"),
 				json.getString("message"), json.getString("receiver"));
 	}
+	
+	/**
+	 * Checks whether two ChatMessages are equal to each other.
+	 * 
+	 * @param other the Object to which the ChatMessage is compared
+	 * @return true if the two ChatMessages are equal, otherwise false
+	 */
+	public boolean equals(Object other)
+	{
+		if(other instanceof ChatMessage)
+		{
+			ChatMessage that = (ChatMessage)other;
+			return this.sender.equals(that.sender) && this.message.equals(that.message) && this.receiver.equals(that.receiver);
+		}
+		return false;
+	}
+	
 }

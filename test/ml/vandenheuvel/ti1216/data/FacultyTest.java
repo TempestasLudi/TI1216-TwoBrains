@@ -139,6 +139,17 @@ public class FacultyTest {
 	}
 	
 	@Test
+	public void testFromToJSON4()
+	{
+		ArrayList<Program> list = new ArrayList<Program>();
+		ArrayList<Course> list2 = new ArrayList<Course>();
+		Program program = new Program("TI", "Technische Informatica", null, list2);
+		list.add(program);
+		Faculty faculty = new Faculty("EWI", "Electrical Engineering, Mathematics and Computer Science", list);
+		assertEquals(faculty, Faculty.fromJSON(faculty.toJSON()));
+	}
+	
+	@Test
 	public void testEqualsPositive()
 	{
 		ArrayList<Program> list = new ArrayList<Program>();

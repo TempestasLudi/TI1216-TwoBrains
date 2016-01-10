@@ -33,5 +33,50 @@ public class CredentialsTest {
 		credentials.setPassword("b2");
 		assertEquals(credentials.getPassword(), "b2");
 	}
+	
+	@Test
+	public void testFromToJSON()
+	{
+		Credentials credentials = new Credentials("azaidman", "Andyyy");
+		assertEquals(credentials,Credentials.fromJSON(credentials.toJSON()));
+	}
+	
+	@Test
+	public void testEquals1()
+	{
+		Credentials credentials1 = new Credentials("azaidman", "Andyyy");
+		Credentials credentials2 = new Credentials("azaidman", "Andyyy");
+		assertTrue(credentials1.equals(credentials2));
+	}
+	
+	@Test
+	public void testEquals2()
+	{
+		Credentials credentials1 = new Credentials("azaidman", "Andyyy");
+		assertFalse(credentials1.equals(null));
+	}
+	
+	@Test
+	public void testEquals3()
+	{
+		Credentials credentials1 = new Credentials("azaidman", "Andyyy");
+		assertFalse(credentials1.equals(4));
+	}
+	
+	@Test
+	public void testEquals4()
+	{
+		Credentials credentials1 = new Credentials("azaidman", "Andyyy");
+		Credentials credentials2 = new Credentials("azaidman", "Andyy");
+		assertFalse(credentials1.equals(credentials2));
+	}
+	
+	@Test
+	public void testEquals5()
+	{
+		Credentials credentials1 = new Credentials("azaidman", "Andyyy");
+		Credentials credentials2 = new Credentials("azaidmann", "Andyyy");
+		assertFalse(credentials1.equals(credentials2));
+	}
 
 }

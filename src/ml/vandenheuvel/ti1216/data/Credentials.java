@@ -82,7 +82,7 @@ public class Credentials {
 	 */
 	@Override
 	public boolean equals(Object object) {
-		if (object instanceof Credentials && object != null) {
+		if (object instanceof Credentials) {
 			Credentials that = (Credentials) object;
 			if (this.getUsername().equals(that.getUsername())
 					&& this.getPassword().equals(that.getPassword())) {

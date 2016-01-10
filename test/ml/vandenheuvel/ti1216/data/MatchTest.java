@@ -61,7 +61,14 @@ public class MatchTest {
 	@Test
 	public void testEqualsNegative3() {
 		Match test1 = new Match(-1, "username2", "username2", false, false);
-		Match test2 = new Match(-1, "username1", "username1", false, false);
+		Match test2 = new Match(-1, "username2", "username1", false, false);
+		assertFalse(test1.equals(test2));
+	}
+	
+	@Test
+	public void testEqualsNegative4() {
+		Match test1 = new Match(-1, "username2", "username2", false, false);
+		Match test2 = new Match(-1, "username1", "username2", false, false);
 		assertFalse(test1.equals(test2));
 	}
 
@@ -70,4 +77,37 @@ public class MatchTest {
 		Match match = create();
 		assertEquals(match, Match.fromJSON(match.toJSON()));
 	}
+	
+	@Test
+	public void testGetSetUsername()
+	{
+		Match match = new Match(5,null,"MgNaam",true,true);
+		match.setUsername("gNaam");
+		assertEquals("gNaam",match.getUsername());
+	}
+	
+	@Test
+	public void testGetMatchUsername()
+	{
+		Match match = new Match(5,"gNaam",null,true,true);
+		match.setMatchUsername("MgNaam");
+		assertEquals("MgNaam",match.getMatchUsername());
+	}
+	
+	@Test
+	public void testGetSetSeen()
+	{
+		Match match = new Match(5,"gNaam","MgNaam",false,true);
+		match.setSeen(true);
+		assertTrue(match.isSeen());
+	}
+	
+	@Test
+	public void testGetSetApproved()
+	{
+		Match match = new Match(5,"gNaam","MgNaam",true,false);
+		match.setApproved(true);
+		assertTrue(match.isApproved());
+	}
+	
 }
