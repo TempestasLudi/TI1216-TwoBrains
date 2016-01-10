@@ -8,8 +8,6 @@ import ml.vandenheuvel.ti1216.data.Match;
 /**
  * This thread runs as soon as the client has logged in. It listens for incoming
  * chatmessages and matches.
- * 
- * @author Bram van den Heuvel
  *
  */
 public class ServerListener implements Runnable {

@@ -1,16 +1,14 @@
-package ml.vandenheuvel.ti1216.api;
+package ml.vandenheuvel.ti1216.server;
 
 import java.io.DataInputStream;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.net.Socket;
 
-import ml.vandenheuvel.ti1216.api.http.*;
+import ml.vandenheuvel.ti1216.http.*;
 
 /**
  * ClientCommunicator handles one HTTP request.
- * 
- * @author Arnoud van der Leer
  */
 public class ClientCommunicator implements Runnable {
 	/**
@@ -31,15 +29,16 @@ public class ClientCommunicator implements Runnable {
 	/**
 	 * The processor for processing the requests.
 	 */
-	private static Processor processor = new Processor();
+	private Processor processor;
 
 	/**
 	 * Class constructor, initializes input and output.
 	 * 
 	 * @param socket the connection socket.
 	 */
-	public ClientCommunicator(Socket socket) {
+	public ClientCommunicator(Socket socket, Processor processor) {
 		this.socket = socket;
+		this.processor = processor;
 		try {
 			this.out = new PrintWriter(socket.getOutputStream());
 			this.in = new DataInputStream(socket.getInputStream());

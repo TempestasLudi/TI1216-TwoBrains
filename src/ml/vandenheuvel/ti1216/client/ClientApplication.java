@@ -5,8 +5,6 @@ import ml.vandenheuvel.ti1216.data.Credentials;
 /**
  * This class contains the main function and is run using two arguments; the
  * server and the port to use.
- * 
- * @author Bram van den Heuvel
  *
  */
 public class ClientApplication {

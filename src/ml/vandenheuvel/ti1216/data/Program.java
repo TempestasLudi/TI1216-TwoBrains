@@ -6,9 +6,7 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 
 /**
- * Class "Program".
- * 
- * @author Andreas Theys, Project Group A1.2, TU Delft 2015-2016.
+ * The data class which holds a list of all courses of that program
  */
 public class Program {
 

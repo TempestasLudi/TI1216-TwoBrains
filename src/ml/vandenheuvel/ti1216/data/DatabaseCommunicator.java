@@ -12,46 +12,32 @@ import com.mysql.jdbc.jdbc2.optional.MysqlDataSource;
 
 /**
  * DatabaseCommunicator is a class that handles communication with a database.
- * 
- * @author Andreas Theys, OOP Project [TI1216], Project Group A1.2, TU Delft
- *         2015-2016.
- * @author Arnoud van der Leer, OOP Project [TI1216], Project Group A1.2, TU
- *         Delft 2015-2016.
  */
 
 public class DatabaseCommunicator {
-
-	/**
-	 * The MySQL username.
-	 */
-	private static String username = "TI1216";
-
-	/**
-	 * The MySQL password.
-	 */
-	private static String password = "3t.uGmL365j2f7B";
 
 	/**
 	 * The database dataSource.
 	 */
 	private DataSource dataSource;
 
+	/**
+	 * The database connection.
+	 */
 	private Connection connection;
 
 	/**
 	 * Constructor, initializes the dataSource.
 	 * 
-	 * @param hostname
-	 *            the database host name
-	 * @param database
-	 *            the database name
+	 * @param hostname the database host name
+	 * @param database the database name
 	 */
-	public DatabaseCommunicator(String hostname, String database) {
+	public DatabaseCommunicator(String hostname, String database, String username, String password) {
 		MysqlDataSource mysqlDS = null;
 		mysqlDS = new MysqlDataSource();
 		mysqlDS.setURL("jdbc:mysql://" + hostname + "/" + database);
-		mysqlDS.setUser(DatabaseCommunicator.username);
-		mysqlDS.setPassword(DatabaseCommunicator.password);
+		mysqlDS.setUser(username);
+		mysqlDS.setPassword(password);
 		this.dataSource = mysqlDS;
 		try {
 			this.connection = this.dataSource.getConnection();
@@ -63,8 +49,7 @@ public class DatabaseCommunicator {
 	/**
 	 * Fetches data from the database.
 	 * 
-	 * @param query
-	 *            the query to be executed
+	 * @param query the query to be executed
 	 * @return the data matching the query
 	 */
 	private ResultSet get(String query) throws SQLException {
@@ -75,8 +60,7 @@ public class DatabaseCommunicator {
 	/**
 	 * Executes a MySQL query.
 	 * 
-	 * @param query
-	 *            the query to be executed
+	 * @param query the query to be executed
 	 */
 	private void execute(String query) throws SQLException {
 		Statement statement = this.connection.createStatement();
@@ -104,8 +88,7 @@ public class DatabaseCommunicator {
 	/**
 	 * Fetches a faculty from the database.
 	 * 
-	 * @param id
-	 *            the id of the faculty
+	 * @param id the id of the faculty
 	 * @return the faculty with the id if found, otherwise null
 	 */
 	public Faculty getFaculty(String id) {
@@ -128,8 +111,7 @@ public class DatabaseCommunicator {
 	/**
 	 * Creates a Faculty-Program-Course tree structure from a MySQL result set.
 	 * 
-	 * @param resultSet
-	 *            the result set
+	 * @param resultSet the result set
 	 * @return a Faculty-Program-Course tree structure from the result set
 	 */
 	private Faculty[] createFPCTree(ResultSet resultSet) throws SQLException {
@@ -160,8 +142,7 @@ public class DatabaseCommunicator {
 	 * Updates a faculty if it already exists, otherwise, adds a new one. Also,
 	 * the programs of the faculty are saved.
 	 * 
-	 * @param faculty
-	 *            the faculty to save
+	 * @param faculty the faculty to save
 	 */
 	public void save(Faculty faculty) {
 		Faculty existing = this.getFaculty(faculty.getID());
@@ -194,8 +175,7 @@ public class DatabaseCommunicator {
 	/**
 	 * Removes a faculty from the database.
 	 * 
-	 * @param faculty
-	 *            the faculty to remove
+	 * @param faculty the faculty to remove
 	 */
 	public void delete(Faculty faculty) {
 		try {
@@ -228,8 +208,7 @@ public class DatabaseCommunicator {
 	/**
 	 * Fetches a program from the database.
 	 * 
-	 * @param id
-	 *            the id of the program
+	 * @param id the id of the program
 	 * @return the program with the id if found, otherwise null
 	 */
 	public Program getProgram(String id) {
@@ -254,8 +233,7 @@ public class DatabaseCommunicator {
 	 * Saves a program. If it already exists, updates the current record.
 	 * Otherwise, adds a new one.
 	 * 
-	 * @param program
-	 *            the faculty to save
+	 * @param program the faculty to save
 	 */
 	public void save(Program program) {
 		Program existing = this.getProgram(program.getID());
@@ -290,8 +268,7 @@ public class DatabaseCommunicator {
 	/**
 	 * Removes a program from the database.
 	 * 
-	 * @param program
-	 *            the program to remove
+	 * @param program the program to remove
 	 */
 	public void delete(Program program) {
 		try {
@@ -324,8 +301,7 @@ public class DatabaseCommunicator {
 	/**
 	 * Fetches a course from the database.
 	 * 
-	 * @param id
-	 *            the id of the course
+	 * @param id the id of the course
 	 * @return the course with the id if found, otherwise null
 	 */
 	public Course getCourse(String id) {
@@ -349,8 +325,7 @@ public class DatabaseCommunicator {
 	/**
 	 * Updates a course if it already exists, otherwise, adds a new one.
 	 * 
-	 * @param course
-	 *            the course to save
+	 * @param course the course to save
 	 */
 	public void save(Course course) {
 		Course existing = this.getCourse(course.getID());
@@ -384,10 +359,8 @@ public class DatabaseCommunicator {
 	/**
 	 * Checks whether a user can create an account or not.
 	 * 
-	 * @param credentials
-	 *            the credentials object containing the username to check
-	 * @return true if no user is registered with that username, otherwise
-	 *         false.
+	 * @param credentials the credentials object containing the username to check
+	 * @return true if no user is registered with that username, otherwise false.
 	 */
 	public boolean canRegister(Credentials credentials) {
 		try {
@@ -406,10 +379,8 @@ public class DatabaseCommunicator {
 	/**
 	 * Checks whether a user can login or not.
 	 * 
-	 * @param credentials
-	 *            the username-password pair to check for
-	 * @return true if the user is registered with that username and password,
-	 *         otherwise false.
+	 * @param credentials the username-password pair to check for
+	 * @return true if the user is registered with that username and password, otherwise false.
 	 */
 	public boolean canLogin(Credentials credentials) {
 		try {
@@ -425,8 +396,7 @@ public class DatabaseCommunicator {
 	/**
 	 * Encrypts a password.
 	 * 
-	 * @param password
-	 *            the password to encrypt
+	 * @param password the password to encrypt
 	 * @return the encrypted password
 	 */
 	private static String encryptPassword(String password) {
@@ -481,8 +451,7 @@ public class DatabaseCommunicator {
 	/**
 	 * Fetches a user from the database.
 	 * 
-	 * @param name
-	 *            the name of the user to fetch
+	 * @param name the name of the user to fetch
 	 * @return a user in the database with the specified name
 	 */
 	public User getUser(String name) {
@@ -512,8 +481,7 @@ public class DatabaseCommunicator {
 	/**
 	 * Updates a user if it already exists.
 	 * 
-	 * @param user
-	 *            the user to update
+	 * @param user the user to update
 	 */
 	public void save(User user) {
 		User existing = this.getUser(user.getUsername());
@@ -545,8 +513,7 @@ public class DatabaseCommunicator {
 	/**
 	 * Adds a new user.
 	 * 
-	 * @param user
-	 *            the user to add
+	 * @param user the user to add
 	 */
 	public void save(User user, Credentials credentials) {
 		User existing = this.getUser(user.getUsername());
@@ -618,8 +585,7 @@ public class DatabaseCommunicator {
 	/**
 	 * Fetches all matches for a certain user.
 	 * 
-	 * @param username
-	 *            the name of the user to fetch matches for
+	 * @param username the name of the user to fetch matches for
 	 * @return all matches for the user
 	 */
 	public Match[] getMatches(String username) {
@@ -644,8 +610,7 @@ public class DatabaseCommunicator {
 	/**
 	 * Updates a match if it already exists, otherwise, adds a new one.
 	 * 
-	 * @param match
-	 *            the match to save
+	 * @param match the match to save
 	 */
 	public void save(Match match) {
 		try {
@@ -665,8 +630,7 @@ public class DatabaseCommunicator {
 	/**
 	 * Removes a match from the database.
 	 * 
-	 * @param match
-	 *            the match to delete
+	 * @param match the match to delete
 	 */
 	public void delete(Match match) {
 		try {

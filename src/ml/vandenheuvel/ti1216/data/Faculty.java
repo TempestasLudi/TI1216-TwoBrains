@@ -6,12 +6,8 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 
 /**
- * Class "Faculty"
- * 
- * @author Andreas Theys, OOP Project [TI1216], Project Group A1.2, TU Delft
- *         2015-2016.
+ * This data class holds a list of programs which are available on that faculty.
  */
-
 public class Faculty {
 
 	/**
@@ -21,22 +17,19 @@ public class Faculty {
 	private ArrayList<Program> programs;
 	private String id;
 
-	// BEGIN CONSTRUCTORS
-	
 	/**
 	 * General constructor.
 	 * 
-	 * @param id
-	 * @param name
-	 * @param programs
+	 * @param id a unique ID for this faculty instance
+	 * @param name the name of this faculty
+	 * @param programs the ArrayList of programs which are on this faculty
 	 */
-	public Faculty(String ID, String name, ArrayList<Program> programs){
+	public Faculty(String ID, String name, ArrayList<Program> programs) {
 		this.id = ID;
 		this.name = name;
-		if(programs==null){
+		if (programs == null) {
 			this.programs = new ArrayList<Program>();
-		}
-		else{
+		} else {
 			this.programs = programs;
 		}
 		for (int i = 0; i < this.programs.size(); i++) {
@@ -44,14 +37,12 @@ public class Faculty {
 		}
 	}
 
-	// END CONSTRUCTORS
-
 	/**
 	 * Returns the id of the faculty.
 	 * 
 	 * @return the id of the faculty
 	 */
-	public String getID(){
+	public String getID() {
 		return this.id;
 	}
 
@@ -60,7 +51,7 @@ public class Faculty {
 	 * 
 	 * @return the name of the faculty
 	 */
-	public String getName(){
+	public String getName() {
 		return this.name;
 	}
 
@@ -69,27 +60,27 @@ public class Faculty {
 	 * 
 	 * @return the programs of the faculty
 	 */
-	public ArrayList<Program> getPrograms(){
+	public ArrayList<Program> getPrograms() {
 		return this.programs;
 	}
-
-	// BEGIN MODIFIERS
-
+	
 	/**
 	 * Changes the name-instance of the faculty.
 	 * 
 	 * @param name the new name of the faculty
 	 */
-	public void setName(String name){
+	public void setName(String name) {
 		this.name = name;
 	}
 
 	/**
-	 * Adds a program to the list of programs, if it does not exist yet and adds the faculty to the program.
+	 * Adds a program to the list of programs, if it does not exist yet and adds
+	 * the faculty to the program.
 	 * 
-	 * @param program the program to add
+	 * @param program
+	 *            the program to add
 	 */
-	public void addProgram(Program program){
+	public void addProgram(Program program) {
 		if (!this.programs.contains(program)) {
 			this.programs.add(program);
 			program.setFaculty(this);
@@ -97,17 +88,18 @@ public class Faculty {
 	}
 
 	/**
-	 * Removes a program from the list of programs and removes the faculty from the program.
+	 * Removes a program from the list of programs and removes the faculty from
+	 * the program.
 	 * 
 	 * @param program the program to remove
 	 */
-	public void removeProgram(Program program){
+	public void removeProgram(Program program) {
 		if (this.programs.contains(program)) {
 			this.programs.remove(program);
 			program.setFaculty(null);
 		}
 	}
-	
+
 	/**
 	 * Creates a JSON object based on the Faculty object.
 	 * 
@@ -124,7 +116,7 @@ public class Faculty {
 		result.put("programs", programs);
 		return result;
 	}
-	
+
 	/**
 	 * Creates a Faculty object based on a JSON object.
 	 * 
@@ -140,8 +132,6 @@ public class Faculty {
 		return new Faculty(json.getString("id"), json.getString("name"), programs);
 	}
 
-	// END MODIFIERS
-
 	/**
 	 * Compares Faculty-objects, based on the respective class-instances.
 	 * 
@@ -149,7 +139,7 @@ public class Faculty {
 	 * @return true if the two Faculties are equal, otherwise false
 	 */
 	@Override
-	public boolean equals(Object obj){
+	public boolean equals(Object obj) {
 		boolean result = false;
 		if (obj instanceof Faculty) {
 			Faculty that = (Faculty) obj;

@@ -3,13 +3,8 @@ package ml.vandenheuvel.ti1216.data;
 import org.json.JSONObject;
 
 /**
- * Class "Course".
- * 
- * @author Andreas Theys, OOP Project [TI1216], Project Group A1.2, TU Delft
- *         2015-2016.
- * @author Arnoud van der Leer
+ * The data class Course holds a unique ID for this course, a name and a program it's part of.
  */
-
 public class Course {
 	
 	/**
@@ -26,9 +21,7 @@ public class Course {
 	 * The program of study the course belongs to.
 	 */
 	private Program program;
-
-	// BEGIN CONSTRUCTORS
-
+	
 	/**
 	 * General constructor.
 	 * 
@@ -42,10 +35,8 @@ public class Course {
 		this.setProgram(program);
 	}
 
-	// END CONSTRUCTORS
-
 	/**
-	 * Gathers the ID of the course.
+	 * Get the ID of the course.
 	 * 
 	 * @return the ID of the course
 	 */
@@ -70,8 +61,6 @@ public class Course {
 	public Program getProgram(){
 		return this.program;
 	}
-
-	// BEGIN MODIFIERS
 
 	/**
 	 * Changes the name of the course.
@@ -123,8 +112,6 @@ public class Course {
 	public static Course fromJSON(JSONObject json) {
 		return new Course(json.getString("id"), json.getString("name"), null);
 	}
-	
-	// END MODIFIERS
 
 	/**
 	 * Compares Course objects, based on the respective class-instances.

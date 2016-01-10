@@ -1,12 +1,10 @@
-package ml.vandenheuvel.ti1216.api.http;
+package ml.vandenheuvel.ti1216.http;
 
 import java.util.ArrayList;
 import java.util.List;
 
 /**
  * Header represents the header of a HTTP request.
- * 
- * @author Arnoud van der Leer
  */
 public class Header {
 	/**

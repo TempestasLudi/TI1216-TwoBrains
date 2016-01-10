@@ -5,8 +5,6 @@ import org.json.JSONObject;
 
 /**
  * The User class contains all information of a user, except for it's password.
- * 
- * @author Bram van den Heuvel
  *
  */
 public class User {

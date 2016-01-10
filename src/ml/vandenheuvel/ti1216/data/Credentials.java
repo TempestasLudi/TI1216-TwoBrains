@@ -4,18 +4,14 @@ import org.json.JSONObject;
 
 /**
  * Credentials is a username-password pair, used to sign in to the application.
- * 
- * @author Arnoud van der Leer
  */
 public class Credentials {
 	private String username;
 	private String password;
 
 	/**
-	 * @param username
-	 *            the username
-	 * @param password
-	 *            the password
+	 * @param username the username
+	 * @param password the password
 	 * @param signUp
 	 *            is true if the user wants to sign up, false otherwise
 	 */
@@ -27,8 +23,7 @@ public class Credentials {
 	/**
 	 * Sets the username.
 	 * 
-	 * @param username
-	 *            the username
+	 * @param username the username
 	 */
 	public void setUsername(String username) {
 		this.username = username;
@@ -37,8 +32,7 @@ public class Credentials {
 	/**
 	 * Sets the password.
 	 * 
-	 * @param password
-	 *            the password
+	 * @param password the password
 	 */
 	public void setPassword(String password) {
 		this.password = password;
@@ -75,8 +69,7 @@ public class Credentials {
 	/**
 	 * Creates a Credentials object out of a JSON object
 	 * 
-	 * @param jsonObject
-	 *            the JSONObject to create a Credentials object from
+	 * @param jsonObject the JSONObject to create a Credentials object from
 	 * @return the Credentials object that is represented in the JSON object
 	 */
 	public static Credentials fromJSON(JSONObject jsonObject) {
@@ -84,6 +77,9 @@ public class Credentials {
 				jsonObject.getString("password"));
 	}
 
+	/**
+	 * The equals method for this class
+	 */
 	@Override
 	public boolean equals(Object object) {
 		if (object instanceof Credentials && object != null) {

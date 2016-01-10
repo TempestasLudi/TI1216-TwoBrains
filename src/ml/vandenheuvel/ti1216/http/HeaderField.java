@@ -1,8 +1,6 @@
-package ml.vandenheuvel.ti1216.api.http;
+package ml.vandenheuvel.ti1216.http;
 
 /**
- * @author Arnoud van der Leer
- * 
  * HeaderField represents a HTTP header field
  */
 public class HeaderField {

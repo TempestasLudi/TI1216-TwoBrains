@@ -1,4 +1,4 @@
-package ml.vandenheuvel.ti1216.api;
+package ml.vandenheuvel.ti1216.server;
 
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
@@ -7,23 +7,34 @@ import java.util.Base64;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
-import ml.vandenheuvel.ti1216.api.http.*;
 import ml.vandenheuvel.ti1216.data.*;
+import ml.vandenheuvel.ti1216.http.*;
 
 /**
  * Processor processes API requests and generates output for those.
- * 
- * @author Arnoud van der Leer
  */
 public class Processor {
-	/**/private DatabaseCommunicator communicator = new DatabaseCommunicator("tempestasludi.com", "TI1216");/*/
-	private DatabaseCommunicator communicator = new DatabaseCommunicator("192.168.1.111", "TI1216");/**/
-	
+	private DatabaseCommunicator communicator;
+
 	/**
 	 * The list of chat messages sent by all users.
 	 */
-	private ArrayList<ChatMessage> chatMessages = new ArrayList<ChatMessage>();
-	
+	private ArrayList<ChatMessage> chatMessages;
+
+	/**
+	 * This constructor creates a new DatabaseCommunicator instance and a new
+	 * ArrayList to store chatMessages in as long as the server is running.
+	 * 
+	 * @param databaseAddress the address on which the database server runs
+	 * @param databaseUsername the username with which to log in on the databasehost
+	 * @param databaseName the name of the database on the host
+	 * @param databasePassword the password with which one can log on to the databasehost
+	 */
+	public Processor(String databaseAddress, String databaseUsername, String databaseName, String databasePassword) {
+		this.communicator = new DatabaseCommunicator(databaseAddress, databaseName, databaseUsername, databasePassword);
+		this.chatMessages = new ArrayList<ChatMessage>();
+	}
+
 	/**
 	 * Processes a HTTP request.
 	 * 
@@ -36,9 +47,9 @@ public class Processor {
 		if (request == null) {
 			return response;
 		}
-		RequestLine headerLine = (RequestLine)request.getHeader().getHeaderLine();
+		RequestLine headerLine = (RequestLine) request.getHeader().getHeaderLine();
 		String[] uriParts = headerLine.getUri().split("/");
-		if (uriParts.length > 1){
+		if (uriParts.length > 1) {
 			if ("user".equals(uriParts[1])) {
 				return this.processUser(request);
 			}
@@ -56,7 +67,7 @@ public class Processor {
 		}
 		return response;
 	}
-	
+
 	/**
 	 * Checks whether a HTTP request is properly authorized or not.
 	 * 
@@ -67,12 +78,13 @@ public class Processor {
 		Credentials credentials = getCredentials(request);
 		return credentials != null && this.communicator.canLogin(credentials);
 	}
-	
+
 	/**
 	 * Retrieves the credentials in the authorization field of a HTTP request.
 	 * 
 	 * @param request the request to extract from
-	 * @return a Credentials object containing the credentials if provided, otherwise null
+	 * @return a Credentials object containing the credentials if provided,
+	 *         otherwise null
 	 */
 	private static Credentials getCredentials(Message request) {
 		HeaderField authorization = request.getHeader().getField("Authorization");
@@ -80,15 +92,15 @@ public class Processor {
 			return null;
 		}
 		String[] typeCredentials = authorization.getValue().split(" ");
-		String[] usernamePassword = new String(Base64.getDecoder().decode(
-				typeCredentials[1].getBytes(StandardCharsets.UTF_8))).split(":");
+		String[] usernamePassword = new String(
+				Base64.getDecoder().decode(typeCredentials[1].getBytes(StandardCharsets.UTF_8))).split(":");
 		if (usernamePassword.length < 2) {
 			return null;
 		}
 		Credentials credentials = new Credentials(usernamePassword[0], usernamePassword[1]);
 		return credentials;
 	}
-	
+
 	/**
 	 * Processes a HTTP request to the /user endpoint.
 	 * 
@@ -96,7 +108,7 @@ public class Processor {
 	 * @return the response to the request
 	 */
 	private Message processUser(Message request) {
-		RequestLine headerLine = (RequestLine)request.getHeader().getHeaderLine();
+		RequestLine headerLine = (RequestLine) request.getHeader().getHeaderLine();
 		Message response = new Message(new Header(), new Body(""));
 		if ("PUT".equals(headerLine.getMethod())) {
 			Credentials credentials = getCredentials(request);
@@ -107,8 +119,8 @@ public class Processor {
 				response.getBody().setContent("{\"success\":true}");
 				return response;
 			}
-			response.getBody().setContent("{\"success\":false,\"reason\":\"You are not allowed to "
-					+ "register with those credentials.\"}");
+			response.getBody().setContent(
+					"{\"success\":false,\"reason\":\"You are not allowed to " + "register with those credentials.\"}");
 			return response;
 		}
 		if ("GET".equals(headerLine.getMethod())) {
@@ -146,7 +158,7 @@ public class Processor {
 	 * @return the response to the request
 	 */
 	private Message processChat(Message request) {
-		RequestLine headerLine = (RequestLine)request.getHeader().getHeaderLine();
+		RequestLine headerLine = (RequestLine) request.getHeader().getHeaderLine();
 		Message response = new Message(new Header(), new Body(""));
 		Credentials credentials = getCredentials(request);
 		if ("PUT".equals(headerLine.getMethod())) {
@@ -180,7 +192,7 @@ public class Processor {
 	 * @return the response to the request
 	 */
 	private Message processFaculty(Message request) {
-		RequestLine headerLine = (RequestLine)request.getHeader().getHeaderLine();
+		RequestLine headerLine = (RequestLine) request.getHeader().getHeaderLine();
 		Message response = new Message(new Header(), new Body(""));
 		String[] uriParts = headerLine.getUri().split("/");
 		if ("GET".equals(headerLine.getMethod())) {
@@ -193,14 +205,12 @@ public class Processor {
 				}
 				result.put("faculties", faculties);
 				response.getBody().setContent(result.toString());
-			}
-			else {
+			} else {
 				String id = uriParts[2];
 				Faculty faculty = this.communicator.getFaculty(id);
 				if (faculty == null) {
 					response.getHeader().setHeaderLine(new ResponseLine("HTTP/1.1 404 Not Found"));
-				}
-				else {
+				} else {
 					JSONObject result = new JSONObject();
 					result.put("faculty", faculty.toJSON());
 					response.getBody().setContent(result.toString());
@@ -211,5 +221,5 @@ public class Processor {
 		response.getHeader().setHeaderLine(new ResponseLine("HTTP/1.1 405 Method Not Allowed"));
 		response.getHeader().addField(new HeaderField("Allow", "GET"));
 		return response;
-	}	
+	}
 }

@@ -1,4 +1,4 @@
-package ml.vandenheuvel.ti1216.api.http;
+package ml.vandenheuvel.ti1216.http;
 
 import java.io.DataInputStream;
 import java.io.EOFException;
@@ -7,8 +7,6 @@ import java.util.Date;
 
 /**
  * Message represents an HTTP message.
- * 
- * @author Arnoud van der Leer
  */
 public class Message {
 

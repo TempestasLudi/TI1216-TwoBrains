@@ -12,8 +12,6 @@ import ml.vandenheuvel.ti1216.data.User;
 /**
  * This class can connect to a server, open streams and log in to the server.
  * The serverListener thread is started here.
- * 
- * @author Bram van den Heuvel
  *
  */
 public class Client {

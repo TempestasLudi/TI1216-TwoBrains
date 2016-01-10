@@ -1,9 +1,7 @@
-package ml.vandenheuvel.ti1216.api.http;
+package ml.vandenheuvel.ti1216.http;
 
 /**
  * ResponseLine represents the response-line of an HTTP response.
- * 
- * @author Arnoud van der Leer
  */
 public class ResponseLine implements HeaderLine {
 	/**

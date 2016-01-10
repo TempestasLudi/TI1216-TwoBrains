@@ -1,9 +1,7 @@
-package ml.vandenheuvel.ti1216.api.http;
+package ml.vandenheuvel.ti1216.http;
 
 /**
  * RequestLine represents the request-line of an HTTP request.
- * 
- * @author Arnoud van der Leer
  */
 public class RequestLine implements HeaderLine {
 	/**

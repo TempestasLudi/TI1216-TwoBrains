@@ -10,17 +10,15 @@ import java.util.Base64;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
-import ml.vandenheuvel.ti1216.api.http.*;
 import ml.vandenheuvel.ti1216.data.ChatMessage;
 import ml.vandenheuvel.ti1216.data.Credentials;
 import ml.vandenheuvel.ti1216.data.Faculty;
 import ml.vandenheuvel.ti1216.data.User;
+import ml.vandenheuvel.ti1216.http.*;
 
 /**
  * ServerCommunicator is a communicator class to communicate in a API-based way
  * with the server (from the client).
- * 
- * @author Arnoud van der Leer
  *
  */
 public class ServerCommunicator {
@@ -185,6 +183,11 @@ public class ServerCommunicator {
 			System.out.println(e.getMessage());
 			e.printStackTrace();
 		}
+		return null;
+	}
+	
+	public static ArrayList<ChatMessage> fetchChats(Credentials credentials){
+		//TODO: Implement this method
 		return null;
 	}
 

@@ -3,13 +3,7 @@ package ml.vandenheuvel.ti1216.data;
 import org.json.JSONObject;
 
 /**
- * Class "ChatMessage".
- * 
- * @author Andreas Theys, OOP Project [TI1216], Project Group A1.2, TU Delft,
- *         2015-2016.
- */
-/**
- * ChatMessage represents a chat message.
+ * Instances of this data class represents a chat message.
  */
 public class ChatMessage {
 
@@ -19,6 +13,17 @@ public class ChatMessage {
 	private String sender;
 	private String message;
 	private String receiver;
+	
+	/**
+	 * @param sender the username of the person who sends the message
+	 * @param message the actual content of the message
+	 * @param receiver the username of the person who should receive the message
+	 */
+	public ChatMessage(String sender, String message, String receiver) {
+		this.sender = sender;
+		this.message = message;
+		this.receiver = receiver;
+	}
 	
 	/**
 	 * Gets the sender of the chat message.
@@ -75,19 +80,6 @@ public class ChatMessage {
 	public void setReceiver(String receiver) {
 		this.receiver = receiver;
 	}
-	
-	/**
-	 * General constructor.
-	 * 
-	 * @param sender The username of the person who sends the message
-	 * @param message The actual content of the message
-	 * @param receiver The username of the person who should receive the message
-	 */
-	public ChatMessage(String sender, String message, String receiver) {
-		this.sender = sender;
-		this.message = message;
-		this.receiver = receiver;
-	}
 
 	/**
 	 * Creates a JSON object out of this ChatMessage object
@@ -106,7 +98,7 @@ public class ChatMessage {
 	 * Creates a ChatMessage object out of a JSON object.
 	 * 
 	 * @param json the JSON object
-	 * @return a ChatMessage constructed out of the JSON input
+	 * @return a chatMessage constructed out of the JSON input
 	 */
 	public static ChatMessage fromJSON(JSONObject json) {
 		return new ChatMessage(json.getString("sender"),

@@ -4,8 +4,6 @@ import org.json.JSONObject;
 
 /**
  * Objects of this instance are pairs of a course and a grade
- * 
- * @author
  *
  */
 public class Grade {

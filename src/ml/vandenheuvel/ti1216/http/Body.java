@@ -1,9 +1,7 @@
-package ml.vandenheuvel.ti1216.api.http;
+package ml.vandenheuvel.ti1216.http;
 
 /**
  * Body represents an HTTP message body.
- * 
- * @author Arnoud van der Leer
  */
 public class Body {
 
