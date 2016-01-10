@@ -7,13 +7,13 @@ import java.util.ArrayList;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
-/**
- * @author Arnoud van der Leer
- *
- */
 public class DatabaseCommunicatorTest {
-	/*/private DatabaseCommunicator communicator = new DatabaseCommunicator("192.168.1.111", "TI1216-test");/*/
-	private DatabaseCommunicator communicator = new DatabaseCommunicator("tempestasludi.com", "TI1216-test");/**/
+	/*
+	 * /private DatabaseCommunicator communicator = new
+	 * DatabaseCommunicator("192.168.1.111", "TI1216-test");/
+	 */
+	private DatabaseCommunicator communicator = new DatabaseCommunicator("tempestasludi.com", "TI1216-test", "TI1216",
+			"3t.uGmL365j2f7B");/**/
 
 	/**
 	 * "Tests" the constructor and cleans the database (or at least tries to..).
@@ -21,8 +21,12 @@ public class DatabaseCommunicatorTest {
 	@BeforeClass
 	public static void testConstructor() {
 		// Clear FPC
-		/*/DatabaseCommunicator communicator = new DatabaseCommunicator("192.168.1.111", "TI1216-test");/*/
-		DatabaseCommunicator communicator = new DatabaseCommunicator("tempestasludi.com", "TI1216-test");/**/
+		/*
+		 * /DatabaseCommunicator communicator = new
+		 * DatabaseCommunicator("192.168.1.111", "TI1216-test");/
+		 */
+		DatabaseCommunicator communicator = new DatabaseCommunicator("tempestasludi.com", "TI1216-test", "TI1216",
+				"3t.uGmL365j2f7B");/**/
 		Faculty[] faculties = communicator.getFaculties();
 		for (int i = 0; i < faculties.length; i++) {
 			communicator.delete(faculties[i]);
@@ -95,7 +99,7 @@ public class DatabaseCommunicatorTest {
 		new Course("C1.1.3", "Course 1.1.3", p11);
 		new Course("C1.1.4", "Course 1.1.4", p11);
 		new Course("C2.1.1", "Course 2.1.1", p21);
-		
+
 		return new Faculty[] { f1, f2 };
 	}
 
@@ -118,18 +122,17 @@ public class DatabaseCommunicatorTest {
 		courses[4] = programs[2].getCourses().get(0);
 		return courses;
 	}
-	
-	private static User[] referenceUsers()
-	{
+
+	private static User[] referenceUsers() {
 		User[] users = new User[2];
-		//users[0] = new User("User 1", "Pc1", "This is a first description.", new Grade[] {new Grade("TI1216",10),new Grade("TI1506",9)});
+		// users[0] = new User("User 1", "Pc1", "This is a first description.",
+		// new Grade[] {new Grade("TI1216",10),new Grade("TI1506",9)});
 		users[0] = new User("User 1", "Pc1", "This is a first description.", new Grade[0]);
 		users[1] = new User("User 2", "Pc2", "This is a second description.", new Grade[0]);
 		return users;
 	}
-	
-	private static Credentials[] referenceCredentials()
-	{
+
+	private static Credentials[] referenceCredentials() {
 		Credentials[] credentials = new Credentials[2];
 		credentials[0] = new Credentials("User 1", "Pass 1");
 		credentials[1] = new Credentials("User 2", "Pass 2");
@@ -186,19 +189,16 @@ public class DatabaseCommunicatorTest {
 	}
 
 	@Test
-	public void testGetPrograms() 
-	{
+	public void testGetPrograms() {
 		Program[] databasePrograms = this.communicator.getPrograms();
 		Program[] referencePrograms = referencePrograms();
-		for (int i = 0; i < 3; i++) 
-		{
+		for (int i = 0; i < 3; i++) {
 			assertEquals(referencePrograms[i], databasePrograms[i]);
 		}
 	}
 
 	@Test
-	public void testGetProgramExists() 
-	{
+	public void testGetProgramExists() {
 		Program[] referencePrograms = referencePrograms();
 		Program p11 = this.communicator.getProgram("P1.1");
 		Program p12 = this.communicator.getProgram("P1.2");
@@ -209,15 +209,13 @@ public class DatabaseCommunicatorTest {
 	}
 
 	@Test
-	public void testGetProgramNull() 
-	{
+	public void testGetProgramNull() {
 		Program program = this.communicator.getProgram("RandomID");
 		assertNull(program);
 	}
-	
+
 	@Test
-	public void testGetProgramEmpty()
-	{
+	public void testGetProgramEmpty() {
 		Program[] referencePrograms = referencePrograms();
 		this.communicator.delete(referencePrograms[0]);
 		this.communicator.delete(referencePrograms[1]);
@@ -234,8 +232,7 @@ public class DatabaseCommunicatorTest {
 	}
 
 	@Test
-	public void testDeleteAddProgram() 
-	{
+	public void testDeleteAddProgram() {
 		Program[] referencePrograms = referencePrograms();
 		assertNotNull(this.communicator.getProgram("P1.1"));
 		this.communicator.delete(referencePrograms[0]);
@@ -245,8 +242,7 @@ public class DatabaseCommunicatorTest {
 	}
 
 	@Test
-	public void testSaveProgram() 
-	{
+	public void testSaveProgram() {
 		Program program = referencePrograms()[0];
 		program.removeCourse(program.getCourses().get(0));
 		program.setName("RandomProgram");
@@ -260,19 +256,16 @@ public class DatabaseCommunicatorTest {
 	}
 
 	@Test
-	public void testGetCourses() 
-	{
+	public void testGetCourses() {
 		Course[] databaseCourses = this.communicator.getCourses();
 		Course[] referenceCourses = referenceCourses();
-		for (int i = 0; i < 5; i++) 
-		{
+		for (int i = 0; i < 5; i++) {
 			assertEquals(referenceCourses[i], databaseCourses[i]);
 		}
 	}
 
 	@Test
-	public void testGetCourseExists() 
-	{
+	public void testGetCourseExists() {
 		Course[] referenceCourses = referenceCourses();
 		Course c111 = this.communicator.getCourse("C1.1.1");
 		Course c112 = this.communicator.getCourse("C1.1.2");
@@ -287,15 +280,13 @@ public class DatabaseCommunicatorTest {
 	}
 
 	@Test
-	public void testGetCourseNull() 
-	{
+	public void testGetCourseNull() {
 		Course course = this.communicator.getCourse("RandomID");
 		assertNull(course);
 	}
 
 	@Test
-	public void testDeleteAddCourse() 
-	{
+	public void testDeleteAddCourse() {
 		Course[] referenceCourses = referenceCourses();
 		assertNotNull(this.communicator.getCourse("C1.1.1"));
 		this.communicator.delete(referenceCourses[0]);
@@ -305,8 +296,7 @@ public class DatabaseCommunicatorTest {
 	}
 
 	@Test
-	public void testSaveCourse() 
-	{
+	public void testSaveCourse() {
 		Course course = referenceCourses()[0];
 		course.setName("RandomCourse");
 		this.communicator.save(course);
@@ -317,94 +307,82 @@ public class DatabaseCommunicatorTest {
 		databaseCourse = this.communicator.getCourse(course.getID());
 		assertEquals(course, databaseCourse);
 	}
-	
+
 	@Test
-	public void testCanRegister1()
-	{
+	public void testCanRegister1() {
 		Credentials credentials = new Credentials(null, null);
 		assertFalse(this.communicator.canRegister(credentials));
 	}
-	
+
 	@Test
-	public void testCanRegister2()
-	{
+	public void testCanRegister2() {
 		Credentials credentials = new Credentials("", "");
 		assertFalse(this.communicator.canRegister(credentials));
 	}
-	
+
 	@Test
-	public void testCanRegister3()
-	{
+	public void testCanRegister3() {
 		Credentials credentials = new Credentials("yinghaodai", "wachtwoord");
 		assertTrue(this.communicator.canRegister(credentials));
 	}
-	
+
 	@Test
-	public void testCanRegister4()
-	{
+	public void testCanRegister4() {
 		Credentials credentials = new Credentials("yinghaodai", "");
 		assertFalse(this.communicator.canRegister(credentials));
 	}
-	
+
 	@Test
-	public void testCanRegister5()
-	{
+	public void testCanRegister5() {
 		Credentials credentials = new Credentials("", "wachtwoord");
 		assertFalse(this.communicator.canRegister(credentials));
 	}
-	
+
 	@Test
-	public void testCanRegister6()
-	{
+	public void testCanRegister6() {
 		Credentials credentials = new Credentials("User 1", "Pass 1");
 		assertFalse(this.communicator.canRegister(credentials));
 	}
-	
+
 	@Test
-	public void testCanRegister7()
-	{
+	public void testCanRegister7() {
 		Credentials credentials = new Credentials("User 1", null);
 		assertFalse(this.communicator.canRegister(credentials));
 	}
-	
+
 	@Test
-	public void testCanLogin1()
-	{
+	public void testCanLogin1() {
 		Credentials credentials = new Credentials("yinghaodai", "wachtwoord");
 		assertFalse(this.communicator.canLogin(credentials));
 	}
-	
+
 	@Test
-	public void testCanLogin2()
-	{
+	public void testCanLogin2() {
 		Credentials credentials = new Credentials("User 1", "Pass 1");
 		assertTrue(this.communicator.canLogin(credentials));
 	}
-	
+
 	@Test
-	public void testGetUsers()
-	{
+	public void testGetUsers() {
 		User[] databaseUsers = this.communicator.getUsers();
 		User[] referenceUsers = referenceUsers();
-		assertEquals(referenceUsers[0],databaseUsers[0]);
-		assertEquals(referenceUsers[1],databaseUsers[1]);
+		assertEquals(referenceUsers[0], databaseUsers[0]);
+		assertEquals(referenceUsers[1], databaseUsers[1]);
 	}
-	
+
 	@Test
-	public void testGetUserExists()
-	{
+	public void testGetUserExists() {
 		User[] referenceUsers = referenceUsers();
 		User user1 = this.communicator.getUser("User 1");
 		User user2 = this.communicator.getUser("User 2");
-		assertEquals(referenceUsers[0],user1);
-		assertEquals(referenceUsers[1],user2);
+		assertEquals(referenceUsers[0], user1);
+		assertEquals(referenceUsers[1], user2);
 	}
-	
+
 	@Test
-	public void testGetUserNull()
-	{
+	public void testGetUserNull() {
 		User user = this.communicator.getUser("Non-existing User");
 		assertNull(user);
 	}
-	
+
 }

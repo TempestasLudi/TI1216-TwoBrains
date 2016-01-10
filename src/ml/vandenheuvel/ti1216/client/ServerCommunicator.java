@@ -54,7 +54,7 @@ public class ServerCommunicator {
 	 * 
 	 * @param credentials the credentials to register with
 	 * @param user the user to register
-	 * @return true if the user could be registerd, otherwise false
+	 * @return true if the user could be registered, otherwise false
 	 */
 	public static boolean register(Credentials credentials, User user) {
 		Header header = new Header(new RequestLine("PUT /user HTTP/1.1"));

@@ -1,6 +1,5 @@
 package ml.vandenheuvel.ti1216.data;
 
-
 import static org.junit.Assert.*;
 
 import org.junit.Test;
@@ -8,14 +7,14 @@ import org.junit.Test;
 import ml.vandenheuvel.ti1216.data.Grade;
 import ml.vandenheuvel.ti1216.data.User;
 
-public class UserTest {	
+public class UserTest {
 	@Test
 	public void testConstructorUser1() {
 		Grade[] g = new Grade[2];
 		User u1 = new User("User", "PC", "descrip", g);
 		assertNotNull(u1);
 	}
-	
+
 	@Test
 	public void testConstructorUser2() {
 		User u1 = new User("User");
@@ -24,7 +23,7 @@ public class UserTest {
 
 	@Test
 	public void testGetUsername() {
-		
+
 		Grade[] g = new Grade[2];
 		User u1 = new User("User", "PC", "descrip", g);
 		assertEquals(u1.getUsername(), "User");
@@ -47,7 +46,7 @@ public class UserTest {
 	@Test
 	public void testGetGradeList() {
 		Grade[] g = new Grade[2];
-		g[0] = new Grade("TI1216",5);
+		g[0] = new Grade("TI1216", 5);
 		User u1 = new User("User", "PC", "descrip", g);
 		assertEquals(u1.getGradeList()[0], g[0]);
 	}
@@ -79,7 +78,7 @@ public class UserTest {
 	@Test
 	public void testSetGradeList() {
 		Grade[] g = new Grade[2];
-		g[0] = new Grade("TI1216",7);
+		g[0] = new Grade("TI1216", 7);
 		Grade[] g2 = new Grade[3];
 		g2[0] = new Grade("TI1206", 7);
 		User u1 = new User("User", "PC", "descrip", g);
@@ -102,55 +101,50 @@ public class UserTest {
 		User u2 = new User("User2", "PC", "descrip", g);
 		assertFalse(u1.equals(u2));
 	}
-	
+
 	@Test
 	public void testEquals3() {
 		Grade[] g = new Grade[2];
 		User u1 = new User("User", "PC", "descrip", g);
 		assertFalse(u1.equals(5));
 	}
-	
+
 	@Test
-	public void testFromToJSON1()
-	{
+	public void testFromToJSON1() {
 		Grade[] gradelist = new Grade[0];
 		User user = new User("azaidman", "postcode", "slimme man", gradelist);
-		assertEquals(user,User.fromJSON(user.toJSON()));
+		assertEquals(user, User.fromJSON(user.toJSON()));
 	}
-	
+
 	@Test
-	public void testFromToJSON2()
-	{
+	public void testFromToJSON2() {
 		Grade[] gradelist = new Grade[3];
 		User user = new User("azaidman", "postcode", "slimme man", gradelist);
-		assertEquals(user.getDescription(),User.fromJSON(user.toJSON()).getDescription());
+		assertEquals(user.getDescription(), User.fromJSON(user.toJSON()).getDescription());
 	}
-	
+
 	@Test
-	public void testFromToJSON3()
-	{
+	public void testFromToJSON3() {
 		Grade[] gradelist = new Grade[3];
 		User user = new User("azaidman", "AndyAntwerpen", "slimme man", gradelist);
-		assertEquals(user.getPostalCode(),User.fromJSON(user.toJSON()).getPostalCode());
+		assertEquals(user.getPostalCode(), User.fromJSON(user.toJSON()).getPostalCode());
 	}
-	
+
 	@Test
-	public void testFromToJSON4()
-	{
-		Grade grade1 = new Grade("TI1216",9);
-		Grade grade2 = new Grade("TI1206",10);
+	public void testFromToJSON4() {
+		Grade grade1 = new Grade("TI1216", 9);
+		Grade grade2 = new Grade("TI1206", 10);
 		Grade[] gradelist = new Grade[3];
 		gradelist[0] = grade1;
 		gradelist[1] = grade2;
 		User user = new User("azaidman", "AndyAntwerpen", "slimme man", gradelist);
-		assertEquals(gradelist[0],User.fromJSON(user.toJSON()).getGradeList()[0]);
-		assertEquals(gradelist[1],User.fromJSON(user.toJSON()).getGradeList()[1]);
+		assertEquals(gradelist[0], User.fromJSON(user.toJSON()).getGradeList()[0]);
+		assertEquals(gradelist[1], User.fromJSON(user.toJSON()).getGradeList()[1]);
 	}
-	
-	/*@Test
-	public void testFromToJSON5()
-	{
-		User user = new User("azaidman", "postcode", "slimme man", null);
-		assertEquals(user,User.fromJSON(user.toJSON()));
-	}*/
+
+	/*
+	 * @Test public void testFromToJSON5() { User user = new User("azaidman",
+	 * "postcode", "slimme man", null);
+	 * assertEquals(user,User.fromJSON(user.toJSON())); }
+	 */
 }
