@@ -35,15 +35,6 @@ public class HeaderField {
 		this.name = name;
 		this.value = value;
 	}
-	
-	/**
-	 * Default constructor.
-	 * 
-	 * @param no input parameters required for this type of constructor.
-	 */
-	public HeaderField() {
-		//This default constructor requires no arguments.
-	}
 
 	/**
 	 * Gets the name of the field.

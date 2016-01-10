@@ -90,15 +90,11 @@ public class HeaderTest {
 		fields.add(hf2);
 		
 		Header h = new Header(rl, fields);
-		boolean evaluate1 = h.getHeaderLine().equals(rl);
+		assertTrue(h.getHeaderLine().equals(rl));
 		
-		boolean evaluate2 = true;
 		for(int i=0; i<fields.size();i++){
-			evaluate2 = evaluate2 && fields.get(i).toString().equals(h.getFields()[i].toString());
+			assertTrue(fields.get(i).toString().equals(h.getFields()[i].toString()));
 			}
-		
-		assertTrue(evaluate1&&evaluate2);
-		
 	}
 
 	
@@ -114,14 +110,11 @@ public class HeaderTest {
 		fields.add(hf2);
 		
 		Header h = new Header(rl, fields);
-		boolean evaluate1 = h.getHeaderLine().equals(rl);
+		assertTrue(h.getHeaderLine().equals(rl));
 		
-		boolean evaluate2 = true;
 		for(int i=0; i<fields.size();i++){
-			evaluate2 = evaluate2 && fields.get(i).equals(h.getFields()[i]);
+			assertTrue(fields.get(i).equals(h.getFields()[i]));
 			}
-		
-		assertTrue(evaluate1&&evaluate2);	
 	}
 	
 	
@@ -134,12 +127,10 @@ public class HeaderTest {
 		HeaderField[] hfs1 = {hf};
 		HeaderField[] hfs2 = h.getFields();
 		
-		boolean evaluate = true && (hfs1.length == hfs2.length);
+		assertTrue(hfs1.length==hfs2.length);
 		for(int i=0; i<hfs2.length;i++){
-			evaluate = evaluate && hfs2[i].toString().equals(hfs1[i].toString());
+			assertTrue(hfs2[i].toString().equals(hfs1[i].toString()));
 			}
-		
-		assertTrue(evaluate);
 	}
 	
 	@Test
@@ -151,12 +142,10 @@ public class HeaderTest {
 		HeaderField[] hfs1 = {hf};
 		HeaderField[] hfs2 = h.getFields();
 		
-		boolean evaluate = true && (hfs1.length == hfs2.length);
+		assertTrue(hfs1.length==hfs2.length);
 		for(int i=0; i<hfs2.length;i++){
-			evaluate = evaluate && hfs2[i].equals(hfs1[i]);
+			assertTrue(hfs2[i].equals(hfs1[i]));
 			}
-		
-		assertTrue(evaluate);
 	}
 	
 	
@@ -168,12 +157,10 @@ public class HeaderTest {
 		HeaderField[] hfs1 = new HeaderField[h.getFields().length];
 		HeaderField[] hfs2 = h.getFields();
 		
-		boolean evaluate = true && (hfs1.length == hfs2.length);
+		assertTrue(hfs1.length == hfs2.length);
 		for(int i=0; i<hfs2.length;i++){
-			evaluate = evaluate && hfs2[i].equals(hfs1[i]);
+			assertTrue(hfs2[i].equals(hfs1[i]));
 			}
-		
-		assertTrue(evaluate);	
 	}
 	
 	
@@ -185,12 +172,10 @@ public class HeaderTest {
 		HeaderField[] hfs1 = new HeaderField[h.getFields().length];
 		HeaderField[] hfs2 = h.getFields();
 		
-		boolean evaluate = true && (hfs1.length == hfs2.length);
+		assertTrue(hfs1.length == hfs2.length);
 		for(int i=0; i<hfs2.length;i++){
-			evaluate = evaluate && hfs2[i].toString().equals(hfs1[i].toString());
+			assertTrue(hfs2[i].toString().equals(hfs1[i].toString()));
 			}
-		
-		assertTrue(evaluate);	
 	}
 	
 	
@@ -211,12 +196,10 @@ public class HeaderTest {
 		HeaderField[] hfs1 = {hf1,hf2,hf3};
 		HeaderField[] hfs2 = h.getFields();
 		
-		boolean evaluate = true && (hfs1.length == hfs2.length);
+		assertTrue(hfs1.length == hfs2.length);
 		for(int i=0; i<hfs2.length;i++){
-			evaluate = evaluate && hfs2[i].toString().equals(hfs1[i].toString());
+			assertTrue(hfs2[i].toString().equals(hfs1[i].toString()));
 			}
-		
-		assertTrue(evaluate);
 		
 	}
 	
@@ -265,13 +248,10 @@ public class HeaderTest {
 		HeaderField[] hfs1 = {hf1,hf2,hf3};
 		HeaderField[] hfs2 = h.getFields();
 		
-		boolean evaluate = true && (hfs1.length == hfs2.length);
+		assertTrue(hfs1.length == hfs2.length);
 		for(int i=0; i<hfs2.length;i++){
-			evaluate = evaluate && hfs2[i].equals(hfs1[i]);
+			assertTrue(hfs2[i].equals(hfs1[i]));
 			}
-		
-		assertTrue(evaluate);
-		
 	}
 	
 	
@@ -380,9 +360,7 @@ public class HeaderTest {
 		HeaderField hf1 = new HeaderField("Connection","close");
 		HeaderField hf2 = h.getField("Connection");
 		
-		boolean evaluate = (hf1.equals(hf2));
-		
-		assertTrue(evaluate);
+		assertTrue(hf1.equals(hf2));
 	}
 	
 	
@@ -394,9 +372,7 @@ public class HeaderTest {
 		HeaderField hf1 = new HeaderField("Connection","close");
 		HeaderField hf2 = h.getField("Network");
 		
-		boolean evaluate = (hf1.toString().equals(hf2));
-		
-		assertFalse(evaluate);
+		assertFalse(hf1.toString().equals(hf2));
 	}
 	
 	
@@ -408,9 +384,7 @@ public class HeaderTest {
 		HeaderField hf1 = new HeaderField("Connection","close");
 		HeaderField hf2 = h.getField("Network");
 		
-		boolean evaluate = (hf1.equals(hf2));
-		
-		assertFalse(evaluate);
+		assertFalse(hf1.equals(hf2));
 	}
 	
 	
@@ -421,9 +395,7 @@ public class HeaderTest {
 		
 		HeaderField hf1 = h.getField("Random");
 		
-		boolean evaluate = (hf1==null);
-		
-		assertTrue(evaluate);
+		assertNull(hf1);
 	}
 	
 	
@@ -434,9 +406,7 @@ public class HeaderTest {
 		
 		HeaderField hf1 = h.getField("Random");
 		
-		boolean evaluate = (hf1==null);
-		
-		assertTrue(evaluate);	
+		assertNull(hf1);
 	}
 	
 	
@@ -461,10 +431,10 @@ public class HeaderTest {
 		HeaderField hfs3 = h.getField("Socket");
 		HeaderField hfs4 = h.getField("Thread");
 		
-		boolean evaluate = hf1.equals(hfs1) && hf2.equals(hfs2) 
-							&& hf3.equals(hfs3) && hf4.equals(hfs4);
-		
-		assertTrue(evaluate);
+		assertTrue(hf1.equals(hfs1));
+		assertTrue(hf2.equals(hfs2));
+		assertTrue(hf3.equals(hfs3));
+		assertTrue(hf4.equals(hfs4));
 	}
 	
 	
@@ -616,14 +586,10 @@ public class HeaderTest {
 		Header h = new Header(hl);
 		h.addField(hf2);
 		h.addField(hf3);
-
-		boolean evaluate1 = h.getField("Connection").equals(hf2);
-		boolean evaluate2 = h.getField("Connection").equals(hf1);
-		boolean evaluate3 = h.getField("Network").equals(hf3);
 		
-		
-		
-		assertTrue(evaluate1&&!evaluate2&&evaluate3);
+		assertTrue(h.getField("Connection").equals(hf2));
+		assertFalse(h.getField("Connection").equals(hf1));
+		assertTrue(h.getField("Network").equals(hf3));
 	}
 	
 	
@@ -641,28 +607,23 @@ public class HeaderTest {
 		h.addField(hf2);
 		h.addField(hf3);
 
-		boolean evaluate1 = h.getField("Network").equals(hf3);
+		assertTrue(h.getField("Network").equals(hf3));
 		
 		h.addField(hf4);
 		h.addField(hf1);
 		
-		boolean evaluate2 = h.getField("Connection").equals(hf1);
-		boolean evaluate3 = h.getField("Network").equals(hf4);
+		assertTrue(h.getField("Connection").equals(hf1));
+		assertTrue(h.getField("Network").equals(hf4));
 		
 		h.addField(hf5);
 		h.addField(hf2);
 		
-		boolean evaluate4 = h.getField("Connection").equals(hf2);
-		boolean evaluate5 = h.getField("Network").equals(hf5);
+		assertTrue(h.getField("Connection").equals(hf2));
+		assertTrue(h.getField("Network").equals(hf5));
 		
 		h.addField(hf3);
 		
-		boolean evaluate6 = h.getField("Network").equals(hf3);
-		
-		boolean evaluate = evaluate1 && evaluate2 && evaluate3 && 
-						   evaluate4 && evaluate5 && evaluate6;
-		
-		assertTrue(evaluate);
+		assertTrue(h.getField("Network").equals(hf3));
 	}
 	
 
@@ -681,28 +642,23 @@ public class HeaderTest {
 		h.addField(hf2);
 		h.addField(hf3);
 
-		boolean evaluate1 = h.getField("Network").equals(hf3);
+		assertTrue(h.getField("Network").equals(hf3));
 		
 		h.addField(hf4);
 		h.addField(hf1);
 		
-		boolean evaluate2 = h.getField("Connection").equals(hf1);
-		boolean evaluate3 = h.getField("Network").equals(hf4);
+		assertTrue(h.getField("Connection").equals(hf1));
+		assertTrue(h.getField("Network").equals(hf4));
 		
 		h.addField(hf5);
 		h.addField(hf2);
 		
-		boolean evaluate4 = h.getField("Connection").equals(hf2);
-		boolean evaluate5 = h.getField("Network").equals(hf5);
+		assertTrue(h.getField("Connection").equals(hf2));
+		assertTrue(h.getField("Network").equals(hf5));
 		
 		h.addField(hf3);
 		
-		boolean evaluate6 = h.getField("Network").equals(hf3);
-		
-		boolean evaluate = evaluate1 && evaluate2 && evaluate3 && 
-						   evaluate4 && evaluate5 && evaluate6;
-		
-		assertTrue(evaluate);
+		assertTrue(h.getField("Network").equals(hf3));
 	}
 	
 	
@@ -722,33 +678,28 @@ public class HeaderTest {
 		HeaderField hf4 = new HeaderField("Network","done");
 		HeaderField hf5 = new HeaderField("Network","revived");
 		
-		boolean evaluate0 = h.getField("Connection").equals(hf1);
+		assertTrue(h.getField("Connection").equals(hf1));
 		
 		h.addField(hf3);
 		h.addField(hf4);
 
-		boolean evaluate1 = h.getField("Network").equals(hf4);
+		assertTrue(h.getField("Network").equals(hf4));
 		
 		h.addField(hf5);
 		h.addField(hf1);
 		
-		boolean evaluate2 = h.getField("Connection").equals(hf1);
-		boolean evaluate3 = h.getField("Network").equals(hf5);
+		assertTrue(h.getField("Connection").equals(hf1));
+		assertTrue(h.getField("Network").equals(hf5));
 		
 		h.addField(hf1);
 		h.addField(hf2);
 		
-		boolean evaluate4 = h.getField("Connection").equals(hf1);
-		boolean evaluate5 = h.getField("Network").equals(hf2);
+		assertTrue(h.getField("Connection").equals(hf1));
+		assertTrue(h.getField("Network").equals(hf2));
 		
 		h.addField(hf3);
 		
-		boolean evaluate6 = h.getField("Connection").equals(hf3);
-		
-		boolean evaluate = evaluate0 && evaluate1 && evaluate2 && evaluate3 && 
-						   evaluate4 && evaluate5 && evaluate6;
-		
-		assertTrue(evaluate);
+		assertTrue(h.getField("Connection").equals(hf3));
 	}
 	
 
@@ -760,9 +711,7 @@ public class HeaderTest {
 		HeaderLine hl2 = new RequestLine("table", "URL", "vista");
 		h.setHeaderLine(hl2);
 		
-		boolean evaluate = h.getHeaderLine().equals(hl2);
-		
-		assertTrue(evaluate);
+		assertTrue(h.getHeaderLine().equals(hl2));
 	}
 
 	
@@ -774,9 +723,7 @@ public class HeaderTest {
 		HeaderLine hl2 = new ResponseLine("1", "200", "okay");
 		h.setHeaderLine(hl2);
 		
-		boolean evaluate = h.getHeaderLine().equals(hl2);
-		
-		assertTrue(evaluate);
+		assertTrue(h.getHeaderLine().equals(hl2));
 	}
 	
 	
@@ -788,9 +735,7 @@ public class HeaderTest {
 		HeaderLine hl2 = new ResponseLine("1", "200", "okay");
 		h.setHeaderLine(hl2);
 		
-		boolean evaluate = h.getHeaderLine().equals(hl2);
-		
-		assertTrue(evaluate);
+		assertTrue(h.getHeaderLine().equals(hl2));
 	}
 	
 	
@@ -802,9 +747,7 @@ public class HeaderTest {
 		HeaderLine hl2 = new RequestLine("1", "200", "okay");
 		h.setHeaderLine(hl2);
 		
-		boolean evaluate = h.getHeaderLine().equals(hl2);
-		
-		assertTrue(evaluate);
+		assertTrue(h.getHeaderLine().equals(hl2));
 	}
 	
 	// To do --> Andreas
