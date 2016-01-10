@@ -4,7 +4,7 @@ import static org.junit.Assert.*;
 
 import org.junit.Test;
 
-import ml.vandenheuvel.ti1216.api.http.HeaderField;
+import ml.vandenheuvel.ti1216.http.HeaderField;
 
 public class HeaderFieldTest {
 

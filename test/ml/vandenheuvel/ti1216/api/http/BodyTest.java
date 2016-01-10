@@ -3,7 +3,7 @@ package ml.vandenheuvel.ti1216.api.http;
 import static org.junit.Assert.*;
 import org.junit.Test;
 
-import ml.vandenheuvel.ti1216.api.http.Body;
+import ml.vandenheuvel.ti1216.http.Body;
 
 public class BodyTest {
 

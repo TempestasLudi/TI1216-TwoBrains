@@ -4,8 +4,7 @@ import static org.junit.Assert.*;
 
 import org.junit.Test;
 
-import ml.vandenheuvel.ti1216.api.http.RequestLine;
-import ml.vandenheuvel.ti1216.api.http.ResponseLine;
+import ml.vandenheuvel.ti1216.http.*;
 
 public class ResponseLineTest {
 

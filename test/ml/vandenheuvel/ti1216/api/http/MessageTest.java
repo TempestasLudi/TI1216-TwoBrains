@@ -6,12 +6,7 @@ import java.util.ArrayList;
 
 import org.junit.Test;
 
-import ml.vandenheuvel.ti1216.api.http.Body;
-import ml.vandenheuvel.ti1216.api.http.Header;
-import ml.vandenheuvel.ti1216.api.http.HeaderField;
-import ml.vandenheuvel.ti1216.api.http.Message;
-import ml.vandenheuvel.ti1216.api.http.RequestLine;
-import ml.vandenheuvel.ti1216.api.http.ResponseLine;
+import ml.vandenheuvel.ti1216.http.*;
 
 import java.util.Date;
 
