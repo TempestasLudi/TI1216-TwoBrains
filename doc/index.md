@@ -224,7 +224,7 @@ A user object is used to register a new user on the server and to send/receive p
 ```code
 { "approved":false,
   "matchUsername":"matchUsername",
-  "id":-1,
+  "id":45631912,
   "seen":false,
   "username":"username" }
 ```
@@ -237,24 +237,6 @@ A user object is used to register a new user on the server and to send/receive p
 { "name":"OOP Project",
   "id":"TI1216",
   "program":"TI" }
-```
-
-## Faculty
-
-> A faculty object represented in JSON may look like
-
-```code
-{ "name":"Electrical Engineering, Mathematics and Computer Science",
-  "id":"EWI",
-  "programs": [ { "courses":[ { "name":"OOP Project",
-                                "id":"TI1216",
-                                "program":"TI" },
-                              { "name":"OOP",
-                                "id":"TI1206",
-                                "program":"TI" } ],
-                  "name":"Technische Informatica",
-                  "id":"TI",
-                  "faculty":"EWI" } ] }
 ```
 
 ## Grade
@@ -277,4 +259,22 @@ A user object is used to register a new user on the server and to send/receive p
   "name":"Technische Informatica",
   "id":"TI",
   "faculty":"EWI" }
+```
+
+## Faculty
+
+> A faculty object represented in JSON may look like
+
+```code
+{ "name":"Electrical Engineering, Mathematics and Computer Science",
+  "id":"EWI",
+  "programs": [ { "courses":[ { "name":"OOP Project",
+                                "id":"TI1216",
+                                "program":"TI" },
+                              { "name":"OOP",
+                                "id":"TI1206",
+                                "program":"TI" } ],
+                  "name":"Technische Informatica",
+                  "id":"TI",
+                  "faculty":"EWI" } ] }
 ```
