@@ -3,6 +3,7 @@ package ml.vandenheuvel.ti1216.server;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.Base64;
+import java.util.logging.Logger;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -14,6 +15,9 @@ import ml.vandenheuvel.ti1216.http.*;
  * Processor processes API requests and generates output for those.
  */
 public class Processor {
+	
+	private static Logger logger = Logger.getLogger("ml.vandenheuvel.ti1216.server");
+	
 	private DatabaseCommunicator communicator;
 
 	/**
@@ -32,6 +36,7 @@ public class Processor {
 	 */
 	public Processor(String databaseAddress, String databaseUsername, String databaseName, String databasePassword) {
 		this.communicator = new DatabaseCommunicator(databaseAddress, databaseName, databaseUsername, databasePassword);
+		logger.fine("Created a new DatabaseCommunicator instance using arguments " + databaseAddress + ", " + databaseName + ", " + databaseUsername + ", " + databasePassword);
 		this.chatMessages = new ArrayList<ChatMessage>();
 	}
 

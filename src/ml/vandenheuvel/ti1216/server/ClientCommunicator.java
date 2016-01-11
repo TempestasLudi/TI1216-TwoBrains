@@ -4,6 +4,7 @@ import java.io.DataInputStream;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.net.Socket;
+import java.util.logging.Logger;
 
 import ml.vandenheuvel.ti1216.http.*;
 
@@ -11,6 +12,9 @@ import ml.vandenheuvel.ti1216.http.*;
  * ClientCommunicator handles one HTTP request.
  */
 public class ClientCommunicator implements Runnable {
+	
+	private static Logger logger = Logger.getLogger("ml.vandenheuvel.ti1216.server");
+	
 	/**
 	 * The connection socket.
 	 */
@@ -41,9 +45,15 @@ public class ClientCommunicator implements Runnable {
 		this.processor = processor;
 		try {
 			this.out = new PrintWriter(socket.getOutputStream());
-			this.in = new DataInputStream(socket.getInputStream());
+			logger.finest("Opened OutputStream and PrintWriter over socket.");
 		} catch (IOException e) {
-			System.out.println(e.getMessage());
+			logger.fine(e.getMessage());
+		}
+		try{
+			this.in = new DataInputStream(socket.getInputStream());
+			logger.finest("Opened InputStream and DataInputStream ovoer socket.");
+		} catch (IOException e) {
+			logger.fine(e.getMessage());
 		}
 	}
 
@@ -52,14 +62,13 @@ public class ClientCommunicator implements Runnable {
 	 */
 	@Override
 	public void run(){
-		System.out.println("Incoming:");
-		
+		logger.finer("Receiving message...");
 		Message message = Message.read(this.in, true);
-		
-		System.out.print(message);
-		
+		logger.finer("Message received. Processing... ");
 		Message response = processor.process(message);
+		logger.finer("Message processed. Finishing up... ");
 		this.finish(response);
+		logger.finer("Closing thread.");
 	}
 	
 	/**
@@ -72,22 +81,32 @@ public class ClientCommunicator implements Runnable {
 		Body body = new Body("");
 		Message outputMessage = new Message(header, body);
 		outputMessage.merge(message);
+		logger.finer("Writing message...");
 		this.out.write(outputMessage.toString());
+		logger.finer("Message written. Closing connections...");
 		this.close();
+		logger.finer("Connections closed.");
 	}
 	
 	/**
-	 * Closes the connection.
+	 * Flushes streams and closes the connection.
 	 */
-	private void close(){
+	private void close() {
+		logger.finest("Flushing out stream...");
 		this.out.flush();
+		logger.finest("Out stream flushed.");
 		try {
+			logger.finest("Closing in stream...");
 			this.in.close();
+			logger.finest("In stream closed.");
+			logger.finest("Closing out stream...");
 			this.out.close();
+			logger.finest("Out stream closed.");
+			logger.finest("Closing socket...");
 			this.socket.close();
+			logger.finest("Socket closed.");
 		} catch (IOException e) {
-			System.out.println(e.getMessage());
-			e.printStackTrace();
+			logger.warning(e.getMessage());
 		}
 	}
 

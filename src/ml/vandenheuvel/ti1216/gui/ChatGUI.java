@@ -7,7 +7,6 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 
 import javafx.stage.Stage;
-import ml.vandenheuvel.ti1216.data.ChatMessage;
 
 public class ChatGUI {
 	public static void display() {
