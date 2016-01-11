@@ -12,7 +12,7 @@ import java.util.logging.Logger;
  */
 public class ServerApplication {
 	
-	private static final Logger logger = Logger.getLogger("ml.vandenheuvel.ti1216.server");
+	private static Logger logger = Logger.getLogger("ml.vandenheuvel.ti1216.server");
 	
 	private ServerApplication(){
 		
@@ -49,12 +49,10 @@ public class ServerApplication {
 		try {
 			logger.addHandler(new FileHandler("%t/TwoBrains.log"));
 			logger.info("Logging to " + System.getProperty("java.io.tmpdir") + "/TwoBrains.log" + " using loglevel " + logger.getLevel().getLocalizedName());
-		} catch (SecurityException e1) {
-			logger.warning("Could not obtain the right permissions to write the logfile in " + System.getProperty("java.io.tmpdir"));
-			logger.warning(e1.getMessage());
-		} catch (IOException e1) {
-			logger.warning("Could not write in " + System.getProperty("java.io.tmpdir"));
-			logger.warning(e1.getMessage());
+		} catch (SecurityException e) {
+			logger.log(Level.WARNING, "Could not obtain the right permissions to write the logfile in " + System.getProperty("java.io.tmpdir"), e);
+		} catch (IOException e) {
+			logger.log(Level.WARNING, "Could not write in " + System.getProperty("java.io.tmpdir"), e);
 		}		
 		
 		try {
@@ -68,12 +66,12 @@ public class ServerApplication {
 				Socket socket = server.accept();
 				logger.finest("A client opened a new connection");
 				new Thread(new ClientCommunicator(socket, processor)).start();
+				logger.finer("A new ClientCommunicator based thread has been started.");
 			}
 			server.close();
 			logger.info("Serversocket closed.");
 		} catch (IOException e) {
-			logger.severe(e.getMessage());
-			logger.severe("Server stopped running.");
+			logger.log(Level.SEVERE, "Server stopped running.", e);
 		}
 	}
 

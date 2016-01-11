@@ -5,6 +5,9 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.LogRecord;
+import java.util.logging.Logger;
 
 import javax.sql.DataSource;
 
@@ -15,6 +18,8 @@ import com.mysql.jdbc.jdbc2.optional.MysqlDataSource;
  */
 
 public class DatabaseCommunicator {
+	
+	private static Logger logger = Logger.getLogger("ml.vandenheuvel.ti1216.server");
 
 	/**
 	 * The database dataSource.
@@ -42,7 +47,7 @@ public class DatabaseCommunicator {
 		try {
 			this.connection = this.dataSource.getConnection();
 		} catch (SQLException e) {
-			e.printStackTrace();
+			logger.log(Level.SEVERE, "Failed to make the connection to SQL database.", e);
 		}
 	}
 
@@ -80,7 +85,7 @@ public class DatabaseCommunicator {
 			ResultSet resultSet = this.get(query);
 			return createFPCTree(resultSet);
 		} catch (SQLException e) {
-			System.out.println(e.getMessage());
+			logger.log(Level.FINE, "Failed getFaculties().", e);
 		}
 		return new Faculty[0];
 	}
@@ -103,7 +108,7 @@ public class DatabaseCommunicator {
 				return faculties[0];
 			}
 		} catch (SQLException e) {
-			System.out.println(e.getMessage());
+			logger.log(Level.FINE, "Failed getFaculty(" + id + ").", e);
 		}
 		return null;
 	}
@@ -168,7 +173,8 @@ public class DatabaseCommunicator {
 				}
 			}
 		} catch (SQLException e) {
-			System.out.println(e.getMessage());
+			logger.log(Level.FINE, "Failed save(Faculty faculty).", e);
+			logger.log(Level.FINER, "String representation of the faculty we were trying to save", new LogRecord(Level.FINER, faculty.toString()));
 		}
 	}
 
@@ -185,7 +191,8 @@ public class DatabaseCommunicator {
 				this.delete(programs.get(i));
 			}
 		} catch (SQLException e) {
-			System.out.println(e.getMessage());
+			logger.log(Level.FINE, "Failed delete(Faculty faculty).", e);
+			logger.log(Level.FINER, "String representation of the faculty we were trying to delete", new LogRecord(Level.FINER, faculty.toString()));
 		}
 	}
 
@@ -224,7 +231,7 @@ public class DatabaseCommunicator {
 				}
 			}
 		} catch (SQLException e) {
-			System.out.println(e.getMessage());
+			logger.log(Level.FINE, "Failed getProgram(String " + id + ")", e);
 		}
 		return null;
 	}
@@ -261,7 +268,8 @@ public class DatabaseCommunicator {
 				}
 			}
 		} catch (SQLException e) {
-			System.out.println(e.getMessage());
+			logger.log(Level.FINE, "Failed save(Program program).", e);
+			logger.log(Level.FINER, "String represenation of the program:", new LogRecord(Level.FINER, program.toString()));
 		}
 	}
 
@@ -278,7 +286,8 @@ public class DatabaseCommunicator {
 				this.delete(courses.get(i));
 			}
 		} catch (SQLException e) {
-			System.out.println(e.getMessage());
+			logger.log(Level.FINE, "Failed delete(Program program).", e);
+			logger.log(Level.FINER, "String represenation of the program:", new LogRecord(Level.FINER, program.toString()));
 		}
 	}
 
@@ -317,7 +326,7 @@ public class DatabaseCommunicator {
 				}
 			}
 		} catch (SQLException e) {
-			System.out.println(e.getMessage());
+			logger.log(Level.FINE, "Failed getCourse(String " + id + ").", e);
 		}
 		return null;
 	}
@@ -338,7 +347,8 @@ public class DatabaseCommunicator {
 						+ course.getProgram().getID() + "' WHERE ID = '" + course.getID() + "'");
 			}
 		} catch (SQLException e) {
-			System.out.println(e.getMessage());
+			logger.log(Level.FINE, "Failed save(Course course).", e);
+			logger.log(Level.FINER, "String represenation of the course:", new LogRecord(Level.FINER, course.toString()));
 		}
 	}
 
@@ -352,7 +362,8 @@ public class DatabaseCommunicator {
 		try {
 			this.execute("DELETE FROM course WHERE ID = \'" + course.getID() + "\'");
 		} catch (SQLException e) {
-			System.out.println(e.getMessage());
+			logger.log(Level.FINE, "Failed delete(Course course).", e);
+			logger.log(Level.FINER, "String represenation of the course:", new LogRecord(Level.FINER, course.toString()));
 		}
 	}
 
@@ -371,7 +382,8 @@ public class DatabaseCommunicator {
 			ResultSet resultSet = this.get("SELECT * FROM user WHERE name = '" + credentials.getUsername() + "'");
 			return !resultSet.next();
 		} catch (SQLException e) {
-			System.out.println(e.getMessage());
+			logger.log(Level.FINE, "Failed canRegister(Credentials credentials).", e);
+			logger.log(Level.FINER, "String represenation of the credentials:", new LogRecord(Level.FINER, credentials.toString()));
 		}
 		return false;
 	}
@@ -388,7 +400,8 @@ public class DatabaseCommunicator {
 					+ "AND password = '" + DatabaseCommunicator.encryptPassword(credentials.getPassword()) + "'");
 			return resultSet.next();
 		} catch (SQLException e) {
-			System.out.println(e.getMessage());
+			logger.log(Level.FINE, "Failed canLogin(Credentials credentials).", e);
+			logger.log(Level.FINER, "String represenation of the credentials:", new LogRecord(Level.FINER, credentials.toString()));
 		}
 		return false;
 	}
@@ -443,7 +456,7 @@ public class DatabaseCommunicator {
 			users.toArray(result);
 			return result;
 		} catch (SQLException e) {
-			System.out.println(e.getMessage());
+			logger.log(Level.FINE, "Failed getUsers().", e);
 		}
 		return new User[0];
 	}
@@ -473,7 +486,7 @@ public class DatabaseCommunicator {
 				return user;
 			}
 		} catch (SQLException e) {
-			System.out.println(e.getMessage());
+			logger.log(Level.FINE, "Failed getUser(" + name + ").", e);
 		}
 		return null;
 	}
@@ -505,8 +518,8 @@ public class DatabaseCommunicator {
 				}
 			}
 		} catch (SQLException e) {
-			e.printStackTrace();
-			System.out.println(e.getMessage());
+			logger.log(Level.FINE, "Failed save(User user).", e);
+			logger.log(Level.FINER, "String represenation of the user:", new LogRecord(Level.FINER, user.toString()));
 		}
 	}
 
@@ -537,8 +550,9 @@ public class DatabaseCommunicator {
 				}
 			}
 		} catch (SQLException e) {
-			e.printStackTrace();
-			System.out.println(e.getMessage());
+			logger.log(Level.FINE, "Failed save(User user, Credentials credentials.", e);
+			logger.log(Level.FINER, "String represenation of the user:", new LogRecord(Level.FINER, user.toString()));
+			logger.log(Level.FINER, "String represenation of the credentials", new LogRecord(Level.FINER, credentials.toString()));
 		}
 	}
 
@@ -553,8 +567,8 @@ public class DatabaseCommunicator {
 			this.execute("DELETE FROM user WHERE name = '" + user.getUsername() + "'");
 			this.execute("DELETE FROM grade WHERE username = '" + user.getUsername() + "'");
 		} catch (SQLException e) {
-			e.printStackTrace();
-			System.out.println(e.getMessage());
+			logger.log(Level.FINE, "Failed delete(User user).", e);
+			logger.log(Level.FINER, "String represenation of the user:", new LogRecord(Level.FINER, user.toString()));
 		}
 	}
 
@@ -576,8 +590,7 @@ public class DatabaseCommunicator {
 			matches.toArray(result);
 			return result;
 		} catch (SQLException e) {
-			e.printStackTrace();
-			System.out.println(e.getMessage());
+			logger.log(Level.FINE, "Failed getMatches().", e);
 		}
 		return null;
 	}
@@ -601,8 +614,7 @@ public class DatabaseCommunicator {
 			matches.toArray(result);
 			return result;
 		} catch (SQLException e) {
-			e.printStackTrace();
-			System.out.println(e.getMessage());
+			logger.log(Level.FINE, "Failed getMatches(String " + username + ").", e);
 		}
 		return null;
 	}
@@ -623,7 +635,8 @@ public class DatabaseCommunicator {
 						+ " WHERE ID = '" + match.getId() + "'");
 			}
 		} catch (SQLException e) {
-			System.out.println(e.getMessage());
+			logger.log(Level.FINE, "Failed save(Match match).", e);
+			logger.log(Level.FINER, "String represenation of the match:", new LogRecord(Level.FINER, match.toString()));
 		}
 	}
 
@@ -636,7 +649,8 @@ public class DatabaseCommunicator {
 		try {
 			this.execute("DELETE FROM match WHERE ID = " + match.getId());
 		} catch (SQLException e) {
-			System.out.println(e.getMessage());
+			logger.log(Level.FINE, "Failed delete(Match match).", e);
+			logger.log(Level.FINER, "String represenation of the match:", new LogRecord(Level.FINER, match.toString()));
 		}
 	}
 

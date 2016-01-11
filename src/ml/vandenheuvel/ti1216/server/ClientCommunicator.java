@@ -4,6 +4,7 @@ import java.io.DataInputStream;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.net.Socket;
+import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import ml.vandenheuvel.ti1216.http.*;
@@ -47,13 +48,13 @@ public class ClientCommunicator implements Runnable {
 			this.out = new PrintWriter(socket.getOutputStream());
 			logger.finest("Opened OutputStream and PrintWriter over socket.");
 		} catch (IOException e) {
-			logger.fine(e.getMessage());
+			logger.log(Level.FINE, "Error opening outputStream and PrintWriter.", e);
 		}
 		try{
 			this.in = new DataInputStream(socket.getInputStream());
 			logger.finest("Opened InputStream and DataInputStream ovoer socket.");
 		} catch (IOException e) {
-			logger.fine(e.getMessage());
+			logger.log(Level.FINE, "Error opening inputStream and DataInputStream.", e);
 		}
 	}
 
@@ -106,7 +107,7 @@ public class ClientCommunicator implements Runnable {
 			this.socket.close();
 			logger.finest("Socket closed.");
 		} catch (IOException e) {
-			logger.warning(e.getMessage());
+			logger.log(Level.FINE, "Failed to close some streams or socket properly.", e);
 		}
 	}
 
