@@ -4,7 +4,6 @@ import java.util.ArrayList;
 
 import ml.vandenheuvel.ti1216.data.ChatMessage;
 import ml.vandenheuvel.ti1216.data.Credentials;
-import ml.vandenheuvel.ti1216.gui.ChatGUI;
 
 /**
  * ChatPoller polls to the server for new chat messages.
