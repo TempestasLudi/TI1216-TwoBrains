@@ -1,8 +1,6 @@
 package ml.vandenheuvel.ti1216.http;
 
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertNull;
-import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.*;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -121,7 +119,7 @@ public class HeaderTest {
 		HeaderField[] hfs1 = { hf };
 		HeaderField[] hfs2 = h.getFields();
 
-		assertTrue(hfs1.length == hfs2.length);
+		assertEquals(hfs1.length,hfs2.length);
 		for (int i = 0; i < hfs2.length; i++) {
 			assertTrue(hfs2[i].toString().equals(hfs1[i].toString()));
 		}
@@ -136,7 +134,7 @@ public class HeaderTest {
 		HeaderField[] hfs1 = { hf };
 		HeaderField[] hfs2 = h.getFields();
 
-		assertTrue(hfs1.length == hfs2.length);
+		assertEquals(hfs1.length,hfs2.length);
 		for (int i = 0; i < hfs2.length; i++) {
 			assertTrue(hfs2[i].equals(hfs1[i]));
 		}
@@ -150,10 +148,7 @@ public class HeaderTest {
 		HeaderField[] hfs1 = new HeaderField[h.getFields().length];
 		HeaderField[] hfs2 = h.getFields();
 
-		assertTrue(hfs1.length == hfs2.length);
-		for (int i = 0; i < hfs2.length; i++) {
-			assertTrue(hfs2[i].equals(hfs1[i]));
-		}
+		assertEquals(hfs1.length,hfs2.length);
 	}
 
 	@Test
@@ -164,10 +159,7 @@ public class HeaderTest {
 		HeaderField[] hfs1 = new HeaderField[h.getFields().length];
 		HeaderField[] hfs2 = h.getFields();
 
-		assertTrue(hfs1.length == hfs2.length);
-		for (int i = 0; i < hfs2.length; i++) {
-			assertTrue(hfs2[i].toString().equals(hfs1[i].toString()));
-		}
+		assertEquals(hfs1.length,hfs2.length);
 	}
 
 	@Test
@@ -187,7 +179,7 @@ public class HeaderTest {
 		HeaderField[] hfs1 = { hf1, hf2, hf3 };
 		HeaderField[] hfs2 = h.getFields();
 
-		assertTrue(hfs1.length == hfs2.length);
+		assertEquals(hfs1.length,hfs2.length);
 		for (int i = 0; i < hfs2.length; i++) {
 			assertTrue(hfs2[i].toString().equals(hfs1[i].toString()));
 		}
@@ -212,12 +204,10 @@ public class HeaderTest {
 		HeaderField[] hfs1 = { hf1, hf2, hf3 };
 		HeaderField[] hfs2 = h.getFields();
 
-		boolean evaluate = true && (hfs1.length == hfs2.length);
-		for (int i = 0; i < hfs2.length; i++) {
-			evaluate = evaluate && hfs2[i].toString().equals(hfs1[i].toString());
-		}
-
-		assertFalse(evaluate);
+		assertEquals(hfs1.length,hfs2.length);
+		assertTrue(hfs2[0].toString().equals(hfs1[0].toString()));
+		assertTrue(hfs2[1].toString().equals(hfs1[1].toString()));
+		assertFalse(hfs2[2].toString().equals(hfs1[2].toString()));
 	}
 
 	@Test
@@ -237,7 +227,7 @@ public class HeaderTest {
 		HeaderField[] hfs1 = { hf1, hf2, hf3 };
 		HeaderField[] hfs2 = h.getFields();
 
-		assertTrue(hfs1.length == hfs2.length);
+		assertEquals(hfs1.length,hfs2.length);
 		for (int i = 0; i < hfs2.length; i++) {
 			assertTrue(hfs2[i].equals(hfs1[i]));
 		}
@@ -261,12 +251,10 @@ public class HeaderTest {
 		HeaderField[] hfs1 = { hf1, hf2, hf3 };
 		HeaderField[] hfs2 = h.getFields();
 
-		boolean evaluate = true && (hfs1.length == hfs2.length);
-		for (int i = 0; i < hfs2.length; i++) {
-			evaluate = evaluate && hfs2[i].equals(hfs1[i]);
-		}
-
-		assertFalse(evaluate);
+		assertEquals(hfs1.length,hfs2.length);
+		assertTrue(hfs2[0].toString().equals(hfs1[0].toString()));
+		assertTrue(hfs2[1].toString().equals(hfs1[1].toString()));
+		assertFalse(hfs2[2].toString().equals(hfs1[2].toString()));
 	}
 
 	@Test
@@ -288,12 +276,7 @@ public class HeaderTest {
 		HeaderField[] hfs1 = { hf1, hf2, hf3, hf4, hf4 };
 		HeaderField[] hfs2 = h.getFields();
 
-		boolean evaluate = true && (hfs1.length == hfs2.length);
-		for (int i = 0; i < hfs2.length; i++) {
-			evaluate = evaluate && hfs2[i].toString().equals(hfs1[i].toString());
-		}
-
-		assertFalse(evaluate);
+		assertNotEquals(hfs1.length,hfs2.length);
 	}
 
 	@Test
@@ -314,12 +297,7 @@ public class HeaderTest {
 		HeaderField[] hfs1 = { hf1, hf2, hf3, hf4, hf4, hf1 };
 		HeaderField[] hfs2 = h.getFields();
 
-		boolean evaluate = true && (hfs1.length == hfs2.length);
-		for (int i = 0; i < hfs2.length; i++) {
-			evaluate = evaluate && hfs2[i].equals(hfs1[i]);
-		}
-
-		assertFalse(evaluate);
+		assertNotEquals(hfs1.length,hfs2.length);
 	}
 
 	@Test
@@ -330,9 +308,7 @@ public class HeaderTest {
 		HeaderField hf1 = new HeaderField("Connection", "close");
 		HeaderField hf2 = h.getField("Connection");
 
-		boolean evaluate = (hf1.toString().equals(hf2.toString()));
-
-		assertTrue(evaluate);
+		assertEquals(hf1.toString(),hf2.toString());
 	}
 
 	@Test
@@ -435,9 +411,10 @@ public class HeaderTest {
 		HeaderField hfs3 = h.getField("Socket");
 		HeaderField hfs4 = h.getField("Thread");
 
-		boolean evaluate = hf1.equals(hfs1) && hf2.equals(hfs2) && hf3.equals(hfs3) && hf4.equals(hfs4);
-
-		assertFalse(evaluate);
+		assertTrue(hf1.equals(hfs1));
+		assertTrue(hf2.equals(hfs2));
+		assertTrue(hf3.equals(hfs3));
+		assertFalse(hf4.equals(hfs4));
 	}
 
 	@Test
@@ -716,14 +693,14 @@ public class HeaderTest {
 		HeaderLine hl2 = new ResponseLine("method", "URI", "version");
 		Header h2 = new Header(hl2);
 
-		HeaderField hf1 = new HeaderField("Connection", "closed");
+		//HeaderField hf1 = new HeaderField("Connection", "closed");
 		h1.merge(h2);
 
-		boolean evaluate1 = h1.getHeaderLine().equals(hl2);
+		assertTrue(h1.getHeaderLine().equals(hl2));
 
 	}
 
-	// To do --> Andreas
+	/*// To do --> Andreas
 	@Test
 	public void testMerge2() {
 		HeaderLine hl1 = new ResponseLine("method", "URI", "version");
@@ -749,7 +726,7 @@ public class HeaderTest {
 		fields.add(hf2);
 
 		Header h2 = new Header(rl1, fields);
-	}
+	}*/
 
 	// To do --> Andreas
 	@Test
@@ -760,26 +737,24 @@ public class HeaderTest {
 		HeaderLine hl2 = new ResponseLine("method", "URI", "version");
 		Header h2 = new Header(hl2);
 
-		HeaderField hf1 = new HeaderField("Connection", "closed");
+		//HeaderField hf1 = new HeaderField("Connection", "closed");
 
 		h1.merge(h2);
 
-		boolean evaluate1 = h1.getHeaderLine().equals(hl2);
-
+		assertTrue(h1.getHeaderLine().equals(hl2));
 	}
 
-	// To do --> Andreas
 	@Test
 	public void testMerge5() {
-		HeaderLine hl1 = new RequestLine("method", "URI", "version");
-		Header h1 = new Header(hl1);
-
-		HeaderLine hl2 = new RequestLine("method", "URI", "version");
-		Header h2 = new Header(hl2);
-
+		Header h1 = new Header(null);
+		Header h2 = new Header(null);
+		
+		h1.merge(h2);
+		
+		assertNull(h1.getHeaderLine());
 	}
 
-	// To do --> Andreas
+	/*// To do --> Andreas
 	@Test
 	public void testMerge6() {
 		HeaderLine hl1 = new RequestLine("method", "URI", "version");
@@ -872,21 +847,28 @@ public class HeaderTest {
 	// To do --> Andreas
 	@Test
 	public void testToString3() {
+	}*/
+
+	@Test
+	public void testEquals1() 
+	{
+		Header header1 = new Header();
+		Header header2 = new Header();
+		assertTrue(header1.equals(header2));
 	}
 
-	// To do --> Andreas
 	@Test
-	public void testEquals1() {
+	public void testEquals2() 
+	{
+		Header header1 = new Header();
+		assertFalse(header1.equals(null));
 	}
 
-	// To do --> Andreas
 	@Test
-	public void testEquals2() {
-	}
-
-	// To do --> Andreas
-	@Test
-	public void testEquals3() {
+	public void testEquals3() 
+	{
+		Header header = new Header();
+		assertFalse(header.equals(76));
 	}
 
 	// To do --> Andreas
