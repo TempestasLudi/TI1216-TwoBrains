@@ -1,10 +1,9 @@
-package ml.vandenheuvel.ti1216.api.http;
+package ml.vandenheuvel.ti1216.http;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
 
 import org.junit.Test;
-
-import ml.vandenheuvel.ti1216.http.*;
 
 public class ResponseLineTest {
 
