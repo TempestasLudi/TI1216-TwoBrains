@@ -21,6 +21,7 @@ public class MenuGUI
 		Button settingsButton = new Button("Settings");
 		settingsButton.setOnAction(new EventHandler<ActionEvent>()
 		{
+				@Override
 				public void handle(ActionEvent e)
 				{
 					SettingsGUI.display();
@@ -30,6 +31,7 @@ public class MenuGUI
 		Button logoutButton = new Button("Log out");
 		logoutButton.setOnAction(new EventHandler<ActionEvent>()
 		{
+				@Override
 				public void handle(ActionEvent e)
 				{
 					LogoutGUI.display();
@@ -54,6 +56,7 @@ public class MenuGUI
 		Button chatButton = new Button("Open chat");
 		chatButton.setOnAction(new EventHandler<ActionEvent>()
 		{
+				@Override
 				public void handle(ActionEvent e)
 				{
 					ChatGUI.display();

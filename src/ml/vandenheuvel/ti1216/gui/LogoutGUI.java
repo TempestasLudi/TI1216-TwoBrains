@@ -24,6 +24,7 @@ public class LogoutGUI
 		Button loginButton = new Button("Back to Login");
 		loginButton.setOnAction(new EventHandler<ActionEvent>()
 		{
+				@Override
 				public void handle(ActionEvent e)
 				{
 					LoginGUI.display();

@@ -111,6 +111,7 @@ public class ChatMessage {
 	 * @param other the Object to which the ChatMessage is compared
 	 * @return true if the two ChatMessages are equal, otherwise false
 	 */
+	@Override
 	public boolean equals(Object other)
 	{
 		if(other instanceof ChatMessage)

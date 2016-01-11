@@ -39,6 +39,7 @@ public class MatchPoller implements Runnable{
 	/**
 	 * {@inheritDoc}
 	 */
+	@Override
 	public void run() {
 		while (this.run) {
 			ArrayList<Match> matches = ServerCommunicator.fetchMatches(this.credentials);

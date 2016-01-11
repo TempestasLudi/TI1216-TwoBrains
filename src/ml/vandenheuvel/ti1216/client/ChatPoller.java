@@ -39,6 +39,7 @@ public class ChatPoller implements Runnable{
 	/**
 	 * {@inheritDoc}
 	 */
+	@Override
 	public void run() {
 		while (this.run) {
 			ArrayList<ChatMessage> chats = ServerCommunicator.fetchChats(this.credentials);

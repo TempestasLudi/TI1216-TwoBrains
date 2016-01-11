@@ -99,6 +99,7 @@ public class EditProfileGUI {
 		Button menuButton = new Button("Return back to menu");
 		menuButton.setOnAction(new EventHandler<ActionEvent>()
 		{
+				@Override
 				public void handle(ActionEvent e)
 				{
 					MenuGUI.display();
