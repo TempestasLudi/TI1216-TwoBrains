@@ -22,12 +22,19 @@ public class ChatPoller implements Runnable{
 	private Credentials credentials;
 	
 	/**
+	 * The client-side application manager.
+	 */
+	private ClientManager manager;
+	
+	/**
 	 * Class constructor.
 	 * 
 	 * @param credentials the credentials of the user messages should be fetched for
+	 * @param manager the manager of the client-side application
 	 */
-	public ChatPoller(Credentials credentials) {
+	public ChatPoller(Credentials credentials, ClientManager manager) {
 		this.credentials = credentials;
+		this.manager = manager;
 	}
 	
 	/**
@@ -37,7 +44,7 @@ public class ChatPoller implements Runnable{
 		while (this.run) {
 			ArrayList<ChatMessage> chats = ServerCommunicator.fetchChats(this.credentials);
 			for (int i = 0; i < chats.size(); i++) {
-				ChatGUI.incoming(chats.get(i));
+				this.manager.incomingChat(chats.get(i));
 			}
 			if (chats.size() == 0) {
 				try {

@@ -33,9 +33,4 @@ public class ChatGUI {
 		window.setScene(scene);
 		window.showAndWait();
 	}
-
-	public static void incoming(ChatMessage message) {
-		System.out.println(message.getMessage());
-		// TODO: do something useful
-	}
 }
