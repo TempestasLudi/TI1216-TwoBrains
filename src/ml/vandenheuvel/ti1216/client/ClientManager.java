@@ -1,26 +1,33 @@
 package ml.vandenheuvel.ti1216.client;
 
 import ml.vandenheuvel.ti1216.data.ChatMessage;
+import ml.vandenheuvel.ti1216.data.Match;
+import ml.vandenheuvel.ti1216.gui.MainGUI;
 
 /**
  * ClientManager is the managment class for the client-side application.
  */
 public class ClientManager {
-	
+
 	/**
 	 * The class that polls for new chat messages.
 	 */
-	private ChatPoller poller;
+	private ChatPoller chatPoller;
+	
+	/**
+	 * The class that polls for new matches.
+	 */
+	private MatchPoller matchPoller;
 	
 	/**
 	 * Boots up the application.
 	 */
-	public static void main() {
-		new ClientManager();
+	public static void main(String[] args) {
+		new ClientManager(args);
 	}
 	
-	public ClientManager() {
-		
+	public ClientManager(String[] args) {
+		MainGUI.launch(args);
 	}
 
 	/**
@@ -30,6 +37,16 @@ public class ClientManager {
 	 */
 	public void incomingChat(ChatMessage message) {
 		System.out.println(message.getMessage());
+		// TODO: do something useful
+	}
+
+	/**
+	 * Handles an incoming chat message.
+	 * 
+	 * @param message the message to handle
+	 */
+	public void incomingMatch(Match match) {
+		System.out.println(match.getMatchUsername());
 		// TODO: do something useful
 	}
 	
