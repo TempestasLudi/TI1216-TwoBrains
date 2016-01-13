@@ -96,13 +96,16 @@ public class MessageTest {
 	
 	@Test
 	public void testRead1(){
-		String request = "GET /chat HTTP/1.1";
+		//String request = "GET /chat HTTP/1.1";
+		String message = "GET /chat HTTP/1.1\r\n" + "Content-Length: 7\r\n" + "Content-Type: text/json\r\n" + "Date: "
+				+ new Date().toString() + "\r\n\r\n" + "Content\r\n\r\n";
 		RequestLine reqLine = new RequestLine("GET /chat HTTP/1.1");
-		InputStream is = new ByteArrayInputStream(request.getBytes());
+		InputStream is = new ByteArrayInputStream(message.getBytes());
 		DataInputStream in = new DataInputStream(is);
 		
 		Header head = new Header(reqLine);
-		Body body = new Body("Hello, World!");
+		Body body = new Body("Content-Length: 7\r\n" + "Content-Type: text/json\r\n" + "Date: "
+				+ new Date().toString() + "\r\n\r\n" + "Content\r\n\r\n");
 		Message msg = new Message(head, body);
 		
 		assertEquals(msg, Message.read(in, true));
