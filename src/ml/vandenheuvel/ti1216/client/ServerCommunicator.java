@@ -102,7 +102,7 @@ public class ServerCommunicator {
 	 * 
 	 * @param credentials
 	 *            the credentials of the user
-	 * @param message
+	 * @param chatMessage
 	 *            the message to send
 	 * @return true if the message could be sent, otherwise false
 	 */
@@ -250,7 +250,7 @@ public class ServerCommunicator {
 	 * @return
 	 */
 	private static Message createMessage(String method, String endpoint, Credentials credentials) {
-		Header header = new Header(new RequestLine(method.toUpperCase() + "/" + endpoint + " HTTP/1.1"));
+		Header header = new Header(new RequestLine(method.toUpperCase() + " /" + endpoint + " HTTP/1.1"));
 		Message result = new Message(header, new Body(""));
 		result.getHeader().addField(new HeaderField("Authorization", "Basic " + Base64.getEncoder()
 				.encodeToString((credentials.getUsername() + ":" + credentials.getPassword()).getBytes())));

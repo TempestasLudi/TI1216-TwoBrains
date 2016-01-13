@@ -48,7 +48,11 @@ If the Authorization field is correct, the server will start looking at the requ
 > A http request containing an Authorization field may look like
 
 ```code
-//TODO: http bericht
+GET /user HTTP/1.1
+Authorization: Basic VGVzdFVzZXJuYW1lOlRlc3RQYXNzd29yZA==
+Content-Length: 0
+Content-Type: text/json
+Date: Wed Jan 13 22:18:32 CET 2016
 ```
 
 > When the Authorization field is not supplied, the server responds with a message similar to
@@ -76,7 +80,13 @@ To sign up a new user, one has to do a PUT request on /user. The body of the req
 > A http request to register a new user may look like
 
 ```code
-//TODO: http bericht
+PUT /user HTTP/1.1
+Authorization: Basic VGVzdFVzZXJuYW1lOlRlc3RQYXNzd29yZA==
+Content-Length: 162
+Content-Type: text/json
+Date: Wed Jan 13 22:28:26 CET 2016
+
+{"gradeList":[{"grade":"9","courseId":"TI1216"},{"grade":"10","courseId":"TI1206"}],"postalCode":"AndyAntwerpen","description":"slimme man","username":"azaidman"}
 ```
 
 If registering a user was succesful, the server will respond with a statuscode 200 and a JSON object in the body with a boolean field 'succes'. If not, registering was not succesful.
@@ -100,12 +110,28 @@ Updating user information goes in the same way as signing up a new user: one doe
 > A http request changing user information may look like
 
 ```code
-//TODO: http bericht
+PUT /user HTTP/1.1
+Authorization: Basic VGVzdFVzZXJuYW1lOlRlc3RQYXNzd29yZA==
+Content-Length: 162
+Content-Type: text/json
+Date: Wed Jan 13 22:28:26 CET 2016
+
+{"gradeList":[{"grade":"9","courseId":"TI1216"},{"grade":"10","courseId":"TI1206"}],"postalCode":"AndyAntwerpen","description":"slimme man","username":"azaidman"}
 ```
 
 ## 'Logging in', or checking a users credentials
 
 As this API is RESTful, the server doesn't know the state of it's clients and treats all message individually. You can still ask the server to check the correctness of credentials, however. To do so, one simply sends a request to any endpoint, such as /user. The server will then check the credentials. If the statuscode of the response is 401 - Unauthorized, the credentials are incorrect. If not, the server responds with the requested content. The client can ofcourse simply drop the body of the received message, as the contents of the message are irrelevant.
+
+> A http request checking if a user can log in may look like
+
+```code
+GET /user HTTP/1.1
+Authorization: Basic VGVzdFVzZXJuYW1lOlRlc3RQYXNzd29yZA==
+Content-Length: 0
+Content-Type: text/json
+Date: Wed Jan 13 22:18:32 CET 2016
+```
 
 ## Requesting chatmessages
 
@@ -138,7 +164,13 @@ To send a chatmessage a client does a PUT request on /chat. The server will then
 > A http request sending a chatmessage may look like
 
 ```code
-//TODO: http bericht
+PUT /chat HTTP/1.1
+Authorization: Basic VGVzdFVzZXJuYW1lOlRlc3RQYXNzd29yZA==
+Content-Length: 64
+Content-Type: text/json
+Date: Wed Jan 13 22:34:29 CET 2016
+
+{"receiver":"Inhoud","sender":"Verzender","message":"Ontvanger"}
 ```
 
 ## Requesting matches
@@ -190,6 +222,7 @@ Error Code | Meaning
 # Data objects
 
 All objects are represented in JSON and are sent in the body of a http response. Always check the received status code first, then try to read the possible JSON data.
+Whitespace is used only to make the JSON more readable to the programmer. Normally, whitespace is omitted.
 
 ## User
 
