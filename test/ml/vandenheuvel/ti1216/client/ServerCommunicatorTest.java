@@ -76,4 +76,9 @@ public class ServerCommunicatorTest {
 		fail("Not yet implemented");
 	}
 
+	@Test
+	public void testCreateMessage() {
+		//TODO 
+		fail("Not yet implemented");
+	}
 }
