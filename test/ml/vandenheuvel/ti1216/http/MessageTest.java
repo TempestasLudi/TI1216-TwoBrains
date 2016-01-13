@@ -1,11 +1,18 @@
 package ml.vandenheuvel.ti1216.http;
 
+import ml.vandenheuvel.ti1216.http.*;
 import static org.junit.Assert.assertEquals;
 
+import java.io.ByteArrayInputStream;
+import java.io.DataInputStream;
+import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.Date;
 
 import org.junit.Test;
+
+//import ml.vandenheuvel.ti1216.source.api.http.Header;
+//import ml.vandenheuvel.ti1216.source.api.http.Message;
 
 public class MessageTest {
 
@@ -85,6 +92,21 @@ public class MessageTest {
 		testMessage1.merge(testMessage2);
 		assertEquals(testMessage1.getHeader(), header2);
 
+	}
+	
+	@Test
+	public void testRead1(){
+		String request = "GET /chat HTTP/1.1";
+		RequestLine reqLine = new RequestLine("GET /chat HTTP/1.1");
+		InputStream is = new ByteArrayInputStream(request.getBytes());
+		DataInputStream in = new DataInputStream(is);
+		
+		Header head = new Header(reqLine);
+		Body body = new Body("Hello, World!");
+		Message msg = new Message(head, body);
+		
+		assertEquals(msg, Message.read(in, true));
+		
 	}
 
 	@Test
