@@ -46,6 +46,7 @@ public class DatabaseCommunicator {
 		this.dataSource = mysqlDS;
 		try {
 			this.connection = this.dataSource.getConnection();
+			logger.info("Connected to the database.");
 		} catch (SQLException e) {
 			logger.log(Level.SEVERE, "Failed to make the connection to SQL database.", e);
 		}
