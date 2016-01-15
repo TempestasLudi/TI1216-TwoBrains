@@ -189,4 +189,34 @@ public class Message {
 		return result;
 	}
 
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj) {
+			return true;
+		}
+		if (obj == null) {
+			return false;
+		}
+		if (!(obj instanceof Message)) {
+			return false;
+		}
+		Message other = (Message) obj;
+		if (body == null) {
+			if (other.body != null) {
+				return false;
+			}
+		} else if (!body.equals(other.body)) {
+			return false;
+		}
+		if (header == null) {
+			if (other.header != null) {
+				return false;
+			}
+		} else if (!header.equals(other.header)) {
+			return false;
+		}
+		return true;
+	}
+
 }

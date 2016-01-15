@@ -4,8 +4,11 @@ import ml.vandenheuvel.ti1216.http.*;
 import static org.junit.Assert.assertEquals;
 
 import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
 import java.io.DataInputStream;
+import java.io.IOException;
 import java.io.InputStream;
+import java.io.ObjectOutputStream;
 import java.util.ArrayList;
 import java.util.Date;
 
@@ -96,20 +99,22 @@ public class MessageTest {
 	
 	@Test
 	public void testRead1(){
-		//String request = "GET /chat HTTP/1.1";
-		String message = "GET /chat HTTP/1.1\r\n" + "Content-Length: 7\r\n" + "Content-Type: text/json\r\n" + "Date: "
-				+ new Date().toString() + "\r\n\r\n" + "Content\r\n\r\n";
-		RequestLine reqLine = new RequestLine("GET /chat HTTP/1.1");
+		
+		String message = "GET /chat HTTP/1.1\r\n" + "Content-Length: 12\r\n" + "Content-Type: text/json\r\n" + "Date: "
+				+ new Date().toString() + "\r\n\r\n" + "User details\r\n\r\n";
 		InputStream is = new ByteArrayInputStream(message.getBytes());
 		DataInputStream in = new DataInputStream(is);
 		
+		 
+		
+		RequestLine reqLine = new RequestLine("GET /chat HTTP/1.1");
 		Header head = new Header(reqLine);
-		Body body = new Body("Content-Length: 7\r\n" + "Content-Type: text/json\r\n" + "Date: "
-				+ new Date().toString() + "\r\n\r\n" + "Content\r\n\r\n");
+		Body body = new Body("User details");
 		Message msg = new Message(head, body);
 		
+
 		assertEquals(msg, Message.read(in, true));
-		
+	   
 	}
 
 	@Test
