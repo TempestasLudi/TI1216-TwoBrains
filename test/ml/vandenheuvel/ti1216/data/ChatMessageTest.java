@@ -66,7 +66,7 @@ public class ChatMessageTest {
 	@Test
 	public void testEquals2() {
 		ChatMessage chatmessage1 = new ChatMessage(-1, "Andy", "Hoe heeft A1-2 het gedaan?", "Stefan", false);
-		ChatMessage chatmessage2 = new ChatMessage(-1, "Andy", "Hoe heeft A1-2 het gedaan??", "Stefan", false);
+		ChatMessage chatmessage2 = new ChatMessage(0, "Andy", "Hoe heeft A1-2 het gedaan?", "Stefan", false);
 		assertFalse(chatmessage1.equals(chatmessage2));
 	}
 
@@ -80,14 +80,14 @@ public class ChatMessageTest {
 	public void testEquals4() {
 		ChatMessage chatmessage1 = new ChatMessage(-1, "Andy", "Hoe heeft A1-2 het gedaan?", "Stefan", false);
 		ChatMessage chatmessage2 = new ChatMessage(-1, "Andyy", "Hoe heeft A1-2 het gedaan?", "Stefan", false);
-		assertFalse(chatmessage1.equals(chatmessage2));
+		assertTrue(chatmessage1.equals(chatmessage2));
 	}
 
 	@Test
 	public void testEquals5() {
-		ChatMessage chatmessage1 = new ChatMessage(-1, "Andy", "Hoe heeft A1-2 het gedaan?", "Stefan", false);
-		ChatMessage chatmessage2 = new ChatMessage(-1, "Andy", "Hoe heeft A1-2 het gedaan?", "Steffan", false);
-		assertFalse(chatmessage1.equals(chatmessage2));
+		ChatMessage chatmessage1 = new ChatMessage(-0, "Andy", "Hoe heeft A1-2 het gedaan?", "Stefan", false);
+		ChatMessage chatmessage2 = new ChatMessage(0, "Andy", "Hoe heeft A1-2 het gedaan??", "Stefan", false);
+		assertTrue(chatmessage1.equals(chatmessage2));
 	}
 
 }

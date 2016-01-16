@@ -161,7 +161,7 @@ public class ChatMessage {
 	public boolean equals(Object other) {
 		if (other instanceof ChatMessage) {
 			ChatMessage that = (ChatMessage) other;
-			return this.id == that.getId();
+			return this.id == that.id;
 		}
 		return false;
 	}
