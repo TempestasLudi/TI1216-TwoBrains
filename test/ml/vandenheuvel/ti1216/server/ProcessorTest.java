@@ -1,6 +1,9 @@
+package ml.vandenheuvel.ti1216.server;
+
 import static org.junit.Assert.*;
 import org.junit.Test;
-import ml.vandenheuvel.ti1216.*;
+import ml.vandenheuvel.ti1216.data.Credentials;
+import ml.vandenheuvel.ti1216.http.HeaderField;
 
 public class ProcessorTest {
 
@@ -21,7 +24,7 @@ public class ProcessorTest {
 	@Test
 	public void testGetCredentials1() {
 		Credentials cred1 = new Credentials("username1","password1");
-		HeaderField hf1 = new HeaderField("Authorization: "+cred1.);
+		HeaderField hf1 = new HeaderField("Authorization: "+cred1.toString());
 		
 	}
 	
