@@ -9,19 +9,17 @@ import org.json.JSONObject;
 public class Grade {
 
 	private String courseId;
-	private int grade;
+	private int mark;
 
 	/**
 	 * creates a new Grade
 	 * 
-	 * @param courseId
-	 *            the courseId to which the Grade belongs
-	 * @param grade
-	 *            an integer that represents the Grade
+	 * @param courseId the courseId to which the Grade belongs
+	 * @param mark an integer that represents the mark
 	 */
-	public Grade(String courseId, int grade) {
+	public Grade(String courseId, int mark) {
 		this.courseId = courseId;
-		this.grade = grade;
+		this.mark = mark;
 	}
 
 	/**
@@ -39,14 +37,13 @@ public class Grade {
 	 * @return the integer that represents the Grade
 	 */
 	public int getGrade() {
-		return this.grade;
+		return this.mark;
 	}
 
 	/**
 	 * sets the Course to which the Grade belongs
 	 * 
-	 * @param course
-	 *            the new Course of the Grade
+	 * @param course the new Course of the Grade
 	 */
 	public void setCourseId(String courseId) {
 		this.courseId = courseId;
@@ -55,11 +52,10 @@ public class Grade {
 	/**
 	 * sets the integer that represents the Grade
 	 * 
-	 * @param grade
-	 *            the new integer of the Grade
+	 * @param grade the new integer of the Grade
 	 */
 	public void setGrade(int grade) {
-		this.grade = grade;
+		this.mark = grade;
 	}
 
 	/**
@@ -68,36 +64,26 @@ public class Grade {
 	 * @return a JSON object out of a Grade object
 	 */
 	public JSONObject toJSON() {
-		return new JSONObject().put("grade", Integer.toString(this.grade)).put(
+		return new JSONObject().put("grade", Integer.toString(this.mark)).put(
 				"courseId", this.courseId);
 	}
 
 	/**
 	 * Creates Grade object out of a JSON object
 	 * 
-	 * @param json
-	 *            the JSON object
+	 * @param json the JSON object
 	 * @return a Grade object
 	 */
 	public static Grade fromJSON(JSONObject jsonObject) {
-		if (jsonObject != null) {
-			//if(jsonObject.get("grade") instanceof String) {
-				return new Grade(jsonObject.getString("courseId"),
-						Integer.parseInt(jsonObject.getString("grade")));
-			}
-			/*else {
-				return new Grade(jsonObject.getString("courseId"),
-						(int)jsonObject.get("grade"));
-			}
-		}*/
+		if (jsonObject != null)
+			return new Grade(jsonObject.getString("courseId"), Integer.parseInt(jsonObject.getString("grade")));
 		return null;
 	}
 
 	/**
 	 * checks whether two Grades are equal to each other
 	 * 
-	 * @param other
-	 *            the Object to which the Grade is compared
+	 * @param other the Object to which the Grade is compared
 	 * @return true if the Grades are equal, otherwise false
 	 */
 	@Override
@@ -105,7 +91,7 @@ public class Grade {
 		if (other instanceof Grade) {
 			Grade that = (Grade) other;
 			return this.courseId.equals(that.courseId)
-					&& this.grade == that.grade;
+					&& this.mark == that.mark;
 		}
 		return false;
 	}

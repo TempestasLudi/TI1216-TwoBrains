@@ -15,7 +15,7 @@ public class Header {
 	/**
 	 * The fields of the header.
 	 */
-	private List<HeaderField> fields = new ArrayList<HeaderField>();
+	private List<HeaderField> fields = new ArrayList<>();
 	 
 	/**
 	 * Class constructor.

@@ -26,9 +26,13 @@ import ml.vandenheuvel.ti1216.http.ResponseLine;
  * ServerCommunicator is a communicator class to communicate in a API-based way
  * with the server (from the client).
  */
-public class ServerCommunicator {
+public abstract class ServerCommunicator {
 
-	public static String targetIp = "127.0.0.1";
+	public static final String targetIp = "127.0.0.1";
+	
+	private ServerCommunicator(){
+		//Private constructor to hide the implicit public one
+	}
 
 	/**
 	 * Tries to log in a user and fetches that user from the server.
@@ -156,7 +160,7 @@ public class ServerCommunicator {
 			return new ArrayList<Faculty>();
 		}
 		JSONObject body = new JSONObject(response.getBody().getContent());
-		ArrayList<Faculty> faculties = new ArrayList<Faculty>();
+		ArrayList<Faculty> faculties = new ArrayList<>();
 		JSONArray facultyData = body.getJSONArray("faculties");
 		for (int i = 0; i < facultyData.length(); i++) {
 			faculties.add(Faculty.fromJSON(facultyData.getJSONObject(i)));
@@ -206,7 +210,7 @@ public class ServerCommunicator {
 		}
 		JSONObject body = new JSONObject(response.getBody().getContent());
 		JSONArray messages = body.getJSONArray("messages");
-		ArrayList<ChatMessage> result = new ArrayList<ChatMessage>();
+		ArrayList<ChatMessage> result = new ArrayList<>();
 		for (int i = 0; i < messages.length(); i++) {
 			result.add(ChatMessage.fromJSON(messages.getJSONObject(i)));
 		}
@@ -231,7 +235,7 @@ public class ServerCommunicator {
 		}
 		JSONObject body = new JSONObject(response.getBody().getContent());
 		JSONArray matches = body.getJSONArray("matches");
-		ArrayList<Match> result = new ArrayList<Match>();
+		ArrayList<Match> result = new ArrayList<>();
 		for (int i = 0; i < matches.length(); i++) {
 			result.add(Match.fromJSON(matches.getJSONObject(i)));
 		}

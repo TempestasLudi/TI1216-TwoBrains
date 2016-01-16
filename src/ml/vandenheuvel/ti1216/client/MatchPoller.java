@@ -46,7 +46,7 @@ public class MatchPoller implements Runnable{
 			for (int i = 0; i < matches.size(); i++) {
 				this.manager.incomingMatch(matches.get(i));
 			}
-			if (matches.size() == 0) {
+			if (matches.isEmpty()) {
 				try {
 					Thread.sleep(1000);
 				} catch (InterruptedException e) {

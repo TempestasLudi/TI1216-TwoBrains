@@ -94,8 +94,7 @@ public class Processor {
 		if (usernamePassword.length < 2) {
 			return null;
 		}
-		Credentials credentials = new Credentials(usernamePassword[0], usernamePassword[1]);
-		return credentials;
+		return new Credentials(usernamePassword[0], usernamePassword[1]);
 	}
 
 	/**

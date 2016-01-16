@@ -9,6 +9,11 @@ import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
 public class ChatGUI {
+	
+	private ChatGUI(){
+		//Default constructor to hide the implicit one
+	}
+	
 	public static void display() {
 		Stage window = new Stage();
 		window.setTitle("ChatGUI");

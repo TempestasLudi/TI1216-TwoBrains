@@ -25,7 +25,7 @@ public class ProcessorTest {
 	public void testGetCredentials1() {
 		Credentials cred1 = new Credentials("username1","password1");
 		HeaderField hf1 = new HeaderField("Authorization: "+cred1.toString());
-		
+		fail("Not yet implemented");
 	}
 	
 	

@@ -11,8 +11,12 @@ import javafx.stage.Stage;
 public class EditProfileGUI {
 
 	static String username = "Default"; //databasecommunicator.getUser().getUsername();
-	static String postcode = "Default";//databasecommunicator.getUser().getPostCode();
-	static String description = "Default";//databasecommunicator.getUser().getDescription();
+	static String postcode = "Default"; //databasecommunicator.getUser().getPostCode();
+	static String description = "Default"; //databasecommunicator.getUser().getDescription();
+	
+	private EditProfileGUI(){
+		//Private constructor to hide the implicit public one
+	}
 	
 	public static void display(){
 		Stage window = new Stage();

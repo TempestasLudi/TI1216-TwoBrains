@@ -127,7 +127,7 @@ public class DatabaseCommunicator {
 	 * @return a Faculty-Program-Course tree structure from the result set
 	 */
 	private Faculty[] createFPCTree(ResultSet resultSet) throws SQLException {
-		ArrayList<Faculty> faculties = new ArrayList<Faculty>();
+		ArrayList<Faculty> faculties = new ArrayList<>();
 		Faculty faculty = null;
 		Program program = null;
 		while (resultSet.next()) {
@@ -142,7 +142,7 @@ public class DatabaseCommunicator {
 						new ArrayList<Course>());
 			}
 			if (resultSet.getString("courseID") != null) {
-				new Course(resultSet.getString("courseID"), resultSet.getString("courseName"), program);
+				new Course(resultSet.getString("courseID"), resultSet.getString("courseName"), program); // NOSONAR
 			}
 		}
 		Faculty[] result = new Faculty[faculties.size()];
@@ -213,7 +213,7 @@ public class DatabaseCommunicator {
 	 * @return all programs in the database
 	 */
 	public Program[] getPrograms() {
-		ArrayList<Program> programs = new ArrayList<Program>();
+		ArrayList<Program> programs = new ArrayList<>();
 		Faculty[] faculties = this.getFaculties();
 		for (int i = 0; i < faculties.length; i++) {
 			programs.addAll(faculties[i].getPrograms());
@@ -313,7 +313,7 @@ public class DatabaseCommunicator {
 	 * @return all courses in the database
 	 */
 	public Course[] getCourses() {
-		ArrayList<Course> courses = new ArrayList<Course>();
+		ArrayList<Course> courses = new ArrayList<>();
 		Program[] programs = this.getPrograms();
 		for (int i = 0; i < programs.length; i++) {
 			courses.addAll(programs[i].getCourses());
@@ -454,9 +454,9 @@ public class DatabaseCommunicator {
 			String query = "SELECT u.name AS username, u.postalCode, u.description AS userDescription, IF(g.ID IS NULL, -1, g.ID) AS gradeId, g.courseId, g.value AS gradeValue "
 					+ "FROM user AS u " + "LEFT JOIN grade AS g " + "ON g.username = u.name";
 			ResultSet resultSet = this.get(query);
-			ArrayList<User> users = new ArrayList<User>();
+			ArrayList<User> users = new ArrayList<>();
 			User user = null;
-			ArrayList<Grade> grades = new ArrayList<Grade>();
+			ArrayList<Grade> grades = new ArrayList<>();
 			while (resultSet.next()) {
 				if (user == null) {
 					user = new User(resultSet.getString("username"), resultSet.getString("postalCode"),
@@ -466,7 +466,7 @@ public class DatabaseCommunicator {
 					Grade[] gradeArray = new Grade[grades.size()];
 					grades.toArray(gradeArray);
 					user.setGradeList(gradeArray);
-					grades = new ArrayList<Grade>();
+					grades = new ArrayList<>();
 					users.add(new User(resultSet.getString("username"), resultSet.getString("postalCode"),
 							resultSet.getString("userDescription"), new Grade[0]));
 				}
@@ -502,7 +502,7 @@ public class DatabaseCommunicator {
 							+ "FROM user AS u " + "LEFT JOIN grade AS g " + "ON g.username = u.name "
 							+ "WHERE u.name = '" + name + "'");
 			if (resultSet.next()) {
-				ArrayList<Grade> gradeList = new ArrayList<Grade>();
+				ArrayList<Grade> gradeList = new ArrayList<>();
 				User user = new User(resultSet.getString("username"), resultSet.getString("postalCode"),
 						resultSet.getString("userDescription"), new Grade[0]);
 				do {
@@ -611,7 +611,7 @@ public class DatabaseCommunicator {
 	public Match[] getMatches() {
 		try {
 			ResultSet resultSet = this.get("SELECT * FROM match");
-			ArrayList<Match> matches = new ArrayList<Match>();
+			ArrayList<Match> matches = new ArrayList<>();
 			while (resultSet.next()) {
 				matches.add(new Match(resultSet.getInt("id"), resultSet.getString("username"),
 						resultSet.getString("matchUsername"), resultSet.getBoolean("seen"),
@@ -636,7 +636,7 @@ public class DatabaseCommunicator {
 	public Match[] getMatches(String username) {
 		try {
 			ResultSet resultSet = this.get("SELECT * FROM match WHERE username = '" + username + "'");
-			ArrayList<Match> matches = new ArrayList<Match>();
+			ArrayList<Match> matches = new ArrayList<>();
 			while (resultSet.next()) {
 				matches.add(new Match(resultSet.getInt("id"), resultSet.getString("username"),
 						resultSet.getString("matchUsername"), resultSet.getBoolean("seen"),
@@ -696,7 +696,7 @@ public class DatabaseCommunicator {
 	public ChatMessage[] getChats() {
 		try {
 			ResultSet resultSet = this.get("SELECT * FROM chat");
-			ArrayList<ChatMessage> chats = new ArrayList<ChatMessage>();
+			ArrayList<ChatMessage> chats = new ArrayList<>();
 			while (resultSet.next()) {
 				chats.add(new ChatMessage(resultSet.getInt("ID"), resultSet.getString("sender"),
 						resultSet.getString("message"), resultSet.getString("receiver"), resultSet.getBoolean("seen")));
@@ -726,7 +726,7 @@ public class DatabaseCommunicator {
 				query += "WHERE seen = false";
 			}
 			ResultSet resultSet = this.get(query);
-			ArrayList<ChatMessage> chats = new ArrayList<ChatMessage>();
+			ArrayList<ChatMessage> chats = new ArrayList<>();
 			while (resultSet.next()) {
 				chats.add(new ChatMessage(resultSet.getInt("ID"), resultSet.getString("sender"),
 						resultSet.getString("message"), resultSet.getString("receiver"), resultSet.getBoolean("seen")));

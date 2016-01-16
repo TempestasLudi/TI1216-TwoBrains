@@ -78,8 +78,9 @@ public class ServerApplication {
 			logger.log(Level.WARNING, "Could not write in " + System.getProperty("java.io.tmpdir"), e);
 		}
 
+		ServerSocket server = null;
 		try {
-			ServerSocket server = new ServerSocket(Integer.parseInt(args[0]));
+			server = new ServerSocket(Integer.parseInt(args[0]));
 			logger.fine("Opened serversocket on port " + args[0]);
 			Processor processor = new Processor(args[1], args[2], args[3], args[4]);
 			logger.fine("Created new Processor instance with arguments " + args[1] + ", " + args[2] + ", " + args[3]
@@ -93,9 +94,14 @@ public class ServerApplication {
 				logger.finer("A new ClientCommunicator based thread has been started.");
 			}
 			server.close();
-			logger.info("Serversocket closed.");
-		} catch (IOException e) {
-			logger.log(Level.SEVERE, "Server stopped running.", e);
+			logger.fine("Serversocket closed.");
+		} catch (IOException e1) {
+			logger.log(Level.SEVERE, "Server stopped running.", e1);
+			try{
+				server.close();
+			} catch(IOException e2) {
+				logger.log(Level.FINE, "ServerSocket kon niet gestopt worden.", e2);
+			}
 		}
 	}
 
