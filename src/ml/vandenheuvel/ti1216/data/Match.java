@@ -148,7 +148,11 @@ public class Match {
 		return new Match(jsonObject.getInt("id"), jsonObject.getString("username"), jsonObject.getString("matchUsername"), jsonObject.getBoolean("seen"), jsonObject.getBoolean("approved"));
 	}
 	
-	/*public int getRating()
+	/**
+	 * Calculates the rating of a given Match.
+	 * @return the rating of the Match
+	 */
+	public int getRating()
 	{
 		DatabaseCommunicator communicator = new DatabaseCommunicator("tempestasludi.com", "TI1216-test", "TI1216", "3t.uGmL365j2f7B");
 		Grade[] gradelist = communicator.getUser(username).getGradeList();
@@ -161,15 +165,33 @@ public class Match {
 				if(gradelist[i].getCourseId().equals(gradelist[j].getCourseId()))
 				{
 					partialRatings[i] = gradelist[i].getGrade() - gradelist[j].getGrade();
-					//break;
+				}
+				else
+				{
+					partialRatings[i]=-100000;
 				}
 			}
 		}
-		for(int i=0;i<partialRatings.length;i++)
+		int max = partialRatings[0];
+		int min = partialRatings[0];
+		int rating = 0;
+		for(int j=0;j<partialRatings.length/2+1;j++)
 		{
-			
+			for(int i=0;i<partialRatings.length;i++)
+			{
+				if(partialRatings[i]>max)
+				{
+					max = partialRatings[i];
+				}
+				if(partialRatings[i]!=-100000 && partialRatings[i]<min)
+				{
+					min = partialRatings[i];
+				}
+			}
+			rating = rating + max-min;
 		}
-	}*/
+		return rating;
+	}
 
 	/**
 	 * checks whether two Matches are equal to each other
