@@ -139,9 +139,37 @@ public class Match {
 		return new JSONObject().put("id", this.id).put("username", this.username).put("matchUsername", this.matchUsername).put("seen", this.seen).put("approved", this.approved);
 	}
 
+	/**
+	 * Creates a Match object out of a JSONObject.
+	 * @param jsonObject the JSONObject out of which the Match has to be created
+	 * @return the created Match Object
+	 */
 	public static Match fromJSON(JSONObject jsonObject) {
 		return new Match(jsonObject.getInt("id"), jsonObject.getString("username"), jsonObject.getString("matchUsername"), jsonObject.getBoolean("seen"), jsonObject.getBoolean("approved"));
 	}
+	
+	/*public int getRating()
+	{
+		DatabaseCommunicator communicator = new DatabaseCommunicator("tempestasludi.com", "TI1216-test", "TI1216", "3t.uGmL365j2f7B");
+		Grade[] gradelist = communicator.getUser(username).getGradeList();
+		Grade[] matchGradelist = communicator.getUser(matchUsername).getGradeList();
+		int[] partialRatings = new int[Math.max(gradelist.length, matchGradelist.length)];
+		for(int i=0;i<gradelist.length;i++)
+		{
+			for(int j=0;j<matchGradelist.length;j++)
+			{
+				if(gradelist[i].getCourseId().equals(gradelist[j].getCourseId()))
+				{
+					partialRatings[i] = gradelist[i].getGrade() - gradelist[j].getGrade();
+					//break;
+				}
+			}
+		}
+		for(int i=0;i<partialRatings.length;i++)
+		{
+			
+		}
+	}*/
 
 	/**
 	 * checks whether two Matches are equal to each other
