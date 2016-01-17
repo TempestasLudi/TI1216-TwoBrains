@@ -74,7 +74,7 @@ public class ServerCommunicator {
 		JSONObject body = new JSONObject(response.getBody().getContent());
 		return body.getBoolean("success");
 	}
-
+	
 	/**
 	 * Tries to update a user on the server.
 	 * 
