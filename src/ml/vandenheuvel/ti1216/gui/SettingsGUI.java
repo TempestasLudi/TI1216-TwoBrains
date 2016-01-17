@@ -11,21 +11,23 @@ import javafx.scene.layout.VBox;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import ml.vandenheuvel.ti1216.client.ServerCommunicator;
+
 /**
  * SettingsGUI allows the user that save his preferences.
- * @author stefan
  */
 public class SettingsGUI {
+
 	/**
 	 * Sets all the elements of the SettingsGUI window.
 	 */
-	private SettingsGUI(){
-		//Private constructor to hide the implicit  public one
+	private SettingsGUI() {
+		// Private constructor to hide the implicit public one
 	}
-	
+
 	public static void display() {
 		/**
-		 * Sets the title of the new window and fetches the user from the database.
+		 * Sets the title of the new window and fetches the user from the
+		 * database.
 		 */
 		Stage window = new Stage();
 		window.initModality(Modality.APPLICATION_MODAL);
@@ -39,43 +41,44 @@ public class SettingsGUI {
 		HBox hbox1 = new HBox();
 		HBox hbox2 = new HBox();
 		HBox hbox3 = new HBox();
-		
+
 		/**
-		 * Label that allows you to receive a notification when a match is found.
+		 * Label that allows you to receive a notification when a match is
+		 * found.
 		 */
 		Label noti1Label = new Label("Notification when match is found?            ");
-		
+
 		/**
 		 * Create a CheckBox that you can tick to enable the option above.
 		 */
 		CheckBox checkbox1 = new CheckBox();
-		
+
 		/**
-		 * Label that allows you to receive a notification when someone starts a chat with you.
+		 * Label that allows you to receive a notification when someone starts a
+		 * chat with you.
 		 */
 		Label noti2Label = new Label("Notification when a chat session starts?    ");
-		
+
 		/**
 		 * Create a CheckBox that you can tick to enable the option above.
 		 */
 		CheckBox checkbox2 = new CheckBox();
-		
+
 		/**
 		 * Label that lets you decide whether or not your location can be used.
 		 */
 		Label noti3Label = new Label("Are we allowed to use your location?        ");
-		
+
 		/**
 		 * Create a CheckBox that you can tick to enable the option above.
 		 */
 		CheckBox checkbox3 = new CheckBox();
-		
+
 		/**
 		 * Button to return back to the Menu.
 		 */
 		Button menuButton = new Button("Return back to menu");
-		menuButton.setOnAction(new EventHandler<ActionEvent>()
-		{
+		menuButton.setOnAction(new EventHandler<ActionEvent>() {
 			/**
 			 * Opens MenuGUI and closes the current window.
 			 */
@@ -85,7 +88,7 @@ public class SettingsGUI {
 				window.close();
 			}
 		});
-		
+
 		/**
 		 * Adds the Labels, CheckBoxes and Button to hbox and vbox.
 		 */
@@ -97,7 +100,7 @@ public class SettingsGUI {
 		hbox2.getChildren().addAll(noti2Label, checkbox2);
 		hbox3.getChildren().addAll(noti3Label, checkbox3);
 		vbox.getChildren().addAll(hbox1, hbox2, hbox3, menuButton);
-		
+
 		/**
 		 * Adds the vbox and the hbox to the BorderPane.
 		 */

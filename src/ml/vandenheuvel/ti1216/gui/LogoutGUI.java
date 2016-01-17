@@ -1,4 +1,5 @@
 package ml.vandenheuvel.ti1216.gui;
+
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Pos;
@@ -8,17 +9,20 @@ import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
+
 /**
  * LogoutGUI is the window that shows up when you log out of the application.
- * @author stefan
  */
-public class LogoutGUI 
-{
+public class LogoutGUI {
+	
+	private LogoutGUI(){
+		//Private constructor to hdie the implicit public one
+	}
+	
 	/**
 	 * Sets all the elements of the LogoutGUI window.
 	 */
-	public static void display()
-	{
+	public static void display() {
 		/**
 		 * Sets the title of the new window.
 		 */
@@ -30,37 +34,35 @@ public class LogoutGUI
 		 * Sets the constraints of the window.
 		 */
 		VBox vbox = new VBox();
-		
+
 		/**
 		 * Label that says Thank you for using this application.
 		 */
 		Label logoutLabel = new Label("Thank you for using our application!");
-		
+
 		/**
 		 * Button that allows you to the login screen.
 		 */
 		Button loginButton = new Button("Back to Login");
-		loginButton.setOnAction(new EventHandler<ActionEvent>()
-		{
+		loginButton.setOnAction(new EventHandler<ActionEvent>() {
 			/**
 			 * Opens LoginGUI and closes the current window.
 			 */
-				@Override
-				public void handle(ActionEvent e)
-				{
-					LoginGUI.display();
-					window.close();
-				}
+			@Override
+			public void handle(ActionEvent e) {
+				LoginGUI.display();
+				window.close();
+			}
 		});
 		vbox.setAlignment(Pos.CENTER);
 		vbox.getChildren().addAll(logoutLabel, loginButton);
-		
+
 		/**
 		 * Adds the vbox to the StackPane.
 		 */
 		StackPane layout = new StackPane();
 		layout.getChildren().addAll(vbox);
-		
+
 		/**
 		 * Sets the seize of the window and adds all the new elements.
 		 */
@@ -69,4 +71,3 @@ public class LogoutGUI
 		window.show();
 	}
 }
-		
