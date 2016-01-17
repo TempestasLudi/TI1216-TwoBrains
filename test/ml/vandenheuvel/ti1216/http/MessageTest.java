@@ -1,7 +1,8 @@
 package ml.vandenheuvel.ti1216.http;
 
 import ml.vandenheuvel.ti1216.http.*;
-import static org.junit.Assert.assertEquals;
+
+import static org.junit.Assert.*;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
@@ -189,7 +190,7 @@ public class MessageTest {
 	@Test
 	public void testRead6(){
 		
-		String message = "GET /chat HTTP/1.1\r\n" + "Content-Length: 22\r\n" + "Content-Type: text/json\r\n" + "Date: "
+		String message = "GET /chat HTTP/1.1\r\n" + "Content-Length: 22\r\n" +"Connection\r\n"+ "Content-Type: text/json\r\n" + "Date: "
 				+ new Date().toString() + "\r\n\r\n" + "User details: cholland\r\n\r\n";
 		InputStream is = new ByteArrayInputStream(message.getBytes());
 		DataInputStream in = new DataInputStream(is);
@@ -254,4 +255,114 @@ public class MessageTest {
 				testMessage1.toString());
 
 	}
+	
+	@Test
+	public void testEquals1() {
+		RequestLine reqLine = new RequestLine("GET /chat HTTP/1.1");
+		ArrayList<HeaderField> hField = new ArrayList<HeaderField>();
+		Header header = new Header(reqLine, hField);
+		Body body = new Body("Content");
+		Message testMessage1 = new Message(header, body);
+		
+		assertEquals(testMessage1, testMessage1);
+	}
+	
+	@Test
+	public void testEquals2() {
+		RequestLine reqLine = new RequestLine("GET /chat HTTP/1.1");
+		ArrayList<HeaderField> hField = new ArrayList<HeaderField>();
+		Header header = new Header(reqLine, hField);
+		Body body = new Body("Content");
+		Message testMessage1 = new Message(header, body);
+		
+		assertFalse(testMessage1.equals(null));
+	}
+	
+	@Test
+	public void testEquals3() {
+		RequestLine reqLine = new RequestLine("GET /chat HTTP/1.1");
+		ArrayList<HeaderField> hField = new ArrayList<HeaderField>();
+		Header header = new Header(reqLine, hField);
+		Body body = new Body("Content");
+		Message testMessage1 = new Message(header, body);
+		
+		assertFalse(testMessage1.equals(header));
+	}
+	
+	@Test
+	public void testEquals4() {
+		RequestLine reqLine = new RequestLine("GET /chat HTTP/1.1");
+		ArrayList<HeaderField> hField = new ArrayList<HeaderField>();
+		Header header = new Header(reqLine, hField);
+		Body body = new Body("Content");
+		Body body2 = null;
+		Message testMessage1 = new Message(header, body);
+		Message testMessage2 = new Message(header, body2);
+		
+		assertFalse(testMessage2.equals(testMessage1));
+	}
+	
+	@Test
+	public void testEquals4_2() {
+		RequestLine reqLine = new RequestLine("GET /chat HTTP/1.1");
+		RequestLine reqLine2 = new RequestLine("GET /test HTTP/1.1");
+		ArrayList<HeaderField> hField = new ArrayList<HeaderField>();
+		Header header = new Header(reqLine, hField);
+		Header header2 = new Header(reqLine2, hField);
+		Body body2 = null;
+		Message testMessage1 = new Message(header, body2);
+		Message testMessage2 = new Message(header2, body2);
+		
+		assertFalse(testMessage2.equals(testMessage1));
+	}
+	
+	@Test
+	public void testEquals5() {
+		RequestLine reqLine = new RequestLine("GET /chat HTTP/1.1");
+		ArrayList<HeaderField> hField = new ArrayList<HeaderField>();
+		Header header = new Header(reqLine, hField);
+		Body body = new Body("Content");
+		Body body2 = new Body("User details");
+		Message testMessage1 = new Message(header, body);
+		Message testMessage2 = new Message(header, body2);
+		
+		assertFalse(testMessage1.equals(testMessage2));
+	}
+	
+	@Test
+	public void testEquals6() {
+		RequestLine reqLine = new RequestLine("GET /chat HTTP/1.1");
+		ArrayList<HeaderField> hField = new ArrayList<HeaderField>();
+		Header header = new Header(reqLine, hField);
+		Header header2 = null;
+		Body body = new Body("Content");
+		Message testMessage1 = new Message(header, body);
+		Message testMessage2 = new Message(header2, body);
+		
+		assertFalse(testMessage2.equals(testMessage1));
+	}
+	
+	@Test
+	public void testEquals7() {
+		Header header2 = null;
+		Body body = new Body("Content");
+		Message testMessage1 = new Message(header2, body);
+		Message testMessage2 = new Message(header2, body);
+		
+		assertTrue(testMessage2.equals(testMessage1));
+	}
+	
+	@Test
+	public void testEquals8() {
+		RequestLine reqLine = new RequestLine("GET /chat HTTP/1.1");
+		ArrayList<HeaderField> hField = new ArrayList<HeaderField>();
+		Header header = new Header(reqLine, hField);
+		Header header2 = null;
+		Body body = new Body("Content");
+		Message testMessage1 = new Message(header, body);
+		Message testMessage2 = new Message(header2, body);
+		
+		assertFalse(testMessage1.equals(testMessage2));
+	}
+	
 }
