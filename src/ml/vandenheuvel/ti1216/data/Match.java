@@ -139,8 +139,58 @@ public class Match {
 		return new JSONObject().put("id", this.id).put("username", this.username).put("matchUsername", this.matchUsername).put("seen", this.seen).put("approved", this.approved);
 	}
 
+	/**
+	 * Creates a Match object out of a JSONObject.
+	 * @param jsonObject the JSONObject out of which the Match has to be created
+	 * @return the created Match Object
+	 */
 	public static Match fromJSON(JSONObject jsonObject) {
 		return new Match(jsonObject.getInt("id"), jsonObject.getString("username"), jsonObject.getString("matchUsername"), jsonObject.getBoolean("seen"), jsonObject.getBoolean("approved"));
+	}
+	
+	/**
+	 * Calculates the rating of a given Match.
+	 * @return the rating of the Match
+	 */
+	public int getRating()
+	{
+		DatabaseCommunicator communicator = new DatabaseCommunicator("tempestasludi.com", "TI1216-test", "TI1216", "3t.uGmL365j2f7B");
+		Grade[] gradelist = communicator.getUser(username).getGradeList();
+		Grade[] matchGradelist = communicator.getUser(matchUsername).getGradeList();
+		int[] partialRatings = new int[Math.max(gradelist.length, matchGradelist.length)];
+		for(int i=0;i<gradelist.length;i++)
+		{
+			for(int j=0;j<matchGradelist.length;j++)
+			{
+				if(gradelist[i].getCourseId().equals(gradelist[j].getCourseId()))
+				{
+					partialRatings[i] = gradelist[i].getGrade() - gradelist[j].getGrade();
+				}
+				else
+				{
+					partialRatings[i]=-100000;
+				}
+			}
+		}
+		int max = partialRatings[0];
+		int min = partialRatings[0];
+		int rating = 0;
+		for(int j=0;j<partialRatings.length/2+1;j++)
+		{
+			for(int i=0;i<partialRatings.length;i++)
+			{
+				if(partialRatings[i]>max)
+				{
+					max = partialRatings[i];
+				}
+				if(partialRatings[i]!=-100000 && partialRatings[i]<min)
+				{
+					min = partialRatings[i];
+				}
+			}
+			rating = rating + max-min;
+		}
+		return rating;
 	}
 
 	/**

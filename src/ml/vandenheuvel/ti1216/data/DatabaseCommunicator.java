@@ -18,7 +18,7 @@ import com.mysql.jdbc.jdbc2.optional.MysqlDataSource;
  */
 
 public class DatabaseCommunicator {
-	
+
 	private static Logger logger = Logger.getLogger("ml.vandenheuvel.ti1216.server");
 
 	/**
@@ -34,8 +34,10 @@ public class DatabaseCommunicator {
 	/**
 	 * Constructor, initializes the dataSource.
 	 * 
-	 * @param hostname the database host name
-	 * @param database the database name
+	 * @param hostname
+	 *            the database host name
+	 * @param database
+	 *            the database name
 	 */
 	public DatabaseCommunicator(String hostname, String database, String username, String password) {
 		MysqlDataSource mysqlDS = null;
@@ -46,6 +48,7 @@ public class DatabaseCommunicator {
 		this.dataSource = mysqlDS;
 		try {
 			this.connection = this.dataSource.getConnection();
+			logger.info("Connected to the database.");
 		} catch (SQLException e) {
 			logger.log(Level.SEVERE, "Failed to make the connection to SQL database.", e);
 		}
@@ -54,7 +57,8 @@ public class DatabaseCommunicator {
 	/**
 	 * Fetches data from the database.
 	 * 
-	 * @param query the query to be executed
+	 * @param query
+	 *            the query to be executed
 	 * @return the data matching the query
 	 */
 	private ResultSet get(String query) throws SQLException {
@@ -65,7 +69,8 @@ public class DatabaseCommunicator {
 	/**
 	 * Executes a MySQL query.
 	 * 
-	 * @param query the query to be executed
+	 * @param query
+	 *            the query to be executed
 	 */
 	private void execute(String query) throws SQLException {
 		Statement statement = this.connection.createStatement();
@@ -93,7 +98,8 @@ public class DatabaseCommunicator {
 	/**
 	 * Fetches a faculty from the database.
 	 * 
-	 * @param id the id of the faculty
+	 * @param id
+	 *            the id of the faculty
 	 * @return the faculty with the id if found, otherwise null
 	 */
 	public Faculty getFaculty(String id) {
@@ -116,11 +122,12 @@ public class DatabaseCommunicator {
 	/**
 	 * Creates a Faculty-Program-Course tree structure from a MySQL result set.
 	 * 
-	 * @param resultSet the result set
+	 * @param resultSet
+	 *            the result set
 	 * @return a Faculty-Program-Course tree structure from the result set
 	 */
 	private Faculty[] createFPCTree(ResultSet resultSet) throws SQLException {
-		ArrayList<Faculty> faculties = new ArrayList<Faculty>();
+		ArrayList<Faculty> faculties = new ArrayList<>();
 		Faculty faculty = null;
 		Program program = null;
 		while (resultSet.next()) {
@@ -135,7 +142,7 @@ public class DatabaseCommunicator {
 						new ArrayList<Course>());
 			}
 			if (resultSet.getString("courseID") != null) {
-				new Course(resultSet.getString("courseID"), resultSet.getString("courseName"), program);
+				new Course(resultSet.getString("courseID"), resultSet.getString("courseName"), program); // NOSONAR
 			}
 		}
 		Faculty[] result = new Faculty[faculties.size()];
@@ -147,7 +154,8 @@ public class DatabaseCommunicator {
 	 * Updates a faculty if it already exists, otherwise, adds a new one. Also,
 	 * the programs of the faculty are saved.
 	 * 
-	 * @param faculty the faculty to save
+	 * @param faculty
+	 *            the faculty to save
 	 */
 	public void save(Faculty faculty) {
 		Faculty existing = this.getFaculty(faculty.getID());
@@ -174,14 +182,16 @@ public class DatabaseCommunicator {
 			}
 		} catch (SQLException e) {
 			logger.log(Level.FINE, "Failed save(Faculty faculty).", e);
-			logger.log(Level.FINER, "String representation of the faculty we were trying to save", new LogRecord(Level.FINER, faculty.toString()));
+			logger.log(Level.FINER, "String representation of the faculty we were trying to save",
+					new LogRecord(Level.FINER, faculty.toString()));
 		}
 	}
 
 	/**
 	 * Removes a faculty from the database.
 	 * 
-	 * @param faculty the faculty to remove
+	 * @param faculty
+	 *            the faculty to remove
 	 */
 	public void delete(Faculty faculty) {
 		try {
@@ -192,7 +202,8 @@ public class DatabaseCommunicator {
 			}
 		} catch (SQLException e) {
 			logger.log(Level.FINE, "Failed delete(Faculty faculty).", e);
-			logger.log(Level.FINER, "String representation of the faculty we were trying to delete", new LogRecord(Level.FINER, faculty.toString()));
+			logger.log(Level.FINER, "String representation of the faculty we were trying to delete",
+					new LogRecord(Level.FINER, faculty.toString()));
 		}
 	}
 
@@ -202,7 +213,7 @@ public class DatabaseCommunicator {
 	 * @return all programs in the database
 	 */
 	public Program[] getPrograms() {
-		ArrayList<Program> programs = new ArrayList<Program>();
+		ArrayList<Program> programs = new ArrayList<>();
 		Faculty[] faculties = this.getFaculties();
 		for (int i = 0; i < faculties.length; i++) {
 			programs.addAll(faculties[i].getPrograms());
@@ -215,7 +226,8 @@ public class DatabaseCommunicator {
 	/**
 	 * Fetches a program from the database.
 	 * 
-	 * @param id the id of the program
+	 * @param id
+	 *            the id of the program
 	 * @return the program with the id if found, otherwise null
 	 */
 	public Program getProgram(String id) {
@@ -240,7 +252,8 @@ public class DatabaseCommunicator {
 	 * Saves a program. If it already exists, updates the current record.
 	 * Otherwise, adds a new one.
 	 * 
-	 * @param program the faculty to save
+	 * @param program
+	 *            the faculty to save
 	 */
 	public void save(Program program) {
 		Program existing = this.getProgram(program.getID());
@@ -269,14 +282,16 @@ public class DatabaseCommunicator {
 			}
 		} catch (SQLException e) {
 			logger.log(Level.FINE, "Failed save(Program program).", e);
-			logger.log(Level.FINER, "String represenation of the program:", new LogRecord(Level.FINER, program.toString()));
+			logger.log(Level.FINER, "String represenation of the program:",
+					new LogRecord(Level.FINER, program.toString()));
 		}
 	}
 
 	/**
 	 * Removes a program from the database.
 	 * 
-	 * @param program the program to remove
+	 * @param program
+	 *            the program to remove
 	 */
 	public void delete(Program program) {
 		try {
@@ -287,7 +302,8 @@ public class DatabaseCommunicator {
 			}
 		} catch (SQLException e) {
 			logger.log(Level.FINE, "Failed delete(Program program).", e);
-			logger.log(Level.FINER, "String represenation of the program:", new LogRecord(Level.FINER, program.toString()));
+			logger.log(Level.FINER, "String represenation of the program:",
+					new LogRecord(Level.FINER, program.toString()));
 		}
 	}
 
@@ -297,7 +313,7 @@ public class DatabaseCommunicator {
 	 * @return all courses in the database
 	 */
 	public Course[] getCourses() {
-		ArrayList<Course> courses = new ArrayList<Course>();
+		ArrayList<Course> courses = new ArrayList<>();
 		Program[] programs = this.getPrograms();
 		for (int i = 0; i < programs.length; i++) {
 			courses.addAll(programs[i].getCourses());
@@ -310,7 +326,8 @@ public class DatabaseCommunicator {
 	/**
 	 * Fetches a course from the database.
 	 * 
-	 * @param id the id of the course
+	 * @param id
+	 *            the id of the course
 	 * @return the course with the id if found, otherwise null
 	 */
 	public Course getCourse(String id) {
@@ -334,7 +351,8 @@ public class DatabaseCommunicator {
 	/**
 	 * Updates a course if it already exists, otherwise, adds a new one.
 	 * 
-	 * @param course the course to save
+	 * @param course
+	 *            the course to save
 	 */
 	public void save(Course course) {
 		Course existing = this.getCourse(course.getID());
@@ -348,7 +366,8 @@ public class DatabaseCommunicator {
 			}
 		} catch (SQLException e) {
 			logger.log(Level.FINE, "Failed save(Course course).", e);
-			logger.log(Level.FINER, "String represenation of the course:", new LogRecord(Level.FINER, course.toString()));
+			logger.log(Level.FINER, "String represenation of the course:",
+					new LogRecord(Level.FINER, course.toString()));
 		}
 	}
 
@@ -363,15 +382,18 @@ public class DatabaseCommunicator {
 			this.execute("DELETE FROM course WHERE ID = \'" + course.getID() + "\'");
 		} catch (SQLException e) {
 			logger.log(Level.FINE, "Failed delete(Course course).", e);
-			logger.log(Level.FINER, "String represenation of the course:", new LogRecord(Level.FINER, course.toString()));
+			logger.log(Level.FINER, "String represenation of the course:",
+					new LogRecord(Level.FINER, course.toString()));
 		}
 	}
 
 	/**
 	 * Checks whether a user can create an account or not.
 	 * 
-	 * @param credentials the credentials object containing the username to check
-	 * @return true if no user is registered with that username, otherwise false.
+	 * @param credentials
+	 *            the credentials object containing the username to check
+	 * @return true if no user is registered with that username, otherwise
+	 *         false.
 	 */
 	public boolean canRegister(Credentials credentials) {
 		try {
@@ -383,7 +405,8 @@ public class DatabaseCommunicator {
 			return !resultSet.next();
 		} catch (SQLException e) {
 			logger.log(Level.FINE, "Failed canRegister(Credentials credentials).", e);
-			logger.log(Level.FINER, "String represenation of the credentials:", new LogRecord(Level.FINER, credentials.toString()));
+			logger.log(Level.FINER, "String represenation of the credentials:",
+					new LogRecord(Level.FINER, credentials.toString()));
 		}
 		return false;
 	}
@@ -391,8 +414,10 @@ public class DatabaseCommunicator {
 	/**
 	 * Checks whether a user can login or not.
 	 * 
-	 * @param credentials the username-password pair to check for
-	 * @return true if the user is registered with that username and password, otherwise false.
+	 * @param credentials
+	 *            the username-password pair to check for
+	 * @return true if the user is registered with that username and password,
+	 *         otherwise false.
 	 */
 	public boolean canLogin(Credentials credentials) {
 		try {
@@ -401,7 +426,8 @@ public class DatabaseCommunicator {
 			return resultSet.next();
 		} catch (SQLException e) {
 			logger.log(Level.FINE, "Failed canLogin(Credentials credentials).", e);
-			logger.log(Level.FINER, "String represenation of the credentials:", new LogRecord(Level.FINER, credentials.toString()));
+			logger.log(Level.FINER, "String represenation of the credentials:",
+					new LogRecord(Level.FINER, credentials.toString()));
 		}
 		return false;
 	}
@@ -409,7 +435,8 @@ public class DatabaseCommunicator {
 	/**
 	 * Encrypts a password.
 	 * 
-	 * @param password the password to encrypt
+	 * @param password
+	 *            the password to encrypt
 	 * @return the encrypted password
 	 */
 	private static String encryptPassword(String password) {
@@ -427,9 +454,9 @@ public class DatabaseCommunicator {
 			String query = "SELECT u.name AS username, u.postalCode, u.description AS userDescription, IF(g.ID IS NULL, -1, g.ID) AS gradeId, g.courseId, g.value AS gradeValue "
 					+ "FROM user AS u " + "LEFT JOIN grade AS g " + "ON g.username = u.name";
 			ResultSet resultSet = this.get(query);
-			ArrayList<User> users = new ArrayList<User>();
+			ArrayList<User> users = new ArrayList<>();
 			User user = null;
-			ArrayList<Grade> grades = new ArrayList<Grade>();
+			ArrayList<Grade> grades = new ArrayList<>();
 			while (resultSet.next()) {
 				if (user == null) {
 					user = new User(resultSet.getString("username"), resultSet.getString("postalCode"),
@@ -439,7 +466,7 @@ public class DatabaseCommunicator {
 					Grade[] gradeArray = new Grade[grades.size()];
 					grades.toArray(gradeArray);
 					user.setGradeList(gradeArray);
-					grades = new ArrayList<Grade>();
+					grades = new ArrayList<>();
 					users.add(new User(resultSet.getString("username"), resultSet.getString("postalCode"),
 							resultSet.getString("userDescription"), new Grade[0]));
 				}
@@ -464,7 +491,8 @@ public class DatabaseCommunicator {
 	/**
 	 * Fetches a user from the database.
 	 * 
-	 * @param name the name of the user to fetch
+	 * @param name
+	 *            the name of the user to fetch
 	 * @return a user in the database with the specified name
 	 */
 	public User getUser(String name) {
@@ -474,7 +502,7 @@ public class DatabaseCommunicator {
 							+ "FROM user AS u " + "LEFT JOIN grade AS g " + "ON g.username = u.name "
 							+ "WHERE u.name = '" + name + "'");
 			if (resultSet.next()) {
-				ArrayList<Grade> gradeList = new ArrayList<Grade>();
+				ArrayList<Grade> gradeList = new ArrayList<>();
 				User user = new User(resultSet.getString("username"), resultSet.getString("postalCode"),
 						resultSet.getString("userDescription"), new Grade[0]);
 				do {
@@ -494,7 +522,8 @@ public class DatabaseCommunicator {
 	/**
 	 * Updates a user if it already exists.
 	 * 
-	 * @param user the user to update
+	 * @param user
+	 *            the user to update
 	 */
 	public void save(User user) {
 		User existing = this.getUser(user.getUsername());
@@ -526,7 +555,8 @@ public class DatabaseCommunicator {
 	/**
 	 * Adds a new user.
 	 * 
-	 * @param user the user to add
+	 * @param user
+	 *            the user to add
 	 */
 	public void save(User user, Credentials credentials) {
 		User existing = this.getUser(user.getUsername());
@@ -552,7 +582,8 @@ public class DatabaseCommunicator {
 		} catch (SQLException e) {
 			logger.log(Level.FINE, "Failed save(User user, Credentials credentials.", e);
 			logger.log(Level.FINER, "String represenation of the user:", new LogRecord(Level.FINER, user.toString()));
-			logger.log(Level.FINER, "String represenation of the credentials", new LogRecord(Level.FINER, credentials.toString()));
+			logger.log(Level.FINER, "String represenation of the credentials",
+					new LogRecord(Level.FINER, credentials.toString()));
 		}
 	}
 
@@ -580,7 +611,7 @@ public class DatabaseCommunicator {
 	public Match[] getMatches() {
 		try {
 			ResultSet resultSet = this.get("SELECT * FROM match");
-			ArrayList<Match> matches = new ArrayList<Match>();
+			ArrayList<Match> matches = new ArrayList<>();
 			while (resultSet.next()) {
 				matches.add(new Match(resultSet.getInt("id"), resultSet.getString("username"),
 						resultSet.getString("matchUsername"), resultSet.getBoolean("seen"),
@@ -598,13 +629,14 @@ public class DatabaseCommunicator {
 	/**
 	 * Fetches all matches for a certain user.
 	 * 
-	 * @param username the name of the user to fetch matches for
+	 * @param username
+	 *            the name of the user to fetch matches for
 	 * @return all matches for the user
 	 */
 	public Match[] getMatches(String username) {
 		try {
 			ResultSet resultSet = this.get("SELECT * FROM match WHERE username = '" + username + "'");
-			ArrayList<Match> matches = new ArrayList<Match>();
+			ArrayList<Match> matches = new ArrayList<>();
 			while (resultSet.next()) {
 				matches.add(new Match(resultSet.getInt("id"), resultSet.getString("username"),
 						resultSet.getString("matchUsername"), resultSet.getBoolean("seen"),
@@ -622,7 +654,8 @@ public class DatabaseCommunicator {
 	/**
 	 * Updates a match if it already exists, otherwise, adds a new one.
 	 * 
-	 * @param match the match to save
+	 * @param match
+	 *            the match to save
 	 */
 	public void save(Match match) {
 		try {
@@ -630,7 +663,7 @@ public class DatabaseCommunicator {
 				this.execute("INSERT INTO match (username, matchUsername) VALUES ('" + match.getUsername() + "', '"
 						+ match.getMatchUsername() + "')");
 			} else {
-				this.execute("UPDATE course SET username = '" + match.getUsername() + "', matchUsername = '"
+				this.execute("UPDATE match SET username = '" + match.getUsername() + "', matchUsername = '"
 						+ match.getMatchUsername() + "', seen=" + match.isSeen() + ", approved=" + match.isApproved()
 						+ " WHERE ID = '" + match.getId() + "'");
 			}
@@ -643,7 +676,8 @@ public class DatabaseCommunicator {
 	/**
 	 * Removes a match from the database.
 	 * 
-	 * @param match the match to delete
+	 * @param match
+	 *            the match to delete
 	 */
 	public void delete(Match match) {
 		try {
@@ -651,6 +685,97 @@ public class DatabaseCommunicator {
 		} catch (SQLException e) {
 			logger.log(Level.FINE, "Failed delete(Match match).", e);
 			logger.log(Level.FINER, "String represenation of the match:", new LogRecord(Level.FINER, match.toString()));
+		}
+	}
+
+	/**
+	 * Fetches all chat messages from the database.
+	 * 
+	 * @return all chat messages from the database
+	 */
+	public ChatMessage[] getChats() {
+		try {
+			ResultSet resultSet = this.get("SELECT * FROM chat");
+			ArrayList<ChatMessage> chats = new ArrayList<>();
+			while (resultSet.next()) {
+				chats.add(new ChatMessage(resultSet.getInt("ID"), resultSet.getString("sender"),
+						resultSet.getString("message"), resultSet.getString("receiver"), resultSet.getBoolean("seen")));
+			}
+			ChatMessage[] result = new ChatMessage[chats.size()];
+			chats.toArray(result);
+			return result;
+		} catch (SQLException e) {
+			logger.log(Level.FINE, "Failed getChats().", e);
+		}
+		return null;
+	}
+
+	/**
+	 * Fetches all chat messages for a certain receiver.
+	 * 
+	 * @param username
+	 *            the user to fetch for
+	 * @param onlyNew
+	 *            whether only new messages should be fetched or not
+	 * @return all chat messages for the user
+	 */
+	public ChatMessage[] getChats(String username, boolean onlyNew) {
+		try {
+			String query = "SELECT * FROM chat WHERE username = '" + username + "'";
+			if (onlyNew) {
+				query += "WHERE seen = false";
+			}
+			ResultSet resultSet = this.get(query);
+			ArrayList<ChatMessage> chats = new ArrayList<>();
+			while (resultSet.next()) {
+				chats.add(new ChatMessage(resultSet.getInt("ID"), resultSet.getString("sender"),
+						resultSet.getString("message"), resultSet.getString("receiver"), resultSet.getBoolean("seen")));
+			}
+			ChatMessage[] result = new ChatMessage[chats.size()];
+			chats.toArray(result);
+			return result;
+		} catch (SQLException e) {
+			logger.log(Level.FINE, "Failed getChats(" + username + ", " + onlyNew + ").", e);
+		}
+		return null;
+	}
+
+	/**
+	 * Updates a chat message if it already exists, otherwise, adds a new one.
+	 * 
+	 * @param message
+	 *            the message to save
+	 */
+	public void save(ChatMessage message) {
+		try {
+			if (message.getId() < 0 || !this.get("SELECT * FROM chat WHERE ID = " + message.getId()).next()) {
+				this.execute("INSERT INTO chat (sender, receiver, message, seen) VALUES ('" + message.getSender()
+						+ "', '" + message.getReceiver() + "', '" + message.getMessage() + "', " + message.isSeen()
+						+ ")");
+			} else {
+				this.execute("UPDATE chat SET sender = '" + message.getSender() + "', receiver = '"
+						+ message.getReceiver() + "', message = '" + message.getMessage() + "', seen = " + message.isSeen()
+						+ " WHERE ID = '" + message.getId() + "'");
+			}
+		} catch (SQLException e) {
+			logger.log(Level.FINE, "Failed save(ChatMessage message).", e);
+			logger.log(Level.FINER, "String represenation of the message:",
+					new LogRecord(Level.FINER, message.toString()));
+		}
+	}
+
+	/**
+	 * Removes a chat message from the database.
+	 * 
+	 * @param message
+	 *            the message to delete
+	 */
+	public void delete(ChatMessage message) {
+		try {
+			this.execute("DELETE FROM chat WHERE ID = " + message.getId());
+		} catch (SQLException e) {
+			logger.log(Level.FINE, "Failed delete(ChatMessage message).", e);
+			logger.log(Level.FINER, "String represenation of the message:", new LogRecord(Level.FINER, message.toString()));
 		}
 	}
 

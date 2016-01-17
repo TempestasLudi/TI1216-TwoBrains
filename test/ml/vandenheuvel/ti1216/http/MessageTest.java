@@ -1,11 +1,21 @@
 package ml.vandenheuvel.ti1216.http;
 
+import ml.vandenheuvel.ti1216.http.*;
 import static org.junit.Assert.assertEquals;
 
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
+import java.io.DataInputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.ObjectOutputStream;
 import java.util.ArrayList;
 import java.util.Date;
 
 import org.junit.Test;
+
+//import ml.vandenheuvel.ti1216.source.api.http.Header;
+//import ml.vandenheuvel.ti1216.source.api.http.Message;
 
 public class MessageTest {
 
@@ -86,7 +96,115 @@ public class MessageTest {
 		assertEquals(testMessage1.getHeader(), header2);
 
 	}
+	
+	@Test
+	public void testRead1(){
+		
+		String message = "GET /chat HTTP/1.1\r\n" + "Content-Length: 12\r\n" + "Content-Type: text/json\r\n" + "Date: "
+				+ new Date().toString() + "\r\n\r\n" + "User details\r\n\r\n";
+		InputStream is = new ByteArrayInputStream(message.getBytes());
+		DataInputStream in = new DataInputStream(is);
+		
+		 
+		
+		RequestLine reqLine = new RequestLine("GET /chat HTTP/1.1");
+		Header head = new Header(reqLine);
+		Body body = new Body("User details");
+		Message msg = new Message(head, body);
+		
 
+		assertEquals(msg, Message.read(in, true));
+	   
+	}
+	
+	@Test
+	public void testRead2(){
+		
+		String message = "GET /chatHTTP/1.1\r\n" + "Content-Length: 12\r\n" + "Content-Type: text/json\r\n" + "Date: "
+				+ new Date().toString() + "\r\n\r\n" + "User details\r\n\r\n";
+		InputStream is = new ByteArrayInputStream(message.getBytes());
+		DataInputStream in = new DataInputStream(is);
+		
+		assertEquals(null, Message.read(in,true));
+	   
+	}
+	
+	@Test
+	public void testRead3(){
+		
+		String message = "HTTP/1.1 200 OK\r\n" + "Connection: close\r\n" + "Content-Length: 12\r\n"
+				+ "Content-Type: text/json\r\n" + "Date: " + new Date().toString() + "\r\n\r\n" + "User details\r\n\r\n";
+		InputStream is = new ByteArrayInputStream(message.getBytes());
+		DataInputStream in = new DataInputStream(is);
+		
+		ResponseLine resLine = new ResponseLine("HTTP/1.1 200 OK");
+		Header header = new Header(resLine);
+		Body body = new Body("User details");
+		Message msg = new Message(header, body);
+
+		assertEquals(msg, Message.read(in, false));
+	   
+	}
+
+	@Test
+	public void testRead4(){
+		
+		String message = "GET /chat HTTP/1.1\r\n" + "Content-Length: 0\r\n" + "Content-Type: text/json\r\n" + "Date: "
+				+ new Date().toString() + "\r\n\r\n"; 
+		InputStream is = new ByteArrayInputStream(message.getBytes());
+		DataInputStream in = new DataInputStream(is);
+		
+		 
+		
+		RequestLine reqLine = new RequestLine("GET /chat HTTP/1.1");
+		Header head = new Header(reqLine);
+		Body body = new Body("");
+		Message msg = new Message(head, body);
+		
+
+		assertEquals(msg, Message.read(in, true));
+	   
+	}
+	
+	@Test
+	public void testRead5(){
+		
+		String message = "GET /chat HTTP/1.1\r\n"  + "\r\n\r\n" ;//+ "Content-Length: 0\r\n" + "Content-Type: text/json\r\n" + "Date: "
+				//+ new Date().toString() + "\r\n\r\n"; 
+		InputStream is = new ByteArrayInputStream(message.getBytes());
+		DataInputStream in = new DataInputStream(is);
+		
+		 
+		
+		RequestLine reqLine = new RequestLine("GET /chat HTTP/1.1");
+		Header head = new Header(reqLine);
+		Body body = new Body("");
+		Message msg = new Message(head, body);
+		
+
+		assertEquals(msg, Message.read(in, true));
+	   
+	}
+	
+	@Test
+	public void testRead6(){
+		
+		String message = "GET /chat HTTP/1.1\r\n" + "Content-Length: 22\r\n" + "Content-Type: text/json\r\n" + "Date: "
+				+ new Date().toString() + "\r\n\r\n" + "User details: cholland\r\n\r\n";
+		InputStream is = new ByteArrayInputStream(message.getBytes());
+		DataInputStream in = new DataInputStream(is);
+		 
+		
+		RequestLine reqLine = new RequestLine("GET /chat HTTP/1.1");
+		Header head = new Header(reqLine);
+		Body body = new Body("User details: cholland");
+		Message msg = new Message(head, body);
+		
+
+		assertEquals(msg, Message.read(in, true));
+	   
+	}
+	
 	@Test
 	public void testToString1() {
 		RequestLine reqLine = new RequestLine("GET /chat HTTP/1.1");

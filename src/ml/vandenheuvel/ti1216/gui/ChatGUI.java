@@ -13,13 +13,15 @@ import ml.vandenheuvel.ti1216.client.ServerCommunicator;
  * ChatGUI is a pop-up window that shows a chat with a specific person.
  * @author stefan
  */
-public class ChatGUI 
-{
+public class ChatGUI {
 	/**
 	 * Sets all the elements of the ChatGUI window.
 	 */
-	public static void display() 
-	{
+	private ChatGUI(){
+		//Default constructor to hide the implicit one
+	}
+	
+	public static void display() {
 		/**
 		 * Sets the title of the new window and fetches the user and his chats from the database.
 		 */

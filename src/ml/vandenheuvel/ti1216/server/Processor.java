@@ -1,7 +1,6 @@
 package ml.vandenheuvel.ti1216.server;
 
 import java.nio.charset.StandardCharsets;
-import java.util.ArrayList;
 import java.util.Base64;
 import java.util.logging.Logger;
 
@@ -21,13 +20,7 @@ public class Processor {
 	private DatabaseCommunicator communicator;
 
 	/**
-	 * The list of chat messages sent by all users.
-	 */
-	private ArrayList<ChatMessage> chatMessages;
-
-	/**
-	 * This constructor creates a new DatabaseCommunicator instance and a new
-	 * ArrayList to store chatMessages in as long as the server is running.
+	 * This constructor creates a new DatabaseCommunicator instance.
 	 * 
 	 * @param databaseAddress the address on which the database server runs
 	 * @param databaseUsername the username with which to log in on the databasehost
@@ -37,7 +30,6 @@ public class Processor {
 	public Processor(String databaseAddress, String databaseUsername, String databaseName, String databasePassword) {
 		this.communicator = new DatabaseCommunicator(databaseAddress, databaseName, databaseUsername, databasePassword);
 		logger.fine("Created a new DatabaseCommunicator instance using arguments " + databaseAddress + ", " + databaseName + ", " + databaseUsername + ", " + databasePassword);
-		this.chatMessages = new ArrayList<ChatMessage>();
 	}
 
 	/**
@@ -102,8 +94,7 @@ public class Processor {
 		if (usernamePassword.length < 2) {
 			return null;
 		}
-		Credentials credentials = new Credentials(usernamePassword[0], usernamePassword[1]);
-		return credentials;
+		return new Credentials(usernamePassword[0], usernamePassword[1]);
 	}
 
 	/**
@@ -136,7 +127,16 @@ public class Processor {
 				return response;
 			}
 			User user = this.communicator.getUser(credentials.getUsername());
-			response.getBody().setContent(new JSONObject().put("success", true).put("user", user.toJSON()).toString());
+			ChatMessage[] messagesData = this.communicator.getChats(user.getUsername(), false);
+			JSONArray messages = new JSONArray();
+			for (int i = 0; i < messagesData.length; i++) {
+				if (!messagesData[i].isSeen()) {
+					messagesData[i].setSeen(true);
+					this.communicator.save(messagesData[i]);
+				}
+				messages.put(messagesData[i].toJSON());
+			}
+			response.getBody().setContent(new JSONObject().put("success", true).put("user", user.toJSON()).put("messages", messages).toString());
 			return response;
 		}
 		if ("UPDATE".equals(headerLine.getMethod())) {
@@ -168,18 +168,19 @@ public class Processor {
 		Credentials credentials = getCredentials(request);
 		if ("PUT".equals(headerLine.getMethod())) {
 			JSONObject data = new JSONObject(request.getBody().getContent());
-			this.chatMessages.add(ChatMessage.fromJSON(data));
+			this.communicator.save(ChatMessage.fromJSON(data));
 			return response;
 		}
 		if ("GET".equals(headerLine.getMethod())) {
-			JSONArray messages = new JSONArray();
 			JSONObject result = new JSONObject();
-			for (int i = 0; i < this.chatMessages.size(); i++) {
-				if (this.chatMessages.get(i).getReceiver().equals(credentials.getUsername())) {
-					messages.put(this.chatMessages.get(i).toJSON());
-					this.chatMessages.remove(i);
-					i--;
+			ChatMessage[] messagesData = this.communicator.getChats(credentials.getUsername(), true);
+			JSONArray messages = new JSONArray();
+			for (int i = 0; i < messagesData.length; i++) {
+				if (!messagesData[i].isSeen()) {
+					messagesData[i].setSeen(true);
+					this.communicator.save(messagesData[i]);
 				}
+				messages.put(messagesData[i].toJSON());
 			}
 			result.put("messages", messages);
 			response.getBody().setContent(result.toString());

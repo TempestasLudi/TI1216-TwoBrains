@@ -32,7 +32,7 @@ public class Program {
 		this.name = name;
 		this.setFaculty(faculty);
 		if(courses==null){
-			this.courses = new ArrayList<Course>();
+			this.courses = new ArrayList<>();
 		}
 		else{
 			this.courses = courses;
@@ -133,18 +133,18 @@ public class Program {
 	}
 	
 	/**
-	 * Creates a JSON object based on the Program object.
+	 * Creates a JSON object based on this Program object.
 	 * 
-	 * @return a JSON object based on the Program object
+	 * @return a JSON object based on this Program object
 	 */
 	public JSONObject toJSON() {
 		JSONObject result = new JSONObject();
 		result.put("id", this.id);
 		result.put("name", this.name);
 		result.put("faculty", this.faculty.getID());
-		JSONArray courses = new JSONArray();
+		JSONArray jsonCourses = new JSONArray();
 		for (int i = 0; i < this.courses.size(); i++) {
-			courses.put(this.courses.get(i).toJSON());
+			jsonCourses.put(this.courses.get(i).toJSON());
 		}
 		result.put("courses", courses);
 		return result;
@@ -158,7 +158,7 @@ public class Program {
 	 */
 	public static Program fromJSON(JSONObject json) {
 		JSONArray coursesJSON = json.getJSONArray("courses");
-		ArrayList<Course> courses = new ArrayList<Course>();
+		ArrayList<Course> courses = new ArrayList<>();
 		for (int i = 0; i < coursesJSON.length(); i++) {
 			courses.add(Course.fromJSON(coursesJSON.getJSONObject(i)));
 		}

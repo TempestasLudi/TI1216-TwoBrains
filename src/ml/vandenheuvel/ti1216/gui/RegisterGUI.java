@@ -1,4 +1,5 @@
 package ml.vandenheuvel.ti1216.gui;
+
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
@@ -15,8 +16,8 @@ import ml.vandenheuvel.ti1216.data.User;
  * In RegisterGUI you can sign up for this application if u don't have an account yet.
  * @author stefan
  */
-public class RegisterGUI 
-{
+public class RegisterGUI {
+
 	/**
 	 * The user that signs up with his data.
 	 */
@@ -32,20 +33,13 @@ public class RegisterGUI
 	 */
 	private static Grade grade;
 	
-	/**
-	 * Accessor method for constructor User.
-	 * 
-	 * @return String username, String postalCode, String description and ArrayList gradeList representing the User.
-	 */
-	
+	private RegisterGUI() {
+		// To hide the implicite public one
+	}
 	/**
 	 * Specifies all the elements of the RegisterGUi window.
 	 */
-	public static void display()
-	{
-		/**
-		 * Sets the title of the new window;
-		 */
+	public static void display() {
 		Stage window = new Stage();
 		window.initModality(Modality.APPLICATION_MODAL);
 		window.setTitle("RegisterGUI");
@@ -57,7 +51,7 @@ public class RegisterGUI
 		grid.setPadding(new Insets(10, 10, 10, 10));
 		grid.setVgap(8);
 		grid.setHgap(10);
-		
+
 		/**
 		 * Label that says Username.
 		 */

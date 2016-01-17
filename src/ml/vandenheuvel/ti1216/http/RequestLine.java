@@ -12,7 +12,7 @@ public class RequestLine implements HeaderLine {
 	/**
 	 * The request URI.
 	 */
-	private String URI;
+	private String uri;
 
 	/**
 	 * The HTTP version.
@@ -27,7 +27,7 @@ public class RequestLine implements HeaderLine {
 	public RequestLine(String line) {
 		String[] parts = line.split(" ");
 		this.method = parts[0].trim().toUpperCase();
-		this.URI = parts[1].trim();
+		this.uri = parts[1].trim();
 		this.version = parts[2].trim();
 	}
 
@@ -35,12 +35,12 @@ public class RequestLine implements HeaderLine {
 	 * Class constructor, takes the data as params.
 	 * 
 	 * @param method the request method
-	 * @param URI the request URI
+	 * @param uri the request URI
 	 * @param version the HTTP version
 	 */
-	public RequestLine(String method, String URI, String version) {
+	public RequestLine(String method, String uri, String version) {
 		this.method = method;
-		this.URI = URI;
+		this.uri = uri;
 		this.version = version;
 	}
 
@@ -59,7 +59,7 @@ public class RequestLine implements HeaderLine {
 	 * @return the request URI
 	 */
 	public String getUri() {
-		return this.URI;
+		return this.uri;
 	}
 
 	/**
@@ -84,10 +84,10 @@ public class RequestLine implements HeaderLine {
 	/**
 	 * Changes the request URI.
 	 * 
-	 * @param URI the request URI
+	 * @param uri the request URI
 	 */
-	public void setUri(String URI) {
-		this.URI = URI;
+	public void setUri(String uri) {
+		this.uri = uri;
 	}
 	
 	/**
@@ -106,7 +106,7 @@ public class RequestLine implements HeaderLine {
 	 */
 	@Override
 	public String toString(){
-		return this.method + " " + this.URI + " " + this.version + "\r\n";
+		return this.method + " " + this.uri + " " + this.version + "\r\n";
 	}
 	
 	

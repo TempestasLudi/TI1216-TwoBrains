@@ -46,7 +46,7 @@ public class ChatPoller implements Runnable{
 			for (int i = 0; i < chats.size(); i++) {
 				this.manager.incomingChat(chats.get(i));
 			}
-			if (chats.size() == 0) {
+			if (chats.isEmpty()) {
 				try {
 					Thread.sleep(1000);
 				} catch (InterruptedException e) {

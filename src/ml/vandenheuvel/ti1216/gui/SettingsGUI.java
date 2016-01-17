@@ -1,4 +1,5 @@
 package ml.vandenheuvel.ti1216.gui;
+
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Pos;
@@ -14,13 +15,15 @@ import ml.vandenheuvel.ti1216.client.ServerCommunicator;
  * SettingsGUI allows the user that save his preferences.
  * @author stefan
  */
-public class SettingsGUI 
-{
+public class SettingsGUI {
 	/**
 	 * Sets all the elements of the SettingsGUI window.
 	 */
-	public static void display()
-	{
+	private SettingsGUI(){
+		//Private constructor to hide the implicit  public one
+	}
+	
+	public static void display() {
 		/**
 		 * Sets the title of the new window and fetches the user from the database.
 		 */
@@ -77,8 +80,7 @@ public class SettingsGUI
 			 * Opens MenuGUI and closes the current window.
 			 */
 			@Override
-			public void handle(ActionEvent e)
-			{
+			public void handle(ActionEvent e) {
 				MenuGUI.display();
 				window.close();
 			}

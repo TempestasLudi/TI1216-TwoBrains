@@ -3,7 +3,9 @@ package ml.vandenheuvel.ti1216.http;
 import java.io.DataInputStream;
 import java.io.EOFException;
 import java.io.IOException;
+
 import java.util.Date;
+
 
 /**
  * Message represents an HTTP message.
@@ -159,9 +161,8 @@ public class Message {
 		for (int i = 0; i < n; i++) {
 			try {
 				char character = (char) in.readByte();
-				line += character;
+				line += Character.toString(character);
 			} catch (IOException e) {
-				System.out.println(e.getMessage());
 				e.printStackTrace();
 			}
 		}
@@ -187,6 +188,36 @@ public class Message {
 			result += "\r\n\r\n";
 		}
 		return result;
+	}
+
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj) {
+			return true;
+		}
+		if (obj == null) {
+			return false;
+		}
+		if (!(obj instanceof Message)) {
+			return false;
+		}
+		Message other = (Message) obj;
+		if (body == null) {
+			if (other.body != null) {
+				return false;
+			}
+		} else if (!body.equals(other.body)) {
+			return false;
+		}
+		if (header == null) {
+			if (other.header != null) {
+				return false;
+			}
+		} else if (!header.equals(other.header)) {
+			return false;
+		}
+		return true;
 	}
 
 }

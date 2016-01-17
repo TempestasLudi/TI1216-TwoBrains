@@ -1,4 +1,5 @@
 package ml.vandenheuvel.ti1216.gui;
+
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Pos;
@@ -7,19 +8,22 @@ import javafx.scene.control.*;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
-import javafx.stage.Stage;
+import javafx.stage.Stage; 
 import ml.vandenheuvel.ti1216.client.ServerCommunicator;
 /**
  * MenuGUI is the main window of this application, from here you can access most other windows.
  * @author stefan
  */
-public class MenuGUI 
-{
+public class MenuGUI {
+
+	private MenuGUI(){
+		//Private constructor to hide the implicit public one
+	}
 	/**
 	 * Sets all the elements of the MenuGUI window.
 	 */
-	public static void display()
-	{
+	public static void display() {
+		
 		/**
 		 * Sets the title of the new window and fetches the user and his matches from the database.
 		 */
@@ -27,7 +31,7 @@ public class MenuGUI
 		window.setTitle("MenuGUI");
 		ServerCommunicator.login(MainGUI.credentials);
 		ServerCommunicator.fetchMatches(MainGUI.credentials);
-
+		
 		/**
 		 * Creates the top row of this window.
 		 */
@@ -37,33 +41,28 @@ public class MenuGUI
 		 * Button to go to the SettingsGUI window.
 		 */
 		Button settingsButton = new Button("Settings");
-		settingsButton.setOnAction(new EventHandler<ActionEvent>()
-		{
-				@Override
-				public void handle(ActionEvent e)
-				{
-					SettingsGUI.display();
-					window.close();
-				}
+		settingsButton.setOnAction(new EventHandler<ActionEvent>() {
+			@Override
+			public void handle(ActionEvent e) {
+				SettingsGUI.display();
+				window.close();
+			}
 		});
 		
 		/**
 		 * Button to log out from this application.
 		 */
 		Button logoutButton = new Button("Log out");
-		logoutButton.setOnAction(new EventHandler<ActionEvent>()
-		{
-				@Override
-				public void handle(ActionEvent e)
-				{
-					LogoutGUI.display();
-					window.close();
-				}
+		logoutButton.setOnAction(new EventHandler<ActionEvent>() {
+			@Override
+			public void handle(ActionEvent e) {
+				LogoutGUI.display();
+				window.close();
+			}
 		});
 		
 		topMenu.setAlignment(Pos.CENTER_RIGHT);
 		topMenu.getChildren().addAll(settingsButton, logoutButton);
-	
 		/**
 		 * Creates the left row of this application.
 		 */
@@ -73,29 +72,25 @@ public class MenuGUI
 		 * Button to go to the EditProfileGUI window.
 		 */
 		Button editButton = new Button("Edit profile");
-		editButton.setOnAction(new EventHandler<ActionEvent>() 
-		{
-			 @Override
-			    public void handle(ActionEvent e) 
-			    {	
-				 	EditProfileGUI.display();
-				 	window.close();
-			    }
+		editButton.setOnAction(new EventHandler<ActionEvent>() {
+			@Override
+			public void handle(ActionEvent e) {
+				EditProfileGUI.display();
+				window.close();
+			}
 		});
 		
 		/**
 		 * Button to go to the ChatGUi window.
 		 */
 		Button chatButton = new Button("Open chat");
-		chatButton.setOnAction(new EventHandler<ActionEvent>()
-		{
-				@Override
-				public void handle(ActionEvent e)
-				{
-					ChatGUI.display();
-					window.close();
-				}
-			
+		chatButton.setOnAction(new EventHandler<ActionEvent>() {
+			@Override
+			public void handle(ActionEvent e) {
+				ChatGUI.display();
+				window.close();
+			}
+
 		});
 		leftMenu.setPrefWidth(200);
 		leftMenu.getChildren().addAll(editButton, chatButton);
@@ -132,6 +127,7 @@ public class MenuGUI
 			}
 		});
 	    centerMenu.setPrefWidth(200);
+		centerMenu.setPrefWidth(200);
 		centerMenu.getChildren().addAll(matchLabel, match1Label, match2Label);
 
 		/**

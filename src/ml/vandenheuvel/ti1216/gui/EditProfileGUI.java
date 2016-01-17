@@ -15,13 +15,16 @@ import ml.vandenheuvel.ti1216.data.User;
  * EditProfileGUI allows the user to change his personal information.
  * @author stefan
  */
-public class EditProfileGUI
-{	
+public class EditProfileGUI {
 	/**
 	 * Sets all the elements of the EditProfileGUI window.
 	 */
-	public static void display()
-	{
+	
+	private EditProfileGUI(){
+		//Private constructor to hide the implicit public one
+	}
+	
+	public static void display(){
 		/**
 		 * Sets the title of the new window and fetches the user from the database.
 		 */
@@ -178,6 +181,4 @@ public class EditProfileGUI
 		window.setScene(scene);
 		window.showAndWait();
 	}
-	
-	
 }

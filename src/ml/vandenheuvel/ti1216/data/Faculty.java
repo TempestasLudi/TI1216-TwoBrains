@@ -24,11 +24,11 @@ public class Faculty {
 	 * @param name the name of this faculty
 	 * @param programs the ArrayList of programs which are on this faculty
 	 */
-	public Faculty(String ID, String name, ArrayList<Program> programs) {
-		this.id = ID;
+	public Faculty(String id, String name, ArrayList<Program> programs) {
+		this.id = id;
 		this.name = name;
 		if (programs == null) {
-			this.programs = new ArrayList<Program>();
+			this.programs = new ArrayList<>();
 		} else {
 			this.programs = programs;
 		}
@@ -109,11 +109,11 @@ public class Faculty {
 		JSONObject result = new JSONObject();
 		result.put("id", this.id);
 		result.put("name", this.name);
-		JSONArray programs = new JSONArray();
+		JSONArray jsonPrograms = new JSONArray();
 		for (int i = 0; i < this.programs.size(); i++) {
-			programs.put(this.programs.get(i).toJSON());
+			jsonPrograms.put(this.programs.get(i).toJSON());
 		}
-		result.put("programs", programs);
+		result.put("programs", jsonPrograms);
 		return result;
 	}
 
@@ -125,7 +125,7 @@ public class Faculty {
 	 */
 	public static Faculty fromJSON(JSONObject json) {
 		JSONArray programsJSON = json.getJSONArray("programs");
-		ArrayList<Program> programs = new ArrayList<Program>();
+		ArrayList<Program> programs = new ArrayList<>();
 		for (int i = 0; i < programsJSON.length(); i++) {
 			programs.add(Program.fromJSON(programsJSON.getJSONObject(i)));
 		}

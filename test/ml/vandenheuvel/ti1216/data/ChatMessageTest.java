@@ -8,7 +8,7 @@ import ml.vandenheuvel.ti1216.data.ChatMessage;
 
 public class ChatMessageTest {
 	private ChatMessage create() {
-		return new ChatMessage("1", "Hello, world!", "2");
+		return new ChatMessage(-1, "1", "Hello, world!", "2", false);
 	}
 
 	@Test
@@ -52,42 +52,42 @@ public class ChatMessageTest {
 
 	@Test
 	public void testFromToJSON() {
-		ChatMessage chatmessage = new ChatMessage("Andy", "Hoe heeft A1-2 het gedaan?", "Stefan");
+		ChatMessage chatmessage = new ChatMessage(-1, "Andy", "Hoe heeft A1-2 het gedaan?", "Stefan", false);
 		assertEquals(chatmessage, ChatMessage.fromJSON(chatmessage.toJSON()));
 	}
 
 	@Test
 	public void testEquals1() {
-		ChatMessage chatmessage1 = new ChatMessage("Andy", "Hoe heeft A1-2 het gedaan?", "Stefan");
-		ChatMessage chatmessage2 = new ChatMessage("Andy", "Hoe heeft A1-2 het gedaan?", "Stefan");
+		ChatMessage chatmessage1 = new ChatMessage(-1, "Andy", "Hoe heeft A1-2 het gedaan?", "Stefan", false);
+		ChatMessage chatmessage2 = new ChatMessage(-1, "Andy", "Hoe heeft A1-2 het gedaan?", "Stefan", false);
 		assertTrue(chatmessage1.equals(chatmessage2));
 	}
 
 	@Test
 	public void testEquals2() {
-		ChatMessage chatmessage1 = new ChatMessage("Andy", "Hoe heeft A1-2 het gedaan?", "Stefan");
-		ChatMessage chatmessage2 = new ChatMessage("Andy", "Hoe heeft A1-2 het gedaan??", "Stefan");
+		ChatMessage chatmessage1 = new ChatMessage(-1, "Andy", "Hoe heeft A1-2 het gedaan?", "Stefan", false);
+		ChatMessage chatmessage2 = new ChatMessage(0, "Andy", "Hoe heeft A1-2 het gedaan?", "Stefan", false);
 		assertFalse(chatmessage1.equals(chatmessage2));
 	}
 
 	@Test
 	public void testEquals3() {
-		ChatMessage chatmessage1 = new ChatMessage("Andy", "Hoe heeft A1-2 het gedaan?", "Stefan");
+		ChatMessage chatmessage1 = new ChatMessage(-1, "Andy", "Hoe heeft A1-2 het gedaan?", "Stefan", false);
 		assertFalse(chatmessage1.equals(15));
 	}
 
 	@Test
 	public void testEquals4() {
-		ChatMessage chatmessage1 = new ChatMessage("Andy", "Hoe heeft A1-2 het gedaan?", "Stefan");
-		ChatMessage chatmessage2 = new ChatMessage("Andyy", "Hoe heeft A1-2 het gedaan?", "Stefan");
-		assertFalse(chatmessage1.equals(chatmessage2));
+		ChatMessage chatmessage1 = new ChatMessage(-1, "Andy", "Hoe heeft A1-2 het gedaan?", "Stefan", false);
+		ChatMessage chatmessage2 = new ChatMessage(-1, "Andyy", "Hoe heeft A1-2 het gedaan?", "Stefan", false);
+		assertTrue(chatmessage1.equals(chatmessage2));
 	}
 
 	@Test
 	public void testEquals5() {
-		ChatMessage chatmessage1 = new ChatMessage("Andy", "Hoe heeft A1-2 het gedaan?", "Stefan");
-		ChatMessage chatmessage2 = new ChatMessage("Andy", "Hoe heeft A1-2 het gedaan?", "Steffan");
-		assertFalse(chatmessage1.equals(chatmessage2));
+		ChatMessage chatmessage1 = new ChatMessage(-0, "Andy", "Hoe heeft A1-2 het gedaan?", "Stefan", false);
+		ChatMessage chatmessage2 = new ChatMessage(0, "Andy", "Hoe heeft A1-2 het gedaan??", "Stefan", false);
+		assertTrue(chatmessage1.equals(chatmessage2));
 	}
 
 }
