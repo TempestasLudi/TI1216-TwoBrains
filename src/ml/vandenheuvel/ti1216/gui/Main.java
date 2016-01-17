@@ -10,9 +10,9 @@ import javafx.stage.Stage;
 import ml.vandenheuvel.ti1216.data.Credentials;
 
 /**
- * MainGUI is where the GUI is launched.
+ * Main is where the GUI is launched.
  */
-public class MainGUI extends Application {
+public class Main extends Application {
 
 	private static Logger logger = Logger.getLogger("ml.vandenheuvel.ti1216.client");
 
@@ -93,7 +93,7 @@ public class MainGUI extends Application {
 	@Override
 	public void start(Stage primaryStage) throws Exception {
 		logger.fine("Opening the LoginGUI window...");
-		LoginGUI.display();
+		Login.display();
 	}
 
 }

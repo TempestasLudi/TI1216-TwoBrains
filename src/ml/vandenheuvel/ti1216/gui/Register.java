@@ -14,10 +14,10 @@ import ml.vandenheuvel.ti1216.data.Grade;
 import ml.vandenheuvel.ti1216.data.User;
 
 /**
- * In RegisterGUI you can sign up for this application if u don't have an
+ * In Register you can sign up for this application if u don't have an
  * account yet.
  */
-public class RegisterGUI {
+public class Register {
 
 	/**
 	 * The user that signs up with his data.
@@ -34,17 +34,17 @@ public class RegisterGUI {
 	 */
 	private static Grade grade;
 
-	private RegisterGUI() {
+	private Register() {
 		// To hide the implicit public one
 	}
 
 	/**
-	 * Specifies all the elements of the RegisterGUi window.
+	 * Specifies all the elements of the Register window.
 	 */
 	public static void display() {
 		Stage window = new Stage();
 		window.initModality(Modality.APPLICATION_MODAL);
-		window.setTitle("RegisterGUI");
+		window.setTitle("Register");
 
 		/**
 		 * Make a new GridPane and set the constraints.
@@ -172,7 +172,7 @@ public class RegisterGUI {
 				user = new User(nameInput.getText(), postalInput.getText(), descriptionInput.getText(), gradelist);
 				if (ServerCommunicator.register(credentials, user) && passInput1.equals(passInput2)) {
 					System.out.println("You are successfully registered");
-					LoginGUI.display();
+					Login.display();
 					window.close();
 				} else {
 					System.out.println("You did not enter the correct data");

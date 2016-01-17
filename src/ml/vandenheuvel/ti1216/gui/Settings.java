@@ -13,14 +13,14 @@ import javafx.stage.Stage;
 import ml.vandenheuvel.ti1216.client.ServerCommunicator;
 
 /**
- * SettingsGUI allows the user that save his preferences.
+ * Settings allows the user that save his preferences.
  */
-public class SettingsGUI {
+public class Settings {
 
 	/**
-	 * Sets all the elements of the SettingsGUI window.
+	 * Sets all the elements of the Settings window.
 	 */
-	private SettingsGUI() {
+	private Settings() {
 		// Private constructor to hide the implicit public one
 	}
 
@@ -31,8 +31,8 @@ public class SettingsGUI {
 		 */
 		Stage window = new Stage();
 		window.initModality(Modality.APPLICATION_MODAL);
-		window.setTitle("SettingsGUI");
-		ServerCommunicator.login(MainGUI.credentials);
+		window.setTitle("Settings");
+		ServerCommunicator.login(Main.credentials);
 
 		/**
 		 * Sets the constraints of the window.
@@ -84,7 +84,7 @@ public class SettingsGUI {
 			 */
 			@Override
 			public void handle(ActionEvent e) {
-				MenuGUI.display();
+				Menu.display();
 				window.close();
 			}
 		});

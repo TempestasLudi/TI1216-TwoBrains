@@ -10,14 +10,14 @@ import javafx.stage.Stage;
 import ml.vandenheuvel.ti1216.client.ServerCommunicator;
 
 /**
- * ChatGUI is a pop-up window that shows a chat with a specific person.
+ * Chat is a pop-up window that shows a chat with a specific person.
  */
-public class ChatGUI {
+public class Chat {
 
 	/**
-	 * Sets all the elements of the ChatGUI window.
+	 * Sets all the elements of the Chat window.
 	 */
-	private ChatGUI() {
+	private Chat() {
 		// Default constructor to hide the implicit one
 	}
 
@@ -28,6 +28,9 @@ public class ChatGUI {
 		 */
 		Stage window = new Stage();
 		window.setTitle("ChatGUI");
+		window.setTitle("Chat");
+		ServerCommunicator.login(Main.credentials);
+		ServerCommunicator.fetchChats(Main.credentials);
 
 		VBox vbox = new VBox();
 		HBox hbox = new HBox();

@@ -2,7 +2,7 @@ package ml.vandenheuvel.ti1216.client;
 
 import ml.vandenheuvel.ti1216.data.ChatMessage;
 import ml.vandenheuvel.ti1216.data.Match;
-import ml.vandenheuvel.ti1216.gui.MainGUI;
+import ml.vandenheuvel.ti1216.gui.Main;
 
 /**
  * ClientManager is the management class for the client-side application.
@@ -20,7 +20,7 @@ public class ClientManager {
 	private MatchPoller matchPoller;
 	
 	public ClientManager(String[] args) {
-		MainGUI.launch(args);
+		Main.launch(args);
 	}
 	
 	/**

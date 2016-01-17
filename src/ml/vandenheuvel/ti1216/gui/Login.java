@@ -14,18 +14,18 @@ import ml.vandenheuvel.ti1216.client.ServerCommunicator;
 import ml.vandenheuvel.ti1216.data.Credentials;
 
 /**
- * LoginGUI is the first window of the GUI, here u are able to login.
+ * Login is the first window of the GUI, here u are able to login.
  */
-public class LoginGUI {
+public class Login {
 	
-	private LoginGUI(){
+	private Login(){
 		//Private constructor to hide the implicit public one
 	}
 
 	private static Logger logger = Logger.getLogger("ml.vandenheuvel.ti1216.client");
 
 	/**
-	 * Specifies all the elements of the LoginGUI window.
+	 * Specifies all the elements of the Login window.
 	 */
 	public static void display() {
 		/**
@@ -33,7 +33,7 @@ public class LoginGUI {
 		 */
 		Stage window = new Stage();
 		window.initModality(Modality.APPLICATION_MODAL);
-		window.setTitle("LoginGUI");
+		window.setTitle("Login");
 
 		/**
 		 * Make a new GridPane and set the constraints.
@@ -76,11 +76,11 @@ public class LoginGUI {
 			 */
 			@Override
 			public void handle(ActionEvent e) {
-				MainGUI.credentials = new Credentials(nameInput.getText(), passInput.getText());
-				if (ServerCommunicator.login(MainGUI.credentials) != null) {
+				Main.credentials = new Credentials(nameInput.getText(), passInput.getText());
+				if (ServerCommunicator.login(Main.credentials) != null) {
 					System.out.println("You are successfully connected");
 					logger.info("Connected successfully.");
-					MenuGUI.display();
+					Menu.display();
 					window.close();
 				} else {
 					System.out.println("Your credentials are not registered");
@@ -103,7 +103,7 @@ public class LoginGUI {
 		registerLink.setOnAction(new EventHandler<ActionEvent>() {
 			@Override
 			public void handle(ActionEvent e) {
-				RegisterGUI.display();
+				Register.display();
 				window.close();
 			}
 		});

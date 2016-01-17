@@ -16,17 +16,17 @@ import ml.vandenheuvel.ti1216.data.Grade;
 import ml.vandenheuvel.ti1216.data.User;
 
 /**
- * EditProfileGUI allows the user to change his personal information.
+ * EditProfile allows the user to change his personal information.
  */
-public class EditProfileGUI {
+public class EditProfile {
 
 	private static Logger logger = Logger.getLogger("ml.vandenheuvel.ti1216.client");
 
 	/**
-	 * Sets all the elements of the EditProfileGUI window.
+	 * Sets all the elements of the EditProfile window.
 	 */
 
-	private EditProfileGUI() {
+	private EditProfile() {
 		// Private constructor to hide the implicit public one
 	}
 
@@ -37,8 +37,8 @@ public class EditProfileGUI {
 		 */
 		Stage window = new Stage();
 		window.initModality(Modality.APPLICATION_MODAL);
-		window.setTitle("EditProfileGUI");
-		ServerCommunicator.login(MainGUI.credentials);
+		window.setTitle("EditProfile");
+		ServerCommunicator.login(Main.credentials);
 
 		/**
 		 * Makes a new GridPane and set the constraints.
@@ -164,7 +164,7 @@ public class EditProfileGUI {
 				if (ServerCommunicator.updateUser(credentials, user) && passInput1.equals(passInput2)) {
 					System.out.println("Your profile is successfully updated");
 					logger.fine("Profile successfully updated.");
-					MenuGUI.display();
+					Menu.display();
 					window.close();
 				} else {
 					System.out.println("You did not enter the correct data");

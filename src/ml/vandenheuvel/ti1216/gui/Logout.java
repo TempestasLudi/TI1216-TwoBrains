@@ -11,16 +11,16 @@ import javafx.stage.Modality;
 import javafx.stage.Stage;
 
 /**
- * LogoutGUI is the window that shows up when you log out of the application.
+ * Logout is the window that shows up when you log out of the application.
  */
-public class LogoutGUI {
+public class Logout {
 	
-	private LogoutGUI(){
+	private Logout(){
 		//Private constructor to hdie the implicit public one
 	}
 	
 	/**
-	 * Sets all the elements of the LogoutGUI window.
+	 * Sets all the elements of the Logout window.
 	 */
 	public static void display() {
 		/**
@@ -28,7 +28,7 @@ public class LogoutGUI {
 		 */
 		Stage window = new Stage();
 		window.initModality(Modality.APPLICATION_MODAL);
-		window.setTitle("LogoutGUI");
+		window.setTitle("Logout");
 
 		/**
 		 * Sets the constraints of the window.
@@ -50,7 +50,7 @@ public class LogoutGUI {
 			 */
 			@Override
 			public void handle(ActionEvent e) {
-				LoginGUI.display();
+				Login.display();
 				window.close();
 			}
 		});
