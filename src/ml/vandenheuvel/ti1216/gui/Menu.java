@@ -12,17 +12,17 @@ import javafx.stage.Stage;
 import ml.vandenheuvel.ti1216.client.ServerCommunicator;
 
 /**
- * MenuGUI is the main window of this application, from here you can access most
+ * Menu is the main window of this application, from here you can access most
  * other windows.
  */
-public class MenuGUI {
+public class Menu {
 
-	private MenuGUI() {
+	private Menu() {
 		// Private constructor to hide the implicit public one
 	}
 
 	/**
-	 * Sets all the elements of the MenuGUI window.
+	 * Sets all the elements of the Menu window.
 	 */
 	public static void display() {
 
@@ -31,9 +31,9 @@ public class MenuGUI {
 		 * from the database.
 		 */
 		Stage window = new Stage();
-		window.setTitle("MenuGUI");
-		ServerCommunicator.login(MainGUI.credentials);
-		ServerCommunicator.fetchMatches(MainGUI.credentials);
+		window.setTitle("Menu");
+		ServerCommunicator.login(Main.credentials);
+		ServerCommunicator.fetchMatches(Main.credentials);
 
 		/**
 		 * Creates the top row of this window.
@@ -47,7 +47,7 @@ public class MenuGUI {
 		settingsButton.setOnAction(new EventHandler<ActionEvent>() {
 			@Override
 			public void handle(ActionEvent e) {
-				SettingsGUI.display();
+				Settings.display();
 				window.close();
 			}
 		});
@@ -59,7 +59,7 @@ public class MenuGUI {
 		logoutButton.setOnAction(new EventHandler<ActionEvent>() {
 			@Override
 			public void handle(ActionEvent e) {
-				LogoutGUI.display();
+				Logout.display();
 				window.close();
 			}
 		});
@@ -78,7 +78,7 @@ public class MenuGUI {
 		editButton.setOnAction(new EventHandler<ActionEvent>() {
 			@Override
 			public void handle(ActionEvent e) {
-				EditProfileGUI.display();
+				EditProfile.display();
 				window.close();
 			}
 		});
@@ -90,7 +90,7 @@ public class MenuGUI {
 		chatButton.setOnAction(new EventHandler<ActionEvent>() {
 			@Override
 			public void handle(ActionEvent e) {
-				ChatGUI.display();
+				Chat.display();
 				window.close();
 			}
 
@@ -124,7 +124,7 @@ public class MenuGUI {
 			 */
 			@Override
 			public void handle(ActionEvent e) {
-				ServerCommunicator.fetchMatches(MainGUI.credentials);
+				ServerCommunicator.fetchMatches(Main.credentials);
 			}
 		});
 		centerMenu.setPrefWidth(200);
