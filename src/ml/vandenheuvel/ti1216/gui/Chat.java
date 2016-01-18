@@ -1,5 +1,6 @@
 package ml.vandenheuvel.ti1216.gui;
 
+import javafx.event.*;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.layout.BorderPane;
