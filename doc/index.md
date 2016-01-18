@@ -24,24 +24,10 @@ We'll cover all the possible requests a client can do and all different objects 
 
 # HTTP requests
 
-All requests should be done on the same server where this html page is hosted, on port 80.
+<aside class="notice">All requests should be done on the same server where this html page is hosted, on port 80.</aside>
+<aside class="warning">Whitespace is used only to make the JSON more readable to the programmer. Normally, whitespace in JSON is omitted.</aside>
 
 ## Authorization
-
-Every single http request must use Basic Authentication. This means that every http message must contain a Authorization request-header field.
-
-As described on <a href=https://en.wikipedia.org/wiki/Basic_access_authentication#Client_side>Wikipedia</a>:
-
-The Authorization field is constructed as follows:
-  1.  Username and password are combined into a string "username:password".
-  2.  The resulting string is then encoded using the RFC2045-MIME variant of Base64, except not limited to 76 char/line.
-  3.  The authorization method and a space i.e. "Basic " is then put before the encoded string.
-
-This may look as follows:
-
-`Authorization: Basic QWxhZGRpbjpvcGVuIHNlc2FtZQ==`
-
-<aside class="warning">If the Authorization field is correct, the server will start looking at the request itself and respond with either the requested data or a 400 Bad Request.</aside>
 
 > A http request containing an Authorization field may look like
 
@@ -73,9 +59,25 @@ WWW-Authenticate: Basic realm="Fake Realm"
 Access-Control-Allow-Credentials: true
 ```
 
-## Signing up a new user
+Every single http request must use Basic Authentication. This means that every http message must contain a Authorization request-header field.
 
-To sign up a new user, one has to do a PUT request on /user. The body of the request should contain a JSON representation of a user. Also in this first message, Basic Authentication is used.
+As described on <a href=https://en.wikipedia.org/wiki/Basic_access_authentication#Client_side>Wikipedia</a>:
+
+The Authorization field is constructed as follows:
+
+  1.  Username and password are combined into a string "username:password".
+
+  2.  The resulting string is then encoded using the RFC2045-MIME variant of Base64, except not limited to 76 char/line.
+
+  3.  The authorization method and a space i.e. "Basic " is then put before the encoded string.
+
+This may look as follows:
+
+`Authorization: Basic QWxhZGRpbjpvcGVuIHNlc2FtZQ==`
+
+<aside class="warning">If the Authorization field is correct, the server will start looking at the request itself and respond with either the requested data or a 400 Bad Request.</aside>
+
+## Signing up a new user
 
 > A http request to register a new user may look like
 
@@ -86,10 +88,14 @@ Content-Length: 162
 Content-Type: text/json
 Date: Wed Jan 13 22:28:26 CET 2016
 
-{"gradeList":[{"grade":"9","courseId":"TI1216"},{"grade":"10","courseId":"TI1206"}],"postalCode":"AndyAntwerpen","description":"slimme man","username":"azaidman"}
+{ "gradeList": [ { "grade":"9",
+                   "courseId":"TI1216" },
+                 { "grade":"10",
+                   "courseId":"TI1206" } ],
+                 "postalCode":"AndyAntwerpen",
+                 "description":"slimme man",
+                 "username":"azaidman" }
 ```
-
-<aside class="notice">If registering a user was succesful, the server will respond with a statuscode 200 and a JSON object in the body with a boolean field 'succes'. If not, registering was not succesful.</aside>
 
 > A response after success may look like
 
@@ -107,9 +113,11 @@ HTTP/1.1 301 MOVED PERMANENTLY
 Location: http://api.tempestasludi.com/user
 ```
 
-## Updating user information and settings
+To sign up a new user, one has to do a PUT request on /user. The body of the request should contain a JSON representation of a user. Also in this first message, Basic Authentication is used.
 
-Updating user information goes in the same way as signing up a new user: one does a PUT request on /user. The body of the message should again contain a JSON representation of a user.
+<aside class="notice">If registering a user was succesful, the server will respond with a statuscode 200 and a JSON object in the body with a boolean field 'succes'. If not, registering was not succesful.</aside>
+
+## Updating user information and settings
 
 > A http request changing user information may look like
 
@@ -120,12 +128,18 @@ Content-Length: 162
 Content-Type: text/json
 Date: Wed Jan 13 22:28:26 CET 2016
 
-{"gradeList":[{"grade":"9","courseId":"TI1216"},{"grade":"10","courseId":"TI1206"}],"postalCode":"AndyAntwerpen","description":"slimme man","username":"azaidman"}
+{ "gradeList": [ { "grade":"9",
+                   "courseId":"TI1216" },
+                 { "grade":"10",
+                   "courseId":"TI1206" } ],
+                 "postalCode":"AndyAntwerpen",
+                 "description":"slimme man",
+                 "username":"azaidman" }
 ```
 
-## 'Logging in', or checking a users credentials
+Updating user information goes in the same way as signing up a new user: one does a PUT request on /user. The body of the message should again contain a JSON representation of a user.
 
-As this API is RESTful, the server doesn't know the state of it's clients and treats all message individually. You can still ask the server to check the correctness of credentials, however. To do so, one simply sends a request to any endpoint, such as /user. The server will then check the credentials. If the statuscode of the response is 401 - Unauthorized, the credentials are incorrect. If not, the server responds with the requested content. The client can ofcourse simply drop the body of the received message, as the contents of the message are irrelevant.
+## 'Logging in', or checking a users credentials
 
 > A http request checking if a user can log in may look like
 
@@ -137,9 +151,9 @@ Content-Type: text/json
 Date: Wed Jan 13 22:18:32 CET 2016
 ```
 
-## Requesting chatmessages
+As this API is RESTful, the server doesn't know the state of it's clients and treats all message individually. You can still ask the server to check the correctness of credentials, however. To do so, one simply sends a request to any endpoint, such as /user. The server will then check the credentials. If the statuscode of the response is 401 - Unauthorized, the credentials are incorrect. If not, the server responds with the requested content. The client can ofcourse simply drop the body of the received message, as the contents of the message are irrelevant.
 
-To request chatmessages a client does a GET request on /chat. The server will then send a JSON representation of all chatmessages to client. 
+## Requesting chatmessages
 
 > A http request requesting new chatmessages may look like
 
@@ -151,7 +165,7 @@ Content-Type: text/json
 Date: Mon Jan 18 21:38:40 CET 2016
 ```
 
-<aside class="notice">A client will probably want to check for new chatmessages regularly, so some form of polling is a logical thing to do.</aside>
+To request chatmessages a client does a GET request on /chat. The server will then send a JSON representation of all chatmessages to client.
 
 > A http response containing chatmessages may look like
 
@@ -162,7 +176,15 @@ Content-Length: 247
 Content-type: text\json
 Access-Control-Allow-Credentials: true
 
-{"messages":[{ "receiver":"Stefan","sender":"Andy","message":"Hoe heeft A1-2 het gedaan?",{"receiver":"Stefan","sender":"Andy","message":"Hoe heeft A1-2 het gedaan?" },{"receiver":"Stefan","sender":"Andy","message":"Hoe heeft A1-2 het gedaan?" }]}
+{ "messages": [ { "receiver": "Stefan",
+                  "sender":"Andy",
+                  "message":"Hoe heeft A1-2 het gedaan?" },
+                { "receiver":"Stefan",
+                  "sender":"Andy",
+                  "message":"Hoe heeft A1-2 het gedaan?" },
+                { "receiver":"Stefan",
+                  "sender":"Andy",
+                  "message":"Hoe heeft A1-2 het gedaan?" } ] }
 ```
 
 > A http response containing no new chatmessages may look like
@@ -175,9 +197,9 @@ Content-type: text\json
 Access-Control-Allow-Credentials: true
 ```
 
-## Sending chatmessages
+<aside class="notice">A client will probably want to check for new chatmessages regularly, so some form of polling is a logical thing to do.</aside>
 
-To send a chatmessage a client does a PUT request on /chat. The server will then expect a JSON representation of a chatmessage in the body of the message.
+## Sending chatmessages
 
 > A http request sending a chatmessage may look like
 
@@ -191,9 +213,9 @@ Date: Wed Jan 13 22:34:29 CET 2016
 {"receiver":"Inhoud","sender":"Verzender","message":"Ontvanger"}
 ```
 
-## Requesting matches
+To send a chatmessage a client does a PUT request on /chat. The server will then expect a JSON representation of a chatmessage in the body of the message.
 
-To request a match which is being made on the server, a client does a GET request on /match. The server then responds with a JSON representation of matches.
+## Requesting matches
 
 > A http request requesting new matches may look like
 
@@ -205,7 +227,7 @@ Content-Type: text/json
 Date: Mon Jan 18 21:41:26 CET 2016
 ```
 
-<aside class="notice">Requesting new matches may also be done regularly, similar to requesting new chatmessages.</aside>
+To request a match which is being made on the server, a client does a GET request on /match. The server then responds with a JSON representation of matches.
 
 > A http response sending new matches may look like
 
@@ -216,7 +238,16 @@ Content-Length: 301
 Content-type: text\json
 Access-Control-Allow-Credentials: true
 
-[{"approved":false,"matchUsername":"matchUsername","id":45631912,"seen":false,"username":"username"},{"approved":false,"matchUsername":"matchUsername","id":45631912,"seen":false,"username":"username"},{"approved":false,"matchUsername":"matchUsername","id":45631912,"seen":false,"username":"username"}]
+[ { "approved":false,
+    "matchUsername":"matchUsername",
+    "id":45631912,
+    "seen":false,
+    "username":"username4" },
+  { "approved":false,
+    "matchUsername":"matchUsername2",
+    "id":45631913,
+    "seen":false,
+    "username":"username3" },
 ```
 
 > A http response containing no new matches may look like
@@ -228,6 +259,8 @@ Content-Length: 0
 Content-type: text\json
 Access-Control-Allow-Credentials: true
 ```
+
+<aside class="notice">Requesting new matches may also be done regularly, similar to requesting new chatmessages.</aside>
 
 ## Responding to matches
 
@@ -258,8 +291,6 @@ All objects are represented in JSON and are sent in the body of a http response.
 
 ## User
 
-A user object is used to register a new user on the server and to send/receive preferences and grades for courses.
-
 > A user object represented in JSON may look like
 
 ```code
@@ -271,6 +302,8 @@ A user object is used to register a new user on the server and to send/receive p
   "description":"This is my bio.",
   "username":   "azaidman" }
 ```
+
+A user object is used to register a new user on the server and to send/receive preferences and grades for courses.
 
 ## Chatmessage
 
