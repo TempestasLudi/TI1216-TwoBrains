@@ -58,19 +58,21 @@ Date: Wed Jan 13 22:18:32 CET 2016
 > When the Authorization field is not supplied, the server responds with a message similar to
 
 ```code
-//TODO: http bericht 
+HTTP/1.1 401 UNAUTHORIZED
+Date: Mon, 18 Jan 2016 20:14:15 GMT
+Content-Length: 0
+WWW-Authenticate: Basic realm="Fake Realm"
+Access-Control-Allow-Credentials: true
 ```
 
-> When the Authorization field is supplied, but the username is not known
+> When the Authorization field is supplied, but the username is not known or the password is incorrect
 
 ```code
-//TODO: http bericht
-```
-
-> When the Authorization field is supplied, but the password is incorrect
-
-```code
-//TODO: http bericht
+HTTP/1.1 401 UNAUTHORIZED
+Date: Mon, 18 Jan 2016 20:19:15 GMT
+Content-Length: 0
+WWW-Authenticate: Basic realm="Fake Realm"
+Access-Control-Allow-Credentials: true
 ```
 
 ## Signing up a new user
@@ -94,13 +96,17 @@ If registering a user was succesful, the server will respond with a statuscode 2
 > A response after success may look like
 
 ```code
-//TODO: http bericht
+HTTP/1.1 200 OK
+Date: Mon, 18 Jan 2016 20:27:33 GMT
+Content-Length: 0
+Access-Control-Allow-Credentials: true
 ```
 
 > A response after failure may look like
 
 ```code
-//TODO: http bericht
+HTTP/1.1 301 MOVED PERMANENTLY
+Location: http://api.tempestasludi.com/user
 ```
 
 ## Updating user information and settings
@@ -140,7 +146,11 @@ To request chatmessages a client does a GET request on /chat. The server will th
 > A http request requesting new chatmessages may look like
 
 ```code
-//TODO: http bericht
+GET /chat HTTP/1.1
+Authorization: Basic dXNlcm5hbWUxOnBhc3N3b3Jk
+Content-Length: 0
+Content-Type: text/json
+Date: Mon Jan 18 21:38:40 CET 2016
 ```
 
 A client will probably want to check for new chatmessages regularly, so some form of polling is a logical thing to do.
@@ -148,13 +158,23 @@ A client will probably want to check for new chatmessages regularly, so some for
 > A http response containing chatmessages may look like
 
 ```code
-//TODO: http bericht
+HTTP/1.1 200 OK
+Date: Mon, 18 Jan 2016 20:27:33 GMT
+Content-Length: 247
+Content-type: text\json
+Access-Control-Allow-Credentials: true
+
+{"messages":[{ "receiver":"Stefan","sender":"Andy","message":"Hoe heeft A1-2 het gedaan?",{"receiver":"Stefan","sender":"Andy","message":"Hoe heeft A1-2 het gedaan?" },{"receiver":"Stefan","sender":"Andy","message":"Hoe heeft A1-2 het gedaan?" }]}
 ```
 
 > A http response containing no new chatmessages may look like
 
 ```code
-//TODO: http bericht
+HTTP/1.1 200 OK
+Date: Mon, 18 Jan 2016 20:27:33 GMT
+Content-Length: 0
+Content-type: text\json
+Access-Control-Allow-Credentials: true
 ```
 
 ## Sending chatmessages
@@ -180,7 +200,11 @@ To request a match which is being made on the server, a client does a GET reques
 > A http request requesting new matches may look like
 
 ```code
-//TODO: http bericht
+GET /match HTTP/1.1
+Authorization: Basic dXNlcm5hbWUxOnBhc3N3b3Jk
+Content-Length: 0
+Content-Type: text/json
+Date: Mon Jan 18 21:41:26 CET 2016
 ```
 
 Requesting new matches may also be done regularly, similar to requesting new chatmessages.
@@ -188,13 +212,23 @@ Requesting new matches may also be done regularly, similar to requesting new cha
 > A http response sending new matches may look like
 
 ```code
-//TODO: http bericht
+HTTP/1.1 200 OK
+Date: Mon, 18 Jan 2016 20:27:33 GMT
+Content-Length: 301
+Content-type: text\json
+Access-Control-Allow-Credentials: true
+
+[{"approved":false,"matchUsername":"matchUsername","id":45631912,"seen":false,"username":"username"},{"approved":false,"matchUsername":"matchUsername","id":45631912,"seen":false,"username":"username"},{"approved":false,"matchUsername":"matchUsername","id":45631912,"seen":false,"username":"username"}]
 ```
 
 > A http response containing no new matches may look like
 
 ```code
-//TODO: http bericht
+HTTP/1.1 200 OK
+Date: Mon, 18 Jan 2016 20:27:33 GMT
+Content-Length: 0
+Content-type: text\json
+Access-Control-Allow-Credentials: true
 ```
 
 ## Responding to matches
