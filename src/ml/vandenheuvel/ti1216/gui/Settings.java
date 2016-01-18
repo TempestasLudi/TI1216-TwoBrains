@@ -46,7 +46,7 @@ public class Settings {
 		 * Label that allows you to receive a notification when a match is
 		 * found.
 		 */
-		Label noti1Label = new Label("Notification when match is found?            ");
+		Label noti1Label = new Label("Notification when match is found?");
 
 		/**
 		 * Create a CheckBox that you can tick to enable the option above.
@@ -57,7 +57,7 @@ public class Settings {
 		 * Label that allows you to receive a notification when someone starts a
 		 * chat with you.
 		 */
-		Label noti2Label = new Label("Notification when a chat session starts?    ");
+		Label noti2Label = new Label("Notification when a chat session starts?");
 
 		/**
 		 * Create a CheckBox that you can tick to enable the option above.
@@ -67,7 +67,7 @@ public class Settings {
 		/**
 		 * Label that lets you decide whether or not your location can be used.
 		 */
-		Label noti3Label = new Label("Are we allowed to use your location?        ");
+		Label noti3Label = new Label("Are we allowed to use your location?");
 
 		/**
 		 * Create a CheckBox that you can tick to enable the option above.

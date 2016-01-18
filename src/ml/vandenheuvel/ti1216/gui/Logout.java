@@ -16,7 +16,7 @@ import javafx.stage.Stage;
 public class Logout {
 	
 	private Logout(){
-		//Private constructor to hdie the implicit public one
+		//Private constructor to hide the implicit public one
 	}
 	
 	/**

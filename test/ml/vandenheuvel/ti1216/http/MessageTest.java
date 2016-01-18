@@ -1,22 +1,14 @@
 package ml.vandenheuvel.ti1216.http;
 
-import ml.vandenheuvel.ti1216.http.*;
-
 import static org.junit.Assert.*;
 
 import java.io.ByteArrayInputStream;
-import java.io.ByteArrayOutputStream;
 import java.io.DataInputStream;
-import java.io.IOException;
 import java.io.InputStream;
-import java.io.ObjectOutputStream;
 import java.util.ArrayList;
 import java.util.Date;
 
 import org.junit.Test;
-
-//import ml.vandenheuvel.ti1216.source.api.http.Header;
-//import ml.vandenheuvel.ti1216.source.api.http.Message;
 
 public class MessageTest {
 
