@@ -146,7 +146,7 @@ public class Program {
 		for (int i = 0; i < this.courses.size(); i++) {
 			jsonCourses.put(this.courses.get(i).toJSON());
 		}
-		result.put("courses", courses);
+		result.put("courses", jsonCourses);
 		return result;
 	}
 	
