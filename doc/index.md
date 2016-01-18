@@ -18,8 +18,6 @@ Welcome to the documentation for the TwoBrains Web API! You can use our API to c
 
 While building this API we followed the RESTful guidelines strictly. This resulted in a straight forward web API that uses standard HTTP messages. Because of this, our API is completely platform independent. You are not limited in any way in creating your TwoBrains application.
 
-# General
-
 A client can get information from the server by doing requests on the different endpoints. The server then responds with the requested information in JSON format. JSON is the only dataformat used. 
 
 We'll cover all the possible requests a client can do and all different objects a client can receive and is expected to send, but first we'll deal with the topic of authorization.
@@ -32,7 +30,7 @@ All requests should be done on the same server where this html page is hosted, o
 
 Every single http request must use Basic Authentication. This means that every http message must contain a Authorization request-header field.
 
-From <a href=https://en.wikipedia.org/wiki/Basic_access_authentication#Client_side>Wikipedia</a>:
+As described on <a href=https://en.wikipedia.org/wiki/Basic_access_authentication#Client_side>Wikipedia</a>:
 
 The Authorization field is constructed as follows:
   1.  Username and password are combined into a string "username:password".
@@ -43,7 +41,7 @@ This may look as follows:
 
 `Authorization: Basic QWxhZGRpbjpvcGVuIHNlc2FtZQ==`
 
-If the Authorization field is correct, the server will start looking at the request itself and respond with either the requested data or a 400 Bad Request.
+<aside class="warning">If the Authorization field is correct, the server will start looking at the request itself and respond with either the requested data or a 400 Bad Request.</aside>
 
 > A http request containing an Authorization field may look like
 
@@ -91,7 +89,7 @@ Date: Wed Jan 13 22:28:26 CET 2016
 {"gradeList":[{"grade":"9","courseId":"TI1216"},{"grade":"10","courseId":"TI1206"}],"postalCode":"AndyAntwerpen","description":"slimme man","username":"azaidman"}
 ```
 
-If registering a user was succesful, the server will respond with a statuscode 200 and a JSON object in the body with a boolean field 'succes'. If not, registering was not succesful.
+<aside class="notice">If registering a user was succesful, the server will respond with a statuscode 200 and a JSON object in the body with a boolean field 'succes'. If not, registering was not succesful.</aside>
 
 > A response after success may look like
 
@@ -153,7 +151,7 @@ Content-Type: text/json
 Date: Mon Jan 18 21:38:40 CET 2016
 ```
 
-A client will probably want to check for new chatmessages regularly, so some form of polling is a logical thing to do.
+<aside class="notice">A client will probably want to check for new chatmessages regularly, so some form of polling is a logical thing to do.</aside>
 
 > A http response containing chatmessages may look like
 
@@ -207,7 +205,7 @@ Content-Type: text/json
 Date: Mon Jan 18 21:41:26 CET 2016
 ```
 
-Requesting new matches may also be done regularly, similar to requesting new chatmessages.
+<aside class="notice">Requesting new matches may also be done regularly, similar to requesting new chatmessages.</aside>
 
 > A http response sending new matches may look like
 
@@ -256,7 +254,7 @@ Error Code | Meaning
 # Data objects
 
 All objects are represented in JSON and are sent in the body of a http response. Always check the received status code first, then try to read the possible JSON data.
-Whitespace is used only to make the JSON more readable to the programmer. Normally, whitespace is omitted.
+<aside class="warning">Whitespace is used only to make the JSON more readable to the programmer. Normally, whitespace is omitted.</aside>
 
 ## User
 
