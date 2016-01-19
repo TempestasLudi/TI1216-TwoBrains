@@ -1,0 +1,26 @@
+.root{
+	-fx-background-color: #000080;
+	-fx-background-radius: 7;
+}
+
+.label{
+	-fx-text-fill: #ffcc00;
+	-fx-font-size: 16;
+	-fx-background-radius: 7;
+}
+
+.button{
+	-fx-background-color: #3366ff;
+	-fx-text-fill: #ffcc00;
+	-fx-background-radius: 7;
+}
+
+.hyperlink{
+	-fx-text-fill: #ffcc00
+}
+
+.text-field{
+	-fx-background-radius: 7;
+	-fx-background-color: #bbaaee;
+	-fx-text-fill: #000000;
+}

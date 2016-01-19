@@ -92,7 +92,7 @@ public class Main extends Application {
 	 */
 	@Override
 	public void start(Stage primaryStage) throws Exception {
-		logger.fine("Opening the LoginGUI window...");
+		logger.fine("Opening the Login window...");
 		Login.display();
 	}
 

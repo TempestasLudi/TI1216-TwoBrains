@@ -111,6 +111,7 @@ public class Settings {
 		 * Sets the seize of the window and adds all the new elements.
 		 */
 		Scene scene = new Scene(borderPane, 350, 200);
+		scene.getStylesheets().add("ml/vandenheuvel/ti1216/gui/Gui.css");
 		window.setScene(scene);
 		window.showAndWait();
 	}

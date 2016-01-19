@@ -5,6 +5,7 @@ import javafx.event.EventHandler;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
@@ -16,6 +17,9 @@ import ml.vandenheuvel.ti1216.client.ServerCommunicator;
  * other windows.
  */
 public class Menu {
+	
+	static double xPress;
+	static double xRelease;
 
 	private Menu() {
 		// Private constructor to hide the implicit public one
@@ -112,6 +116,30 @@ public class Menu {
 		 * Multiple Labels to show all the matches.
 		 */
 		Label match1Label = new Label("Match1");
+
+		match1Label.setOnMousePressed(new EventHandler<MouseEvent>() {
+			@Override
+			public void handle(MouseEvent e) {
+				xPress = e.getX();
+				System.out.println(xPress);
+			}
+		});
+		match1Label.setOnMouseReleased(new EventHandler<MouseEvent>() {
+			@Override
+			public void handle(MouseEvent e) {
+			    xRelease = e.getX();
+			    System.out.println(xRelease);
+				if(xRelease - xPress > 0)
+				{
+					System.out.println("Added the match to preferences.");
+				}
+				else
+				{
+					System.out.println("Deleted the match.");
+				}
+			}
+		});
+		
 		Label match2Label = new Label("Match2");
 
 		/**
@@ -129,7 +157,7 @@ public class Menu {
 		});
 		centerMenu.setPrefWidth(200);
 		centerMenu.setPrefWidth(200);
-		centerMenu.getChildren().addAll(matchLabel, match1Label, match2Label);
+		centerMenu.getChildren().addAll(matchLabel, match1Label, match2Label, urgentButton);
 
 		/**
 		 * Creates the right row of this application.
@@ -171,6 +199,7 @@ public class Menu {
 		 * Sets the seize of the window and add all the elements.
 		 */
 		Scene scene = new Scene(borderPane, 700, 400);
+		scene.getStylesheets().add("ml/vandenheuvel/ti1216/gui/Gui.css");
 		window.setScene(scene);
 		window.showAndWait();
 	}
