@@ -28,7 +28,8 @@ import ml.vandenheuvel.ti1216.http.ResponseLine;
  */
 public abstract class ServerCommunicator {
 
-	public static final String targetIp = "127.0.0.1";
+	public static final String targetAddress = "127.0.0.1";
+	public static final String targetHost = "127.0.0.1";
 	
 	private ServerCommunicator(){
 		//Private constructor to hide the implicit public one
@@ -177,7 +178,10 @@ public abstract class ServerCommunicator {
 	 */
 	public static Message send(Message message) {
 		try {
-			Socket socket = new Socket(targetIp, 80);
+			if (message.getHeader().getField("Host") == null) {
+				message.getHeader().addField(new HeaderField("Host", targetHost));
+			}
+			Socket socket = new Socket(targetAddress, 80);
 			DataInputStream inputStream = new DataInputStream(socket.getInputStream());
 			PrintWriter out = new PrintWriter(socket.getOutputStream());
 			out.write(message.toString());
