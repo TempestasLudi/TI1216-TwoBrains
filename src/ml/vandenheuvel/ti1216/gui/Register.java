@@ -136,62 +136,53 @@ public class Register {
 		GridPane.setConstraints(gradeLabel, 0, 6);
 
 		/**
-		 * Slider to enter the Grade.
+		 * InputField to enter the Grade.
 		 */
-		Slider gradeInput = new Slider(1, 10, 5);
-		gradeInput.setMax(10);
-		gradeInput.setMin(1);
-		gradeInput.setShowTickMarks(true);
-		gradeInput.setShowTickLabels(true);
-		gradeInput.setMajorTickUnit(1);
-		gradeInput.setMinorTickCount(1);
-		gradeInput.setBlockIncrement(1);
+		TextField gradeInput = new TextField();
+		gradeInput.setPromptText("Grade");
 		GridPane.setConstraints(gradeInput, 1, 6);
 
-		/**
-		 * Label that shows the value of the Slider.
-		 */
-		Label gradeValue = new Label(Double.toString(gradeInput.getValue()));
-		GridPane.setConstraints(gradeValue, 2, 6);
 
 		/**
 		 * Button to sign up for the application.
 		 */
-		Button loginButton = new Button("Register");
-		loginButton.setOnAction(new EventHandler<ActionEvent>() {
+		Button registerButton = new Button("Register");
+		registerButton.setOnAction(new EventHandler<ActionEvent>() {
 			/**
 			 * Fetches the input from all the textfields above and puts them
 			 * into the database as a new user.
 			 */
 			@Override
 			public void handle(ActionEvent e) {
-				grade = new Grade(courseIDInput.getText(), (int) gradeInput.getValue());
 				Grade[] gradelist = new Grade[1];
 				gradelist[0] = grade;
+				grade = new Grade(courseIDInput.getText(), Integer.parseInt(gradeInput.getText()));
 				credentials = new Credentials(nameInput.getText(), passInput1.getText());
 				user = new User(nameInput.getText(), postalInput.getText(), descriptionInput.getText(), gradelist);
-				if (ServerCommunicator.register(credentials, user) && passInput1.equals(passInput2)) {
+				if (ServerCommunicator.register(credentials, user)) {
 					System.out.println("You are successfully registered");
 					Login.display();
 					window.close();
-				} else {
+				} 
+				else {
 					System.out.println("You did not enter the correct data");
 				}
 			}
 		});
-		GridPane.setConstraints(loginButton, 1, 7);
+		GridPane.setConstraints(registerButton, 1, 7);
 
 		/**
 		 * Adds all the Labels, TextFields, Buttons and Sliders to the GridPane.
 		 */
 		grid.getChildren().addAll(nameLabel, nameInput, passLabel1, passInput1, passLabel2, passInput2, postalLabel,
 				postalInput, descriptionLabel, descriptionInput, courseIDLabel, courseIDInput, gradeLabel, gradeInput,
-				gradeValue, loginButton);
+				registerButton);
 
 		/**
 		 * Sets the seize of the window and adds all the elements.
 		 */
 		Scene scene = new Scene(grid, 500, 400);
+		scene.getStylesheets().add("ml/vandenheuvel/ti1216/gui/Gui.css");
 		window.setScene(scene);
 		window.showAndWait();
 	}

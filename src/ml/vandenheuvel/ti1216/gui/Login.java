@@ -118,6 +118,7 @@ public class Login {
 		 * Sets the seize of the window and add all the elements.
 		 */
 		Scene scene = new Scene(grid, 350, 200);
+		scene.getStylesheets().add("ml/vandenheuvel/ti1216/gui/Gui.css");
 		window.setScene(scene);
 		window.showAndWait();
 	}

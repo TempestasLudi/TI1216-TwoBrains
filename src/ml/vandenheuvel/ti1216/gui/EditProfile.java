@@ -104,7 +104,7 @@ public class EditProfile {
 		 */
 		TextField postalInput = new TextField();
 		postalInput.setPromptText("PostalCode");
-		GridPane.setConstraints(postalInput, 2, 4);
+		GridPane.setConstraints(postalInput, 1, 4);
 
 		/**
 		 * Label that says Description.
@@ -184,7 +184,8 @@ public class EditProfile {
 		/**
 		 * Sets the seize of the window and adds all the new elements.
 		 */
-		Scene scene = new Scene(grid, 500, 500);
+		Scene scene = new Scene(grid, 500, 375);
+		scene.getStylesheets().add("ml/vandenheuvel/ti1216/gui/Gui.css");
 		window.setScene(scene);
 		window.showAndWait();
 	}
