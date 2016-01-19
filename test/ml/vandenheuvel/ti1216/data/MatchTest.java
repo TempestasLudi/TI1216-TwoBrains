@@ -110,18 +110,17 @@ public class MatchTest {
 	}
 	
 	@Test
-	public void testGetRating() 
-	{
+	public void testGetRating() {
 		DatabaseCommunicator communicator = new DatabaseCommunicator("tempestasludi.com", "TI1216-test", "TI1216", "3t.uGmL365j2f7B");
 		Faculty f = new Faculty("EWI", "Elektrotechniek, Wiskunde en Informatica", new ArrayList<Program>());
 		Program p = new Program("TI", "Technische Informatica", f, new ArrayList<Course>());
-		Course c1 = new Course("C1", "Course 1", p);
-		Course c2 = new Course("C2", "Course 2", p);
-		Course c3 = new Course("C3", "Course 3", p);
-		Course c4 = new Course("C4", "Course 4", p);
-		Course c5 = new Course("C5", "Course 5", p);
-		Course c6 = new Course("C6", "Course 6", p);
-		Course c7 = new Course("C7", "Course 7", p);
+		new Course("C1", "Course 1", p);
+		new Course("C2", "Course 2", p);
+		new Course("C3", "Course 3", p);
+		new Course("C4", "Course 4", p);
+		new Course("C5", "Course 5", p);
+		new Course("C6", "Course 6", p);
+		new Course("C7", "Course 7", p);
 		Grade g11 = new Grade("C1", 9);
 		Grade g12 = new Grade("C2", 8);
 		Grade g13 = new Grade("C3", 9);
@@ -162,13 +161,7 @@ public class MatchTest {
 		Credentials cr2 = new Credentials("U2","P2");
 		Credentials cr3 = new Credentials("U3","P3");
 		Credentials cr4 = new Credentials("U4","P4");
-		communicator.save(c1);
-		communicator.save(c2);
-		communicator.save(c3);
-		communicator.save(c4);
-		communicator.save(c5);
-		communicator.save(c6);
-		communicator.save(c7);
+		communicator.save(f);
 		communicator.save(u1,cr1);
 		communicator.save(u2,cr2);
 		communicator.save(u3,cr3);
@@ -197,17 +190,7 @@ public class MatchTest {
 		assertEquals(match14.getRating(),match41.getRating());
 		assertEquals(match24.getRating(),match42.getRating());
 		assertEquals(match34.getRating(),match43.getRating());
-		communicator.delete(c1);
-		communicator.delete(c2);
-		communicator.delete(c3);
-		communicator.delete(c4);
-		communicator.delete(c5);
-		communicator.delete(c6);
-		communicator.delete(c7);
-		communicator.delete(u1);
-		communicator.delete(u2);
-		communicator.delete(u3);
-		communicator.delete(u4);
+		communicator.delete(f);
 	}
 
 }
