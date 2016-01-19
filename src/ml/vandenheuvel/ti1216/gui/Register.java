@@ -162,7 +162,7 @@ public class Register {
 				grade = new Grade(courseIDInput.getText(), Integer.parseInt(gradeInput.getText()));
 				credentials = new Credentials(nameInput.getText(), passInput1.getText());
 				user = new User(nameInput.getText(), postalInput.getText(), descriptionInput.getText(), gradelist);
-				if (ServerCommunicator.register(credentials, user)) {
+				if (passInput1.getText().equals(passInput2.getText()) && ServerCommunicator.register(credentials, user)) {
 					System.out.println("You are successfully registered");
 					Login.display();
 					window.close();
