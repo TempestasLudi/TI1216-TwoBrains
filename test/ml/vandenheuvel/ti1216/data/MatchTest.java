@@ -197,6 +197,17 @@ public class MatchTest {
 		assertEquals(match14.getRating(),match41.getRating());
 		assertEquals(match24.getRating(),match42.getRating());
 		assertEquals(match34.getRating(),match43.getRating());
+		communicator.delete(c1);
+		communicator.delete(c2);
+		communicator.delete(c3);
+		communicator.delete(c4);
+		communicator.delete(c5);
+		communicator.delete(c6);
+		communicator.delete(c7);
+		communicator.delete(u1);
+		communicator.delete(u2);
+		communicator.delete(u3);
+		communicator.delete(u4);
 	}
 
 }
