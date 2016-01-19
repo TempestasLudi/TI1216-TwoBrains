@@ -623,7 +623,7 @@ public class DatabaseCommunicator {
 		} catch (SQLException e) {
 			logger.log(Level.FINE, "Failed getMatches().", e);
 		}
-		return null;
+		return new Match[0];
 	}
 
 	/**
@@ -648,7 +648,7 @@ public class DatabaseCommunicator {
 		} catch (SQLException e) {
 			logger.log(Level.FINE, "Failed getMatches(String " + username + ").", e);
 		}
-		return null;
+		return new Match[0];
 	}
 
 	/**
@@ -707,7 +707,7 @@ public class DatabaseCommunicator {
 		} catch (SQLException e) {
 			logger.log(Level.FINE, "Failed getChats().", e);
 		}
-		return null;
+		return new ChatMessage[0];
 	}
 
 	/**
@@ -737,7 +737,7 @@ public class DatabaseCommunicator {
 		} catch (SQLException e) {
 			logger.log(Level.FINE, "Failed getChats(" + username + ", " + onlyNew + ").", e);
 		}
-		return null;
+		return new ChatMessage[0];
 	}
 
 	/**
