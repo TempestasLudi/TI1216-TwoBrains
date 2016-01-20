@@ -25,11 +25,6 @@ public class Register {
 	private static User user;
 
 	/**
-	 * The credentials of the user that he uses to sign up.
-	 */
-	private static Credentials credentials;
-
-	/**
 	 * The grades of the user's courses.
 	 */
 	private static Grade grade;
