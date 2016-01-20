@@ -149,7 +149,7 @@ public class Register {
 				if ((passInput1.getText().equals(passInput2.getText())) && 
 					(manager.register(new Credentials(nameInput.getText(), passInput1.getText()), 
 					new User(nameInput.getText(), postalInput.getText(), descriptionInput.getText(), gradelist)))) {
-					Login(this.manager).display();
+					new Login(this.manager).display();
 					window.close();
 				} 
 				else {

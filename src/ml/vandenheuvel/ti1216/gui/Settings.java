@@ -80,7 +80,7 @@ public class Settings {
 		 */
 		Button menuButton = new Button("Return back to menu");
 		menuButton.setOnAction(e -> {
-				Menu(this.manager).display();
+				new Menu(this.manager).display();
 				window.close();
 		});
 

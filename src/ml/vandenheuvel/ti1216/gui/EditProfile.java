@@ -158,7 +158,7 @@ public class EditProfile {
 					(manager.updateUser(new Credentials(nameInput.getText(), passInput1.getText()),
 					new User(nameInput.getText(), postalInput.getText(), descriptionInput.getText(), gradelist)))){
 					logger.fine("Profile successfully updated.");
-					Menu(this.manager).display();
+					new Menu(this.manager).display();
 					window.close();
 				} else {
 					logger.fine("Wrong data entered.");

@@ -49,7 +49,7 @@ public class Menu {
 		 */
 		Button settingsButton = new Button("Settings");
 		settingsButton.setOnAction(e -> {
-				Settings(this.manager).display();
+				new Settings(this.manager).display();
 				window.close();
 		});
 
@@ -58,7 +58,7 @@ public class Menu {
 		 */
 		Button logoutButton = new Button("Log out");
 		logoutButton.setOnAction(e -> {
-				Logout(this.manager).display();
+				new Logout(this.manager).display();
 				window.close();
 		});
 		topMenu.setAlignment(Pos.CENTER_RIGHT);
@@ -71,7 +71,7 @@ public class Menu {
 		 */
 		Button editButton = new Button("Edit profile");
 		editButton.setOnAction(e -> {
-				EditProfile(this.manager).display();
+				new EditProfile(this.manager).display();
 				window.close();
 		});
 
@@ -80,7 +80,7 @@ public class Menu {
 		 */
 		Button chatButton = new Button("Open chat");
 		chatButton.setOnAction(e -> {
-				Chat(this.manager).display();
+				new Chat(this.manager).display();
 				window.close();
 		});
 		leftMenu.setPrefWidth(200);
