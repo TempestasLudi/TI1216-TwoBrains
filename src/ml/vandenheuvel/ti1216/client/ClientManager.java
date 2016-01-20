@@ -12,6 +12,7 @@ import ml.vandenheuvel.ti1216.data.Credentials;
 import ml.vandenheuvel.ti1216.data.Match;
 import ml.vandenheuvel.ti1216.data.User;
 import ml.vandenheuvel.ti1216.gui.Login;
+import ml.vandenheuvel.ti1216.gui.Menu;
 
 /**
  * ClientManager is the management class for the client-side application.
@@ -33,6 +34,8 @@ public class ClientManager extends Application {
 	private User user;
 	
 	private static Logger logger = Logger.getLogger("ml.vandenheuvel.ti1216.client");
+	
+	private Login loginWindow;
 	
 	/**
 	 * Boots up the application.
@@ -90,7 +93,8 @@ public class ClientManager extends Application {
 	}
 	
 	public void start(Stage primaryStage) {
-		new Login(this).display();
+		this.loginWindow = new Login(this);
+		this.loginWindow.display();
 	}
 	
 	/**
@@ -102,7 +106,6 @@ public class ClientManager extends Application {
 		return credentials;
 	}
 	
-
 	/**
 	 * Gets the user.
 	 * 
@@ -125,8 +128,18 @@ public class ClientManager extends Application {
 		if (this.matchPoller != null) {
 			this.matchPoller.stop();
 		}
-		this.chatPoller = new ChatPoller(credentials, this);
-		this.matchPoller = new MatchPoller(credentials, this);
+		if (credentials != null) {
+			this.chatPoller = new ChatPoller(credentials, this);
+			this.matchPoller = new MatchPoller(credentials, this);
+			new Thread(this.chatPoller).start();
+	//		new Thread(this.matchPoller).start();
+			this.loginWindow.close();
+			new Menu(this).display();
+		}
+		else {
+			this.chatPoller = null;
+			this.matchPoller = null;
+		}
 	}
 	
 	/**
@@ -146,8 +159,9 @@ public class ClientManager extends Application {
 	public boolean login(Credentials credentials) {
 		User user = ServerCommunicator.login(credentials);
 		if (user != null) {
-			logger.info("Connected successfully.");
+			logger.info("Logged in successfully.");
 			this.setUser(user);
+			this.setCredentials(credentials);
 			return true;
 		} else {
 			logger.fine("Credentials not registered.");
@@ -158,8 +172,8 @@ public class ClientManager extends Application {
 	public boolean register(Credentials credentials, User user) {
 		boolean register = ServerCommunicator.register(credentials, user);
 		if(register == true) {
-			this.user = user;
 			logger.info("Registered successfully.");
+			this.setUser(user);
 			this.setCredentials(credentials);
 			return true;
 		} else {
@@ -178,6 +192,10 @@ public class ClientManager extends Application {
 		}
 	}
 
+	public void logout() {
+		this.setCredentials(null);
+	}
+	
 	/**
 	 * Handles an incoming chat message.
 	 * 

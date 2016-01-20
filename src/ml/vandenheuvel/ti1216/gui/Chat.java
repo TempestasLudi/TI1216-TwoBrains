@@ -5,7 +5,7 @@ import javafx.scene.control.*;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
-
+import javafx.stage.Modality;
 import javafx.stage.Stage;
 
 import ml.vandenheuvel.ti1216.client.ClientManager;
@@ -29,7 +29,7 @@ public class Chat {
 		 * from the database.
 		 */
 		Stage window = new Stage();
-		window.setTitle("ChatGUI");
+		window.initModality(Modality.WINDOW_MODAL);
 		window.setTitle("Chat");
 
 		VBox vbox = new VBox();

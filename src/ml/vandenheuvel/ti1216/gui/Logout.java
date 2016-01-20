@@ -48,8 +48,8 @@ public class Logout {
 		 */
 		Button loginButton = new Button("Back to Login");
 		loginButton.setOnAction(e -> {
-				new Login(this.manager).display();
 				window.close();
+				new Login(this.manager).display();
 		});
 		vbox.setAlignment(Pos.CENTER);
 		vbox.getChildren().addAll(logoutLabel, loginButton);

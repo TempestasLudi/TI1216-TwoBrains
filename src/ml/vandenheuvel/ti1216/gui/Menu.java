@@ -16,11 +16,11 @@ import ml.vandenheuvel.ti1216.client.ClientManager;
  * other windows.
  */
 public class Menu {
-	
+
 	static double xPress;
 	static double xRelease;
 	private ClientManager manager;
-	
+
 	private static Logger logger = Logger.getLogger("ml.vandenheuvel.ti1216.client");
 
 	public Menu(ClientManager manager) {
@@ -45,12 +45,19 @@ public class Menu {
 		HBox topMenu = new HBox();
 
 		/**
+		 * Button to go to the EditProfileGUI window.
+		 */
+		Button editButton = new Button("Edit profile");
+		editButton.setOnAction(e -> {
+			new EditProfile(this.manager).display();
+		});
+		
+		/**
 		 * Button to go to the SettingsGUI window.
 		 */
 		Button settingsButton = new Button("Settings");
 		settingsButton.setOnAction(e -> {
-				new Settings(this.manager).display();
-				window.close();
+			new Settings(this.manager).display();
 		});
 
 		/**
@@ -58,33 +65,12 @@ public class Menu {
 		 */
 		Button logoutButton = new Button("Log out");
 		logoutButton.setOnAction(e -> {
-				new Logout(this.manager).display();
-				window.close();
+			window.close();
+			this.manager.logout();
+			new Logout(this.manager).display();
 		});
-		topMenu.setAlignment(Pos.CENTER_RIGHT);
-		topMenu.getChildren().addAll(settingsButton, logoutButton);
-
-		VBox leftMenu = new VBox();
-
-		/**
-		 * Button to go to the EditProfileGUI window.
-		 */
-		Button editButton = new Button("Edit profile");
-		editButton.setOnAction(e -> {
-				new EditProfile(this.manager).display();
-				window.close();
-		});
-
-		/**
-		 * Button to go to the ChatGUi window.
-		 */
-		Button chatButton = new Button("Open chat");
-		chatButton.setOnAction(e -> {
-				new Chat(this.manager).display();
-				window.close();
-		});
-		leftMenu.setPrefWidth(200);
-		leftMenu.getChildren().addAll(editButton, chatButton);
+		topMenu.setAlignment(Pos.TOP_LEFT);
+		topMenu.getChildren().addAll(editButton, settingsButton, logoutButton);
 
 		/**
 		 * Creates the center of this window.
@@ -102,22 +88,19 @@ public class Menu {
 		Label match1Label = new Label("Match1");
 
 		match1Label.setOnMousePressed(e -> {
-				xPress = e.getX();
-				System.out.println(xPress);
+			xPress = e.getX();
+			System.out.println(xPress);
 		});
 		match1Label.setOnMouseReleased(e -> {
-			    xRelease = e.getX();
-			    System.out.println(xRelease);
-				if(xRelease - xPress > 0)
-				{
-					System.out.println("Added the match to preferences.");
-				}
-				else
-				{
-					System.out.println("Deleted the match.");
-				}
+			xRelease = e.getX();
+			System.out.println(xRelease);
+			if (xRelease - xPress > 0) {
+				System.out.println("Added the match to preferences.");
+			} else {
+				System.out.println("Deleted the match.");
+			}
 		});
-		
+
 		Label match2Label = new Label("Match2");
 
 		/**
@@ -125,7 +108,7 @@ public class Menu {
 		 */
 		Button urgentButton = new Button("Help now!");
 		urgentButton.setOnAction(e -> {
-			
+
 		});
 		centerMenu.setPrefWidth(200);
 		centerMenu.setPrefWidth(200);
@@ -160,7 +143,6 @@ public class Menu {
 		 */
 		BorderPane borderPane = new BorderPane();
 		borderPane.setTop(topMenu);
-		borderPane.setLeft(leftMenu);
 		borderPane.setCenter(centerMenu);
 		borderPane.setRight(rightMenu);
 

@@ -17,6 +17,8 @@ import ml.vandenheuvel.ti1216.data.Credentials;
 public class Login {
 
 	private ClientManager manager;
+	
+	private Stage window;
 
 	private static Logger logger = Logger.getLogger("ml.vandenheuvel.ti1216.client");
 
@@ -31,7 +33,7 @@ public class Login {
 		/**
 		 * Sets the title of the new window.
 		 */
-		Stage window = new Stage();
+		Stage window = this.window = new Stage();
 		window.setResizable(false);
 		window.initModality(Modality.APPLICATION_MODAL);
 		window.setTitle("Login");
@@ -77,9 +79,7 @@ public class Login {
 		 */
 		Button loginButton = new Button("Log in");
 		loginButton.setOnAction(e -> {
-			if (manager.login(new Credentials(nameInput.getText(), passInput.getText()))) {
-				window.close();
-			} else {
+			if (!manager.login(new Credentials(nameInput.getText(), passInput.getText()))) {
 				messageLabel.setText("Invalid credentials.");
 			}
 		});
@@ -96,8 +96,7 @@ public class Login {
 		 * When u click this link, the RegisterGUI window will open.
 		 */
 		registerLink.setOnAction(e -> {
-				new Register(this.manager).display();
-				window.close();
+			new Register(this.manager).display();
 		});
 		GridPane.setConstraints(registerLink, 1, 4);
 
@@ -114,4 +113,9 @@ public class Login {
 		window.setScene(scene);
 		window.showAndWait();
 	}
+
+	public void close() {
+		this.window.close();
+	}
+
 }
