@@ -158,6 +158,7 @@ public class ClientManager extends Application {
 	public boolean register(Credentials credentials, User user) {
 		boolean register = ServerCommunicator.register(credentials, user);
 		if(register == true) {
+			this.user = user;
 			logger.info("Registered successfully.");
 			this.setCredentials(credentials);
 			return true;
