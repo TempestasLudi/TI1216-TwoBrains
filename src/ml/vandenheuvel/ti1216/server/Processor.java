@@ -28,6 +28,7 @@ public class Processor {
 	 * @param databasePassword the password with which one can log on to the databasehost
 	 */
 	public Processor(String databaseAddress, String databaseUsername, String databaseName, String databasePassword) {
+		logger.fine("Creating new DatabaseCommunicator instance using arguments " + databaseAddress + ", " + databaseName + ", " + databaseUsername + ", " + databasePassword);
 		this.communicator = new DatabaseCommunicator(databaseAddress, databaseName, databaseUsername, databasePassword);
 		logger.fine("Created a new DatabaseCommunicator instance using arguments " + databaseAddress + ", " + databaseName + ", " + databaseUsername + ", " + databasePassword);
 	}
