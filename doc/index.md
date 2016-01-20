@@ -262,10 +262,6 @@ Access-Control-Allow-Credentials: true
 
 <aside class="notice">Requesting new matches may also be done regularly, similar to requesting new chatmessages.</aside>
 
-## Responding to matches
-
-//TODO
-
 ## Possible error codes
 
 The error codes used with this API are standard http error codes. The ones used most are
