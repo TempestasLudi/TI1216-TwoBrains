@@ -1,7 +1,7 @@
 package ml.vandenheuvel.ti1216.gui;
 
-import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
+import java.util.logging.Logger;
+
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
@@ -10,21 +10,23 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
-import ml.vandenheuvel.ti1216.client.ServerCommunicator;
+import ml.vandenheuvel.ti1216.client.ClientManager;
 
 /**
  * Settings allows the user that save his preferences.
  */
 public class Settings {
+	
+	private ClientManager manager;
+	
+	private Settings(ClientManager manager) {
+		this.manager = manager;
+	}
 
 	/**
 	 * Sets all the elements of the Settings window.
 	 */
-	private Settings() {
-		// Private constructor to hide the implicit public one
-	}
-
-	public static void display() {
+	public void display() {
 		/**
 		 * Sets the title of the new window and fetches the user from the
 		 * database.
@@ -32,8 +34,7 @@ public class Settings {
 		Stage window = new Stage();
 		window.initModality(Modality.APPLICATION_MODAL);
 		window.setTitle("Settings");
-		ServerCommunicator.login(Main.credentials);
-
+		
 		/**
 		 * Sets the constraints of the window.
 		 */
@@ -78,15 +79,9 @@ public class Settings {
 		 * Button to return back to the Menu.
 		 */
 		Button menuButton = new Button("Return back to menu");
-		menuButton.setOnAction(new EventHandler<ActionEvent>() {
-			/**
-			 * Opens MenuGUI and closes the current window.
-			 */
-			@Override
-			public void handle(ActionEvent e) {
+		menuButton.setOnAction(e -> {
 				Menu.display();
 				window.close();
-			}
 		});
 
 		/**

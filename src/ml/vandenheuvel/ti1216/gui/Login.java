@@ -2,8 +2,6 @@ package ml.vandenheuvel.ti1216.gui;
 
 import java.util.logging.Logger;
 
-import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
@@ -11,7 +9,6 @@ import javafx.scene.layout.GridPane;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import ml.vandenheuvel.ti1216.client.ClientManager;
-import ml.vandenheuvel.ti1216.client.ServerCommunicator;
 import ml.vandenheuvel.ti1216.data.Credentials;
 
 /**
@@ -101,12 +98,9 @@ public class Login {
 		/**
 		 * When u click this link, the RegisterGUI window will open.
 		 */
-		registerLink.setOnAction(new EventHandler<ActionEvent>() {
-			@Override
-			public void handle(ActionEvent e) {
+		registerLink.setOnAction(e -> {
 				Register.display();
 				window.close();
-			}
 		});
 		GridPane.setConstraints(registerLink, 1, 4);
 

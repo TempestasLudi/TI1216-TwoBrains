@@ -1,16 +1,15 @@
 package ml.vandenheuvel.ti1216.gui;
 
-import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
+import java.util.logging.Logger;
+
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
-import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
-import ml.vandenheuvel.ti1216.client.ServerCommunicator;
+import ml.vandenheuvel.ti1216.client.ClientManager;
 
 /**
  * Menu is the main window of this application, from here you can access most
@@ -20,15 +19,18 @@ public class Menu {
 	
 	static double xPress;
 	static double xRelease;
+	private ClientManager manager;
+	
+	private static Logger logger = Logger.getLogger("ml.vandenheuvel.ti1216.client");
 
-	private Menu() {
-		// Private constructor to hide the implicit public one
+	private Menu(ClientManager manager) {
+		this.manager = manager;
 	}
 
 	/**
 	 * Sets all the elements of the Menu window.
 	 */
-	public static void display() {
+	public void display() {
 
 		/**
 		 * Sets the title of the new window and fetches the user and his matches
@@ -36,8 +38,6 @@ public class Menu {
 		 */
 		Stage window = new Stage();
 		window.setTitle("Menu");
-		ServerCommunicator.login(Main.credentials);
-		ServerCommunicator.fetchMatches(Main.credentials);
 
 		/**
 		 * Creates the top row of this window.
@@ -48,24 +48,18 @@ public class Menu {
 		 * Button to go to the SettingsGUI window.
 		 */
 		Button settingsButton = new Button("Settings");
-		settingsButton.setOnAction(new EventHandler<ActionEvent>() {
-			@Override
-			public void handle(ActionEvent e) {
+		settingsButton.setOnAction(e -> {
 				Settings.display();
 				window.close();
-			}
 		});
 
 		/**
 		 * Button to log out from this application.
 		 */
 		Button logoutButton = new Button("Log out");
-		logoutButton.setOnAction(new EventHandler<ActionEvent>() {
-			@Override
-			public void handle(ActionEvent e) {
+		logoutButton.setOnAction(e -> {
 				Logout.display();
 				window.close();
-			}
 		});
 		topMenu.setAlignment(Pos.CENTER_RIGHT);
 		topMenu.getChildren().addAll(settingsButton, logoutButton);
@@ -76,25 +70,18 @@ public class Menu {
 		 * Button to go to the EditProfileGUI window.
 		 */
 		Button editButton = new Button("Edit profile");
-		editButton.setOnAction(new EventHandler<ActionEvent>() {
-			@Override
-			public void handle(ActionEvent e) {
+		editButton.setOnAction(e -> {
 				EditProfile.display();
 				window.close();
-			}
 		});
 
 		/**
 		 * Button to go to the ChatGUi window.
 		 */
 		Button chatButton = new Button("Open chat");
-		chatButton.setOnAction(new EventHandler<ActionEvent>() {
-			@Override
-			public void handle(ActionEvent e) {
+		chatButton.setOnAction(e -> {
 				Chat.display();
 				window.close();
-			}
-
 		});
 		leftMenu.setPrefWidth(200);
 		leftMenu.getChildren().addAll(editButton, chatButton);
@@ -114,16 +101,11 @@ public class Menu {
 		 */
 		Label match1Label = new Label("Match1");
 
-		match1Label.setOnMousePressed(new EventHandler<MouseEvent>() {
-			@Override
-			public void handle(MouseEvent e) {
+		match1Label.setOnMousePressed(e -> {
 				xPress = e.getX();
 				System.out.println(xPress);
-			}
 		});
-		match1Label.setOnMouseReleased(new EventHandler<MouseEvent>() {
-			@Override
-			public void handle(MouseEvent e) {
+		match1Label.setOnMouseReleased(e -> {
 			    xRelease = e.getX();
 			    System.out.println(xRelease);
 				if(xRelease - xPress > 0)
@@ -134,7 +116,6 @@ public class Menu {
 				{
 					System.out.println("Deleted the match.");
 				}
-			}
 		});
 		
 		Label match2Label = new Label("Match2");
@@ -143,14 +124,8 @@ public class Menu {
 		 * Button to ask for immediate matches.
 		 */
 		Button urgentButton = new Button("Help now!");
-		urgentButton.setOnAction(new EventHandler<ActionEvent>() {
-			/**
-			 * Fetches more matches from the database.
-			 */
-			@Override
-			public void handle(ActionEvent e) {
-				ServerCommunicator.fetchMatches(Main.credentials);
-			}
+		urgentButton.setOnAction(e -> {
+			
 		});
 		centerMenu.setPrefWidth(200);
 		centerMenu.setPrefWidth(200);

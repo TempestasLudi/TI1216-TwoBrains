@@ -12,7 +12,6 @@ import ml.vandenheuvel.ti1216.data.Credentials;
 import ml.vandenheuvel.ti1216.data.Match;
 import ml.vandenheuvel.ti1216.data.User;
 import ml.vandenheuvel.ti1216.gui.Login;
-import ml.vandenheuvel.ti1216.gui.Menu;
 
 /**
  * ClientManager is the management class for the client-side application.
@@ -30,8 +29,6 @@ public class ClientManager extends Application {
 	private MatchPoller matchPoller;
 	
 	private Credentials credentials;
-	
-	private Screen window;
 	
 	private static Logger logger = Logger.getLogger("ml.vandenheuvel.ti1216.client");
 	
@@ -125,6 +122,26 @@ public class ClientManager extends Application {
 			return true;
 		} else {
 			logger.fine("Credentials not registered.");
+			return false;
+		}
+	}
+	
+	public boolean register(Credentials credentials, User user) {
+		boolean register = ServerCommunicator.register(credentials, user);
+		if(register == true) {
+			logger.info("Registered successfully.");
+			return true;
+		} else {
+			return false;
+		}
+	}
+	
+	public boolean updateUser(Credentials credentials, User user) {
+		boolean update = ServerCommunicator.updateUser(credentials, user);
+		if(update == true) {
+			logger.info("Profile successfully updated.");
+			return true;
+		} else {
 			return false;
 		}
 	}
