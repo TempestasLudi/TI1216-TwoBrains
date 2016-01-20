@@ -30,6 +30,8 @@ public class ClientManager extends Application {
 	
 	private Credentials credentials;
 	
+	private User user;
+	
 	private static Logger logger = Logger.getLogger("ml.vandenheuvel.ti1216.client");
 	
 	/**
@@ -102,6 +104,41 @@ public class ClientManager extends Application {
 	
 
 	/**
+	 * Gets the user.
+	 * 
+	 * @return the user
+	 */
+	public User getUser() {
+		return user;
+	}
+	
+	/**
+	 * Sets the credentials.
+	 * 
+	 * @param credentials the credentials to set
+	 */
+	private void setCredentials(Credentials credentials) {
+		this.credentials = credentials;
+		if (this.chatPoller != null) {
+			this.chatPoller.stop();
+		}
+		if (this.matchPoller != null) {
+			this.matchPoller.stop();
+		}
+		this.chatPoller = new ChatPoller(credentials, this);
+		this.matchPoller = new MatchPoller(credentials, this);
+	}
+	
+	/**
+	 * Sets the user.
+	 * 
+	 * @param user the user to set
+	 */
+	public void setUser(User user) {
+		this.user = user;
+	}
+
+	/**
 	 * Sets the credentials.
 	 * 
 	 * @param credentials the credentials to set
@@ -110,15 +147,7 @@ public class ClientManager extends Application {
 		User user = ServerCommunicator.login(credentials);
 		if (user != null) {
 			logger.info("Connected successfully.");
-			this.credentials = credentials;
-			if (this.chatPoller != null) {
-				this.chatPoller.stop();
-			}
-			if (this.matchPoller != null) {
-				this.matchPoller.stop();
-			}
-			this.chatPoller = new ChatPoller(credentials, this);
-			this.matchPoller = new MatchPoller(credentials, this);
+			this.setUser(user);
 			return true;
 		} else {
 			logger.fine("Credentials not registered.");
@@ -130,6 +159,7 @@ public class ClientManager extends Application {
 		boolean register = ServerCommunicator.register(credentials, user);
 		if(register == true) {
 			logger.info("Registered successfully.");
+			this.setCredentials(credentials);
 			return true;
 		} else {
 			return false;
@@ -140,6 +170,7 @@ public class ClientManager extends Application {
 		boolean update = ServerCommunicator.updateUser(credentials, user);
 		if(update == true) {
 			logger.info("Profile successfully updated.");
+			this.user = user;
 			return true;
 		} else {
 			return false;
