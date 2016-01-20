@@ -99,7 +99,7 @@ public class Login {
 		 * When u click this link, the RegisterGUI window will open.
 		 */
 		registerLink.setOnAction(e -> {
-				Register.display();
+				Register(this.manager).display();
 				window.close();
 		});
 		GridPane.setConstraints(registerLink, 1, 4);
