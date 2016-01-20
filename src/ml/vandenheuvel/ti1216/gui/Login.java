@@ -46,9 +46,6 @@ public class Login {
 		Label messageLabel = new Label("");
 		GridPane.setConstraints(messageLabel, 0, 0, 2, 1);
 
-		Label messageLabel = new Label("");
-		GridPane.setConstraints(messageLabel, 0, 0, 2, 1);
-
 		/**
 		 * Label that says Username.
 		 */
