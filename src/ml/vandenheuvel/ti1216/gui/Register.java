@@ -23,7 +23,7 @@ public class Register {
 	
 	private static Logger logger = Logger.getLogger("ml.vandenheuvel.ti1216.client");
 
-	private Register(ClientManager manager) {
+	public Register(ClientManager manager) {
 		this.manager = manager;
 	}
 

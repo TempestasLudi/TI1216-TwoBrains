@@ -19,7 +19,7 @@ public class Settings {
 	
 	private ClientManager manager;
 	
-	private Settings(ClientManager manager) {
+	public Settings(ClientManager manager) {
 		this.manager = manager;
 	}
 

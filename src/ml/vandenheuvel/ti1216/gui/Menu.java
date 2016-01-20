@@ -23,7 +23,7 @@ public class Menu {
 	
 	private static Logger logger = Logger.getLogger("ml.vandenheuvel.ti1216.client");
 
-	private Menu(ClientManager manager) {
+	public Menu(ClientManager manager) {
 		this.manager = manager;
 	}
 

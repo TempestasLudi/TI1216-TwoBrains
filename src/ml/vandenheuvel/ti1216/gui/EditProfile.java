@@ -22,7 +22,7 @@ public class EditProfile {
 
 	private static Logger logger = Logger.getLogger("ml.vandenheuvel.ti1216.client");
 
-	private EditProfile(ClientManager manager) {
+	public EditProfile(ClientManager manager) {
 		this.manager = manager;
 	}
 	

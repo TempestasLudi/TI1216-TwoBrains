@@ -17,7 +17,7 @@ public class Chat {
 	
 	private ClientManager manager;
 	
-	private Chat(ClientManager manager) {
+	public Chat(ClientManager manager) {
 		this.manager = manager;
 	}
 	/**

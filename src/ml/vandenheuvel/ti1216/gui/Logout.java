@@ -18,7 +18,7 @@ public class Logout {
 	
 	private ClientManager manager; 
 	
-	private Logout(ClientManager manager){
+	public Logout(ClientManager manager){
 		this.manager = manager;
 	}
 	
