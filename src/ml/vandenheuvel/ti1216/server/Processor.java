@@ -61,6 +61,8 @@ public class Processor {
 				return processChat(request);
 			case "faculty":
 				return processFaculty(request);
+			case "match":
+				return processMatch(request);	
 			}
 		}
 		return response;
@@ -227,6 +229,59 @@ public class Processor {
 		}
 		response.getHeader().setHeaderLine(new ResponseLine("HTTP/1.1 405 Method Not Allowed"));
 		response.getHeader().addField(new HeaderField("Allow", "GET"));
+		return response;
+	}
+	
+	
+	/**
+	 * Processes a HTTP request to the /match endpoint.
+	 * 
+	 * @param request the request to process
+	 * @return the response to the request
+	 */
+	private Message processMatch(Message request){
+		RequestLine headerLine = (RequestLine) request.getHeader().getHeaderLine();
+		Message response = new Message(new Header(), new Body(""));		
+		String[] uriParts = headerLine.getUri().split("/");
+		Credentials credentials = getCredentials(request);
+		if ("GET".equals(headerLine.getMethod())){
+			JSONObject result = new JSONObject();
+			Match[] matches = this.communicator.getMatches(credentials.getUsername());
+			JSONArray matchesNew = new JSONArray();
+			for(int i=0; i<matches.length; i++){
+				if(!matches[i].isSeen()){
+					matches[i].setSeen(true);
+					this.communicator.save(matches[i]);
+					matchesNew.put(matches[i].toJSON());
+				}
+			result.put("matches", matchesNew);
+			response.getBody().setContent(result.toString());
+			return response;
+			}
+		}
+		if("UPDATE".equals(headerLine.getMethod())){
+			JSONObject data = new JSONObject(request.getBody().getContent());
+			Match receive = Match.fromJSON(data);
+			if(credentials.getUsername().equals(receive.getUsername())){
+				Match checkMatch = this.communicator.getMatch(receive.getId());
+				if(credentials.getUsername().equals(checkMatch.getUsername())){
+					this.communicator.save(checkMatch);
+					response.getHeader().setHeaderLine(new ResponseLine("HTTP/1.1 200 OK"));
+					JSONObject succes = new JSONObject();
+					succes.put("success", true);
+					response.getBody().setContent(succes.toString());
+				}
+				else{
+					response.getHeader().setHeaderLine(new ResponseLine("HTTP/1.1 400 Bad Request"));
+				}
+			}
+			else{
+				response.getHeader().setHeaderLine(new ResponseLine("HTTP/1.1 404 Not Found"));
+				}
+			return response;
+			}
+		response.getHeader().setHeaderLine(new ResponseLine("HTTP/1.1 405 Method Not Allowed"));
+		response.getHeader().addField(new HeaderField("Allow", "GET, UPDATE"));
 		return response;
 	}
 }
