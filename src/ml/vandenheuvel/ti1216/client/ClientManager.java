@@ -162,8 +162,7 @@ public class ClientManager extends Application {
 			this.chatPoller = new ChatPoller(credentials, this);
 			this.matchPoller = new MatchPoller(credentials, this);
 			new Thread(this.chatPoller).start();
-	//		TODO: enable
-	//		new Thread(this.matchPoller).start();
+			new Thread(this.matchPoller).start();
 			this.loginWindow.close();
 			this.homeWindow = new Home(this);
 			this.menuWindow = new Menu(this);

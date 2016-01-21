@@ -36,8 +36,14 @@
 	-fx-background-color: #ff0000;
 }
 
-.remove {
-	-fx-color: #ff0000;
-	-fx-background-radius: 0;
-	-fx-padding: 0;
+.grade-list {
+	-fx-background-color: rgba(255, 255, 255, .05);
+	-fx-background-radius: 10;
+}
+
+.remove-grade {
+	-fx-text-fill: #ff0000;
+	-fx-background-radius: 10;
+	-fx-padding: 0 5;
+	-fx-line-height: 20;
 }

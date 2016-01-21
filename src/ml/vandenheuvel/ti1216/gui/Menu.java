@@ -95,7 +95,6 @@ public class Menu {
 		Button logoutButton = new Button("Log out");
 		logoutButton.setOnAction(e -> {
 			window.close();
-			new Logout(this.manager).display();
 			this.manager.logout();
 		});
 		topMenu.getChildren().addAll(homeButton, editButton, urgentButton, settingsButton, logoutButton);
