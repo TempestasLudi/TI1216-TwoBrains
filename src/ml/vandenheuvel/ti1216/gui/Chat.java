@@ -17,7 +17,7 @@ public class Chat {
 	
 	private ClientManager manager;
 	
-	private Stage window;
+	private Stage stage1;
 	
 	public Chat(ClientManager manager) {
 		this.manager = manager;
@@ -30,7 +30,8 @@ public class Chat {
 		 * Sets the title of the new window and fetches the user and his chats
 		 * from the database.
 		 */
-		Stage window = this.window  = new Stage();
+		this.stage1 = new Stage();
+		Stage window = this.stage1;
 		window.initModality(Modality.WINDOW_MODAL);
 		window.setTitle("Chat");
 
@@ -55,7 +56,7 @@ public class Chat {
 		 */
 		Button sendButton = new Button("Send");
 		sendButton.setOnAction(e -> {
-			
+			//TODO: Send something
 		});
 
 		hbox.getChildren().addAll(chatInput, sendButton);
