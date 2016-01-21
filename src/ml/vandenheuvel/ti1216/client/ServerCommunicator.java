@@ -288,7 +288,7 @@ public class ServerCommunicator {
 	 *            the match to update
 	 * @return true if the match could be updated, otherwise false
 	 */
-	public static boolean updateMatch(Credentials credentials, Match match){
+	public boolean updateMatch(Credentials credentials, Match match){
 		Message request = createMessage("get", "match", credentials);
 		request.getBody().setContent(match.toJSON().toString());
 		Message response = send(request);
