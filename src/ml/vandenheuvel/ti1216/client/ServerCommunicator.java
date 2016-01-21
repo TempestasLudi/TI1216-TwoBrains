@@ -246,6 +246,32 @@ public abstract class ServerCommunicator {
 		return result;
 	}
 
+	
+	
+	/**
+	 * Tries to update a user on the server.
+	 * 
+	 * @param credentials
+	 *            the credentials of the user
+	 * @param match
+	 *            the match to update
+	 * @return true if the match could be updated, otherwise false
+	 */
+	public static boolean updateMatch(Credentials credentials, Match match){
+		Message request = createMessage("get", "match", credentials);
+		request.getBody().setContent(match.toJSON().toString());
+		Message response = send(request);
+		ResponseLine responseLine = (ResponseLine) response.getHeader().getHeaderLine();
+		String statusCode = responseLine.getCode();
+		if (!("200".equals(statusCode))) {
+			return false;
+		}
+		JSONObject body = new JSONObject(response.getBody().getContent());
+		return body.getBoolean("success");
+	}
+	
+	
+
 	/**
 	 * Creates a default HTTP message with Basic authentication.
 	 * 
