@@ -53,7 +53,7 @@ public class ChatPoller implements Runnable{
 		logger.info("Started 'run()' method in ChatPoller.");
 		while (this.run) {
 			logger.fine("Fetching chats...");
-			ArrayList<ChatMessage> chats = ServerCommunicator.fetchChats(this.credentials);
+			ArrayList<ChatMessage> chats = this.manager.communicator.fetchChats(this.credentials);
 			logger.fine("Received " + Integer.toString(chats.size()) + " chats.");
 			for (int i = 0; i < chats.size(); i++) {
 				this.manager.incomingChat(chats.get(i));

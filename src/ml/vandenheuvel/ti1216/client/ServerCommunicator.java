@@ -6,6 +6,8 @@ import java.io.PrintWriter;
 import java.net.Socket;
 import java.util.ArrayList;
 import java.util.Base64;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -26,31 +28,37 @@ import ml.vandenheuvel.ti1216.http.ResponseLine;
  * ServerCommunicator is a communicator class to communicate in a API-based way
  * with the server (from the client).
  */
-public abstract class ServerCommunicator {
+public class ServerCommunicator {
 
-	public static final String targetAddress = "127.0.0.1";
-	public static final String targetHost = "127.0.0.1";
+	private static Logger logger = Logger.getLogger("ml.vandenheuvel.ti1216.client");
 	
-	private ServerCommunicator(){
-		//Private constructor to hide the implicit public one
+	private String targetAddress;
+	private String targetHost;
+	private int portNumber;
+	
+	public ServerCommunicator(String targetAddress, String targetHost, int portNumber){
+		this.targetAddress = targetAddress;
+		this.targetHost = targetHost;
+		this.portNumber = portNumber;
 	}
 
 	/**
 	 * Tries to log in a user and fetches that user from the server.
 	 * 
-	 * @param credentials
-	 *            the credentials to login with
-	 * @return the user with specified credentials if present on the server,
-	 *         otherwise null
+	 * @param credentials the credentials to login with
+	 * @return the user with specified credentials if present on the server, otherwise null
 	 */
-	public static User login(Credentials credentials) {
+	public User login(Credentials credentials) {
+		logger.fine("Logging in with credentials " + credentials.toString() + "...");
 		Message request = createMessage("get", "user", credentials);
 		Message response = send(request);
 		ResponseLine responseLine = (ResponseLine) response.getHeader().getHeaderLine();
 		String statusCode = responseLine.getCode();
 		if (!("200".equals(statusCode))) {
+			logger.fine("Logging in not successful. Statuscode " + statusCode);
 			return null;
 		}
+		logger.fine("Logging in successful.");
 		JSONObject body = new JSONObject(response.getBody().getContent());
 		if (body.getBoolean("success")) {
 			return User.fromJSON(body.getJSONObject("user"));
@@ -61,21 +69,22 @@ public abstract class ServerCommunicator {
 	/**
 	 * Tries to register a user on the server.
 	 * 
-	 * @param credentials
-	 *            the credentials to register with
-	 * @param user
-	 *            the user to register
+	 * @param credentials the credentials to register with
+	 * @param user the user to register
 	 * @return true if the user could be registered, otherwise false
 	 */
-	public static boolean register(Credentials credentials, User user) {
+	public boolean register(Credentials credentials, User user) {
+		logger.fine("Registering user " + user.getUsername() + "...");
 		Message request = createMessage("put", "user", credentials);
 		request.getBody().setContent(user.toJSON().toString());
 		Message response = send(request);
 		ResponseLine responseLine = (ResponseLine) response.getHeader().getHeaderLine();
 		String statusCode = responseLine.getCode();
 		if (!("200".equals(statusCode))) {
+			logger.fine("Registering  not successful. Statuscode " + statusCode);
 			return false;
 		}
+		logger.fine("Registering successful.");
 		JSONObject body = new JSONObject(response.getBody().getContent());
 		return body.getBoolean("success");
 	}
@@ -83,21 +92,22 @@ public abstract class ServerCommunicator {
 	/**
 	 * Tries to update a user on the server.
 	 * 
-	 * @param credentials
-	 *            the credentials of the user
-	 * @param user
-	 *            the user to update
+	 * @param credentials the credentials of the user
+	 * @param user the user to update
 	 * @return true if the user could be updated, otherwise false
 	 */
-	public static boolean updateUser(Credentials credentials, User user) {
+	public boolean updateUser(Credentials credentials, User user) {
+		logger.fine("Updating user " + user.getUsername() + "...");
 		Message request = createMessage("update", "user", credentials);
 		request.getBody().setContent(user.toJSON().toString());
 		Message response = send(request);
 		ResponseLine responseLine = (ResponseLine) response.getHeader().getHeaderLine();
 		String statusCode = responseLine.getCode();
 		if (!("200".equals(statusCode))) {
+			logger.fine("Updating user not successful. Statuscode " + statusCode);
 			return false;
 		}
+		logger.fine("Updating user successful.");
 		JSONObject body = new JSONObject(response.getBody().getContent());
 		return body.getBoolean("success");
 	}
@@ -111,13 +121,15 @@ public abstract class ServerCommunicator {
 	 *            the message to send
 	 * @return true if the message could be sent, otherwise false
 	 */
-	public static boolean sendChat(Credentials credentials, ChatMessage message) {
+	public boolean sendChat(Credentials credentials, ChatMessage message) {
+		logger.fine("Sending chat...");
 		Message request = createMessage("put", "chat", credentials);
 		request.getBody().setContent(message.toJSON().toString());
 		Message response = send(request);
 		ResponseLine responseLine = (ResponseLine) response.getHeader().getHeaderLine();
 		String statusCode = responseLine.getCode();
 		if (!("200".equals(statusCode))) {
+			logger.fine("Sending chat not successful. Statuscode " + statusCode);
 			return false;
 		}
 		JSONObject body = new JSONObject(response.getBody().getContent());
@@ -133,14 +145,17 @@ public abstract class ServerCommunicator {
 	 *            the id of the faculty to fetch
 	 * @return a faculty if found, otherwise null
 	 */
-	public static Faculty fetchFaculty(Credentials credentials, int facultyId) {
+	public Faculty fetchFaculty(Credentials credentials, int facultyId) {
+		logger.fine("Fetching faculty with id = " + facultyId+ "...");
 		Message request = createMessage("get", "faculty/" + facultyId, credentials);
 		Message response = send(request);
 		ResponseLine responseLine = (ResponseLine) response.getHeader().getHeaderLine();
 		String statusCode = responseLine.getCode();
 		if (!("200".equals(statusCode))) {
+			logger.fine("Fetching faculty not successful. Statuscode: " + statusCode);
 			return null;
 		}
+		logger.fine("Fetching faculty successful.");
 		JSONObject body = new JSONObject(response.getBody().getContent());
 		return Faculty.fromJSON(body.getJSONObject("faculty"));
 	}
@@ -152,12 +167,14 @@ public abstract class ServerCommunicator {
 	 *            the credentials of the user
 	 * @return a faculty if found, otherwise null
 	 */
-	public static ArrayList<Faculty> fetchFaculties(Credentials credentials) {
+	public ArrayList<Faculty> fetchFaculties(Credentials credentials) {
+		logger.fine("Fetching faculties...");
 		Message request = createMessage("get", "faculty", credentials);
 		Message response = send(request);
 		ResponseLine responseLine = (ResponseLine) response.getHeader().getHeaderLine();
 		String statusCode = responseLine.getCode();
 		if (!("200".equals(statusCode))) {
+			logger.fine("Fetching faculties not successful. Statuscode: " + statusCode);
 			return new ArrayList<Faculty>();
 		}
 		JSONObject body = new JSONObject(response.getBody().getContent());
@@ -166,6 +183,7 @@ public abstract class ServerCommunicator {
 		for (int i = 0; i < facultyData.length(); i++) {
 			faculties.add(Faculty.fromJSON(facultyData.getJSONObject(i)));
 		}
+		logger.fine("Fetched " + facultyData.length() + "faculties.");
 		return faculties;
 	}
 
@@ -176,22 +194,35 @@ public abstract class ServerCommunicator {
 	 *            the message to send
 	 * @return the response
 	 */
-	public static Message send(Message message) {
+	public Message send(Message message) {
+		logger.finest("Sending message...");
 		try {
-			if (message.getHeader().getField("Host") == null) {
-				message.getHeader().addField(new HeaderField("Host", targetHost));
-			}
-			Socket socket = new Socket(targetAddress, 80);
+			if (message.getHeader().getField("Host") == null)
+				message.getHeader().addField(new HeaderField("Host", this.targetHost));
+			logger.finest("Creating socket to " + this.targetAddress + " on port " + this.portNumber + "...");
+			Socket socket = new Socket(this.targetAddress, this.portNumber);
+			logger.finest("Created socket to " + this.targetAddress + " on port " + this.portNumber + ".");
+			logger.finest("Creating inputStream...");
 			DataInputStream inputStream = new DataInputStream(socket.getInputStream());
+			logger.finest("Created inputStream.");
+			logger.finest("Creating printwriter over outputstream...");
 			PrintWriter out = new PrintWriter(socket.getOutputStream());
+			logger.finest("Created printwriter over outputstream.");
+			logger.finest("Writing message...");
 			out.write(message.toString());
+			logger.finest("Wrote message.");
+			logger.finest("Flushing outputstream...");
 			out.flush();
+			logger.finest("Flushed outputstream.");
+			logger.finest("Reading response...");
 			Message result = Message.read(inputStream, false);
+			logger.finest("Read response.");
+			logger.finest("Closing socket...");
 			socket.close();
+			logger.finest("Closed socket.");
 			return result;
 		} catch (IOException e) {
-			System.out.println(e.getMessage());
-			e.printStackTrace();
+			logger.log(Level.FINE, "Error while sending message and receiving response.",e);
 		}
 		return null;
 	}
@@ -204,7 +235,7 @@ public abstract class ServerCommunicator {
 	 * @return an arrayList of chat messages if they could be fetched, otherwise
 	 *         an empty arrayList
 	 */
-	public static ArrayList<ChatMessage> fetchChats(Credentials credentials) {
+	public ArrayList<ChatMessage> fetchChats(Credentials credentials) {
 		Message request = createMessage("get", "chat", credentials);
 		Message response = send(request);
 		ResponseLine responseLine = (ResponseLine) response.getHeader().getHeaderLine();
@@ -229,7 +260,7 @@ public abstract class ServerCommunicator {
 	 * @return an arrayList of matches if they could be fetched, otherwise an
 	 *         empty arrayList
 	 */
-	public static ArrayList<Match> fetchMatches(Credentials credentials) {
+	public ArrayList<Match> fetchMatches(Credentials credentials) {
 		Message request = createMessage("get", "match", credentials);
 		Message response = send(request);
 		ResponseLine responseLine = (ResponseLine) response.getHeader().getHeaderLine();

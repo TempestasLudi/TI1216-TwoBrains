@@ -53,7 +53,7 @@ public class MatchPoller implements Runnable{
 		logger.info("Started 'run()' method in MatchPoller.");
 		while (this.run) {
 			logger.fine("Fetching matches...");
-			ArrayList<Match> matches = ServerCommunicator.fetchMatches(this.credentials);
+			ArrayList<Match> matches = this.manager.communicator.fetchMatches(this.credentials);
 			logger.fine("Received " + Integer.toString(matches.size()) + " matches.");
 			for (int i = 0; i < matches.size(); i++) {
 				this.manager.incomingMatch(matches.get(i));
