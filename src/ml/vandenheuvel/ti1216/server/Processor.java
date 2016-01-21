@@ -172,7 +172,13 @@ public class Processor {
 		Credentials credentials = getCredentials(request);
 		if ("PUT".equals(headerLine.getMethod())) {
 			JSONObject data = new JSONObject(request.getBody().getContent());
-			this.communicator.save(ChatMessage.fromJSON(data));
+			ChatMessage cm = ChatMessage.fromJSON(data);
+			if(credentials.getUsername().equals(cm.getSender())){
+				this.communicator.save(cm);
+			}		
+			else{
+				response.getHeader().setHeaderLine(new ResponseLine("HTTP/1.1 400 Bad Request"));
+			}
 			return response;
 		}
 		if ("GET".equals(headerLine.getMethod())) {
