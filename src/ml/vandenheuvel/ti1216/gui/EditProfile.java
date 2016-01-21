@@ -110,7 +110,7 @@ public class EditProfile {
 		HBox facultyRow = new HBox();
 		Label facultyLabel = new Label("Faculty: ");
 		facultyLabel.setMinWidth(labelWidth);
-		ComboBox<String> facultyInput = new ComboBox<String>(facultyOptions);
+		ComboBox<String> facultyInput = new ComboBox<>(facultyOptions);
 		facultyInput.setPromptText("Select a faculty");
 		facultyInput.setMinWidth(250);
 		facultyRow.getChildren().addAll(facultyLabel, facultyInput);
@@ -121,7 +121,7 @@ public class EditProfile {
 		HBox programRow = new HBox();
 		Label programLabel = new Label("Program: ");
 		programLabel.setMinWidth(labelWidth);
-		ComboBox<String> programInput = new ComboBox<String>(programOptions);
+		ComboBox<String> programInput = new ComboBox<>(programOptions);
 		programInput.setPromptText("Select a program");
 		programInput.setMinWidth(250);
 		programRow.getChildren().addAll(programLabel, programInput);
@@ -132,7 +132,7 @@ public class EditProfile {
 		HBox courseRow = new HBox();
 		Label courseLabel = new Label("Course: ");
 		courseLabel.setMinWidth(labelWidth);
-		ComboBox<String> courseInput = new ComboBox<String>(courseOptions);
+		ComboBox<String> courseInput = new ComboBox<>(courseOptions);
 		courseInput.setPromptText("Select a course");
 		courseInput.setMinWidth(250);
 		courseRow.getChildren().addAll(courseLabel, courseInput);
@@ -235,17 +235,15 @@ public class EditProfile {
 		});
 		updateButton.setMinWidth(125);
 		Button cancelButton = new Button("Cancel");
-		cancelButton.setOnAction(e -> {
-			this.manager.showHome();
-		});
+		cancelButton.setOnAction(e -> this.manager.showHome());
 		cancelButton.setMinWidth(125);
 		buttonRow.getChildren().addAll(updateButton, cancelButton);
 		wrapperChildren.add(buttonRow);
 
-		Scene scene = new Scene(wrapper, 500, 375);
-		scene.getStylesheets().add("ml/vandenheuvel/ti1216/gui/Gui.css");
+		Scene scene1 = new Scene(wrapper, 500, 375);
+		scene1.getStylesheets().add("ml/vandenheuvel/ti1216/gui/Gui.css");
 
-		this.scene = scene;
+		this.scene = scene1;
 	}
 
 	public void addGradeToBox(String courseId, double mark, VBox box) {
@@ -274,9 +272,7 @@ public class EditProfile {
 		gradeBox.getChildren().addAll(courseBox, markLabel, removeButton);
 		box.getChildren().add(gradeBox);
 
-		removeButton.setOnAction(e -> {
-			((Pane) removeButton.getParent().getParent()).getChildren().remove(removeButton.getParent());
-		});
+		removeButton.setOnAction(e -> ((Pane) removeButton.getParent().getParent()).getChildren().remove(removeButton.getParent()));
 	}
 
 	public Scene getScene() {
