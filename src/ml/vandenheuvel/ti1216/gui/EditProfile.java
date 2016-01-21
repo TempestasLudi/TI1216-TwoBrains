@@ -13,7 +13,6 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import ml.vandenheuvel.ti1216.client.ClientManager;
-import ml.vandenheuvel.ti1216.client.ServerCommunicator;
 import ml.vandenheuvel.ti1216.data.Credentials;
 import ml.vandenheuvel.ti1216.data.Faculty;
 import ml.vandenheuvel.ti1216.data.Grade;

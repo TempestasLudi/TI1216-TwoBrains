@@ -176,7 +176,7 @@ public class ServerCommunicator {
 		String statusCode = responseLine.getCode();
 		if (!("200".equals(statusCode))) {
 			logger.fine("Fetching faculties not successful. Statuscode: " + statusCode);
-			return new ArrayList<Faculty>();
+			return new ArrayList<>();
 		}
 		JSONObject body = new JSONObject(response.getBody().getContent());
 		ArrayList<Faculty> faculties = new ArrayList<>();
@@ -237,13 +237,13 @@ public class ServerCommunicator {
 	 * @return an arrayList of chat messages if they could be fetched, otherwise
 	 *         an empty arrayList
 	 */
-	public ArrayList<ChatMessage> fetchChats(Credentials credentials) {
+	public List<ChatMessage> fetchChats(Credentials credentials) {
 		Message request = createMessage("get", "chat", credentials);
 		Message response = send(request);
 		ResponseLine responseLine = (ResponseLine) response.getHeader().getHeaderLine();
 		String statusCode = responseLine.getCode();
 		if (!("200".equals(statusCode))) {
-			return new ArrayList<ChatMessage>();
+			return new ArrayList<>();
 		}
 		JSONObject body = new JSONObject(response.getBody().getContent());
 		JSONArray messages = body.getJSONArray("messages");
@@ -262,13 +262,13 @@ public class ServerCommunicator {
 	 * @return an arrayList of matches if they could be fetched, otherwise an
 	 *         empty arrayList
 	 */
-	public ArrayList<Match> fetchMatches(Credentials credentials) {
+	public List<Match> fetchMatches(Credentials credentials) {
 		Message request = createMessage("get", "match", credentials);
 		Message response = send(request);
 		ResponseLine responseLine = (ResponseLine) response.getHeader().getHeaderLine();
 		String statusCode = responseLine.getCode();
 		if (!("200".equals(statusCode))) {
-			return new ArrayList<Match>();
+			return new ArrayList<>();
 		}
 		JSONObject body = new JSONObject(response.getBody().getContent());
 		JSONArray matches = body.getJSONArray("matches");
