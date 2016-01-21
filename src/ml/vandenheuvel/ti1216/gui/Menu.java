@@ -37,7 +37,7 @@ public class Menu {
 	 * Sets all the elements of the Menu window.
 	 */
 	public void display() {
-
+		logger.fine("Displaying Menu window...");
 		/**
 		 * Sets the title of the new window and fetches the user and his matches
 		 * from the database.
@@ -55,19 +55,13 @@ public class Menu {
 		 * Button to go to the EditProfileGUI window.
 		 */
 		Button homeButton = new Button("Home");
-		homeButton.setOnAction(e -> {
-			// new EditProfile(this.manager).display();
-			displaySub(new Home(this.manager).getScene());
-		});
+		homeButton.setOnAction(e -> displaySub(new Home(this.manager).getScene()));
 
 		/**
 		 * Button to go to the EditProfileGUI window.
 		 */
 		Button editButton = new Button("Edit profile");
-		editButton.setOnAction(e -> {
-			// new EditProfile(this.manager).display();
-			displaySub(new EditProfile(this.manager).getScene());
-		});
+		editButton.setOnAction(e -> displaySub(new EditProfile(this.manager).getScene()));
 
 		/**
 		 * Button to ask for immediate matches.
@@ -84,10 +78,7 @@ public class Menu {
 		 * Button to go to the SettingsGUI window.
 		 */
 		Button settingsButton = new Button("Settings");
-		settingsButton.setOnAction(e -> {
-//			new Settings(this.manager).display();
-			displaySub(new Settings(this.manager).getScene());
-		});
+		settingsButton.setOnAction(e -> displaySub(new Settings(this.manager).getScene()));
 
 		/**
 		 * Button to log out from this application.
@@ -99,54 +90,19 @@ public class Menu {
 		});
 		topMenu.getChildren().addAll(homeButton, editButton, urgentButton, settingsButton, logoutButton);
 
-		// /**
-		// * Creates the center of this window.
-		// */
-		// VBox centerMenu = new VBox();
-		//
-		// /**
-		// * Label that says All matches.
-		// */
-		// Label matchLabel = new Label("All matches: ");
-
-		// /**
-		// * Multiple Labels to show all the matches.
-		// */
-		// Label match1Label = new Label("Match1");
-		//
-		// match1Label.setOnMousePressed(e -> {
-		// xPress = e.getX();
-		// System.out.println(xPress);
-		// });
-		// match1Label.setOnMouseReleased(e -> {
-		// xRelease = e.getX();
-		// System.out.println(xRelease);
-		// if (xRelease - xPress > 0) {
-		// System.out.println("Added the match to preferences.");
-		// } else {
-		// System.out.println("Deleted the match.");
-		// }
-		// });
-		//
-		// Label match2Label = new Label("Match2");
-		//
-		// centerMenu.setPrefWidth(200);
-		// centerMenu.setPrefWidth(200);
-		// centerMenu.getChildren().addAll(matchLabel, match1Label,
-		// match2Label);
-
 		/**
 		 * Adds all the different components to the BorderPane.
 		 */
-		VBox contentWrapper = this.contentWrapper = new VBox();
-		contentWrapper.getChildren().addAll(topMenu);
+		this.contentWrapper = new VBox();
+		VBox contentWrapper1 = this.contentWrapper;
+		contentWrapper1.getChildren().addAll(topMenu);
 		this.displaySub(this.manager.getHomeWindow().getScene());
 		// borderPane.setCenter(centerMenu);
 
 		/**
 		 * Sets the seize of the window and add all the elements.
 		 */
-		Scene scene = new Scene(contentWrapper, 700, 400);
+		Scene scene = new Scene(contentWrapper1, 700, 400);
 		scene.getStylesheets().add("ml/vandenheuvel/ti1216/gui/Gui.css");
 		window.setScene(scene);
 		window.show();
