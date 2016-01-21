@@ -42,6 +42,7 @@ public class EditProfile {
 	 */
 	private void renderScene() {
 		VBox wrapper = new VBox();
+		wrapper.setMaxWidth(400);
 		ObservableList<Node> wrapperChildren = wrapper.getChildren();
 
 		int labelWidth = 150;
@@ -199,6 +200,7 @@ public class EditProfile {
 
 		Grade[] grades = this.manager.getUser().getGradeList();
 		VBox gradeList = new VBox();
+		gradeList.getStyleClass().add("grade-list");
 		for (int i = 0; i < grades.length; i++) {
 			addGradeToBox(grades[i].getCourseId(), grades[i].getGrade(), gradeList);
 		}
@@ -217,8 +219,8 @@ public class EditProfile {
 			Grade[] gradeArray = new Grade[gradeList.getChildren().size()];
 			for (int i = 0; i < gradeList.getChildren().size(); i++) {
 				Pane row = (Pane) gradeList.getChildren().get(i);
-				String courseId = ((Label) row.getChildren().get(0)).getText();
-				double mark = Double.valueOf(((Label) row.getChildren().get(2)).getText());
+				String courseId = ((Label) ((Pane) wrapper.getChildren().get(0)).getChildren().get(0)).getText();
+				double mark = Double.valueOf(((Label) row.getChildren().get(1)).getText());
 				gradeArray[i] = new Grade(courseId, mark);
 			}
 			User user = new User(this.manager.getUser().getUsername(), postalInput.getText(),
@@ -246,23 +248,33 @@ public class EditProfile {
 
 		this.scene = scene;
 	}
-	
+
 	public void addGradeToBox(String courseId, double mark, VBox box) {
 		for (int i = 0; i < box.getChildren().size(); i++) {
 			Pane wrapper = (Pane) box.getChildren().get(i);
-			String existingCourse = ((Label) wrapper.getChildren().get(0)).getText();
+			String existingCourse = ((Label) ((Pane) wrapper.getChildren().get(0)).getChildren().get(0)).getText();
 			if (existingCourse.equals(courseId)) {
 				return;
 			}
 		}
-		
+
 		HBox gradeBox = new HBox();
+		HBox courseBox = new HBox();
 		Button removeButton = new Button("x");
-		removeButton.getStyleClass().add("remove");
-		gradeBox.getChildren().addAll(new Label(courseId), new Label(": "),
-				new Label(mark + ""), removeButton);
+		removeButton.setMinHeight(20);
+		removeButton.setMaxHeight(20);
+		removeButton.setMinWidth(20);
+		removeButton.setMaxWidth(20);
+		removeButton.getStyleClass().add("remove-grade");
+		Label courseLabel = new Label(courseId);
+		Label colonLabel = new Label(": ");
+		courseBox.getChildren().addAll(courseLabel, colonLabel);
+		courseBox.setMinWidth(150);
+		Label markLabel = new Label(mark + "");
+		markLabel.setMinWidth(230);
+		gradeBox.getChildren().addAll(courseBox, markLabel, removeButton);
 		box.getChildren().add(gradeBox);
-		
+
 		removeButton.setOnAction(e -> {
 			((Pane) removeButton.getParent().getParent()).getChildren().remove(removeButton.getParent());
 		});
