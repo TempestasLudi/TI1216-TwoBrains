@@ -654,6 +654,27 @@ public class DatabaseCommunicator {
 	}
 
 	/**
+	 * Fetches a match.
+	 * 
+	 * @param id
+	 *            the id of the match to fetch
+	 * @return the match, if it exists, otherwise false
+	 */
+	public Match getMatch(int id) {
+		try {
+			ResultSet resultSet = this.get("SELECT * FROM match WHERE id = " + id);
+			if (resultSet.next()) {
+				return new Match(resultSet.getInt("id"), resultSet.getString("username"),
+						resultSet.getString("matchUsername"), resultSet.getBoolean("seen"),
+						resultSet.getBoolean("approved"));
+			}
+		} catch (SQLException e) {
+			logger.log(Level.FINE, "Failed getMatch(String " + id + ").", e);
+		}
+		return null;
+	}
+
+	/**
 	 * Updates a match if it already exists, otherwise, adds a new one.
 	 * 
 	 * @param match
