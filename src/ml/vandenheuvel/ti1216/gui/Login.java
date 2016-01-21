@@ -30,10 +30,13 @@ public class Login {
 	 * Specifies all the elements of the Login window.
 	 */
 	public void display() {
+		logger.fine("Displaying Login Window...");
+		
 		/**
 		 * Sets the title of the new window.
 		 */
-		Stage window = this.window = new Stage();
+		this.window = new Stage();
+		Stage window = this.window;
 		window.setResizable(false);
 		window.initModality(Modality.APPLICATION_MODAL);
 		window.setTitle("Login");
@@ -79,9 +82,8 @@ public class Login {
 		 */
 		Button loginButton = new Button("Log in");
 		loginButton.setOnAction(e -> {
-			if (!manager.login(new Credentials(nameInput.getText(), passInput.getText()))) {
+			if (!manager.login(new Credentials(nameInput.getText(), passInput.getText())))
 				messageLabel.setText("Invalid credentials.");
-			}
 		});
 		GridPane.setConstraints(loginButton, 1, 3);
 
