@@ -13,6 +13,7 @@ import ml.vandenheuvel.ti1216.data.Credentials;
 public class ChatPoller implements Runnable{
 	
 	private static Logger logger = Logger.getLogger("ml.vandenheuvel.ti1216.client");
+	
 	/**
 	 * Whether the poller should keep polling or not.
 	 */
