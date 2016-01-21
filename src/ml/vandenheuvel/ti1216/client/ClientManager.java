@@ -51,7 +51,7 @@ public class ClientManager extends Application {
 			logger.warning("Assuming loglevel \"WARNING\".");
 		}
 		else if(args.length == 1){
-			switch (args[5]) {
+			switch (args[1]) {
 			case "OFF":
 				logger.setLevel(Level.OFF);
 				break;
