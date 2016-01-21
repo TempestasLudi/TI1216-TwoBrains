@@ -94,7 +94,7 @@ public class RequestLineTest {
 		RequestLine testLine = new RequestLine("GET", "/uri", "HTTP/1.1");
 		assertEquals("GET", testLine.getMethod());
 		testLine.setMethod("POST");
-		assertFalse(testLine.getMethod().equals("GET"));
+		assertFalse("GET".equals(testLine.getMethod()));
 	}
 
 	@Test
@@ -110,7 +110,7 @@ public class RequestLineTest {
 		RequestLine testLine = new RequestLine("GET", "/uri", "HTTP/1.1");
 		assertEquals("/uri", testLine.getUri());
 		testLine.setUri("/url");
-		assertFalse(testLine.getUri().equals("/uri"));
+		assertFalse("/uri".equals(testLine.getUri()));
 	}
 
 	@Test
@@ -126,7 +126,7 @@ public class RequestLineTest {
 		RequestLine testLine = new RequestLine("GET", "/uri", "HTTP/1.1");
 		assertEquals("/uri", testLine.getUri());
 		testLine.setVersion("/url");
-		assertFalse(testLine.getVersion().equals("/uri"));
+		assertFalse("/uri".equals(testLine.getVersion()));
 	}
 
 	@Test

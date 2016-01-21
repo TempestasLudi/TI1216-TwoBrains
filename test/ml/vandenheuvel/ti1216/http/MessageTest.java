@@ -76,7 +76,7 @@ public class MessageTest {
 	@Test
 	public void testMerge() {
 		RequestLine reqLine = new RequestLine("GET /uri HTTP/1.1");
-		ArrayList<HeaderField> hField = new ArrayList<HeaderField>();
+		ArrayList<HeaderField> hField = new ArrayList<>();
 
 		Header header = new Header(reqLine, hField);
 
@@ -201,7 +201,7 @@ public class MessageTest {
 	@Test
 	public void testToString1() {
 		RequestLine reqLine = new RequestLine("GET /chat HTTP/1.1");
-		ArrayList<HeaderField> hField = new ArrayList<HeaderField>();
+		ArrayList<HeaderField> hField = new ArrayList<>();
 		Header header = new Header(reqLine, hField);
 		Body body = new Body("Content");
 		Message testMessage1 = new Message(header, body);
@@ -251,7 +251,7 @@ public class MessageTest {
 	@Test
 	public void testEquals1() {
 		RequestLine reqLine = new RequestLine("GET /chat HTTP/1.1");
-		ArrayList<HeaderField> hField = new ArrayList<HeaderField>();
+		ArrayList<HeaderField> hField = new ArrayList<>();
 		Header header = new Header(reqLine, hField);
 		Body body = new Body("Content");
 		Message testMessage1 = new Message(header, body);
@@ -262,7 +262,7 @@ public class MessageTest {
 	@Test
 	public void testEquals2() {
 		RequestLine reqLine = new RequestLine("GET /chat HTTP/1.1");
-		ArrayList<HeaderField> hField = new ArrayList<HeaderField>();
+		ArrayList<HeaderField> hField = new ArrayList<>();
 		Header header = new Header(reqLine, hField);
 		Body body = new Body("Content");
 		Message testMessage1 = new Message(header, body);
@@ -273,7 +273,7 @@ public class MessageTest {
 	@Test
 	public void testEquals3() {
 		RequestLine reqLine = new RequestLine("GET /chat HTTP/1.1");
-		ArrayList<HeaderField> hField = new ArrayList<HeaderField>();
+		ArrayList<HeaderField> hField = new ArrayList<>();
 		Header header = new Header(reqLine, hField);
 		Body body = new Body("Content");
 		Message testMessage1 = new Message(header, body);
@@ -284,7 +284,7 @@ public class MessageTest {
 	@Test
 	public void testEquals4() {
 		RequestLine reqLine = new RequestLine("GET /chat HTTP/1.1");
-		ArrayList<HeaderField> hField = new ArrayList<HeaderField>();
+		ArrayList<HeaderField> hField = new ArrayList<>();
 		Header header = new Header(reqLine, hField);
 		Body body = new Body("Content");
 		Body body2 = null;
@@ -298,7 +298,7 @@ public class MessageTest {
 	public void testEquals4_2() {
 		RequestLine reqLine = new RequestLine("GET /chat HTTP/1.1");
 		RequestLine reqLine2 = new RequestLine("GET /test HTTP/1.1");
-		ArrayList<HeaderField> hField = new ArrayList<HeaderField>();
+		ArrayList<HeaderField> hField = new ArrayList<>();
 		Header header = new Header(reqLine, hField);
 		Header header2 = new Header(reqLine2, hField);
 		Body body2 = null;
@@ -311,7 +311,7 @@ public class MessageTest {
 	@Test
 	public void testEquals5() {
 		RequestLine reqLine = new RequestLine("GET /chat HTTP/1.1");
-		ArrayList<HeaderField> hField = new ArrayList<HeaderField>();
+		ArrayList<HeaderField> hField = new ArrayList<>();
 		Header header = new Header(reqLine, hField);
 		Body body = new Body("Content");
 		Body body2 = new Body("User details");
@@ -324,7 +324,7 @@ public class MessageTest {
 	@Test
 	public void testEquals6() {
 		RequestLine reqLine = new RequestLine("GET /chat HTTP/1.1");
-		ArrayList<HeaderField> hField = new ArrayList<HeaderField>();
+		ArrayList<HeaderField> hField = new ArrayList<>();
 		Header header = new Header(reqLine, hField);
 		Header header2 = null;
 		Body body = new Body("Content");
@@ -347,7 +347,7 @@ public class MessageTest {
 	@Test
 	public void testEquals8() {
 		RequestLine reqLine = new RequestLine("GET /chat HTTP/1.1");
-		ArrayList<HeaderField> hField = new ArrayList<HeaderField>();
+		ArrayList<HeaderField> hField = new ArrayList<>();
 		Header header = new Header(reqLine, hField);
 		Header header2 = null;
 		Body body = new Body("Content");
