@@ -267,7 +267,7 @@ public class EditProfile {
 		Label colonLabel = new Label(": ");
 		courseBox.getChildren().addAll(courseLabel, colonLabel);
 		courseBox.setMinWidth(150);
-		Label markLabel = new Label(mark + "");
+		Label markLabel = new Label(Double.toString(mark));
 		markLabel.setMinWidth(230);
 		gradeBox.getChildren().addAll(courseBox, markLabel, removeButton);
 		box.getChildren().add(gradeBox);

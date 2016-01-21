@@ -70,8 +70,8 @@ public class DatabaseCommunicatorTest {
 						Program referenceProgram = referencePrograms.get(rp);
 						assertEquals(referenceProgram.getFaculty(), dbProgram.getFaculty());
 						assertEquals(referenceProgram.getName(), dbProgram.getName());
-						ArrayList<Course> dbCourses = dbProgram.getCourses();
-						ArrayList<Course> referenceCourses = referenceProgram.getCourses();
+						List<Course> dbCourses = dbProgram.getCourses();
+						List<Course> referenceCourses = referenceProgram.getCourses();
 						assertEquals(dbCourses.size(), referenceCourses.size());
 						for (int dc = 0; dc < dbCourses.size(); dc++) {
 							int rc = referenceCourses.indexOf(dbCourses.get(dc));

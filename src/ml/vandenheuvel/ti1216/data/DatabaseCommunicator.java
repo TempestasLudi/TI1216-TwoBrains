@@ -259,7 +259,7 @@ public class DatabaseCommunicator {
 	public void save(Program program) {
 		Program existing = this.getProgram(program.getID());
 		try {
-			ArrayList<Course> courses = program.getCourses();
+			List<Course> courses = program.getCourses();
 			if (existing == null) {
 				this.execute("INSERT INTO program (ID, facultyID, name) VALUES ('" + program.getID() + "', '"
 						+ program.getFaculty().getID() + "', '" + program.getName() + "')");
@@ -269,7 +269,7 @@ public class DatabaseCommunicator {
 			} else {
 				this.execute("UPDATE program SET name = '" + program.getName() + "', facultyID = '"
 						+ program.getFaculty().getID() + "' WHERE ID = '" + program.getID() + "'");
-				ArrayList<Course> existingCourses = existing.getCourses();
+				List<Course> existingCourses = existing.getCourses();
 				for (int i = 0; i < existingCourses.size(); i++) {
 					if (!courses.contains(existingCourses.get(i))) {
 						this.delete(existingCourses.get(i));
@@ -297,7 +297,7 @@ public class DatabaseCommunicator {
 	public void delete(Program program) {
 		try {
 			this.execute("DELETE FROM program WHERE ID = \'" + program.getID() + "\'");
-			ArrayList<Course> courses = program.getCourses();
+			List<Course> courses = program.getCourses();
 			for (int i = 0; i < courses.size(); i++) {
 				this.delete(courses.get(i));
 			}
@@ -336,7 +336,7 @@ public class DatabaseCommunicator {
 			ResultSet resultSet = this.get("SELECT * FROM course WHERE ID = '" + id + "'");
 			if (resultSet.next()) {
 				Program program = this.getProgram(resultSet.getString("programID"));
-				ArrayList<Course> courses = program.getCourses();
+				List<Course> courses = program.getCourses();
 				for (int i = 0; i < courses.size(); i++) {
 					if (courses.get(i).getID().equals(id)) {
 						return courses.get(i);

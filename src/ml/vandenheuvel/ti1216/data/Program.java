@@ -14,7 +14,7 @@ public class Program {
 	 * Class-instances/variables.
 	 */
 	private String name;
-	private ArrayList<Course> courses;
+	private List<Course> courses;
 	private String id;
 	private Faculty faculty;
 
@@ -27,7 +27,7 @@ public class Program {
 	 * @param faculty the faculty the program belongs to
 	 * @param courses an ArrayList containing all courses of the program
 	 */
-	public Program(String id, String name, Faculty faculty, ArrayList<Course> courses) {
+	public Program(String id, String name, Faculty faculty, List<Course> courses) {
 		this.id = id;
 		this.name = name;
 		this.setFaculty(faculty);
@@ -65,7 +65,7 @@ public class Program {
 	 * 
 	 * @return an ArrayList containing all courses of the program
 	 */
-	public ArrayList<Course> getCourses(){
+	public List<Course> getCourses(){
 		return this.courses;
 	}
 
