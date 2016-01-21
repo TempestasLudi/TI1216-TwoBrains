@@ -6,6 +6,7 @@ import java.io.PrintWriter;
 import java.net.Socket;
 import java.util.ArrayList;
 import java.util.Base64;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -167,7 +168,7 @@ public class ServerCommunicator {
 	 *            the credentials of the user
 	 * @return a faculty if found, otherwise null
 	 */
-	public ArrayList<Faculty> fetchFaculties(Credentials credentials) {
+	public List<Faculty> fetchFaculties(Credentials credentials) {
 		logger.fine("Fetching faculties...");
 		Message request = createMessage("get", "faculty", credentials);
 		Message response = send(request);

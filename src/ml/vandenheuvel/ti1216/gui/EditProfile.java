@@ -1,6 +1,6 @@
 package ml.vandenheuvel.ti1216.gui;
 
-import java.util.ArrayList;
+import java.util.List;
 import java.util.logging.Logger;
 
 import javafx.collections.FXCollections;
@@ -102,7 +102,7 @@ public class EditProfile {
 
 		wrapperChildren.add(new Label("Grades:"));
 
-		ArrayList<Faculty> faculties = this.manager.communicator.fetchFaculties(this.manager.getCredentials());
+		List<Faculty> faculties = this.manager.communicator.fetchFaculties(this.manager.getCredentials());
 		ObservableList<String> facultyOptions = FXCollections.observableArrayList();
 		for (int i = 0; i < faculties.size(); i++) {
 			facultyOptions.add(faculties.get(i).getID());
