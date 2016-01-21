@@ -1,18 +1,23 @@
 package ml.vandenheuvel.ti1216.gui;
 
+import java.util.ArrayList;
 import java.util.logging.Logger;
 
-import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.geometry.Insets;
+import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
-import javafx.scene.layout.GridPane;
-import javafx.stage.Modality;
-import javafx.stage.Stage;
+import javafx.scene.layout.HBox;
+import javafx.scene.layout.Pane;
+import javafx.scene.layout.VBox;
+import ml.vandenheuvel.ti1216.client.ClientManager;
 import ml.vandenheuvel.ti1216.client.ServerCommunicator;
 import ml.vandenheuvel.ti1216.data.Credentials;
+import ml.vandenheuvel.ti1216.data.Faculty;
 import ml.vandenheuvel.ti1216.data.Grade;
+import ml.vandenheuvel.ti1216.data.Program;
 import ml.vandenheuvel.ti1216.data.User;
 
 /**
@@ -20,173 +25,251 @@ import ml.vandenheuvel.ti1216.data.User;
  */
 public class EditProfile {
 
+	private ClientManager manager;
+
+	private Scene scene;
+
 	private static Logger logger = Logger.getLogger("ml.vandenheuvel.ti1216.client");
 
-	/**
-	 * Sets all the elements of the EditProfile window.
-	 */
-
-	private EditProfile() {
-		// Private constructor to hide the implicit public one
+	public EditProfile(ClientManager manager) {
+		this.manager = manager;
+		this.renderScene();
 	}
 
-	public static void display() {
-		/**
-		 * Sets the title of the new window and fetches the user from the
-		 * database.
-		 */
-		Stage window = new Stage();
-		window.initModality(Modality.APPLICATION_MODAL);
-		window.setTitle("EditProfile");
-		ServerCommunicator.login(Main.credentials);
+	/**
+	 * Creates a scene, containing a main VBox layout element that contains a
+	 * couple of inputs and labels.
+	 */
+	private void renderScene() {
+		VBox wrapper = new VBox();
+		ObservableList<Node> wrapperChildren = wrapper.getChildren();
 
-		/**
-		 * Makes a new GridPane and set the constraints.
-		 */
-		GridPane grid = new GridPane();
-		grid.setPadding(new Insets(10, 10, 10, 10));
-		grid.setVgap(8);
-		grid.setHgap(10);
+		int labelWidth = 150;
 
-		/**
-		 * Label that shows that the user can change his setting here.
-		 */
-		Label textLabel = new Label("You can change your settings here: ");
-		GridPane.setConstraints(textLabel, 0, 0);
+		Label messageLabel = new Label("");
+		wrapperChildren.add(messageLabel);
 
-		/**
-		 * Label that says Username.
-		 */
-		Label nameLabel = new Label("Username: ");
-		GridPane.setConstraints(nameLabel, 0, 1);
+		Label description = new Label("You can change your settings here: ");
+		wrapperChildren.add(description);
 
-		/**
-		 * InputField to enter the Username.
-		 */
-		TextField nameInput = new TextField();
-		nameInput.setPromptText("Username");
-		GridPane.setConstraints(nameInput, 1, 1);
-
-		/**
-		 * Label that says Password.
-		 */
+		HBox passRow1 = new HBox();
 		Label passLabel1 = new Label("Password: ");
-		GridPane.setConstraints(passLabel1, 0, 2);
-
-		/**
-		 * InputField to enter the Password.
-		 */
-		TextField passInput1 = new TextField();
+		passLabel1.setMinWidth(labelWidth);
+		TextField passInput1 = new PasswordField();
 		passInput1.setPromptText("Password");
-		GridPane.setConstraints(passInput1, 1, 2);
+		passInput1.setMinWidth(250);
+		passRow1.getChildren().addAll(passLabel1, passInput1);
+		wrapperChildren.add(passRow1);
 
-		/**
-		 * Label that says Confirm Password.
-		 */
-		Label passLabel2 = new Label("Confirm Password: ");
-		GridPane.setConstraints(passLabel2, 0, 3);
+		HBox passRow2 = new HBox();
+		Label passLabel2 = new Label("Confirm password: ");
+		passLabel2.setMinWidth(labelWidth);
+		TextField passInput2 = new PasswordField();
+		passInput2.setPromptText("Confirm password");
+		passInput2.setMinWidth(250);
+		passRow2.getChildren().addAll(passLabel2, passInput2);
+		wrapperChildren.add(passRow2);
 
-		/**
-		 * InputField to enter the Password.
-		 */
-		PasswordField passInput2 = new PasswordField();
-		passInput2.setPromptText("Password");
-		GridPane.setConstraints(passInput2, 1, 3);
-
-		/**
-		 * Label that says PostalCode.
-		 */
+		HBox postalRow = new HBox();
 		Label postalLabel = new Label("PostalCode: ");
-		GridPane.setConstraints(postalLabel, 0, 4);
-
-		/**
-		 * InputField to enter the PostalCode.
-		 */
+		postalLabel.setMinWidth(labelWidth);
 		TextField postalInput = new TextField();
 		postalInput.setPromptText("PostalCode");
-		GridPane.setConstraints(postalInput, 1, 4);
+		postalInput.setMinWidth(250);
+		postalInput.setText(this.manager.getUser().getPostalCode());
+		postalRow.getChildren().addAll(postalLabel, postalInput);
+		wrapperChildren.add(postalRow);
 
-		/**
-		 * Label that says Description.
-		 */
+		HBox descriptionRow = new HBox();
 		Label descriptionLabel = new Label("Description: ");
-		GridPane.setConstraints(descriptionLabel, 0, 5);
-
-		/**
-		 * InputField to enter the Description.
-		 */
+		descriptionLabel.setMinWidth(labelWidth);
 		TextField descriptionInput = new TextField();
 		descriptionInput.setPromptText("Description");
-		GridPane.setConstraints(descriptionInput, 1, 5);
+		descriptionInput.setMinWidth(250);
+		descriptionInput.setText(this.manager.getUser().getDescription());
+		descriptionRow.getChildren().addAll(descriptionLabel, descriptionInput);
+		wrapperChildren.add(descriptionRow);
 
-		/**
-		 * Label that says CourseID.
-		 */
-		Label courseIDLabel = new Label("CourseID: ");
-		GridPane.setConstraints(courseIDLabel, 0, 6);
+		HBox oldPassRow = new HBox();
+		Label oldPassLabel = new Label("Old password: ");
+		oldPassLabel.setMinWidth(labelWidth);
+		TextField oldPassInput = new PasswordField();
+		oldPassInput.setPromptText("Password");
+		oldPassInput.setMinWidth(250);
+		oldPassRow.getChildren().addAll(oldPassLabel, oldPassInput);
+		wrapperChildren.add(oldPassRow);
 
-		/**
-		 * InputField to enter the CourseID.
-		 */
-		TextField courseIDInput = new TextField();
-		courseIDInput.setPromptText("CourseID");
-		GridPane.setConstraints(courseIDInput, 1, 6);
+		wrapperChildren.add(new Label("Grades:"));
 
-		/**
-		 * Label that says Grade.
-		 */
-		Label gradeLabel = new Label("Grade: ");
-		GridPane.setConstraints(gradeLabel, 0, 7);
+		ArrayList<Faculty> faculties = ServerCommunicator.fetchFaculties(this.manager.getCredentials());
+		ObservableList<String> facultyOptions = FXCollections.observableArrayList();
+		for (int i = 0; i < faculties.size(); i++) {
+			facultyOptions.add(faculties.get(i).getID());
+		}
 
-		/**
-		 * InputField to enter the Grade.
-		 */
-		TextField gradeInput = new TextField();
-		gradeInput.setPromptText("Grade");
-		GridPane.setConstraints(gradeInput, 1, 7);
+		HBox facultyRow = new HBox();
+		Label facultyLabel = new Label("Faculty: ");
+		facultyLabel.setMinWidth(labelWidth);
+		ComboBox<String> facultyInput = new ComboBox<String>(facultyOptions);
+		facultyInput.setPromptText("Select a faculty");
+		facultyInput.setMinWidth(250);
+		facultyRow.getChildren().addAll(facultyLabel, facultyInput);
+		wrapperChildren.add(facultyRow);
 
-		/**
-		 * Button to update the User profile.
-		 */
-		Button updateButton = new Button("Update");
-		updateButton.setOnAction(new EventHandler<ActionEvent>() {
-			/**
-			 * Fetches the input from all the text fields above and puts them
-			 * into the database as an updated user.
-			 */
-			@Override
-			public void handle(ActionEvent e) {
-				Grade grade = new Grade(courseIDInput.getText(), gradeInput.getAnchor());
-				Grade[] gradelist = new Grade[1];
-				gradelist[0] = grade;
-				Credentials credentials = new Credentials(nameInput.getText(), passInput1.getText());
-				User user = new User(nameInput.getText(), postalInput.getText(), descriptionInput.getText(), gradelist);
-				if (ServerCommunicator.updateUser(credentials, user) && passInput1.equals(passInput2)) {
-					System.out.println("Your profile is successfully updated");
-					logger.fine("Profile successfully updated.");
-					Menu.display();
-					window.close();
-				} else {
-					System.out.println("You did not enter the correct data");
-					logger.fine("Wrong data entered.");
+		ObservableList<String> programOptions = FXCollections.observableArrayList();
+
+		HBox programRow = new HBox();
+		Label programLabel = new Label("Program: ");
+		programLabel.setMinWidth(labelWidth);
+		ComboBox<String> programInput = new ComboBox<String>(programOptions);
+		programInput.setPromptText("Select a program");
+		programInput.setMinWidth(250);
+		programRow.getChildren().addAll(programLabel, programInput);
+		wrapperChildren.add(programRow);
+
+		ObservableList<String> courseOptions = FXCollections.observableArrayList();
+
+		HBox courseRow = new HBox();
+		Label courseLabel = new Label("Course: ");
+		courseLabel.setMinWidth(labelWidth);
+		ComboBox<String> courseInput = new ComboBox<String>(courseOptions);
+		courseInput.setPromptText("Select a course");
+		courseInput.setMinWidth(250);
+		courseRow.getChildren().addAll(courseLabel, courseInput);
+		wrapperChildren.add(courseRow);
+
+		facultyInput.setOnAction(e -> {
+			programOptions.clear();
+			String facultyId = facultyInput.getValue();
+			Faculty faculty = null;
+			for (int i = 0; i < faculties.size(); i++) {
+				if (faculties.get(i).getID() == facultyId) {
+					faculty = faculties.get(i);
+					break;
 				}
 			}
+			for (int i = 0; i < faculty.getPrograms().size(); i++) {
+				programOptions.add(faculty.getPrograms().get(i).getID());
+			}
 		});
-		GridPane.setConstraints(updateButton, 1, 8);
 
-		/**
-		 * Adds all the Labels, TextFields and Buttons to the GridPane.
-		 */
-		grid.getChildren().addAll(textLabel, nameLabel, nameInput, passLabel1, passInput1, passLabel2, passInput2,
-				postalLabel, postalInput, descriptionLabel, descriptionInput, courseIDLabel, courseIDInput, gradeLabel,
-				gradeInput, updateButton);
+		programInput.setOnAction(e -> {
+			courseOptions.clear();
+			String facultyId = facultyInput.getValue();
+			Faculty faculty = null;
+			for (int i = 0; i < faculties.size(); i++) {
+				if (faculties.get(i).getID() == facultyId) {
+					faculty = faculties.get(i);
+					break;
+				}
+			}
+			String programId = programInput.getValue();
+			Program program = null;
+			for (int i = 0; i < faculty.getPrograms().size(); i++) {
+				if (faculty.getPrograms().get(i).getID() == programId) {
+					program = faculty.getPrograms().get(i);
+					break;
+				}
+			}
+			for (int i = 0; i < program.getCourses().size(); i++) {
+				courseOptions.add(program.getCourses().get(i).getID());
+			}
+		});
 
-		/**
-		 * Sets the seize of the window and adds all the new elements.
-		 */
-		Scene scene = new Scene(grid, 500, 375);
+		HBox markRow = new HBox();
+		Label markLabel = new Label("Mark: ");
+		markLabel.setMinWidth(labelWidth);
+		Slider markInput = new Slider(0, 10, 5);
+		markInput.setMinWidth(250);
+		markInput.setShowTickLabels(true);
+		markInput.setShowTickMarks(true);
+		markInput.setMajorTickUnit(1);
+		markInput.setMinorTickCount(1);
+		markInput.setBlockIncrement(.5);
+		markInput.setSnapToTicks(true);
+		markRow.getChildren().addAll(markLabel, markInput);
+		wrapperChildren.add(markRow);
+
+		HBox gradeButtonRow = new HBox();
+		gradeButtonRow.setPadding(new Insets(0, 0, 0, 150));
+		Button gradeAddButton = new Button("Add grade to list");
+		gradeAddButton.setMinWidth(250);
+		gradeButtonRow.getChildren().addAll(gradeAddButton);
+		wrapperChildren.add(gradeButtonRow);
+
+		Grade[] grades = this.manager.getUser().getGradeList();
+		VBox gradeList = new VBox();
+		for (int i = 0; i < grades.length; i++) {
+			addGradeToBox(grades[i].getCourseId(), grades[i].getGrade(), gradeList);
+		}
+		wrapperChildren.add(gradeList);
+
+		gradeAddButton.setOnAction(e -> {
+			if (courseInput.getValue() != null) {
+				addGradeToBox(courseInput.getValue(), markInput.getValue(), gradeList);
+			}
+		});
+
+		HBox buttonRow = new HBox();
+		buttonRow.setPadding(new Insets(0, 0, 0, 150));
+		Button updateButton = new Button("Update");
+		updateButton.setOnAction(e -> {
+			Grade[] gradeArray = new Grade[gradeList.getChildren().size()];
+			for (int i = 0; i < gradeList.getChildren().size(); i++) {
+				Pane row = (Pane) gradeList.getChildren().get(i);
+				String courseId = ((Label) row.getChildren().get(0)).getText();
+				double mark = Double.valueOf(((Label) row.getChildren().get(2)).getText());
+				gradeArray[i] = new Grade(courseId, mark);
+			}
+			User user = new User(this.manager.getUser().getUsername(), postalInput.getText(),
+					descriptionInput.getText(), gradeArray, this.manager.getUser().isUrgent());
+			Credentials credentials = new Credentials(this.manager.getCredentials().getUsername(),
+					passInput1.getText());
+			if ((passInput1.getText().equals(passInput2.getText())) && (manager.updateUser(credentials, user))) {
+				logger.fine("Profile successfully updated.");
+				this.manager.showHome();
+			} else {
+				logger.fine("Wrong data entered.");
+			}
+		});
+		updateButton.setMinWidth(125);
+		Button cancelButton = new Button("Cancel");
+		cancelButton.setOnAction(e -> {
+			this.manager.showHome();
+		});
+		cancelButton.setMinWidth(125);
+		buttonRow.getChildren().addAll(updateButton, cancelButton);
+		wrapperChildren.add(buttonRow);
+
+		Scene scene = new Scene(wrapper, 500, 375);
 		scene.getStylesheets().add("ml/vandenheuvel/ti1216/gui/Gui.css");
-		window.setScene(scene);
-		window.showAndWait();
+
+		this.scene = scene;
 	}
+	
+	public void addGradeToBox(String courseId, double mark, VBox box) {
+		for (int i = 0; i < box.getChildren().size(); i++) {
+			Pane wrapper = (Pane) box.getChildren().get(i);
+			String existingCourse = ((Label) wrapper.getChildren().get(0)).getText();
+			if (existingCourse.equals(courseId)) {
+				return;
+			}
+		}
+		
+		HBox gradeBox = new HBox();
+		Button removeButton = new Button("x");
+		removeButton.getStyleClass().add("remove");
+		gradeBox.getChildren().addAll(new Label(courseId), new Label(": "),
+				new Label(mark + ""), removeButton);
+		box.getChildren().add(gradeBox);
+		
+		removeButton.setOnAction(e -> {
+			((Pane) removeButton.getParent().getParent()).getChildren().remove(removeButton.getParent());
+		});
+	}
+
+	public Scene getScene() {
+		return this.scene;
+	}
+
 }

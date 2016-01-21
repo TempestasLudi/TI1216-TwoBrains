@@ -451,7 +451,7 @@ public class DatabaseCommunicator {
 	 */
 	public User[] getUsers() {
 		try {
-			String query = "SELECT u.name AS username, u.postalCode, u.description AS userDescription, IF(g.ID IS NULL, -1, g.ID) AS gradeId, g.courseId, g.value AS gradeValue "
+			String query = "SELECT u.name AS username, u.postalCode, u.description AS userDescription, IF(g.ID IS NULL, -1, g.ID) AS gradeId, g.courseId, g.value AS gradeValue, u.urgent "
 					+ "FROM user AS u " + "LEFT JOIN grade AS g " + "ON g.username = u.name";
 			ResultSet resultSet = this.get(query);
 			ArrayList<User> users = new ArrayList<>();
@@ -460,7 +460,7 @@ public class DatabaseCommunicator {
 			while (resultSet.next()) {
 				if (user == null) {
 					user = new User(resultSet.getString("username"), resultSet.getString("postalCode"),
-							resultSet.getString("userDescription"), new Grade[0]);
+							resultSet.getString("userDescription"), new Grade[0], resultSet.getBoolean("urgent"));
 					users.add(user);
 				} else if (!resultSet.getString("username").equals(user.getUsername())) {
 					Grade[] gradeArray = new Grade[grades.size()];
@@ -468,10 +468,10 @@ public class DatabaseCommunicator {
 					user.setGradeList(gradeArray);
 					grades = new ArrayList<>();
 					users.add(new User(resultSet.getString("username"), resultSet.getString("postalCode"),
-							resultSet.getString("userDescription"), new Grade[0]));
+							resultSet.getString("userDescription"), new Grade[0], resultSet.getBoolean("urgent")));
 				}
 				if (resultSet.getInt("gradeId") != -1) {
-					grades.add(new Grade(resultSet.getString("courseId"), resultSet.getInt("gradeValue")));
+					grades.add(new Grade(resultSet.getString("courseId"), resultSet.getDouble("gradeValue")));
 				}
 			}
 			if (user != null) {
@@ -498,15 +498,17 @@ public class DatabaseCommunicator {
 	public User getUser(String name) {
 		try {
 			ResultSet resultSet = this
-					.get("SELECT u.name AS username, u.postalCode, u.description AS userDescription, IF(g.ID IS NULL, -1, g.ID) AS gradeId, g.courseId, g.value AS gradeValue "
+					.get("SELECT u.name AS username, u.postalCode, u.description AS userDescription, IF(g.ID IS NULL, -1, g.ID) AS gradeId, g.courseId, g.value AS gradeValue, u.urgent "
 							+ "FROM user AS u " + "LEFT JOIN grade AS g " + "ON g.username = u.name "
 							+ "WHERE u.name = '" + name + "'");
 			if (resultSet.next()) {
 				ArrayList<Grade> gradeList = new ArrayList<>();
 				User user = new User(resultSet.getString("username"), resultSet.getString("postalCode"),
-						resultSet.getString("userDescription"), new Grade[0]);
+						resultSet.getString("userDescription"), new Grade[0], resultSet.getBoolean("urgent"));
 				do {
-					gradeList.add(new Grade(resultSet.getString("courseId"), resultSet.getInt("gradeValue")));
+					if (resultSet.getString("courseId") != null) {
+						gradeList.add(new Grade(resultSet.getString("courseId"), resultSet.getDouble("gradeValue")));
+					}
 				} while (resultSet.next());
 				Grade[] gradeArray = new Grade[gradeList.size()];
 				gradeList.toArray(gradeArray);
@@ -530,7 +532,7 @@ public class DatabaseCommunicator {
 		try {
 			if (existing != null) {
 				this.execute("UPDATE user SET postalCode = '" + user.getPostalCode() + "', description = '"
-						+ user.getDescription() + "' WHERE name = '" + user.getUsername() + "'");
+						+ user.getDescription() + "', urgent = " + user.isUrgent() + " WHERE name = '" + user.getUsername() + "'");
 				this.execute("DELETE FROM grade WHERE username = '" + user.getUsername() + "'");
 				Grade[] gradeList = user.getGradeList();
 				if (gradeList.length > 0) {
@@ -562,9 +564,9 @@ public class DatabaseCommunicator {
 		User existing = this.getUser(user.getUsername());
 		try {
 			if (existing == null) {
-				this.execute("INSERT INTO user (name, password, postalCode, description) VALUES ('"
+				this.execute("INSERT INTO user (name, password, postalCode, description, urgent) VALUES ('"
 						+ credentials.getUsername() + "', '" + credentials.getPassword() + "', '" + user.getPostalCode()
-						+ "', '" + user.getDescription() + "')");
+						+ "', '" + user.getDescription() + "', " + user.isUrgent() + ")");
 				Grade[] gradeList = user.getGradeList();
 				if (gradeList.length > 0) {
 					String addQuery = "INSERT INTO grade (courseID, username, value) VALUES ";

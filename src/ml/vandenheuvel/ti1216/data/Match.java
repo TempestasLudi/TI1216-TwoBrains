@@ -152,12 +152,12 @@ public class Match {
 	 * Calculates the rating of a given Match.
 	 * @return the rating of the Match
 	 */
-	public int getRating()
+	public double getRating()
 	{
 		DatabaseCommunicator communicator = new DatabaseCommunicator("tempestasludi.com", "TI1216-test", "TI1216", "3t.uGmL365j2f7B");
 		Grade[] gradelist = communicator.getUser(username).getGradeList();
 		Grade[] matchGradelist = communicator.getUser(matchUsername).getGradeList();
-		int[] partialRatings = new int[Math.max(gradelist.length, matchGradelist.length)];
+		double[] partialRatings = new double[Math.max(gradelist.length, matchGradelist.length)];
 		for(int i=0;i<gradelist.length;i++)
 		{
 			for(int j=0;j<matchGradelist.length;j++)
@@ -172,9 +172,9 @@ public class Match {
 				}
 			}
 		}
-		int max = partialRatings[0];
-		int min = partialRatings[0];
-		int rating = 0;
+		double max = partialRatings[0];
+		double min = partialRatings[0];
+		double rating = 0;
 		for(int j=0;j<partialRatings.length/2+1;j++)
 		{
 			for(int i=0;i<partialRatings.length;i++)

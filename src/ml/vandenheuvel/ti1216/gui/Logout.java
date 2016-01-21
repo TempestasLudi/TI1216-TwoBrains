@@ -1,7 +1,7 @@
 package ml.vandenheuvel.ti1216.gui;
 
-import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
+import java.util.logging.Logger;
+
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
@@ -9,20 +9,23 @@ import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
+import ml.vandenheuvel.ti1216.client.ClientManager;
 
 /**
  * Logout is the window that shows up when you log out of the application.
  */
 public class Logout {
 	
-	private Logout(){
-		//Private constructor to hide the implicit public one
+	private ClientManager manager;
+	
+	public Logout(ClientManager manager){
+		this.manager = manager;
 	}
 	
 	/**
 	 * Sets all the elements of the Logout window.
 	 */
-	public static void display() {
+	public void display() {
 		/**
 		 * Sets the title of the new window.
 		 */
@@ -41,18 +44,11 @@ public class Logout {
 		Label logoutLabel = new Label("Thank you for using our application!");
 
 		/**
-		 * Button that allows you to the login screen.
+		 * Button that allows you to go back to the login screen.
 		 */
 		Button loginButton = new Button("Back to Login");
-		loginButton.setOnAction(new EventHandler<ActionEvent>() {
-			/**
-			 * Opens LoginGUI and closes the current window.
-			 */
-			@Override
-			public void handle(ActionEvent e) {
-				Login.display();
+		loginButton.setOnAction(e -> {
 				window.close();
-			}
 		});
 		vbox.setAlignment(Pos.CENTER);
 		vbox.getChildren().addAll(logoutLabel, loginButton);
@@ -69,6 +65,6 @@ public class Logout {
 		Scene scene = new Scene(layout, 350, 200);
 		scene.getStylesheets().add("ml/vandenheuvel/ti1216/gui/Gui.css");
 		window.setScene(scene);
-		window.show();
+		window.showAndWait();
 	}
 }

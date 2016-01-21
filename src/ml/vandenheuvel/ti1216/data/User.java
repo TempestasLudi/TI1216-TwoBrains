@@ -12,6 +12,7 @@ public class User {
 	private String postalCode;
 	private String description;
 	private Grade[] gradeList;
+	private boolean urgent;
 
 	/**
 	 * Constructor method for User object
@@ -25,13 +26,15 @@ public class User {
 	 * @param gradelist
 	 *            Array of Grade objects to represent the grades for the user's
 	 *            courses
+	 * @param urgent whether the user is desperate or not
 	 */
 	public User(String username, String postalCode, String description,
-			Grade[] gradelist) {
+			Grade[] gradelist, boolean urgent) {
 		this.username = username;
 		this.postalCode = postalCode;
 		this.description = description;
 		this.gradeList = gradelist;
+		this.urgent = urgent;
 	}
 
 	/**
@@ -81,6 +84,24 @@ public class User {
 	 */
 	public Grade[] getGradeList() {
 		return this.gradeList;
+	}
+
+	/**
+	 * Gets whether the user is desperate or not.
+	 * 
+	 * @return the urgent
+	 */
+	public boolean isUrgent() {
+		return urgent;
+	}
+
+	/**
+	 * Sets whether the user is desperate or not.
+	 * 
+	 * @param urgent the urgent to set
+	 */
+	public void setUrgent(boolean urgent) {
+		this.urgent = urgent;
 	}
 
 	/**
@@ -139,7 +160,8 @@ public class User {
 		return new JSONObject().put("username", this.username)
 				.put("postalCode", this.postalCode)
 				.put("description", this.description)
-				.put("gradeList", jsonGradeList);
+				.put("gradeList", jsonGradeList)
+				.put("urgent", this.urgent);
 	}
 
 	/**
@@ -159,7 +181,7 @@ public class User {
 				}
 				return new User(jsonObject.getString("username"),
 					jsonObject.getString("postalCode"),
-					jsonObject.getString("description"), tempGradeList);
+					jsonObject.getString("description"), tempGradeList, jsonObject.getBoolean("urgent"));
 			}
 		}
 		return null;
