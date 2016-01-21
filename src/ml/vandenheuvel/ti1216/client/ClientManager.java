@@ -189,10 +189,10 @@ public class ClientManager extends Application {
 	 * @param credentials the credentials to set
 	 */
 	public boolean login(Credentials credentials) {
-		User user = this.communicator.login(credentials);
-		if (user != null) {
+		User myuser = this.communicator.login(credentials);
+		if (myuser != null) {
 			logger.info("Logged in successfully.");
-			this.setUser(user);
+			this.setUser(myuser);
 			this.setCredentials(credentials);
 			return true;
 		} else {
