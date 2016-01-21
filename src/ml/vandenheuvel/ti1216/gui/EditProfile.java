@@ -101,7 +101,7 @@ public class EditProfile {
 
 		wrapperChildren.add(new Label("Grades:"));
 
-		ArrayList<Faculty> faculties = ServerCommunicator.fetchFaculties(this.manager.getCredentials());
+		ArrayList<Faculty> faculties = this.manager.communicator.fetchFaculties(this.manager.getCredentials());
 		ObservableList<String> facultyOptions = FXCollections.observableArrayList();
 		for (int i = 0; i < faculties.size(); i++) {
 			facultyOptions.add(faculties.get(i).getID());

@@ -1,6 +1,7 @@
 package ml.vandenheuvel.ti1216.client;
 
 import java.io.IOException;
+import java.util.List;
 import java.util.logging.FileHandler;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -17,16 +18,22 @@ import ml.vandenheuvel.ti1216.gui.Menu;
 
 /**
  * ClientManager is the management class for the client-side application.
+ * Probably has to be started with 127.0.0.1 127.0.0.1 80 as run configuration.
  */
 public class ClientManager extends Application {
+	
+	/**
+	 * The communicator that handles all communication with the server.
+	 */
+	public ServerCommunicator communicator;
 
 	/**
-	 * The class that polls for new chat messages.
+	 * The thread that polls for new chat messages.
 	 */
 	private ChatPoller chatPoller;
 	
 	/**
-	 * The class that polls for new matches.
+	 * The thread that polls for new matches.
 	 */
 	private MatchPoller matchPoller;
 	
@@ -46,12 +53,17 @@ public class ClientManager extends Application {
 	 * Boots up the application.
 	 */
 	public static void main(String[] args) {
-		if(args.length == 0){
+		if(args.length < 3){
+			logger.setLevel(Level.SEVERE);
+			logger.severe("Cannot start application without target address, target host and portnumber to connect to.");
+			return;
+		}
+		else if(args.length == 3){
 			logger.setLevel(Level.WARNING);
 			logger.warning("Assuming loglevel \"WARNING\".");
 		}
-		else if(args.length == 1){
-			switch (args[0]) {
+		else if(args.length == 4){
+			switch (args[3]) {
 			case "OFF":
 				logger.setLevel(Level.OFF);
 				break;
@@ -78,6 +90,7 @@ public class ClientManager extends Application {
 			}
 		}
 		else {
+			logger.setLevel(Level.WARNING);
 			logger.severe("Too many arguments. Only give the loglevel as argument.");
 			return;
 		}
@@ -94,10 +107,14 @@ public class ClientManager extends Application {
 		}
 		
 		logger.fine("Launching main application...");
-		launch(args);
+		Application.launch(args);
 	}
 	
 	public void start(Stage primaryStage) {
+		final List<String> parameters = getParameters().getRaw();
+		logger.info("Starting new ServerCommunicator with parameters " + parameters.get(0) + " " + parameters.get(1) + " " + parameters.get(2));
+		this.communicator = new ServerCommunicator(parameters.get(0), parameters.get(1), Integer.valueOf(Integer.parseInt(parameters.get(2))));
+		logger.fine("Opening Login window...");
 		this.loginWindow = new Login(this);
 		this.loginWindow.display();
 	}
@@ -173,7 +190,7 @@ public class ClientManager extends Application {
 	 * @param credentials the credentials to set
 	 */
 	public boolean login(Credentials credentials) {
-		User user = ServerCommunicator.login(credentials);
+		User user = this.communicator.login(credentials);
 		if (user != null) {
 			logger.info("Logged in successfully.");
 			this.setUser(user);
@@ -186,7 +203,7 @@ public class ClientManager extends Application {
 	}
 	
 	public boolean register(Credentials credentials, User user) {
-		boolean register = ServerCommunicator.register(credentials, user);
+		boolean register = this.communicator.register(credentials, user);
 		if(register == true) {
 			logger.info("Registered successfully.");
 			this.setUser(user);
@@ -198,7 +215,7 @@ public class ClientManager extends Application {
 	}
 	
 	public boolean updateUser(Credentials credentials, User user) {
-		boolean update = ServerCommunicator.updateUser(credentials, user);
+		boolean update = this.communicator.updateUser(credentials, user);
 		if(update == true) {
 			logger.info("Profile successfully updated.");
 			this.user = user;
