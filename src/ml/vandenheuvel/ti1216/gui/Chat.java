@@ -17,6 +17,8 @@ public class Chat {
 	
 	private ClientManager manager;
 	
+	private Stage window;
+	
 	public Chat(ClientManager manager) {
 		this.manager = manager;
 	}
@@ -28,7 +30,7 @@ public class Chat {
 		 * Sets the title of the new window and fetches the user and his chats
 		 * from the database.
 		 */
-		Stage window = new Stage();
+		Stage window = this.window  = new Stage();
 		window.initModality(Modality.WINDOW_MODAL);
 		window.setTitle("Chat");
 

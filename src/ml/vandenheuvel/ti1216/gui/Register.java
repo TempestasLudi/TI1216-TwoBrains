@@ -9,18 +9,19 @@ import javafx.scene.layout.GridPane;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import ml.vandenheuvel.ti1216.client.ClientManager;
+import ml.vandenheuvel.ti1216.client.ServerCommunicator;
 import ml.vandenheuvel.ti1216.data.Credentials;
 import ml.vandenheuvel.ti1216.data.Grade;
 import ml.vandenheuvel.ti1216.data.User;
 
 /**
- * In Register you can sign up for this application if u don't have an
- * account yet.
+ * In Register you can sign up for this application if u don't have an account
+ * yet.
  */
 public class Register {
-	
+
 	private ClientManager manager;
-	
+
 	private static Logger logger = Logger.getLogger("ml.vandenheuvel.ti1216.client");
 
 	public Register(ClientManager manager) {
@@ -42,10 +43,10 @@ public class Register {
 		grid.setPadding(new Insets(10, 10, 10, 10));
 		grid.setVgap(8);
 		grid.setHgap(10);
-		
+
 		Label messageLabel = new Label("");
 		GridPane.setConstraints(messageLabel, 0, 0, 2, 1);
-		
+
 		/**
 		 * Label that says Username.
 		 */
@@ -112,58 +113,27 @@ public class Register {
 		GridPane.setConstraints(descriptionInput, 1, 5);
 
 		/**
-		 * Label that says CourseID.
-		 */
-		Label courseIDLabel = new Label("CourseID: ");
-		GridPane.setConstraints(courseIDLabel, 0, 6);
-
-		/**
-		 * InputField to enter the CourseID
-		 */
-		TextField courseIDInput = new TextField();
-		courseIDInput.setPromptText("CourseID");
-		GridPane.setConstraints(courseIDInput, 1, 6);
-
-		/**
-		 * Label that says Grade.
-		 */
-		Label gradeLabel = new Label("Grade: ");
-		GridPane.setConstraints(gradeLabel, 0, 7);
-
-		/**
-		 * InputField to enter the Grade.
-		 */
-		TextField gradeInput = new TextField();
-		gradeInput.setPromptText("Grade");
-		GridPane.setConstraints(gradeInput, 1, 7);
-
-
-		/**
 		 * Button to sign up for the application.
 		 */
 		Button registerButton = new Button("Register");
 		registerButton.setOnAction(e -> {
-				Grade grade = new Grade(courseIDInput.getText(), Integer.parseInt(gradeInput.getText()));
-				Grade[] gradelist = new Grade[1];
-				gradelist[0] = grade;
-				if ((passInput1.getText().equals(passInput2.getText())) && 
-					(manager.register(new Credentials(nameInput.getText(), passInput1.getText()), 
-					new User(nameInput.getText(), postalInput.getText(), descriptionInput.getText(), gradelist)))) {
-					new Login(this.manager).display();
-					window.close();
-				} 
-				else {
-					messageLabel.setText("Wrong data entered.");
-				}
+			Grade[] gradelist = new Grade[0];
+			if ((passInput1.getText().equals(passInput2.getText())) && (manager
+					.register(new Credentials(nameInput.getText(), passInput1.getText()), new User(nameInput.getText(),
+							postalInput.getText(), descriptionInput.getText(), gradelist, false)))) {
+				new Login(this.manager).display();
+				window.close();
+			} else {
+				messageLabel.setText("Wrong data entered.");
+			}
 		});
 		GridPane.setConstraints(registerButton, 1, 8);
 
 		/**
 		 * Adds all the Labels, TextFields, Buttons and Sliders to the GridPane.
 		 */
-		grid.getChildren().addAll(messageLabel, nameLabel, nameInput, passLabel1, passInput1, passLabel2, passInput2, postalLabel,
-				postalInput, descriptionLabel, descriptionInput, courseIDLabel, courseIDInput, gradeLabel, gradeInput,
-				registerButton);
+		grid.getChildren().addAll(messageLabel, nameLabel, nameInput, passLabel1, passInput1, passLabel2, passInput2,
+				postalLabel, postalInput, descriptionLabel, descriptionInput, registerButton);
 
 		/**
 		 * Sets the seize of the window and adds all the elements.
@@ -173,5 +143,4 @@ public class Register {
 		window.setScene(scene);
 		window.showAndWait();
 	}
-
 }

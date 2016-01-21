@@ -9,7 +9,7 @@ import org.json.JSONObject;
 public class Grade {
 
 	private String courseId;
-	private int mark;
+	private double mark;
 
 	/**
 	 * creates a new Grade
@@ -17,7 +17,7 @@ public class Grade {
 	 * @param courseId the courseId to which the Grade belongs
 	 * @param mark an integer that represents the mark
 	 */
-	public Grade(String courseId, int mark) {
+	public Grade(String courseId, double mark) {
 		this.courseId = courseId;
 		this.mark = mark;
 	}
@@ -36,7 +36,7 @@ public class Grade {
 	 * 
 	 * @return the integer that represents the Grade
 	 */
-	public int getGrade() {
+	public double getGrade() {
 		return this.mark;
 	}
 
@@ -54,7 +54,7 @@ public class Grade {
 	 * 
 	 * @param grade the new integer of the Grade
 	 */
-	public void setGrade(int grade) {
+	public void setGrade(double grade) {
 		this.mark = grade;
 	}
 
@@ -64,7 +64,7 @@ public class Grade {
 	 * @return a JSON object out of a Grade object
 	 */
 	public JSONObject toJSON() {
-		return new JSONObject().put("grade", Integer.toString(this.mark)).put(
+		return new JSONObject().put("grade", Double.toString(this.mark)).put(
 				"courseId", this.courseId);
 	}
 
@@ -76,7 +76,7 @@ public class Grade {
 	 */
 	public static Grade fromJSON(JSONObject jsonObject) {
 		if (jsonObject != null)
-			return new Grade(jsonObject.getString("courseId"), Integer.parseInt(jsonObject.getString("grade")));
+			return new Grade(jsonObject.getString("courseId"), jsonObject.getDouble("grade"));
 		return null;
 	}
 

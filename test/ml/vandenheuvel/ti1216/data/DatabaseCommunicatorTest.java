@@ -12,7 +12,7 @@ public class DatabaseCommunicatorTest {
 	 * /private DatabaseCommunicator communicator = new
 	 * DatabaseCommunicator("192.168.1.111", "TI1216-test");/
 	 */
-	private DatabaseCommunicator communicator = new DatabaseCommunicator("tempestasludi.com", "TI1216-test", "TI1216", "3t.uGmL365j2f7B");
+	private DatabaseCommunicator communicator = new DatabaseCommunicator("192.168.1.111", "TI1216-test", "TI1216", "3t.uGmL365j2f7B");
 
 	/**
 	 * "Tests" the constructor and cleans the database (or at least tries to..).
@@ -24,7 +24,7 @@ public class DatabaseCommunicatorTest {
 		 * /DatabaseCommunicator communicator = new
 		 * DatabaseCommunicator("192.168.1.111", "TI1216-test");/
 		 */
-		DatabaseCommunicator communicator = new DatabaseCommunicator("tempestasludi.com", "TI1216-test", "TI1216",
+		DatabaseCommunicator communicator = new DatabaseCommunicator("192.168.1.111", "TI1216-test", "TI1216",
 				"3t.uGmL365j2f7B");/**/
 		Faculty[] faculties = communicator.getFaculties();
 		for (int i = 0; i < faculties.length; i++) {
@@ -126,8 +126,8 @@ public class DatabaseCommunicatorTest {
 		User[] users = new User[2];
 		// users[0] = new User("User 1", "Pc1", "This is a first description.",
 		// new Grade[] {new Grade("TI1216",10),new Grade("TI1506",9)});
-		users[0] = new User("User 1", "Pc1", "This is a first description.", new Grade[] {new Grade("TI1216",10),new Grade("TI1506",9)});
-		users[1] = new User("User 2", "Pc2", "This is a second description.", new Grade[0]);
+		users[0] = new User("User 1", "Pc1", "This is a first description.", new Grade[] {new Grade("TI1216",10),new Grade("TI1506",9)}, false);
+		users[1] = new User("User 2", "Pc2", "This is a second description.", new Grade[0], false);
 		return users;
 	}
 

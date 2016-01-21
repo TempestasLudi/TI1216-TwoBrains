@@ -17,7 +17,7 @@ import ml.vandenheuvel.ti1216.data.Credentials;
 public class Login {
 
 	private ClientManager manager;
-	
+
 	private Stage window;
 
 	private static Logger logger = Logger.getLogger("ml.vandenheuvel.ti1216.client");
@@ -53,7 +53,7 @@ public class Login {
 		 */
 		Label nameLabel = new Label("Username: ");
 		GridPane.setConstraints(nameLabel, 0, 1);
-		
+
 		/**
 		 * InputField to enter your Username.
 		 */

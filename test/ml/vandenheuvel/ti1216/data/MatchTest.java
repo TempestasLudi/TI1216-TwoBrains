@@ -153,10 +153,10 @@ public class MatchTest {
 		Grade[] l2 = new Grade[] {g21,g22,g23,g24,g25,g26,g27};
 		Grade[] l3 = new Grade[] {g31,g32,g33,g34,g35,g36,g37};
 		Grade[] l4 = new Grade[] {g41,g42,g43,g44,g45,g46,g47};
-		User u1 = new User("U1","","",l1);
-		User u2 = new User("U2","","",l2);
-		User u3 = new User("U3","","",l3);
-		User u4 = new User("U4","","",l4);
+		User u1 = new User("U1","","",l1, false);
+		User u2 = new User("U2","","",l2, false);
+		User u3 = new User("U3","","",l3, false);
+		User u4 = new User("U4","","",l4, false);
 		Credentials cr1 = new Credentials("U1","P1");
 		Credentials cr2 = new Credentials("U2","P2");
 		Credentials cr3 = new Credentials("U3","P3");

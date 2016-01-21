@@ -11,6 +11,7 @@ import ml.vandenheuvel.ti1216.data.ChatMessage;
 import ml.vandenheuvel.ti1216.data.Credentials;
 import ml.vandenheuvel.ti1216.data.Match;
 import ml.vandenheuvel.ti1216.data.User;
+import ml.vandenheuvel.ti1216.gui.Home;
 import ml.vandenheuvel.ti1216.gui.Login;
 import ml.vandenheuvel.ti1216.gui.Menu;
 
@@ -36,6 +37,10 @@ public class ClientManager extends Application {
 	private static Logger logger = Logger.getLogger("ml.vandenheuvel.ti1216.client");
 	
 	private Login loginWindow;
+	
+	private Home homeWindow;
+	
+	private Menu menuWindow;
 	
 	/**
 	 * Boots up the application.
@@ -116,6 +121,14 @@ public class ClientManager extends Application {
 	}
 	
 	/**
+	 * @return the homeWindow
+	 */
+	public Home getHomeWindow() {
+		return homeWindow;
+	}
+
+	
+	/**
 	 * Sets the credentials.
 	 * 
 	 * @param credentials the credentials to set
@@ -132,9 +145,12 @@ public class ClientManager extends Application {
 			this.chatPoller = new ChatPoller(credentials, this);
 			this.matchPoller = new MatchPoller(credentials, this);
 			new Thread(this.chatPoller).start();
+	//		TODO: enable
 	//		new Thread(this.matchPoller).start();
 			this.loginWindow.close();
-			new Menu(this).display();
+			this.homeWindow = new Home(this);
+			this.menuWindow = new Menu(this);
+			this.menuWindow.display();
 		}
 		else {
 			this.chatPoller = null;
@@ -192,8 +208,14 @@ public class ClientManager extends Application {
 		}
 	}
 
+	public void showHome() {
+		this.menuWindow.displaySub(this.homeWindow.getScene());
+	}
+	
 	public void logout() {
 		this.setCredentials(null);
+		this.loginWindow = new Login(this);
+		this.loginWindow.display();
 	}
 	
 	/**

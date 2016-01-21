@@ -7,6 +7,7 @@
 	-fx-text-fill: #ffcc00;
 	-fx-font-size: 16;
 	-fx-background-radius: 7;
+	-fx-width: 100;
 }
 
 .button{
@@ -19,8 +20,19 @@
 	-fx-text-fill: #ffcc00
 }
 
-.text-field{
+.text-field, .password-field{
 	-fx-background-radius: 7;
 	-fx-background-color: #bbaaee;
 	-fx-text-fill: #000000;
+	-fx-width: 150;
+}
+
+.urgent {
+	-fx-background-color: #ff0000;
+}
+
+.remove {
+	-fx-color: #ff0000;
+	-fx-background-radius: 0;
+	-fx-padding: 0;
 }

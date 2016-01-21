@@ -7,6 +7,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
@@ -16,25 +17,20 @@ import ml.vandenheuvel.ti1216.client.ClientManager;
  * Settings allows the user that save his preferences.
  */
 public class Settings {
-	
+
 	private ClientManager manager;
-	
+
+	private Scene scene;
+
 	public Settings(ClientManager manager) {
 		this.manager = manager;
+		this.renderScene();
 	}
 
 	/**
 	 * Sets all the elements of the Settings window.
 	 */
-	public void display() {
-		/**
-		 * Sets the title of the new window and fetches the user from the
-		 * database.
-		 */
-		Stage window = new Stage();
-		window.initModality(Modality.APPLICATION_MODAL);
-		window.setTitle("Settings");
-		
+	private void renderScene() {
 		/**
 		 * Sets the constraints of the window.
 		 */
@@ -80,8 +76,7 @@ public class Settings {
 		 */
 		Button menuButton = new Button("Return back to menu");
 		menuButton.setOnAction(e -> {
-				new Menu(this.manager).display();
-				window.close();
+			this.manager.showHome();
 		});
 
 		/**
@@ -107,7 +102,11 @@ public class Settings {
 		 */
 		Scene scene = new Scene(borderPane, 350, 200);
 		scene.getStylesheets().add("ml/vandenheuvel/ti1216/gui/Gui.css");
-		window.setScene(scene);
-		window.showAndWait();
+		this.scene = scene;
 	}
+
+	public Scene getScene() {
+		return this.scene;
+	}
+	
 }

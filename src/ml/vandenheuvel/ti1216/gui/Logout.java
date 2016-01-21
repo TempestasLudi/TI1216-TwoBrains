@@ -16,7 +16,7 @@ import ml.vandenheuvel.ti1216.client.ClientManager;
  */
 public class Logout {
 	
-	private ClientManager manager; 
+	private ClientManager manager;
 	
 	public Logout(ClientManager manager){
 		this.manager = manager;
@@ -49,7 +49,6 @@ public class Logout {
 		Button loginButton = new Button("Back to Login");
 		loginButton.setOnAction(e -> {
 				window.close();
-				new Login(this.manager).display();
 		});
 		vbox.setAlignment(Pos.CENTER);
 		vbox.getChildren().addAll(logoutLabel, loginButton);
@@ -66,6 +65,6 @@ public class Logout {
 		Scene scene = new Scene(layout, 350, 200);
 		scene.getStylesheets().add("ml/vandenheuvel/ti1216/gui/Gui.css");
 		window.setScene(scene);
-		window.show();
+		window.showAndWait();
 	}
 }

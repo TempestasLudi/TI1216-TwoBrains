@@ -150,6 +150,7 @@ public class Processor {
 			User user = User.fromJSON(new JSONObject(request.getBody().getContent()));
 			user.setUsername(credentials.getUsername());
 			this.communicator.save(user);
+			response.getBody().setContent(new JSONObject().put("success", true).toString());
 			return response;
 		}
 		response.getHeader().setHeaderLine(new ResponseLine("HTTP/1.1 405 Method Not Allowed"));
