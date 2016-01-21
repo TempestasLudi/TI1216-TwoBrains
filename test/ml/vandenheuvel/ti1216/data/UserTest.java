@@ -141,13 +141,5 @@ public class UserTest {
 		assertEquals(gradelist[0], User.fromJSON(user.toJSON()).getGradeList()[0]);
 		assertEquals(gradelist[1], User.fromJSON(user.toJSON()).getGradeList()[1]);
 	}
-
-	
-	/*@Test
-	public void testFromToJSON5() 
-	{ 
-		User user = new User("azaidman", "postcode", "slimme man", new Grade[] {null, new Grade("TI1216", 10)});
-		assertNull(User.fromJSON(user.toJSON()).getGradeList()[0]);
-	}*/
 	 
 }

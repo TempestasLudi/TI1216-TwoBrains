@@ -75,9 +75,7 @@ public class Settings {
 		 * Button to return back to the Menu.
 		 */
 		Button menuButton = new Button("Return back to menu");
-		menuButton.setOnAction(e -> {
-			this.manager.showHome();
-		});
+		menuButton.setOnAction(e -> this.manager.showHome());
 
 		/**
 		 * Adds the Labels, CheckBoxes and Button to hbox and vbox.

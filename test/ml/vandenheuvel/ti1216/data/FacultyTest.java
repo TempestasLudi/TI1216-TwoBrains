@@ -62,11 +62,11 @@ public class FacultyTest {
 
 	@Test
 	public void testAddProgram3() {
-		ArrayList<Program> list = new ArrayList<Program>();
-		ArrayList<Program> list3 = new ArrayList<Program>();
+		ArrayList<Program> list = new ArrayList<>();
+		ArrayList<Program> list3 = new ArrayList<>();
 		Faculty faculty = new Faculty("EWI", "Electrical Engineering, Mathematics and Computer Science", list);
 		Faculty faculty2 = new Faculty("INF", "Informatica", list3);
-		ArrayList<Course> list2 = new ArrayList<Course>();
+		ArrayList<Course> list2 = new ArrayList<>();
 		Program program = new Program("TI", "Technische Informatica", faculty2, list2);
 		faculty.addProgram(program);
 		assertEquals(faculty, program.getFaculty());
@@ -74,9 +74,9 @@ public class FacultyTest {
 
 	@Test
 	public void testRemoveProgram1() {
-		ArrayList<Program> list = new ArrayList<Program>();
+		ArrayList<Program> list = new ArrayList<>();
 		Faculty faculty = new Faculty("EWI", "Electrical Engineering, Mathematics and Computer Science", list);
-		ArrayList<Course> list2 = new ArrayList<Course>();
+		ArrayList<Course> list2 = new ArrayList<>();
 		Program program = new Program("TI", "Technische Informatica", faculty, list2);
 		faculty.addProgram(program);
 		faculty.removeProgram(program);
@@ -85,9 +85,9 @@ public class FacultyTest {
 
 	@Test
 	public void testRemoveProgram2() {
-		ArrayList<Program> list = new ArrayList<Program>();
+		ArrayList<Program> list = new ArrayList<>();
 		Faculty faculty = new Faculty("EWI", "Electrical Engineering, Mathematics and Computer Science", list);
-		ArrayList<Course> list2 = new ArrayList<Course>();
+		ArrayList<Course> list2 = new ArrayList<>();
 		Program program = new Program("TI", "Technische Informatica", faculty, list2);
 		faculty.addProgram(program);
 		faculty.removeProgram(program);
@@ -96,9 +96,9 @@ public class FacultyTest {
 
 	@Test
 	public void testRemoveProgram3() {
-		ArrayList<Program> list = new ArrayList<Program>();
+		ArrayList<Program> list = new ArrayList<>();
 		Faculty faculty = new Faculty("EWI", "Electrical Engineering, Mathematics and Computer Science", list);
-		ArrayList<Course> list2 = new ArrayList<Course>();
+		ArrayList<Course> list2 = new ArrayList<>();
 		Program program = new Program("TI", "Technische Informatica", faculty, list2);
 		Program program2 = new Program("TW", "Technische Wiskunde", faculty, list2);
 		faculty.addProgram(program);
@@ -108,7 +108,7 @@ public class FacultyTest {
 
 	@Test
 	public void testFromToJSON1() {
-		ArrayList<Program> list = new ArrayList<Program>();
+		ArrayList<Program> list = new ArrayList<>();
 		Faculty faculty = new Faculty("EWI", "Electrical Engineering, Mathematics and Computer Science", list);
 		assertEquals(faculty, Faculty.fromJSON(faculty.toJSON()));
 	}
@@ -121,15 +121,15 @@ public class FacultyTest {
 
 	@Test
 	public void testFromToJSON3() {
-		ArrayList<Program> list = new ArrayList<Program>();
+		ArrayList<Program> list = new ArrayList<>();
 		Faculty faculty = new Faculty("EWI", "Electrical Engineering, Mathematics and Computer Science", list);
 		assertEquals(faculty.getName(), Faculty.fromJSON(faculty.toJSON()).getName());
 	}
 
 	@Test
 	public void testFromToJSON4() {
-		ArrayList<Program> list = new ArrayList<Program>();
-		ArrayList<Course> list2 = new ArrayList<Course>();
+		ArrayList<Program> list = new ArrayList<>();
+		ArrayList<Course> list2 = new ArrayList<>();
 		Program program = new Program("TI", "Technische Informatica", null, list2);
 		list.add(program);
 		Faculty faculty = new Faculty("EWI", "Electrical Engineering, Mathematics and Computer Science", list);
@@ -138,7 +138,7 @@ public class FacultyTest {
 
 	@Test
 	public void testEqualsPositive() {
-		ArrayList<Program> list = new ArrayList<Program>();
+		ArrayList<Program> list = new ArrayList<>();
 		Faculty faculty1 = new Faculty("EWI", "Electrical Engineering, Mathematics and Computer Science", list);
 		Faculty faculty2 = new Faculty("EWI", "Elektrotechniek, Wiskunde en Informatica", list);
 		assertTrue(faculty1.equals(faculty2));
@@ -146,7 +146,7 @@ public class FacultyTest {
 
 	@Test
 	public void testEqualsNegative() {
-		ArrayList<Program> list = new ArrayList<Program>();
+		ArrayList<Program> list = new ArrayList<>();
 		Faculty faculty1 = new Faculty("EWI", "Electrical Engineering, Mathematics and Computer Science", list);
 		Faculty faculty2 = new Faculty("ewi", "Electrical Engineering, Mathematics and Computer Science", list);
 		assertFalse(faculty1.equals(faculty2));

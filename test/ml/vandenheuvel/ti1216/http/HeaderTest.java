@@ -79,7 +79,7 @@ public class HeaderTest {
 		HeaderField hf1 = new HeaderField("Connection", "close");
 		HeaderField hf2 = new HeaderField("Server", "working");
 
-		List<HeaderField> fields = new ArrayList<HeaderField>();
+		List<HeaderField> fields = new ArrayList<>();
 		fields.add(hf1);
 		fields.add(hf2);
 
@@ -98,7 +98,7 @@ public class HeaderTest {
 		HeaderField hf1 = new HeaderField("Connection", "close");
 		HeaderField hf2 = new HeaderField("Server", "working");
 
-		List<HeaderField> fields = new ArrayList<HeaderField>();
+		List<HeaderField> fields = new ArrayList<>();
 		fields.add(hf1);
 		fields.add(hf2);
 
@@ -169,7 +169,7 @@ public class HeaderTest {
 		HeaderField hf2 = new HeaderField("Server", "working");
 		HeaderField hf3 = new HeaderField("Thread", "lazy");
 
-		List<HeaderField> fields = new ArrayList<HeaderField>();
+		List<HeaderField> fields = new ArrayList<>();
 		fields.add(hf1);
 		fields.add(hf2);
 		fields.add(hf3);
@@ -194,7 +194,7 @@ public class HeaderTest {
 		HeaderField hf3 = new HeaderField("Socket", "lazy");
 		HeaderField hf4 = new HeaderField("ServerSocket", "wrong");
 
-		List<HeaderField> fields = new ArrayList<HeaderField>();
+		List<HeaderField> fields = new ArrayList<>();
 		fields.add(hf1);
 		fields.add(hf2);
 		fields.add(hf4);
@@ -217,7 +217,7 @@ public class HeaderTest {
 		HeaderField hf2 = new HeaderField("Server", "working");
 		HeaderField hf3 = new HeaderField("Thread", "lazy");
 
-		List<HeaderField> fields = new ArrayList<HeaderField>();
+		List<HeaderField> fields = new ArrayList<>();
 		fields.add(hf1);
 		fields.add(hf2);
 		fields.add(hf3);
@@ -241,7 +241,7 @@ public class HeaderTest {
 		HeaderField hf3 = new HeaderField("Socket", "lazy");
 		HeaderField hf4 = new HeaderField("Thread", "wrong");
 
-		List<HeaderField> fields = new ArrayList<HeaderField>();
+		List<HeaderField> fields = new ArrayList<>();
 		fields.add(hf1);
 		fields.add(hf2);
 		fields.add(hf4);
@@ -265,7 +265,7 @@ public class HeaderTest {
 		HeaderField hf3 = new HeaderField("Socket", "lazy");
 		HeaderField hf4 = new HeaderField("Thread", "wrong");
 
-		List<HeaderField> fields = new ArrayList<HeaderField>();
+		List<HeaderField> fields = new ArrayList<>();
 		fields.add(hf1);
 		fields.add(hf2);
 		fields.add(hf3);
@@ -287,7 +287,7 @@ public class HeaderTest {
 		HeaderField hf3 = new HeaderField("Thread", "lazy");
 		HeaderField hf4 = new HeaderField("Server", "wrong");
 
-		List<HeaderField> fields = new ArrayList<HeaderField>();
+		List<HeaderField> fields = new ArrayList<>();
 		fields.add(hf1);
 		fields.add(hf2);
 		fields.add(hf4);
@@ -372,7 +372,7 @@ public class HeaderTest {
 		HeaderField hf3 = new HeaderField("Socket", "lazy");
 		HeaderField hf4 = new HeaderField("Thread", "wrong");
 
-		List<HeaderField> fields = new ArrayList<HeaderField>();
+		List<HeaderField> fields = new ArrayList<>();
 		fields.add(hf1);
 		fields.add(hf2);
 		fields.add(hf3);
@@ -399,7 +399,7 @@ public class HeaderTest {
 		HeaderField hf3 = new HeaderField("Socket", "lazy");
 		HeaderField hf4 = new HeaderField("Thread", "wrong");
 
-		List<HeaderField> fields = new ArrayList<HeaderField>();
+		List<HeaderField> fields = new ArrayList<>();
 		fields.add(hf1);
 		fields.add(hf2);
 		fields.add(hf3);
@@ -424,7 +424,7 @@ public class HeaderTest {
 
 		HeaderLine hl2 = h.getHeaderLine();
 
-		boolean evaluate = (hl1.toString().equals(hl2.toString()));
+		boolean evaluate = hl1.toString().equals(hl2.toString());
 
 		assertTrue(evaluate);
 	}
@@ -436,7 +436,7 @@ public class HeaderTest {
 
 		HeaderLine hl2 = h.getHeaderLine();
 
-		boolean evaluate = (hl1.equals(hl2));
+		boolean evaluate = hl1.equals(hl2);
 
 		assertTrue(evaluate);
 	}
@@ -470,7 +470,7 @@ public class HeaderTest {
 		HeaderLine hl1 = new RequestLine("method", "URI", "version");
 		HeaderField hf1 = new HeaderField("Connection", "close");
 		HeaderField hf2 = new HeaderField("Server", "working");
-		List<HeaderField> fields = new ArrayList<HeaderField>();
+		List<HeaderField> fields = new ArrayList<>();
 		fields.add(hf1);
 		fields.add(hf2);
 
@@ -487,7 +487,7 @@ public class HeaderTest {
 		RequestLine rl1 = new RequestLine("method", "URI", "version");
 		HeaderField hf1 = new HeaderField("Connection", "close");
 		HeaderField hf2 = new HeaderField("Server", "working");
-		List<HeaderField> fields = new ArrayList<HeaderField>();
+		List<HeaderField> fields = new ArrayList<>();
 		fields.add(hf1);
 		fields.add(hf2);
 
@@ -504,7 +504,7 @@ public class HeaderTest {
 		RequestLine rl1 = new RequestLine("method", "URI", "version");
 		HeaderField hf1 = new HeaderField("Connection", "close");
 		HeaderField hf2 = new HeaderField("Server", "working");
-		List<HeaderField> fields = new ArrayList<HeaderField>();
+		List<HeaderField> fields = new ArrayList<>();
 		fields.add(hf1);
 		fields.add(hf2);
 
@@ -603,7 +603,7 @@ public class HeaderTest {
 	@Test
 	public void testAddField4() {
 		RequestLine rl = new RequestLine("method", "URI", "version");
-		List<HeaderField> fields = new ArrayList<HeaderField>();
+		List<HeaderField> fields = new ArrayList<>();
 
 		HeaderField hf1 = new HeaderField("Connection", "closed");
 		HeaderField hf2 = new HeaderField("Network", "open");
@@ -718,7 +718,7 @@ public class HeaderTest {
 		Header h1 = new Header(hl1);
 
 		RequestLine rl1 = new RequestLine("method", "URI", "version");
-		List<HeaderField> fields = new ArrayList<HeaderField>();
+		List<HeaderField> fields = new ArrayList<>();
 
 		HeaderField hf1 = new HeaderField("Connection", "closed");
 		HeaderField hf2 = new HeaderField("Network", "open");
@@ -761,7 +761,7 @@ public class HeaderTest {
 		Header h1 = new Header(hl1);
 
 		RequestLine rl1 = new RequestLine("method", "URI", "version");
-		List<HeaderField> fields = new ArrayList<HeaderField>();
+		List<HeaderField> fields = new ArrayList<>();
 
 		HeaderField hf1 = new HeaderField("Connection", "closed");
 		HeaderField hf2 = new HeaderField("Network", "open");
@@ -776,7 +776,7 @@ public class HeaderTest {
 	@Test
 	public void testMerge7() {
 		RequestLine rl1 = new RequestLine("method", "URI", "version");
-		List<HeaderField> fields = new ArrayList<HeaderField>();
+		List<HeaderField> fields = new ArrayList<>();
 
 		HeaderField hf1 = new HeaderField("Connection", "closed");
 		HeaderField hf2 = new HeaderField("Network", "open");
@@ -794,7 +794,7 @@ public class HeaderTest {
 	@Test
 	public void testMerge8() {
 		RequestLine rl1 = new RequestLine("method", "URI", "version");
-		List<HeaderField> fields = new ArrayList<HeaderField>();
+		List<HeaderField> fields = new ArrayList<>();
 
 		HeaderField hf1 = new HeaderField("Connection", "closed");
 		HeaderField hf2 = new HeaderField("Network", "open");
@@ -812,7 +812,7 @@ public class HeaderTest {
 	@Test
 	public void testMerge9() {
 		RequestLine rl1 = new RequestLine("method", "URI", "version");
-		List<HeaderField> fields1 = new ArrayList<HeaderField>();
+		List<HeaderField> fields1 = new ArrayList<>();
 
 		HeaderField hf1 = new HeaderField("Connection", "closed");
 		HeaderField hf2 = new HeaderField("Network", "open");
@@ -822,7 +822,7 @@ public class HeaderTest {
 		Header h1 = new Header(rl1, fields1);
 
 		RequestLine rl2 = new RequestLine("method", "URI", "version");
-		List<HeaderField> fields2 = new ArrayList<HeaderField>();
+		List<HeaderField> fields2 = new ArrayList<>();
 
 		HeaderField hf3 = new HeaderField("Connection", "closed");
 		HeaderField hf4 = new HeaderField("Network", "open");
@@ -832,21 +832,6 @@ public class HeaderTest {
 		fields2.add(hf5);
 
 		Header h2 = new Header(rl2, fields2);
-	}
-
-	// To do --> Andreas
-	@Test
-	public void testToString1() {
-	}
-
-	// To do --> Andreas
-	@Test
-	public void testToString2() {
-	}
-
-	// To do --> Andreas
-	@Test
-	public void testToString3() {
 	}*/
 
 	@Test
@@ -869,35 +854,5 @@ public class HeaderTest {
 	{
 		Header header = new Header();
 		assertFalse(header.equals(76));
-	}
-
-	// To do --> Andreas
-	@Test
-	public void testEquals4() {
-	}
-
-	// To do --> Andreas
-	@Test
-	public void testEquals5() {
-	}
-
-	// To do --> Andreas
-	@Test
-	public void testEquals6() {
-	}
-
-	// To do --> Andreas
-	@Test
-	public void testEquals7() {
-	}
-
-	// To do --> Andreas
-	@Test
-	public void testEquals8() {
-	}
-
-	// To do --> Andreas
-	@Test
-	public void testEquals9() {
 	}
 }

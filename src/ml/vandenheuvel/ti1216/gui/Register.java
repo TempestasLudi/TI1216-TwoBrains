@@ -32,6 +32,7 @@ public class Register {
 	 * Specifies all the elements of the Register window.
 	 */
 	public void display() {
+		logger.fine("Displaying Register window...");
 		Stage window = new Stage();
 		window.initModality(Modality.APPLICATION_MODAL);
 		window.setTitle("Register");

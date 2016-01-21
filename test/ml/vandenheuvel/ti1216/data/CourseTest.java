@@ -89,9 +89,9 @@ public class CourseTest {
 
 	@Test
 	public void testFromToJSON1() {
-		ArrayList<Program> programlist = new ArrayList<Program>();
+		ArrayList<Program> programlist = new ArrayList<>();
 		Faculty faculty = new Faculty("EWI", "Elektrotechniek, wiskunde en informatica", programlist);
-		ArrayList<Course> courselist = new ArrayList<Course>();
+		ArrayList<Course> courselist = new ArrayList<>();
 		Program program = new Program("TI", "Technische Informatica", faculty, courselist);
 		Course course = new Course("TI1216", "OOP Project", program);
 		assertEquals(course, Course.fromJSON(course.toJSON()));
@@ -99,9 +99,9 @@ public class CourseTest {
 
 	@Test
 	public void testFromToJSON2() {
-		ArrayList<Program> programlist = new ArrayList<Program>();
+		ArrayList<Program> programlist = new ArrayList<>();
 		Faculty faculty = new Faculty("EWI", "Elektrotechniek, wiskunde en informatica", programlist);
-		ArrayList<Course> courselist = new ArrayList<Course>();
+		ArrayList<Course> courselist = new ArrayList<>();
 		Program program = new Program("TI", "Technische Informatica", faculty, courselist);
 		Course course = new Course("TI1216", "OOP Project", program);
 		assertEquals(course.getName(), Course.fromJSON(course.toJSON()).getName());
