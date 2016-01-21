@@ -1,6 +1,7 @@
 package ml.vandenheuvel.ti1216.data;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -14,7 +15,7 @@ public class Faculty {
 	 * Class-instances/variables.
 	 */
 	private String name;
-	private ArrayList<Program> programs;
+	private List<Program> programs;
 	private String id;
 
 	/**
@@ -24,7 +25,7 @@ public class Faculty {
 	 * @param name the name of this faculty
 	 * @param programs the ArrayList of programs which are on this faculty
 	 */
-	public Faculty(String id, String name, ArrayList<Program> programs) {
+	public Faculty(String id, String name, List<Program> programs) {
 		this.id = id;
 		this.name = name;
 		if (programs == null) {
@@ -60,7 +61,7 @@ public class Faculty {
 	 * 
 	 * @return the programs of the faculty
 	 */
-	public ArrayList<Program> getPrograms() {
+	public List<Program> getPrograms() {
 		return this.programs;
 	}
 	
@@ -125,7 +126,7 @@ public class Faculty {
 	 */
 	public static Faculty fromJSON(JSONObject json) {
 		JSONArray programsJSON = json.getJSONArray("programs");
-		ArrayList<Program> programs = new ArrayList<>();
+		List<Program> programs = new ArrayList<>();
 		for (int i = 0; i < programsJSON.length(); i++) {
 			programs.add(Program.fromJSON(programsJSON.getJSONObject(i)));
 		}

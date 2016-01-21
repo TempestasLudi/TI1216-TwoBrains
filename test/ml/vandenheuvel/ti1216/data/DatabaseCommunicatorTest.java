@@ -3,6 +3,7 @@ package ml.vandenheuvel.ti1216.data;
 import static org.junit.Assert.*;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import org.junit.BeforeClass;
 import org.junit.Test;
@@ -59,8 +60,8 @@ public class DatabaseCommunicatorTest {
 					Faculty referenceFaculty = referenceFaculties[rf];
 					assertEquals(referenceFaculty.getName(), dbFaculty.getName());
 					found = true;
-					ArrayList<Program> dbPrograms = dbFaculty.getPrograms();
-					ArrayList<Program> referencePrograms = referenceFaculty.getPrograms();
+					List<Program> dbPrograms = dbFaculty.getPrograms();
+					List<Program> referencePrograms = referenceFaculty.getPrograms();
 					assertEquals(referencePrograms.size(), dbPrograms.size());
 					for (int dp = 0; dp < dbPrograms.size(); dp++) {
 						int rp = referencePrograms.indexOf(dbPrograms.get(dp));

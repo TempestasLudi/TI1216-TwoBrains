@@ -5,6 +5,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.LogRecord;
 import java.util.logging.Logger;
@@ -160,7 +161,7 @@ public class DatabaseCommunicator {
 	public void save(Faculty faculty) {
 		Faculty existing = this.getFaculty(faculty.getID());
 		try {
-			ArrayList<Program> programs = faculty.getPrograms();
+			List<Program> programs = faculty.getPrograms();
 			if (existing == null) {
 				this.execute("INSERT INTO faculty (ID, name) VALUES ('" + faculty.getID() + "', '" + faculty.getName()
 						+ "')");
@@ -170,7 +171,7 @@ public class DatabaseCommunicator {
 			} else {
 				this.execute(
 						"UPDATE faculty SET name = '" + faculty.getName() + "' WHERE ID = '" + faculty.getID() + "'");
-				ArrayList<Program> existingPrograms = existing.getPrograms();
+				List<Program> existingPrograms = existing.getPrograms();
 				for (int i = 0; i < programs.size(); i++) {
 					this.save(programs.get(i));
 				}
@@ -196,7 +197,7 @@ public class DatabaseCommunicator {
 	public void delete(Faculty faculty) {
 		try {
 			this.execute("DELETE FROM faculty WHERE ID = \'" + faculty.getID() + "\'");
-			ArrayList<Program> programs = faculty.getPrograms();
+			List<Program> programs = faculty.getPrograms();
 			for (int i = 0; i < programs.size(); i++) {
 				this.delete(programs.get(i));
 			}
@@ -235,7 +236,7 @@ public class DatabaseCommunicator {
 			ResultSet resultSet = this.get("SELECT * FROM program WHERE ID = '" + id + "'");
 			if (resultSet.next()) {
 				Faculty faculty = this.getFaculty(resultSet.getString("facultyID"));
-				ArrayList<Program> programs = faculty.getPrograms();
+				List<Program> programs = faculty.getPrograms();
 				for (int i = 0; i < programs.size(); i++) {
 					if (programs.get(i).getID().equals(id)) {
 						return programs.get(i);
