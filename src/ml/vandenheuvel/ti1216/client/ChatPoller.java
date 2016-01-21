@@ -1,6 +1,8 @@
 package ml.vandenheuvel.ti1216.client;
 
 import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import ml.vandenheuvel.ti1216.data.ChatMessage;
 import ml.vandenheuvel.ti1216.data.Credentials;
@@ -10,6 +12,7 @@ import ml.vandenheuvel.ti1216.data.Credentials;
  */
 public class ChatPoller implements Runnable{
 	
+	private static Logger logger = Logger.getLogger("ml.vandenheuvel.ti1216.client");
 	/**
 	 * Whether the poller should keep polling or not.
 	 */
@@ -24,6 +27,11 @@ public class ChatPoller implements Runnable{
 	 * The client-side application manager.
 	 */
 	private ClientManager manager;
+	
+	/**
+	 * The amount of milliseconds to wait before polling
+	 */
+	private int interval = 1000;
 	
 	/**
 	 * Class constructor.
@@ -41,26 +49,31 @@ public class ChatPoller implements Runnable{
 	 */
 	@Override
 	public void run() {
+		logger.info("Started 'run()' method in ChatPoller.");
 		while (this.run) {
+			logger.fine("Fetching chats...");
 			ArrayList<ChatMessage> chats = ServerCommunicator.fetchChats(this.credentials);
+			logger.fine("Received " + Integer.toString(chats.size()) + " chats.");
 			for (int i = 0; i < chats.size(); i++) {
 				this.manager.incomingChat(chats.get(i));
 			}
 			if (chats.isEmpty()) {
 				try {
-					Thread.sleep(1000);
+					logger.finest("Sleeping for " + Integer.toString(this.interval) + " milliseconds.");
+					Thread.sleep(this.interval);
 				} catch (InterruptedException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
+					logger.log(Level.WARNING, "Failed sleeping for " + Integer.toString(this.interval), e);
 				}
 			}
 		}
+		logger.info("ChatPoller thread stopped.");
 	}
 	
 	/**
 	 * Lets the poller terminate after the next poll.
 	 */
 	public void stop() {
+		logger.fine("Stopping ChatPoller thread...");
 		this.run = false;
 	}
 	
