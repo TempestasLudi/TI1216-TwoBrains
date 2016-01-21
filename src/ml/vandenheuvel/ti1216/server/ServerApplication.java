@@ -93,7 +93,11 @@ public class ServerApplication {
 				new Thread(new ClientCommunicator(socket, processor)).start();
 				logger.finer("A new ClientCommunicator based thread has been started.");
 			}
-			server.close();
+			try{
+				server.close();
+			} catch (NullPointerException e){
+				logger.log(Level.SEVERE, "Closed serversocket.", e);
+			}
 			logger.fine("Serversocket closed.");
 		} catch (IOException e1) {
 			logger.log(Level.SEVERE, "Server stopped running.", e1);

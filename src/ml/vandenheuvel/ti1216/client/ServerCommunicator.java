@@ -220,6 +220,7 @@ public class ServerCommunicator {
 			logger.finest("Closing socket...");
 			socket.close();
 			logger.finest("Closed socket.");
+			out.close();
 			return result;
 		} catch (IOException e) {
 			logger.log(Level.FINE, "Error while sending message and receiving response.",e);
