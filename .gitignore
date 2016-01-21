@@ -4,3 +4,5 @@
 .DS_Store
 .metadata/
 .settings/
+.sonar/
+sonar-project.properties
