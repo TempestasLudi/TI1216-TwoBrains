@@ -16,7 +16,7 @@ public class GradeTest {
 	@Test
 	public void testGetGrade() {
 		Grade test = new Grade("TI1216", 8);
-		assertEquals(8, test.getGrade());
+		assertTrue(8 == test.getGrade());
 	}
 
 	@Test
@@ -30,7 +30,7 @@ public class GradeTest {
 	public void testSetGrade() {
 		Grade test = new Grade("TI1216", 8);
 		test.setGrade(8);
-		assertEquals(8, test.getGrade());
+		assertTrue(8 == test.getGrade());
 	}
 
 	@Test

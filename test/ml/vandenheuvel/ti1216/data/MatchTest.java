@@ -178,18 +178,18 @@ public class MatchTest {
 		Match match41 = new Match(10,"U4","U1",false,false);
 		Match match42 = new Match(11,"U4","U2",false,false);
 		Match match43 = new Match(12,"U4","U3",false,false);
-		assertEquals(7,match12.getRating());
-		assertEquals(14,match13.getRating());
-		assertEquals(12,match14.getRating());
-		assertEquals(match12.getRating(),match21.getRating());
-		assertEquals(15,match23.getRating());
-		assertEquals(12,match24.getRating());
-		assertEquals(match13.getRating(),match31.getRating());
-		assertEquals(match23.getRating(),match32.getRating());
-		assertEquals(25,match34.getRating());
-		assertEquals(match14.getRating(),match41.getRating());
-		assertEquals(match24.getRating(),match42.getRating());
-		assertEquals(match34.getRating(),match43.getRating());
+		assertTrue(7==match12.getRating());
+		assertTrue(14==match13.getRating());
+		assertTrue(12==match14.getRating());
+		assertTrue(match12.getRating()==match21.getRating());
+		assertTrue(15==match23.getRating());
+		assertTrue(12==match24.getRating());
+		assertTrue(match13.getRating()==match31.getRating());
+		assertTrue(match23.getRating()==match32.getRating());
+		assertTrue(25==match34.getRating());
+		assertTrue(match14.getRating()==match41.getRating());
+		assertTrue(match24.getRating()==match42.getRating());
+		assertTrue(match34.getRating()==match43.getRating());
 		communicator.delete(f);
 	}
 
