@@ -18,7 +18,7 @@ public class Login {
 
 	private ClientManager manager;
 
-	private Stage window;
+	private Stage window1;
 
 	private static Logger logger = Logger.getLogger("ml.vandenheuvel.ti1216.client");
 
@@ -35,8 +35,8 @@ public class Login {
 		/**
 		 * Sets the title of the new window.
 		 */
-		this.window = new Stage();
-		Stage window = this.window;
+		this.window1 = new Stage();
+		Stage window = this.window1;
 		window.setResizable(false);
 		window.initModality(Modality.APPLICATION_MODAL);
 		window.setTitle("Login");
@@ -117,7 +117,7 @@ public class Login {
 	}
 
 	public void close() {
-		this.window.close();
+		this.window1.close();
 	}
 
 }
