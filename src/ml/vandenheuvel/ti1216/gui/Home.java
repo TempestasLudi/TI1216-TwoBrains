@@ -3,6 +3,7 @@ package ml.vandenheuvel.ti1216.gui;
 import java.util.ArrayList;
 import java.util.logging.Logger;
 
+import javafx.application.Platform;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
@@ -24,7 +25,7 @@ public class Home {
 	private ClientManager manager;
 
 	private Scene scene;
-	
+
 	private Pane matches;
 
 	public Home(ClientManager manager) {
@@ -41,17 +42,17 @@ public class Home {
 		this.matches = new VBox();
 		wrapper.getChildren().add(this.matches);
 		this.matches.getChildren().add(new Label("Matches:"));
-		
+
 		ArrayList<Match> matchesList = this.manager.getMatches();
 		for (int i = 0; i < matchesList.size(); i++) {
 			this.addMatch(matchesList.get(i));
 		}
-		
+
 		Scene scene = new Scene(wrapper, 350, 200);
 		scene.getStylesheets().add("ml/vandenheuvel/ti1216/gui/Gui.css");
 		this.scene = scene;
 	}
-	
+
 	public void addMatch(Match match) {
 		HBox wrapper = new HBox();
 		Label matchLabel = new Label(match.getMatchUsername());
@@ -66,11 +67,15 @@ public class Home {
 			this.manager.discardMatch(match);
 		});
 		wrapper.getChildren().addAll(matchLabel, chatButton, discardButton);
-		this.matches.getChildren().add(wrapper);
+		Platform.runLater(new Runnable() {
+			public void run() {
+				matches.getChildren().add(wrapper);
+			}
+		});
 	}
 
 	public Scene getScene() {
 		return this.scene;
 	}
-	
+
 }

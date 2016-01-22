@@ -6,27 +6,27 @@ import org.json.JSONObject;
  * Match represents a match between two users.
  */
 public class Match {
-	
+
 	/**
 	 * The id of the match.
 	 */
 	private int id;
-	
+
 	/**
 	 * The name of the user the match belongs to.
 	 */
 	private String username;
-	
+
 	/**
 	 * The name of the user that is matched.
 	 */
 	private String matchUsername;
-	
+
 	/**
 	 * Whether the match has already been seen or not by its user.
 	 */
 	private boolean seen;
-	
+
 	/**
 	 * Whether the match has been approved or not by its user.
 	 */
@@ -35,11 +35,16 @@ public class Match {
 	/**
 	 * Class constructor.
 	 * 
-	 * @param id the id of the match
-	 * @param username the name of the user the match belongs to
-	 * @param matchUsername the name of the user that is matched
-	 * @param seen whether the match has already been seen or not by its user
-	 * @param approved whether the match has been approved or not by its user
+	 * @param id
+	 *            the id of the match
+	 * @param username
+	 *            the name of the user the match belongs to
+	 * @param matchUsername
+	 *            the name of the user that is matched
+	 * @param seen
+	 *            whether the match has already been seen or not by its user
+	 * @param approved
+	 *            whether the match has been approved or not by its user
 	 */
 	public Match(int id, String username, String matchUsername, boolean seen, boolean approved) {
 		this.id = id;
@@ -48,7 +53,7 @@ public class Match {
 		this.seen = seen;
 		this.approved = approved;
 	}
-	
+
 	/**
 	 * Gets the id of the match.
 	 * 
@@ -57,7 +62,7 @@ public class Match {
 	public int getId() {
 		return this.id;
 	}
-	
+
 	/**
 	 * Gets the name of the user the match belongs to.
 	 * 
@@ -66,7 +71,7 @@ public class Match {
 	public String getUsername() {
 		return username;
 	}
-	
+
 	/**
 	 * Gets the name of the user that is matched.
 	 * 
@@ -93,20 +98,22 @@ public class Match {
 	public boolean isApproved() {
 		return approved;
 	}
-	
+
 	/**
 	 * Sets the name of the user the match belongs to.
 	 * 
-	 * @param username the name of the user the match belongs to
+	 * @param username
+	 *            the name of the user the match belongs to
 	 */
 	public void setUsername(String username) {
 		this.username = username;
 	}
-	
+
 	/**
 	 * Sets the name of the user that is matched.
 	 * 
-	 * @param matchUsername the name of the user that is matched
+	 * @param matchUsername
+	 *            the name of the user that is matched
 	 */
 	public void setMatchUsername(String matchUsername) {
 		this.matchUsername = matchUsername;
@@ -115,7 +122,8 @@ public class Match {
 	/**
 	 * Sets whether the match has already been seen or not by its user.
 	 * 
-	 * @param seen true if the match has been seen, otherwise false
+	 * @param seen
+	 *            true if the match has been seen, otherwise false
 	 */
 	public void setSeen(boolean seen) {
 		this.seen = seen;
@@ -124,7 +132,8 @@ public class Match {
 	/**
 	 * Sets whether the match has been approved or not by its user.
 	 * 
-	 * @param approved true if the match has been approved, otherwise false
+	 * @param approved
+	 *            true if the match has been approved, otherwise false
 	 */
 	public void setApproved(boolean approved) {
 		this.approved = approved;
@@ -136,59 +145,56 @@ public class Match {
 	 * @return a JSONObject that represents a Match object
 	 */
 	public JSONObject toJSON() {
-		return new JSONObject().put("id", this.id).put("username", this.username).put("matchUsername", this.matchUsername).put("seen", this.seen).put("approved", this.approved);
+		return new JSONObject().put("id", this.id).put("username", this.username)
+				.put("matchUsername", this.matchUsername).put("seen", this.seen).put("approved", this.approved);
 	}
 
 	/**
 	 * Creates a Match object out of a JSONObject.
-	 * @param jsonObject the JSONObject out of which the Match has to be created
+	 * 
+	 * @param jsonObject
+	 *            the JSONObject out of which the Match has to be created
 	 * @return the created Match Object
 	 */
 	public static Match fromJSON(JSONObject jsonObject) {
-		return new Match(jsonObject.getInt("id"), jsonObject.getString("username"), jsonObject.getString("matchUsername"), jsonObject.getBoolean("seen"), jsonObject.getBoolean("approved"));
+		return new Match(jsonObject.getInt("id"), jsonObject.getString("username"),
+				jsonObject.getString("matchUsername"), jsonObject.getBoolean("seen"),
+				jsonObject.getBoolean("approved"));
 	}
-	
+
 	/**
 	 * Calculates the rating of a given Match.
+	 * 
 	 * @return the rating of the Match
 	 */
-	public double getRating()
-	{
-		DatabaseCommunicator communicator = new DatabaseCommunicator("tempestasludi.com", "TI1216-test", "TI1216", "3t.uGmL365j2f7B");
+	public double getRating() {
+		DatabaseCommunicator communicator = new DatabaseCommunicator("tempestasludi.com", "TI1216-test", "TI1216",
+				"3t.uGmL365j2f7B");
 		Grade[] gradelist = communicator.getUser(username).getGradeList();
 		Grade[] matchGradelist = communicator.getUser(matchUsername).getGradeList();
 		double[] partialRatings = new double[Math.max(gradelist.length, matchGradelist.length)];
-		for(int i=0;i<gradelist.length;i++)
-		{
-			for(int j=0;j<matchGradelist.length;j++)
-			{
-				if(gradelist[i].getCourseId().equals(gradelist[j].getCourseId()))
-				{
+		for (int i = 0; i < gradelist.length; i++) {
+			for (int j = 0; j < matchGradelist.length; j++) {
+				if (gradelist[i].getCourseId().equals(gradelist[j].getCourseId())) {
 					partialRatings[i] = gradelist[i].getGrade() - gradelist[j].getGrade();
-				}
-				else
-				{
-					partialRatings[i]=-100000;
+				} else {
+					partialRatings[i] = -100000;
 				}
 			}
 		}
 		double max = partialRatings[0];
 		double min = partialRatings[0];
 		double rating = 0;
-		for(int j=0;j<partialRatings.length/2+1;j++)
-		{
-			for(int i=0;i<partialRatings.length;i++)
-			{
-				if(partialRatings[i]>max)
-				{
+		for (int j = 0; j < partialRatings.length / 2 + 1; j++) {
+			for (int i = 0; i < partialRatings.length; i++) {
+				if (partialRatings[i] > max) {
 					max = partialRatings[i];
 				}
-				if(partialRatings[i]!=-100000 && partialRatings[i]<min)
-				{
+				if (partialRatings[i] != -100000 && partialRatings[i] < min) {
 					min = partialRatings[i];
 				}
 			}
-			rating = rating + max-min;
+			rating = rating + max - min;
 		}
 		return rating;
 	}

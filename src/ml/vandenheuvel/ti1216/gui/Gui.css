@@ -37,6 +37,10 @@
 	-fx-background-color: #ff0000;
 }
 
+.not-urgent {
+	-fx-background-color: #00ff00;
+}
+
 .grade-list {
 	-fx-background-color: rgba(255, 255, 255, .05);
 	-fx-background-radius: 10;

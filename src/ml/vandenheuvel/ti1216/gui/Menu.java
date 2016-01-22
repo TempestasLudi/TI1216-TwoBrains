@@ -26,6 +26,8 @@ public class Menu {
 	// private Stage window;
 	private VBox contentWrapper;
 	private Scene subscene;
+	
+	private Button urgencyButton;
 
 	private static Logger logger = Logger.getLogger("ml.vandenheuvel.ti1216.client");
 
@@ -67,13 +69,8 @@ public class Menu {
 		/**
 		 * Button to ask for immediate matches.
 		 */
-		Button urgentButton = new Button("I am desperate!");
-		urgentButton.getStyleClass().add("urgent");
-		urgentButton.setOnAction(e -> {
-			User user = this.manager.getUser();
-			user.setUrgent(true);
-			this.manager.updateUser(this.manager.getCredentials(), user);
-		});
+		this.urgencyButton = new Button();
+		this.setUrgency(this.manager.getUser().isUrgent());
 
 		/**
 		 * Button to go to the Settings window.
@@ -89,7 +86,7 @@ public class Menu {
 			window.close();
 			this.manager.logout();
 		});
-		topMenu.getChildren().addAll(homeButton, editButton, urgentButton, settingsButton, logoutButton);
+		topMenu.getChildren().addAll(homeButton, editButton, urgencyButton, settingsButton, logoutButton);
 
 		/**
 		 * Adds all the different components to the BorderPane.
@@ -117,6 +114,24 @@ public class Menu {
 		if (this.subscene != null) {
 			this.contentWrapper.getChildren().add(subscene.getRoot());
 		}
+	}
+	
+	private void setUrgency(boolean urgent) {
+		if (urgent) {
+			this.urgencyButton.setText("I'm not desperate.");
+			this.urgencyButton.getStyleClass().add("not-urgent");
+			this.urgencyButton.getStyleClass().remove("urgent");
+		} else {
+			this.urgencyButton.setText("I am desperate.");
+			this.urgencyButton.getStyleClass().add("urgent");
+			this.urgencyButton.getStyleClass().remove("not-urgent");
+		}
+		this.urgencyButton.setOnAction(e -> {
+			User user = this.manager.getUser();
+			user.setUrgent(!urgent);
+			this.manager.updateUser(this.manager.getCredentials(), user);
+			this.setUrgency(!urgent);
+		});
 	}
 
 }

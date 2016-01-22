@@ -146,7 +146,7 @@ public class Chat {
 		row.getChildren().add(chatLabel);
 		boolean bottom = this.scroller.getVvalue() == this.scroller.getVmax();
 		this.messageList.getChildren().add(row);
-		
+
 		// Scroll down
 		if (bottom) {
 			DoubleProperty wProperty = new SimpleDoubleProperty();
@@ -171,5 +171,5 @@ public class Chat {
 			chatInput.setText("");
 		}
 	}
-	
+
 }

@@ -533,7 +533,8 @@ public class DatabaseCommunicator {
 		try {
 			if (existing != null) {
 				this.execute("UPDATE user SET postalCode = '" + user.getPostalCode() + "', description = '"
-						+ user.getDescription() + "', urgent = " + user.isUrgent() + " WHERE name = '" + user.getUsername() + "'");
+						+ user.getDescription() + "', urgent = " + user.isUrgent() + " WHERE name = '"
+						+ user.getUsername() + "'");
 				this.execute("DELETE FROM grade WHERE username = '" + user.getUsername() + "'");
 				Grade[] gradeList = user.getGradeList();
 				if (gradeList.length > 0) {
@@ -687,9 +688,10 @@ public class DatabaseCommunicator {
 				this.execute("INSERT INTO `match` (username, matchUsername) VALUES ('" + match.getUsername() + "', '"
 						+ match.getMatchUsername() + "')");
 			} else {
-				this.execute("UPDATE `match` SET username = '" + match.getUsername() + "', matchUsername = '"
+				String query = "UPDATE `match` SET username = '" + match.getUsername() + "', matchUsername = '"
 						+ match.getMatchUsername() + "', seen=" + match.isSeen() + ", approved=" + match.isApproved()
-						+ " WHERE ID = '" + match.getId() + "'");
+						+ " WHERE ID = '" + match.getId() + "'";
+				this.execute(query);
 			}
 		} catch (SQLException e) {
 			logger.log(Level.FINE, "Failed save(Match match).", e);
@@ -748,15 +750,15 @@ public class DatabaseCommunicator {
 			String query = "SELECT * FROM chat WHERE receiverName = '" + username + "'";
 			if (onlyNew) {
 				query += " AND seen = false";
-			}
-			else {
+			} else {
 				query += " OR senderName = '" + username + "'";
 			}
 			ResultSet resultSet = this.get(query);
 			ArrayList<ChatMessage> chats = new ArrayList<>();
 			while (resultSet.next()) {
 				chats.add(new ChatMessage(resultSet.getInt("ID"), resultSet.getString("senderName"),
-						resultSet.getString("message"), resultSet.getString("receiverName"), resultSet.getBoolean("seen")));
+						resultSet.getString("message"), resultSet.getString("receiverName"),
+						resultSet.getBoolean("seen")));
 			}
 			ChatMessage[] result = new ChatMessage[chats.size()];
 			chats.toArray(result);
@@ -776,13 +778,13 @@ public class DatabaseCommunicator {
 	public void save(ChatMessage message) {
 		try {
 			if (message.getId() < 0 || !this.get("SELECT * FROM chat WHERE ID = " + message.getId()).next()) {
-				this.execute("INSERT INTO chat (senderName, receiverName, message, seen) VALUES ('" + message.getSender()
-				+ "', '" + message.getReceiver() + "', '" + message.getMessage() + "', " + message.isSeen()
-				+ ")");
+				this.execute("INSERT INTO chat (senderName, receiverName, message, seen) VALUES ('"
+						+ message.getSender() + "', '" + message.getReceiver() + "', '" + message.getMessage() + "', "
+						+ message.isSeen() + ")");
 			} else {
 				this.execute("UPDATE chat SET senderName = '" + message.getSender() + "', receiverName = '"
-						+ message.getReceiver() + "', message = '" + message.getMessage() + "', seen = " + message.isSeen()
-						+ " WHERE ID = '" + message.getId() + "'");
+						+ message.getReceiver() + "', message = '" + message.getMessage() + "', seen = "
+						+ message.isSeen() + " WHERE ID = '" + message.getId() + "'");
 			}
 		} catch (SQLException e) {
 			logger.log(Level.FINE, "Failed save(ChatMessage message).", e);
@@ -802,7 +804,8 @@ public class DatabaseCommunicator {
 			this.execute("DELETE FROM chat WHERE ID = " + message.getId());
 		} catch (SQLException e) {
 			logger.log(Level.FINE, "Failed delete(ChatMessage message).", e);
-			logger.log(Level.FINER, "String represenation of the message:", new LogRecord(Level.FINER, message.toString()));
+			logger.log(Level.FINER, "String represenation of the message:",
+					new LogRecord(Level.FINER, message.toString()));
 		}
 	}
 

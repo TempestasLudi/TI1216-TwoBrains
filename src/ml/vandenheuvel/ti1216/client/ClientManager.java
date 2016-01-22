@@ -27,7 +27,7 @@ import ml.vandenheuvel.ti1216.gui.Menu;
  * Probably has to be started with 127.0.0.1 127.0.0.1 80 as run configuration.
  */
 public class ClientManager extends Application {
-	
+
 	/**
 	 * The communicator that handles all communication with the server.
 	 */
@@ -37,17 +37,17 @@ public class ClientManager extends Application {
 	 * The thread that polls for new chat messages.
 	 */
 	private ChatPoller chatPoller;
-	
+
 	/**
 	 * The thread that polls for new matches.
 	 */
 	private MatchPoller matchPoller;
-	
+
 	private Credentials credentials;
 	private User user;
-	
+
 	private static Logger logger = Logger.getLogger("ml.vandenheuvel.ti1216.client");
-	
+
 	private Login loginWindow;
 	private Home homeWindow;
 	private Menu menuWindow;
@@ -55,21 +55,19 @@ public class ClientManager extends Application {
 
 	private ArrayList<ChatMessage> messages = new ArrayList<ChatMessage>();
 	private ArrayList<Match> matches = new ArrayList<Match>();
-	
+
 	/**
 	 * Boots up the application.
 	 */
 	public static void main(String[] args) {
-		if(args.length < 3){
+		if (args.length < 3) {
 			logger.setLevel(Level.SEVERE);
 			logger.severe("Cannot start application without target address, target host and portnumber to connect to.");
 			return;
-		}
-		else if(args.length == 3){
+		} else if (args.length == 3) {
 			logger.setLevel(Level.WARNING);
 			logger.warning("Assuming loglevel \"WARNING\".");
-		}
-		else if(args.length == 4){
+		} else if (args.length == 4) {
 			switch (args[3]) {
 			case "OFF":
 				logger.setLevel(Level.OFF);
@@ -95,13 +93,12 @@ public class ClientManager extends Application {
 			default:
 				logger.setLevel(Level.WARNING);
 			}
-		}
-		else {
+		} else {
 			logger.setLevel(Level.WARNING);
 			logger.severe("Too many arguments. Only give the loglevel as argument.");
 			return;
 		}
-		
+
 		try {
 			logger.addHandler(new FileHandler("%t/TwoBrains.log"));
 			logger.info("Logging to " + System.getProperty("java.io.tmpdir") + "/TwoBrains.log" + " using loglevel "
@@ -115,19 +112,21 @@ public class ClientManager extends Application {
 		logger.fine("Launching main application...");
 		Application.launch(args);
 	}
-	
+
 	/**
 	 * Starts the application.
 	 */
 	public void start(Stage primaryStage) {
 		final List<String> parameters = getParameters().getRaw();
-		logger.info("Starting new ServerCommunicator with parameters " + parameters.get(0) + " " + parameters.get(1) + " " + parameters.get(2));
-		this.communicator = new ServerCommunicator(parameters.get(0), parameters.get(1), Integer.valueOf(Integer.parseInt(parameters.get(2))));
+		logger.info("Starting new ServerCommunicator with parameters " + parameters.get(0) + " " + parameters.get(1)
+				+ " " + parameters.get(2));
+		this.communicator = new ServerCommunicator(parameters.get(0), parameters.get(1),
+				Integer.valueOf(Integer.parseInt(parameters.get(2))));
 		logger.fine("Opening Login window...");
 		this.loginWindow = new Login(this);
 		this.loginWindow.display();
 	}
-	
+
 	/**
 	 * Gets the credentials.
 	 * 
@@ -136,7 +135,7 @@ public class ClientManager extends Application {
 	public Credentials getCredentials() {
 		return credentials;
 	}
-	
+
 	/**
 	 * Gets the user.
 	 * 
@@ -145,7 +144,7 @@ public class ClientManager extends Application {
 	public User getUser() {
 		return user;
 	}
-	
+
 	/**
 	 * @return the homeWindow
 	 */
@@ -170,7 +169,8 @@ public class ClientManager extends Application {
 	/**
 	 * Sets the credentials.
 	 * 
-	 * @param credentials the credentials to set
+	 * @param credentials
+	 *            the credentials to set
 	 */
 	private void setCredentials(Credentials credentials) {
 		this.credentials = credentials;
@@ -189,8 +189,7 @@ public class ClientManager extends Application {
 			this.homeWindow = new Home(this);
 			this.menuWindow = new Menu(this);
 			this.menuWindow.display();
-		}
-		else {
+		} else {
 			this.chatPoller = null;
 			this.matchPoller = null;
 			this.chatWindows = new ArrayList<Chat>();
@@ -198,11 +197,12 @@ public class ClientManager extends Application {
 			this.matches = new ArrayList<Match>();
 		}
 	}
-	
+
 	/**
 	 * Sets the user.
 	 * 
-	 * @param user the user to set
+	 * @param user
+	 *            the user to set
 	 */
 	public void setUser(User user) {
 		this.user = user;
@@ -211,7 +211,8 @@ public class ClientManager extends Application {
 	/**
 	 * Sets the credentials.
 	 * 
-	 * @param credentials the credentials to set
+	 * @param credentials
+	 *            the credentials to set
 	 */
 	public boolean login(Credentials credentials) {
 		JSONObject userData = this.communicator.login(credentials);
@@ -233,17 +234,19 @@ public class ClientManager extends Application {
 			return false;
 		}
 	}
-	
+
 	/**
 	 * Tries to register a user.
 	 * 
-	 * @param credentials the credentials to register by
-	 * @param user the user to register
+	 * @param credentials
+	 *            the credentials to register by
+	 * @param user
+	 *            the user to register
 	 * @return whether the user could be registered or not
 	 */
 	public boolean register(Credentials credentials, User user) {
 		boolean register = this.communicator.register(credentials, user);
-		if(register == true) {
+		if (register == true) {
 			logger.info("Registered successfully.");
 			this.setUser(user);
 			this.setCredentials(credentials);
@@ -252,17 +255,19 @@ public class ClientManager extends Application {
 			return false;
 		}
 	}
-	
+
 	/**
 	 * Tries to update a user.
 	 * 
-	 * @param credentials the credentials to authenticate with
-	 * @param user the user to update
+	 * @param credentials
+	 *            the credentials to authenticate with
+	 * @param user
+	 *            the user to update
 	 * @return whether the user could be updated or not
 	 */
 	public boolean updateUser(Credentials credentials, User user) {
 		boolean update = this.communicator.updateUser(credentials, user);
-		if(update == true) {
+		if (update == true) {
 			logger.info("Profile successfully updated.");
 			this.user = user;
 			return true;
@@ -270,7 +275,7 @@ public class ClientManager extends Application {
 			return false;
 		}
 	}
-	
+
 	public void openChat(String username) {
 		for (int i = 0; i < this.chatWindows.size(); i++) {
 			if (this.chatWindows.get(i).getUsername().equals(username)) {
@@ -286,25 +291,24 @@ public class ClientManager extends Application {
 	public boolean sendChat(ChatMessage message) {
 		if (this.communicator.sendChat(this.credentials, message)) {
 			return true;
-		}
-		else {
+		} else {
 			return false;
 		}
 	}
-	
+
 	public void discardMatch(Match match) {
 		this.matches.remove(match);
 		match.setApproved(false);
 		this.communicator.updateMatch(this.credentials, match);
 	}
-	
+
 	/**
 	 * Puts the home screen on in the menu.
 	 */
 	public void showHome() {
 		this.menuWindow.displaySub(this.homeWindow.getScene());
 	}
-	
+
 	/**
 	 * Returns to login screen.
 	 */
@@ -313,14 +317,15 @@ public class ClientManager extends Application {
 		this.loginWindow = new Login(this);
 		this.loginWindow.display();
 	}
-	
+
 	/**
 	 * Handles an incoming chat message.
 	 * 
-	 * @param message the message to handle
+	 * @param message
+	 *            the message to handle
 	 */
 	public void incomingChat(ChatMessage message) {
-		Platform.runLater(new Runnable(){
+		Platform.runLater(new Runnable() {
 			public void run() {
 				openChat(message.getSender());
 				for (int i = 0; i < chatWindows.size(); i++) {
@@ -336,10 +341,11 @@ public class ClientManager extends Application {
 	/**
 	 * Handles an incoming chat message.
 	 * 
-	 * @param message the message to handle
+	 * @param message
+	 *            the message to handle
 	 */
 	public void incomingMatch(Match match) {
 		this.homeWindow.addMatch(match);
 	}
-	
+
 }

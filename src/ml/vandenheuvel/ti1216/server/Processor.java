@@ -295,7 +295,7 @@ public class Processor {
 			if (credentials.getUsername().equals(receive.getUsername())) {
 				Match checkMatch = this.communicator.getMatch(receive.getId());
 				if (credentials.getUsername().equals(checkMatch.getUsername())) {
-					this.communicator.save(checkMatch);
+					this.communicator.save(receive);
 					response.getHeader().setHeaderLine(new ResponseLine("HTTP/1.1 200 OK"));
 					JSONObject succes = new JSONObject();
 					succes.put("success", true);
