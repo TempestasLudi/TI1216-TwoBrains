@@ -32,12 +32,12 @@ import ml.vandenheuvel.ti1216.http.ResponseLine;
 public class ServerCommunicator {
 
 	private static Logger logger = Logger.getLogger("ml.vandenheuvel.ti1216.client");
-	
+
 	private String targetAddress;
 	private String targetHost;
 	private int portNumber;
-	
-	public ServerCommunicator(String targetAddress, String targetHost, int portNumber){
+
+	public ServerCommunicator(String targetAddress, String targetHost, int portNumber) {
 		this.targetAddress = targetAddress;
 		this.targetHost = targetHost;
 		this.portNumber = portNumber;
@@ -46,8 +46,10 @@ public class ServerCommunicator {
 	/**
 	 * Tries to log in a user and fetches that user from the server.
 	 * 
-	 * @param credentials the credentials to login with
-	 * @return the user with specified credentials if present on the server, otherwise null
+	 * @param credentials
+	 *            the credentials to login with
+	 * @return the user with specified credentials if present on the server,
+	 *         otherwise null
 	 */
 	public User login(Credentials credentials) {
 		logger.fine("Logging in with credentials " + credentials.toString() + "...");
@@ -70,8 +72,10 @@ public class ServerCommunicator {
 	/**
 	 * Tries to register a user on the server.
 	 * 
-	 * @param credentials the credentials to register with
-	 * @param user the user to register
+	 * @param credentials
+	 *            the credentials to register with
+	 * @param user
+	 *            the user to register
 	 * @return true if the user could be registered, otherwise false
 	 */
 	public boolean register(Credentials credentials, User user) {
@@ -93,8 +97,10 @@ public class ServerCommunicator {
 	/**
 	 * Tries to update a user on the server.
 	 * 
-	 * @param credentials the credentials of the user
-	 * @param user the user to update
+	 * @param credentials
+	 *            the credentials of the user
+	 * @param user
+	 *            the user to update
 	 * @return true if the user could be updated, otherwise false
 	 */
 	public boolean updateUser(Credentials credentials, User user) {
@@ -147,7 +153,7 @@ public class ServerCommunicator {
 	 * @return a faculty if found, otherwise null
 	 */
 	public Faculty fetchFaculty(Credentials credentials, int facultyId) {
-		logger.fine("Fetching faculty with id = " + facultyId+ "...");
+		logger.fine("Fetching faculty with id = " + facultyId + "...");
 		Message request = createMessage("get", "faculty/" + facultyId, credentials);
 		Message response = send(request);
 		ResponseLine responseLine = (ResponseLine) response.getHeader().getHeaderLine();
@@ -224,7 +230,7 @@ public class ServerCommunicator {
 			out.close();
 			return result;
 		} catch (IOException e) {
-			logger.log(Level.FINE, "Error while sending message and receiving response.",e);
+			logger.log(Level.FINE, "Error while sending message and receiving response.", e);
 		}
 		return null;
 	}
@@ -279,8 +285,6 @@ public class ServerCommunicator {
 		return result;
 	}
 
-	
-	
 	/**
 	 * Tries to update a user on the server.
 	 * 
@@ -290,8 +294,8 @@ public class ServerCommunicator {
 	 *            the match to update
 	 * @return true if the match could be updated, otherwise false
 	 */
-	public boolean updateMatch(Credentials credentials, Match match){
-		Message request = createMessage("get", "match", credentials);
+	public boolean updateMatch(Credentials credentials, Match match) {
+		Message request = createMessage("update", "match", credentials);
 		request.getBody().setContent(match.toJSON().toString());
 		Message response = send(request);
 		ResponseLine responseLine = (ResponseLine) response.getHeader().getHeaderLine();
@@ -302,8 +306,6 @@ public class ServerCommunicator {
 		JSONObject body = new JSONObject(response.getBody().getContent());
 		return body.getBoolean("success");
 	}
-	
-	
 
 	/**
 	 * Creates a default HTTP message with Basic authentication.
