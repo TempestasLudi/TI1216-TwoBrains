@@ -3,13 +3,13 @@ package ml.vandenheuvel.ti1216.gui;
 import java.util.logging.Logger;
 
 import javafx.geometry.Insets;
+import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.layout.GridPane;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import ml.vandenheuvel.ti1216.client.ClientManager;
-import ml.vandenheuvel.ti1216.client.ServerCommunicator;
 import ml.vandenheuvel.ti1216.data.Credentials;
 import ml.vandenheuvel.ti1216.data.Grade;
 import ml.vandenheuvel.ti1216.data.User;
@@ -34,6 +34,7 @@ public class Register {
 	public void display() {
 		logger.fine("Displaying Register window...");
 		Stage window = new Stage();
+		window.setResizable(false);
 		window.initModality(Modality.APPLICATION_MODAL);
 		window.setTitle("Register");
 
@@ -41,6 +42,7 @@ public class Register {
 		 * Make a new GridPane and set the constraints.
 		 */
 		GridPane grid = new GridPane();
+		grid.setAlignment(Pos.CENTER);
 		grid.setPadding(new Insets(10, 10, 10, 10));
 		grid.setVgap(8);
 		grid.setHgap(10);
@@ -138,7 +140,7 @@ public class Register {
 		/**
 		 * Sets the seize of the window and adds all the elements.
 		 */
-		Scene scene = new Scene(grid, 500, 400);
+		Scene scene = new Scene(grid, 400, 300);
 		scene.getStylesheets().add("ml/vandenheuvel/ti1216/gui/Gui.css");
 		window.setScene(scene);
 		window.showAndWait();

@@ -88,11 +88,11 @@ public class Login {
 		GridPane.setConstraints(loginButton, 1, 3);
 
 		/**
-		 * Hyperlink to go to the RegisterGUI window when you are not a member
+		 * Hyperlink to go to the Register window when you are not a member
 		 * yet.
 		 */
 		Hyperlink registerLink = new Hyperlink();
-		registerLink.setText("Not a member yet? Register now!");
+		registerLink.setText("Not a member yet? Register here!");
 
 		/**
 		 * When u click this link, the RegisterGUI window will open.

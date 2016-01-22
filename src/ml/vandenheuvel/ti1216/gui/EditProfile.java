@@ -6,6 +6,7 @@ import java.util.logging.Logger;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.geometry.Insets;
+import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
@@ -41,7 +42,8 @@ public class EditProfile {
 	 */
 	private void renderScene() {
 		VBox wrapper = new VBox();
-		wrapper.setMaxWidth(400);
+		wrapper.setAlignment(Pos.CENTER);
+		wrapper.setMaxWidth(800);
 		ObservableList<Node> wrapperChildren = wrapper.getChildren();
 
 		int labelWidth = 150;
@@ -59,6 +61,7 @@ public class EditProfile {
 		passInput1.setPromptText("Password");
 		passInput1.setMinWidth(250);
 		passRow1.getChildren().addAll(passLabel1, passInput1);
+		passRow1.setAlignment(Pos.CENTER);
 		wrapperChildren.add(passRow1);
 
 		HBox passRow2 = new HBox();
@@ -68,6 +71,7 @@ public class EditProfile {
 		passInput2.setPromptText("Confirm password");
 		passInput2.setMinWidth(250);
 		passRow2.getChildren().addAll(passLabel2, passInput2);
+		passRow2.setAlignment(Pos.CENTER);
 		wrapperChildren.add(passRow2);
 
 		HBox postalRow = new HBox();
@@ -78,6 +82,7 @@ public class EditProfile {
 		postalInput.setMinWidth(250);
 		postalInput.setText(this.manager.getUser().getPostalCode());
 		postalRow.getChildren().addAll(postalLabel, postalInput);
+		postalRow.setAlignment(Pos.CENTER);
 		wrapperChildren.add(postalRow);
 
 		HBox descriptionRow = new HBox();
@@ -88,6 +93,7 @@ public class EditProfile {
 		descriptionInput.setMinWidth(250);
 		descriptionInput.setText(this.manager.getUser().getDescription());
 		descriptionRow.getChildren().addAll(descriptionLabel, descriptionInput);
+		descriptionRow.setAlignment(Pos.CENTER);
 		wrapperChildren.add(descriptionRow);
 
 		HBox oldPassRow = new HBox();
@@ -97,6 +103,7 @@ public class EditProfile {
 		oldPassInput.setPromptText("Password");
 		oldPassInput.setMinWidth(250);
 		oldPassRow.getChildren().addAll(oldPassLabel, oldPassInput);
+		oldPassRow.setAlignment(Pos.CENTER);
 		wrapperChildren.add(oldPassRow);
 
 		wrapperChildren.add(new Label("Grades:"));
@@ -114,6 +121,7 @@ public class EditProfile {
 		facultyInput.setPromptText("Select a faculty");
 		facultyInput.setMinWidth(250);
 		facultyRow.getChildren().addAll(facultyLabel, facultyInput);
+		facultyRow.setAlignment(Pos.CENTER);
 		wrapperChildren.add(facultyRow);
 
 		ObservableList<String> programOptions = FXCollections.observableArrayList();
@@ -125,6 +133,7 @@ public class EditProfile {
 		programInput.setPromptText("Select a program");
 		programInput.setMinWidth(250);
 		programRow.getChildren().addAll(programLabel, programInput);
+		programRow.setAlignment(Pos.CENTER);
 		wrapperChildren.add(programRow);
 
 		ObservableList<String> courseOptions = FXCollections.observableArrayList();
@@ -136,6 +145,7 @@ public class EditProfile {
 		courseInput.setPromptText("Select a course");
 		courseInput.setMinWidth(250);
 		courseRow.getChildren().addAll(courseLabel, courseInput);
+		courseRow.setAlignment(Pos.CENTER);
 		wrapperChildren.add(courseRow);
 
 		facultyInput.setOnAction(e -> {
@@ -188,6 +198,7 @@ public class EditProfile {
 		markInput.setBlockIncrement(.5);
 		markInput.setSnapToTicks(true);
 		markRow.getChildren().addAll(markLabel, markInput);
+		markRow.setAlignment(Pos.CENTER);
 		wrapperChildren.add(markRow);
 
 		HBox gradeButtonRow = new HBox();
@@ -195,6 +206,7 @@ public class EditProfile {
 		Button gradeAddButton = new Button("Add grade to list");
 		gradeAddButton.setMinWidth(250);
 		gradeButtonRow.getChildren().addAll(gradeAddButton);
+		gradeButtonRow.setAlignment(Pos.CENTER);
 		wrapperChildren.add(gradeButtonRow);
 
 		Grade[] grades = this.manager.getUser().getGradeList();
@@ -238,6 +250,7 @@ public class EditProfile {
 		cancelButton.setOnAction(e -> this.manager.showHome());
 		cancelButton.setMinWidth(125);
 		buttonRow.getChildren().addAll(updateButton, cancelButton);
+		buttonRow.setAlignment(Pos.CENTER);
 		wrapperChildren.add(buttonRow);
 
 		Scene scene1 = new Scene(wrapper, 500, 375);
@@ -270,6 +283,7 @@ public class EditProfile {
 		Label markLabel = new Label(Double.toString(mark));
 		markLabel.setMinWidth(230);
 		gradeBox.getChildren().addAll(courseBox, markLabel, removeButton);
+		gradeBox.setAlignment(Pos.CENTER);
 		box.getChildren().add(gradeBox);
 
 		removeButton.setOnAction(e -> ((Pane) removeButton.getParent().getParent()).getChildren().remove(removeButton.getParent()));

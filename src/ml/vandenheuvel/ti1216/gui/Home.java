@@ -31,6 +31,7 @@ public class Home {
 	 */
 	private void renderScene() {
 		HBox wrapper = new HBox();
+		wrapper.setAlignment(Pos.CENTER);
 		
 		VBox match = new VBox();
 		wrapper.getChildren().add(match);

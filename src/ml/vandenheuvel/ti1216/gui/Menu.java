@@ -44,12 +44,13 @@ public class Menu {
 		 */
 		Stage window = new Stage();
 		window.setTitle("Menu");
-		window.setMaximized(true);
+		window.setResizable(false);
 
 		/**
 		 * Creates the top row of this window.
 		 */
 		HBox topMenu = new HBox();
+		topMenu.setAlignment(Pos.CENTER);
 
 		/**
 		 * Button to go to the EditProfileGUI window.
@@ -58,7 +59,7 @@ public class Menu {
 		homeButton.setOnAction(e -> displaySub(new Home(this.manager).getScene()));
 
 		/**
-		 * Button to go to the EditProfileGUI window.
+		 * Button to go to the EditProfile window.
 		 */
 		Button editButton = new Button("Edit profile");
 		editButton.setOnAction(e -> displaySub(new EditProfile(this.manager).getScene()));
@@ -75,7 +76,7 @@ public class Menu {
 		});
 
 		/**
-		 * Button to go to the SettingsGUI window.
+		 * Button to go to the Settings window.
 		 */
 		Button settingsButton = new Button("Settings");
 		settingsButton.setOnAction(e -> displaySub(new Settings(this.manager).getScene()));
@@ -102,7 +103,7 @@ public class Menu {
 		/**
 		 * Sets the seize of the window and add all the elements.
 		 */
-		Scene scene = new Scene(contentWrapper1, 700, 400);
+		Scene scene = new Scene(contentWrapper1, 800, 600);
 		scene.getStylesheets().add("ml/vandenheuvel/ti1216/gui/Gui.css");
 		window.setScene(scene);
 		window.show();
