@@ -14,29 +14,36 @@ import ml.vandenheuvel.ti1216.http.*;
  * Processor processes API requests and generates output for those.
  */
 public class Processor {
-	
+
 	private static Logger logger = Logger.getLogger("ml.vandenheuvel.ti1216.server");
-	
+
 	private DatabaseCommunicator communicator;
 
 	/**
 	 * This constructor creates a new DatabaseCommunicator instance.
 	 * 
-	 * @param databaseAddress the address on which the database server runs
-	 * @param databaseUsername the username with which to log in on the databasehost
-	 * @param databaseName the name of the database on the host
-	 * @param databasePassword the password with which one can log on to the databasehost
+	 * @param databaseAddress
+	 *            the address on which the database server runs
+	 * @param databaseUsername
+	 *            the username with which to log in on the databasehost
+	 * @param databaseName
+	 *            the name of the database on the host
+	 * @param databasePassword
+	 *            the password with which one can log on to the databasehost
 	 */
 	public Processor(String databaseAddress, String databaseUsername, String databaseName, String databasePassword) {
-		logger.fine("Creating new DatabaseCommunicator instance using arguments " + databaseAddress + ", " + databaseName + ", " + databaseUsername + ", " + databasePassword);
+		logger.fine("Creating new DatabaseCommunicator instance using arguments " + databaseAddress + ", "
+				+ databaseName + ", " + databaseUsername + ", " + databasePassword);
 		this.communicator = new DatabaseCommunicator(databaseAddress, databaseName, databaseUsername, databasePassword);
-		logger.fine("Created a new DatabaseCommunicator instance using arguments " + databaseAddress + ", " + databaseName + ", " + databaseUsername + ", " + databasePassword);
+		logger.fine("Created a new DatabaseCommunicator instance using arguments " + databaseAddress + ", "
+				+ databaseName + ", " + databaseUsername + ", " + databasePassword);
 	}
 
 	/**
 	 * Processes a HTTP request.
 	 * 
-	 * @param request the request to process
+	 * @param request
+	 *            the request to process
 	 * @return the response to the request
 	 */
 	public Message process(Message request) {
@@ -62,7 +69,7 @@ public class Processor {
 			case "faculty":
 				return processFaculty(request);
 			case "match":
-				return processMatch(request);	
+				return processMatch(request);
 			}
 		}
 		return response;
@@ -71,7 +78,8 @@ public class Processor {
 	/**
 	 * Checks whether a HTTP request is properly authorized or not.
 	 * 
-	 * @param request the request to check
+	 * @param request
+	 *            the request to check
 	 * @return true if the HTTP request is authorized, otherwise false
 	 */
 	private boolean checkAuth(Message request) {
@@ -82,7 +90,8 @@ public class Processor {
 	/**
 	 * Retrieves the credentials in the authorization field of a HTTP request.
 	 * 
-	 * @param request the request to extract from
+	 * @param request
+	 *            the request to extract from
 	 * @return a Credentials object containing the credentials if provided,
 	 *         otherwise null
 	 */
@@ -103,7 +112,8 @@ public class Processor {
 	/**
 	 * Processes a HTTP request to the /user endpoint.
 	 * 
-	 * @param request the request to process
+	 * @param request
+	 *            the request to process
 	 * @return the response to the request
 	 */
 	private Message processUser(Message request) {
@@ -139,7 +149,17 @@ public class Processor {
 				}
 				messages.put(messagesData[i].toJSON());
 			}
-			response.getBody().setContent(new JSONObject().put("success", true).put("user", user.toJSON()).put("messages", messages).toString());
+			Match[] matchesData = this.communicator.getMatches(credentials.getUsername());
+			JSONArray matches = new JSONArray();
+			for (int i = 0; i < matchesData.length; i++) {
+				if (matchesData[i].isSeen() && matchesData[i].isApproved()) {
+					matchesData[i].setSeen(true);
+					this.communicator.save(matchesData[i]);
+					matches.put(matchesData[i].toJSON());
+				}
+			}
+			response.getBody().setContent(new JSONObject().put("success", true).put("user", user.toJSON())
+					.put("messages", messages).put("matches", matches).toString());
 			return response;
 		}
 		if ("UPDATE".equals(headerLine.getMethod())) {
@@ -163,7 +183,8 @@ public class Processor {
 	/**
 	 * Processes a HTTP request to the /chat endpoint.
 	 * 
-	 * @param request the request to process
+	 * @param request
+	 *            the request to process
 	 * @return the response to the request
 	 */
 	private Message processChat(Message request) {
@@ -173,10 +194,9 @@ public class Processor {
 		if ("PUT".equals(headerLine.getMethod())) {
 			JSONObject data = new JSONObject(request.getBody().getContent());
 			ChatMessage cm = ChatMessage.fromJSON(data);
-			if(credentials.getUsername().equals(cm.getSender())){
+			if (credentials.getUsername().equals(cm.getSender())) {
 				this.communicator.save(cm);
-			}		
-			else{
+			} else {
 				response.getHeader().setHeaderLine(new ResponseLine("HTTP/1.1 400 Bad Request"));
 			}
 			return response;
@@ -204,7 +224,8 @@ public class Processor {
 	/**
 	 * Processes a HTTP request to the /faculty endpoint.
 	 * 
-	 * @param request the request to process
+	 * @param request
+	 *            the request to process
 	 * @return the response to the request
 	 */
 	private Message processFaculty(Message request) {
@@ -238,55 +259,53 @@ public class Processor {
 		response.getHeader().addField(new HeaderField("Allow", "GET"));
 		return response;
 	}
-	
-	
+
 	/**
 	 * Processes a HTTP request to the /match endpoint.
 	 * 
-	 * @param request the request to process
+	 * @param request
+	 *            the request to process
 	 * @return the response to the request
 	 */
-	private Message processMatch(Message request){
+	private Message processMatch(Message request) {
 		RequestLine headerLine = (RequestLine) request.getHeader().getHeaderLine();
-		Message response = new Message(new Header(), new Body(""));		
+		Message response = new Message(new Header(), new Body(""));
 		String[] uriParts = headerLine.getUri().split("/");
 		Credentials credentials = getCredentials(request);
-		if ("GET".equals(headerLine.getMethod())){
+		if ("GET".equals(headerLine.getMethod())) {
 			JSONObject result = new JSONObject();
 			Match[] matches = this.communicator.getMatches(credentials.getUsername());
 			JSONArray matchesNew = new JSONArray();
-			for(int i=0; i<matches.length; i++){
-				if(!matches[i].isSeen()){
+			for (int i = 0; i < matches.length; i++) {
+				if (!matches[i].isSeen()) {
 					matches[i].setSeen(true);
 					this.communicator.save(matches[i]);
 					matchesNew.put(matches[i].toJSON());
 				}
+			}
 			result.put("matches", matchesNew);
 			response.getBody().setContent(result.toString());
 			return response;
-			}
 		}
-		if("UPDATE".equals(headerLine.getMethod())){
+		if ("UPDATE".equals(headerLine.getMethod())) {
 			JSONObject data = new JSONObject(request.getBody().getContent());
 			Match receive = Match.fromJSON(data);
-			if(credentials.getUsername().equals(receive.getUsername())){
+			if (credentials.getUsername().equals(receive.getUsername())) {
 				Match checkMatch = this.communicator.getMatch(receive.getId());
-				if(credentials.getUsername().equals(checkMatch.getUsername())){
+				if (credentials.getUsername().equals(checkMatch.getUsername())) {
 					this.communicator.save(checkMatch);
 					response.getHeader().setHeaderLine(new ResponseLine("HTTP/1.1 200 OK"));
 					JSONObject succes = new JSONObject();
 					succes.put("success", true);
 					response.getBody().setContent(succes.toString());
-				}
-				else{
+				} else {
 					response.getHeader().setHeaderLine(new ResponseLine("HTTP/1.1 400 Bad Request"));
 				}
-			}
-			else{
+			} else {
 				response.getHeader().setHeaderLine(new ResponseLine("HTTP/1.1 404 Not Found"));
-				}
-			return response;
 			}
+			return response;
+		}
 		response.getHeader().setHeaderLine(new ResponseLine("HTTP/1.1 405 Method Not Allowed"));
 		response.getHeader().addField(new HeaderField("Allow", "GET, UPDATE"));
 		return response;
