@@ -1,17 +1,23 @@
 package ml.vandenheuvel.ti1216.client;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.FileHandler;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+import org.json.JSONArray;
+import org.json.JSONObject;
+
 import javafx.application.Application;
+import javafx.application.Platform;
 import javafx.stage.Stage;
 import ml.vandenheuvel.ti1216.data.ChatMessage;
 import ml.vandenheuvel.ti1216.data.Credentials;
 import ml.vandenheuvel.ti1216.data.Match;
 import ml.vandenheuvel.ti1216.data.User;
+import ml.vandenheuvel.ti1216.gui.Chat;
 import ml.vandenheuvel.ti1216.gui.Home;
 import ml.vandenheuvel.ti1216.gui.Login;
 import ml.vandenheuvel.ti1216.gui.Menu;
@@ -38,16 +44,17 @@ public class ClientManager extends Application {
 	private MatchPoller matchPoller;
 	
 	private Credentials credentials;
-	
 	private User user;
 	
 	private static Logger logger = Logger.getLogger("ml.vandenheuvel.ti1216.client");
 	
 	private Login loginWindow;
-	
 	private Home homeWindow;
-	
 	private Menu menuWindow;
+	private ArrayList<Chat> chatWindows = new ArrayList<Chat>();
+
+	private ArrayList<ChatMessage> messages = new ArrayList<ChatMessage>();
+	private ArrayList<Match> matches = new ArrayList<Match>();
 	
 	/**
 	 * Boots up the application.
@@ -105,11 +112,13 @@ public class ClientManager extends Application {
 		} catch (IOException e) {
 			logger.log(Level.WARNING, "Could not write in " + System.getProperty("java.io.tmpdir"), e);
 		}
-		
 		logger.fine("Launching main application...");
 		Application.launch(args);
 	}
 	
+	/**
+	 * Starts the application.
+	 */
 	public void start(Stage primaryStage) {
 		final List<String> parameters = getParameters().getRaw();
 		logger.info("Starting new ServerCommunicator with parameters " + parameters.get(0) + " " + parameters.get(1) + " " + parameters.get(2));
@@ -144,7 +153,20 @@ public class ClientManager extends Application {
 		return homeWindow;
 	}
 
-	
+	/**
+	 * @return the messages
+	 */
+	public ArrayList<ChatMessage> getMessages() {
+		return messages;
+	}
+
+	/**
+	 * @return the matches
+	 */
+	public ArrayList<Match> getMatches() {
+		return matches;
+	}
+
 	/**
 	 * Sets the credentials.
 	 * 
@@ -171,6 +193,9 @@ public class ClientManager extends Application {
 		else {
 			this.chatPoller = null;
 			this.matchPoller = null;
+			this.chatWindows = new ArrayList<Chat>();
+			this.messages = new ArrayList<ChatMessage>();
+			this.matches = new ArrayList<Match>();
 		}
 	}
 	
@@ -189,10 +214,18 @@ public class ClientManager extends Application {
 	 * @param credentials the credentials to set
 	 */
 	public boolean login(Credentials credentials) {
-		User myuser = this.communicator.login(credentials);
-		if (myuser != null) {
+		JSONObject userData = this.communicator.login(credentials);
+		if (userData != null) {
 			logger.info("Logged in successfully.");
-			this.setUser(myuser);
+			this.setUser(User.fromJSON(userData.getJSONObject("user")));
+			JSONArray matchData = userData.getJSONArray("matches");
+			for (int i = 0; i < matchData.length(); i++) {
+				this.matches.add(Match.fromJSON(matchData.getJSONObject(i)));
+			}
+			JSONArray messageData = userData.getJSONArray("messages");
+			for (int i = 0; i < messageData.length(); i++) {
+				this.messages.add(ChatMessage.fromJSON(messageData.getJSONObject(i)));
+			}
 			this.setCredentials(credentials);
 			return true;
 		} else {
@@ -201,6 +234,13 @@ public class ClientManager extends Application {
 		}
 	}
 	
+	/**
+	 * Tries to register a user.
+	 * 
+	 * @param credentials the credentials to register by
+	 * @param user the user to register
+	 * @return whether the user could be registered or not
+	 */
 	public boolean register(Credentials credentials, User user) {
 		boolean register = this.communicator.register(credentials, user);
 		if(register == true) {
@@ -213,6 +253,13 @@ public class ClientManager extends Application {
 		}
 	}
 	
+	/**
+	 * Tries to update a user.
+	 * 
+	 * @param credentials the credentials to authenticate with
+	 * @param user the user to update
+	 * @return whether the user could be updated or not
+	 */
 	public boolean updateUser(Credentials credentials, User user) {
 		boolean update = this.communicator.updateUser(credentials, user);
 		if(update == true) {
@@ -223,11 +270,44 @@ public class ClientManager extends Application {
 			return false;
 		}
 	}
+	
+	public void openChat(String username) {
+		for (int i = 0; i < this.chatWindows.size(); i++) {
+			if (this.chatWindows.get(i).getUsername().equals(username)) {
+				this.chatWindows.get(i).toFront();
+				return;
+			}
+		}
+		Chat newWindow = new Chat(this, username);
+		this.chatWindows.add(newWindow);
+		newWindow.display();
+	}
 
+	public boolean sendChat(ChatMessage message) {
+		if (this.communicator.sendChat(this.credentials, message)) {
+			return true;
+		}
+		else {
+			return false;
+		}
+	}
+	
+	public void discardMatch(Match match) {
+		this.matches.remove(match);
+		match.setApproved(false);
+		this.communicator.updateMatch(this.credentials, match);
+	}
+	
+	/**
+	 * Puts the home screen on in the menu.
+	 */
 	public void showHome() {
 		this.menuWindow.displaySub(this.homeWindow.getScene());
 	}
 	
+	/**
+	 * Returns to login screen.
+	 */
 	public void logout() {
 		this.setCredentials(null);
 		this.loginWindow = new Login(this);
@@ -240,8 +320,17 @@ public class ClientManager extends Application {
 	 * @param message the message to handle
 	 */
 	public void incomingChat(ChatMessage message) {
-		System.out.println(message.getMessage());
-		// TODO: do something useful
+		Platform.runLater(new Runnable(){
+			public void run() {
+				openChat(message.getSender());
+				for (int i = 0; i < chatWindows.size(); i++) {
+					if (chatWindows.get(i).getUsername().equals(message.getSender())) {
+						chatWindows.get(i).newChat(message);
+						return;
+					}
+				}
+			}
+		});
 	}
 
 	/**
@@ -250,8 +339,7 @@ public class ClientManager extends Application {
 	 * @param message the message to handle
 	 */
 	public void incomingMatch(Match match) {
-		System.out.println(match.getMatchUsername());
-		// TODO: do something useful
+		this.homeWindow.addMatch(match);
 	}
 	
 }

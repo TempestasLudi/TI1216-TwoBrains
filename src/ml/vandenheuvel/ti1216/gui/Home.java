@@ -1,16 +1,20 @@
 package ml.vandenheuvel.ti1216.gui;
 
+import java.util.ArrayList;
 import java.util.logging.Logger;
 
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import ml.vandenheuvel.ti1216.client.ClientManager;
+import ml.vandenheuvel.ti1216.data.Match;
 
 /**
  * Settings allows the user that save his preferences.
@@ -20,6 +24,8 @@ public class Home {
 	private ClientManager manager;
 
 	private Scene scene;
+	
+	private Pane matches;
 
 	public Home(ClientManager manager) {
 		this.manager = manager;
@@ -32,18 +38,35 @@ public class Home {
 	private void renderScene() {
 		HBox wrapper = new HBox();
 		wrapper.setAlignment(Pos.CENTER);
+		this.matches = new VBox();
+		wrapper.getChildren().add(this.matches);
+		this.matches.getChildren().add(new Label("Matches:"));
 		
-		VBox match = new VBox();
-		wrapper.getChildren().add(match);
-		
-		VBox doneMatches = new VBox();
-		wrapper.getChildren().add(doneMatches);
-		Label doneMatch01 = new Label("ASDF");
-		doneMatches.getChildren().add(doneMatch01);
+		ArrayList<Match> matchesList = this.manager.getMatches();
+		for (int i = 0; i < matchesList.size(); i++) {
+			this.addMatch(matchesList.get(i));
+		}
 		
 		Scene scene = new Scene(wrapper, 350, 200);
 		scene.getStylesheets().add("ml/vandenheuvel/ti1216/gui/Gui.css");
 		this.scene = scene;
+	}
+	
+	public void addMatch(Match match) {
+		HBox wrapper = new HBox();
+		Label matchLabel = new Label(match.getMatchUsername());
+		matchLabel.setMinWidth(200);
+		Button chatButton = new Button("Chat");
+		chatButton.addEventFilter(MouseEvent.MOUSE_CLICKED, e -> {
+			this.manager.openChat(match.getUsername());
+		});
+		Button discardButton = new Button("Discard");
+		discardButton.addEventFilter(MouseEvent.MOUSE_CLICKED, e -> {
+			this.matches.getChildren().remove(wrapper);
+			this.manager.discardMatch(match);
+		});
+		wrapper.getChildren().addAll(matchLabel, chatButton, discardButton);
+		this.matches.getChildren().add(wrapper);
 	}
 
 	public Scene getScene() {

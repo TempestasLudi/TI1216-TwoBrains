@@ -152,9 +152,11 @@ public class Processor {
 			Match[] matchesData = this.communicator.getMatches(credentials.getUsername());
 			JSONArray matches = new JSONArray();
 			for (int i = 0; i < matchesData.length; i++) {
-				if (matchesData[i].isSeen() && matchesData[i].isApproved()) {
-					matchesData[i].setSeen(true);
-					this.communicator.save(matchesData[i]);
+				if (matchesData[i].isApproved()) {
+					if (!matchesData[i].isSeen()) {
+						matchesData[i].setSeen(true);
+						this.communicator.save(matchesData[i]);
+					}
 					matches.put(matchesData[i].toJSON());
 				}
 			}
@@ -193,9 +195,11 @@ public class Processor {
 		Credentials credentials = getCredentials(request);
 		if ("PUT".equals(headerLine.getMethod())) {
 			JSONObject data = new JSONObject(request.getBody().getContent());
+			data.put("id", -1);
 			ChatMessage cm = ChatMessage.fromJSON(data);
 			if (credentials.getUsername().equals(cm.getSender())) {
 				this.communicator.save(cm);
+				response.getBody().setContent(new JSONObject().put("success", true).toString());
 			} else {
 				response.getHeader().setHeaderLine(new ResponseLine("HTTP/1.1 400 Bad Request"));
 			}
@@ -206,10 +210,8 @@ public class Processor {
 			ChatMessage[] messagesData = this.communicator.getChats(credentials.getUsername(), true);
 			JSONArray messages = new JSONArray();
 			for (int i = 0; i < messagesData.length; i++) {
-				if (!messagesData[i].isSeen()) {
-					messagesData[i].setSeen(true);
-					this.communicator.save(messagesData[i]);
-				}
+				messagesData[i].setSeen(true);
+				this.communicator.save(messagesData[i]);
 				messages.put(messagesData[i].toJSON());
 			}
 			result.put("messages", messages);

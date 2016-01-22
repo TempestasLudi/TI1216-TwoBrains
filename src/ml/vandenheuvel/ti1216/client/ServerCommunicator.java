@@ -51,7 +51,7 @@ public class ServerCommunicator {
 	 * @return the user with specified credentials if present on the server,
 	 *         otherwise null
 	 */
-	public User login(Credentials credentials) {
+	public JSONObject login(Credentials credentials) {
 		logger.fine("Logging in with credentials " + credentials.toString() + "...");
 		Message request = createMessage("get", "user", credentials);
 		Message response = send(request);
@@ -64,7 +64,7 @@ public class ServerCommunicator {
 		logger.fine("Logging in successful.");
 		JSONObject body = new JSONObject(response.getBody().getContent());
 		if (body.getBoolean("success")) {
-			return User.fromJSON(body.getJSONObject("user"));
+			return body;
 		}
 		return null;
 	}

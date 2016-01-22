@@ -613,7 +613,7 @@ public class DatabaseCommunicator {
 	 */
 	public Match[] getMatches() {
 		try {
-			ResultSet resultSet = this.get("SELECT * FROM match");
+			ResultSet resultSet = this.get("SELECT * FROM `match`");
 			ArrayList<Match> matches = new ArrayList<>();
 			while (resultSet.next()) {
 				matches.add(new Match(resultSet.getInt("id"), resultSet.getString("username"),
@@ -638,7 +638,7 @@ public class DatabaseCommunicator {
 	 */
 	public Match[] getMatches(String username) {
 		try {
-			ResultSet resultSet = this.get("SELECT * FROM match WHERE username = '" + username + "'");
+			ResultSet resultSet = this.get("SELECT * FROM `match` WHERE username = '" + username + "'");
 			ArrayList<Match> matches = new ArrayList<>();
 			while (resultSet.next()) {
 				matches.add(new Match(resultSet.getInt("id"), resultSet.getString("username"),
@@ -663,7 +663,7 @@ public class DatabaseCommunicator {
 	 */
 	public Match getMatch(int id) {
 		try {
-			ResultSet resultSet = this.get("SELECT * FROM match WHERE id = " + id);
+			ResultSet resultSet = this.get("SELECT * FROM `match` WHERE id = " + id);
 			if (resultSet.next()) {
 				return new Match(resultSet.getInt("id"), resultSet.getString("username"),
 						resultSet.getString("matchUsername"), resultSet.getBoolean("seen"),
@@ -683,11 +683,11 @@ public class DatabaseCommunicator {
 	 */
 	public void save(Match match) {
 		try {
-			if (match.getId() < 0 || !this.get("SELECT * FROM match WHERE ID = " + match.getId()).next()) {
-				this.execute("INSERT INTO match (username, matchUsername) VALUES ('" + match.getUsername() + "', '"
+			if (match.getId() < 0 || !this.get("SELECT * FROM `match` WHERE ID = " + match.getId()).next()) {
+				this.execute("INSERT INTO `match` (username, matchUsername) VALUES ('" + match.getUsername() + "', '"
 						+ match.getMatchUsername() + "')");
 			} else {
-				this.execute("UPDATE match SET username = '" + match.getUsername() + "', matchUsername = '"
+				this.execute("UPDATE `match` SET username = '" + match.getUsername() + "', matchUsername = '"
 						+ match.getMatchUsername() + "', seen=" + match.isSeen() + ", approved=" + match.isApproved()
 						+ " WHERE ID = '" + match.getId() + "'");
 			}
@@ -705,7 +705,7 @@ public class DatabaseCommunicator {
 	 */
 	public void delete(Match match) {
 		try {
-			this.execute("DELETE FROM match WHERE ID = " + match.getId());
+			this.execute("DELETE FROM `match` WHERE ID = " + match.getId());
 		} catch (SQLException e) {
 			logger.log(Level.FINE, "Failed delete(Match match).", e);
 			logger.log(Level.FINER, "String represenation of the match:", new LogRecord(Level.FINER, match.toString()));
@@ -745,15 +745,18 @@ public class DatabaseCommunicator {
 	 */
 	public ChatMessage[] getChats(String username, boolean onlyNew) {
 		try {
-			String query = "SELECT * FROM chat WHERE username = '" + username + "'";
+			String query = "SELECT * FROM chat WHERE receiverName = '" + username + "'";
 			if (onlyNew) {
-				query += "WHERE seen = false";
+				query += " AND seen = false";
+			}
+			else {
+				query += " OR senderName = '" + username + "'";
 			}
 			ResultSet resultSet = this.get(query);
 			ArrayList<ChatMessage> chats = new ArrayList<>();
 			while (resultSet.next()) {
-				chats.add(new ChatMessage(resultSet.getInt("ID"), resultSet.getString("sender"),
-						resultSet.getString("message"), resultSet.getString("receiver"), resultSet.getBoolean("seen")));
+				chats.add(new ChatMessage(resultSet.getInt("ID"), resultSet.getString("senderName"),
+						resultSet.getString("message"), resultSet.getString("receiverName"), resultSet.getBoolean("seen")));
 			}
 			ChatMessage[] result = new ChatMessage[chats.size()];
 			chats.toArray(result);
@@ -773,11 +776,11 @@ public class DatabaseCommunicator {
 	public void save(ChatMessage message) {
 		try {
 			if (message.getId() < 0 || !this.get("SELECT * FROM chat WHERE ID = " + message.getId()).next()) {
-				this.execute("INSERT INTO chat (sender, receiver, message, seen) VALUES ('" + message.getSender()
-						+ "', '" + message.getReceiver() + "', '" + message.getMessage() + "', " + message.isSeen()
-						+ ")");
+				this.execute("INSERT INTO chat (senderName, receiverName, message, seen) VALUES ('" + message.getSender()
+				+ "', '" + message.getReceiver() + "', '" + message.getMessage() + "', " + message.isSeen()
+				+ ")");
 			} else {
-				this.execute("UPDATE chat SET sender = '" + message.getSender() + "', receiver = '"
+				this.execute("UPDATE chat SET senderName = '" + message.getSender() + "', receiverName = '"
 						+ message.getReceiver() + "', message = '" + message.getMessage() + "', seen = " + message.isSeen()
 						+ " WHERE ID = '" + message.getId() + "'");
 			}

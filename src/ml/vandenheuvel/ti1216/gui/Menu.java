@@ -19,11 +19,11 @@ import ml.vandenheuvel.ti1216.data.User;
  */
 public class Menu {
 
-//	private double xPress;
-//	private double xRelease;
+	// private double xPress;
+	// private double xRelease;
 	private ClientManager manager;
 
-//	private Stage window;
+	// private Stage window;
 	private VBox contentWrapper;
 	private Scene subscene;
 
@@ -43,8 +43,8 @@ public class Menu {
 		 * from the database.
 		 */
 		Stage window = new Stage();
-		window.setTitle("Menu");
 		window.setResizable(false);
+		window.setTitle("TwoBrains");
 
 		/**
 		 * Creates the top row of this window.
@@ -101,14 +101,14 @@ public class Menu {
 		// borderPane.setCenter(centerMenu);
 
 		/**
-		 * Sets the seize of the window and add all the elements.
+		 * Sets the size of the window and add all the elements.
 		 */
 		Scene scene = new Scene(contentWrapper1, 800, 600);
 		scene.getStylesheets().add("ml/vandenheuvel/ti1216/gui/Gui.css");
 		window.setScene(scene);
 		window.show();
 	}
-	
+
 	public void displaySub(Scene subscene) {
 		if (this.subscene != null) {
 			this.contentWrapper.getChildren().remove(this.subscene.getRoot());
