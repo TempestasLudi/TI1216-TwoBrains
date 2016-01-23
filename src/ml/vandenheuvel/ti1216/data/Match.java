@@ -175,26 +175,41 @@ public class Match {
 		double[] partialRatings = new double[Math.max(gradelist.length, matchGradelist.length)];
 		for (int i = 0; i < gradelist.length; i++) {
 			for (int j = 0; j < matchGradelist.length; j++) {
-				if (gradelist[i].getCourseId().equals(gradelist[j].getCourseId())) {
-					partialRatings[i] = gradelist[i].getGrade() - gradelist[j].getGrade();
+				if (gradelist[i].getCourseId().equals(matchGradelist[j].getCourseId())) {
+					partialRatings[i] = gradelist[i].getGrade() - matchGradelist[j].getGrade();
+					break;
 				} else {
 					partialRatings[i] = -100000;
 				}
 			}
 		}
-		double max = partialRatings[0];
-		double min = partialRatings[0];
+		double max = -100000;
+		double min = -100000;
 		double rating = 0;
 		for (int j = 0; j < partialRatings.length / 2 + 1; j++) {
 			for (int i = 0; i < partialRatings.length; i++) {
 				if (partialRatings[i] > max) {
 					max = partialRatings[i];
 				}
-				if (partialRatings[i] != -100000 && partialRatings[i] < min) {
+				if (min==-100000 || (partialRatings[i] != -100000 && partialRatings[i] < min)) { // NOSONAR
 					min = partialRatings[i];
 				}
 			}
 			rating = rating + max - min;
+			boolean deletedmax = false;
+			boolean deletedmin = false;
+			for (int i = 0; i < partialRatings.length; i++) {
+				if (partialRatings[i]==max && !deletedmax) {
+					partialRatings[i]=-100000;
+					max=-100000;
+					deletedmax=true;
+				}
+				if (partialRatings[i]==min && !deletedmin) {
+					partialRatings[i]=-100000;
+					min=-100000;
+					deletedmin=true;
+				}
+			}
 		}
 		return rating;
 	}
