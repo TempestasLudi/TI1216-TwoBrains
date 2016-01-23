@@ -89,5 +89,25 @@ public class ChatMessageTest {
 		ChatMessage chatmessage2 = new ChatMessage(0, "Andy", "Hoe heeft A1-2 het gedaan??", "Stefan", false);
 		assertTrue(chatmessage1.equals(chatmessage2));
 	}
+	
+	@Test
+	public void testGetId() {
+		ChatMessage chatmessage = new ChatMessage(-1, "Andy", "Hoe heeft A1-2 het gedaan?", "Stefan", false);
+		assertEquals(-1, chatmessage.getId());
+	}
+	
+	@Test
+	public void testGetSetSeen1() {
+		ChatMessage chatmessage = new ChatMessage(-1, "Andy", "Hoe heeft A1-2 het gedaan?", "Stefan", false);
+		chatmessage.setSeen(true);
+		assertTrue(chatmessage.isSeen());
+	}
+	
+	@Test
+	public void testGetSetSeen2() {
+		ChatMessage chatmessage = new ChatMessage(-1, "Andy", "Hoe heeft A1-2 het gedaan?", "Stefan", true);
+		chatmessage.setSeen(false);
+		assertFalse(chatmessage.isSeen());
+	}
 
 }
