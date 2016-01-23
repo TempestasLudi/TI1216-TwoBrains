@@ -85,6 +85,22 @@ public class UserTest {
 		u1.setGradeList(g2);
 		assertEquals(u1.getGradeList()[0], g2[0]);
 	}
+	
+	@Test
+	public void testGetSetUrgent() {
+		Grade[] gradelist = new Grade[5];
+		User user = new User("azaidman","AndyAntwerpen", "slimme man", gradelist, false);
+		user.setUrgent(true);
+		assertTrue(user.isUrgent());
+	}
+	
+	@Test
+	public void testGetSetUrgent2() {
+		Grade[] gradelist = new Grade[5];
+		User user = new User("azaidman","AndyAntwerpen", "slimme man", gradelist, true);
+		user.setUrgent(false);
+		assertFalse(user.isUrgent());
+	}
 
 	@Test
 	public void testEquals1() {
@@ -141,5 +157,10 @@ public class UserTest {
 		assertEquals(gradelist[0], User.fromJSON(user.toJSON()).getGradeList()[0]);
 		assertEquals(gradelist[1], User.fromJSON(user.toJSON()).getGradeList()[1]);
 	}
-	 
+	
+	@Test
+	public void testFromJSONNull() {
+		assertNull(User.fromJSON(null));
+	}
+	
 }
