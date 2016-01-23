@@ -614,7 +614,7 @@ public class DatabaseCommunicator {
 	 */
 	public Match[] getMatches() {
 		try {
-			ResultSet resultSet = this.get("SELECT * FROM `match`");
+			ResultSet resultSet = this.get("SELECT * FROM 'match'");
 			ArrayList<Match> matches = new ArrayList<>();
 			while (resultSet.next()) {
 				matches.add(new Match(resultSet.getInt("id"), resultSet.getString("username"),
@@ -639,7 +639,7 @@ public class DatabaseCommunicator {
 	 */
 	public Match[] getMatches(String username) {
 		try {
-			ResultSet resultSet = this.get("SELECT * FROM `match` WHERE username = '" + username + "'");
+			ResultSet resultSet = this.get("SELECT * FROM 'match' WHERE username = '" + username + "'");
 			ArrayList<Match> matches = new ArrayList<>();
 			while (resultSet.next()) {
 				matches.add(new Match(resultSet.getInt("id"), resultSet.getString("username"),
@@ -664,7 +664,7 @@ public class DatabaseCommunicator {
 	 */
 	public Match getMatch(int id) {
 		try {
-			ResultSet resultSet = this.get("SELECT * FROM `match` WHERE id = " + id);
+			ResultSet resultSet = this.get("SELECT * FROM 'match' WHERE id = " + id);
 			if (resultSet.next()) {
 				return new Match(resultSet.getInt("id"), resultSet.getString("username"),
 						resultSet.getString("matchUsername"), resultSet.getBoolean("seen"),
@@ -684,11 +684,11 @@ public class DatabaseCommunicator {
 	 */
 	public void save(Match match) {
 		try {
-			if (match.getId() < 0 || !this.get("SELECT * FROM `match` WHERE ID = " + match.getId()).next()) {
-				this.execute("INSERT INTO `match` (username, matchUsername) VALUES ('" + match.getUsername() + "', '"
+			if (match.getId() < 0 || !this.get("SELECT * FROM 'match' WHERE ID = " + match.getId()).next()) {
+				this.execute("INSERT INTO 'match' (username, matchUsername) VALUES ('" + match.getUsername() + "', '"
 						+ match.getMatchUsername() + "')");
 			} else {
-				String query = "UPDATE `match` SET username = '" + match.getUsername() + "', matchUsername = '"
+				String query = "UPDATE 'match' SET username = '" + match.getUsername() + "', matchUsername = '"
 						+ match.getMatchUsername() + "', seen=" + match.isSeen() + ", approved=" + match.isApproved()
 						+ " WHERE ID = '" + match.getId() + "'";
 				this.execute(query);
@@ -707,7 +707,7 @@ public class DatabaseCommunicator {
 	 */
 	public void delete(Match match) {
 		try {
-			this.execute("DELETE FROM `match` WHERE ID = " + match.getId());
+			this.execute("DELETE FROM 'match' WHERE ID = " + match.getId());
 		} catch (SQLException e) {
 			logger.log(Level.FINE, "Failed delete(Match match).", e);
 			logger.log(Level.FINER, "String represenation of the match:", new LogRecord(Level.FINER, match.toString()));

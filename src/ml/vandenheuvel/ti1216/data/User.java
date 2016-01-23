@@ -26,10 +26,10 @@ public class User {
 	 * @param gradelist
 	 *            Array of Grade objects to represent the grades for the user's
 	 *            courses
-	 * @param urgent whether the user is desperate or not
+	 * @param urgent
+	 *            whether the user is desperate or not
 	 */
-	public User(String username, String postalCode, String description,
-			Grade[] gradelist, boolean urgent) {
+	public User(String username, String postalCode, String description, Grade[] gradelist, boolean urgent) {
 		this.username = username;
 		this.postalCode = postalCode;
 		this.description = description;
@@ -98,7 +98,8 @@ public class User {
 	/**
 	 * Sets whether the user is desperate or not.
 	 * 
-	 * @param urgent the urgent to set
+	 * @param urgent
+	 *            the urgent to set
 	 */
 	public void setUrgent(boolean urgent) {
 		this.urgent = urgent;
@@ -152,16 +153,12 @@ public class User {
 	public JSONObject toJSON() {
 		JSONArray jsonGradeList = new JSONArray();
 		for (int i = 0; i < this.gradeList.length; i++) {
-			if(this.gradeList[i]!=null)
-			{
+			if (this.gradeList[i] != null) {
 				jsonGradeList.put(this.gradeList[i].toJSON());
 			}
 		}
-		return new JSONObject().put("username", this.username)
-				.put("postalCode", this.postalCode)
-				.put("description", this.description)
-				.put("gradeList", jsonGradeList)
-				.put("urgent", this.urgent);
+		return new JSONObject().put("username", this.username).put("postalCode", this.postalCode)
+				.put("description", this.description).put("gradeList", jsonGradeList).put("urgent", this.urgent);
 	}
 
 	/**
@@ -170,20 +167,21 @@ public class User {
 	 * @return a User object out of a JSON file
 	 */
 	public static User fromJSON(JSONObject jsonObject) {
-		if(jsonObject != null){
+		if (jsonObject != null) {
 			JSONArray tempJSONGradeList = jsonObject.getJSONArray("gradeList");
-			if(tempJSONGradeList != null){
+			//if (tempJSONGradeList != null) {
 				Grade[] tempGradeList = new Grade[tempJSONGradeList.length()];
 				for (int i = 0; i < tempJSONGradeList.length(); i++) {
-					if(tempJSONGradeList.get(i) != null)
+					//if (tempJSONGradeList.get(i) != null)
 						tempGradeList[i] = Grade.fromJSON((JSONObject) tempJSONGradeList.get(i));
-					else tempGradeList[i] = null;
+					/*else {
+						tempGradeList[i] = null;
+					}*/
 				}
-				return new User(jsonObject.getString("username"),
-					jsonObject.getString("postalCode"),
-					jsonObject.getString("description"), tempGradeList, jsonObject.getBoolean("urgent"));
+				return new User(jsonObject.getString("username"), jsonObject.getString("postalCode"),
+						jsonObject.getString("description"), tempGradeList, jsonObject.getBoolean("urgent"));
 			}
-		}
+		//}
 		return null;
 	}
 
