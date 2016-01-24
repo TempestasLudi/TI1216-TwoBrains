@@ -27,6 +27,9 @@ public class Home {
 	private Scene scene;
 
 	private Pane matches;
+	
+	private double xPress;
+	private double xRelease;
 
 	public Home(ClientManager manager) {
 		this.manager = manager;
@@ -57,6 +60,16 @@ public class Home {
 		HBox wrapper = new HBox();
 		Label matchLabel = new Label(match.getMatchUsername());
 		matchLabel.setMinWidth(200);
+		matchLabel.setOnMousePressed(e -> {
+			xPress = e.getX();
+		});
+		matchLabel.setOnMouseReleased(e -> {
+			xRelease = e.getX();
+			if(xRelease - xPress < 10) {
+				this.matches.getChildren().remove(wrapper);
+				this.manager.discardMatch(match);
+			}
+		});
 		Button chatButton = new Button("Chat");
 		chatButton.addEventFilter(MouseEvent.MOUSE_CLICKED, e -> {
 			this.manager.openChat(match.getUsername());

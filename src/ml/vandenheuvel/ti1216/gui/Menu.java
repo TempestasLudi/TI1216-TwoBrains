@@ -19,8 +19,6 @@ import ml.vandenheuvel.ti1216.data.User;
  */
 public class Menu {
 
-	// private double xPress;
-	// private double xRelease;
 	private ClientManager manager;
 
 	// private Stage window;

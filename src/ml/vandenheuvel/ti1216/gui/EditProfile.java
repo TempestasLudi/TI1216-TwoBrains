@@ -238,10 +238,14 @@ public class EditProfile {
 					descriptionInput.getText(), gradeArray, this.manager.getUser().isUrgent());
 			Credentials credentials = new Credentials(this.manager.getCredentials().getUsername(),
 					passInput1.getText());
-			if ((passInput1.getText().equals(passInput2.getText())) && (manager.updateUser(credentials, user))) {
+			if ((passInput1.getText().equals(passInput2.getText())) && 
+				(manager.updateUser(credentials, user)) && 
+				(gradeList.getChildren().size() >= 5) &&
+				((oldPassInput.getText()).equals((this.manager.getCredentials().getPassword())))) {
 				logger.fine("Profile successfully updated.");
 				this.manager.showHome();
 			} else {
+				messageLabel.setText("Wrong data entered, you should add 5 courses to continue and make sure old Password is filled in correct.");
 				logger.fine("Wrong data entered.");
 			}
 		});
