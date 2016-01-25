@@ -158,6 +158,9 @@ public class EditProfile {
 					break;
 				}
 			}
+			if (faculty == null) {
+				return;
+			}
 			for (int i = 0; i < faculty.getPrograms().size(); i++) {
 				programOptions.add(faculty.getPrograms().get(i).getID());
 			}
@@ -173,6 +176,9 @@ public class EditProfile {
 					break;
 				}
 			}
+			if (faculty == null) {
+				return;
+			}
 			String programId = programInput.getValue();
 			Program program = null;
 			for (int i = 0; i < faculty.getPrograms().size(); i++) {
@@ -180,6 +186,9 @@ public class EditProfile {
 					program = faculty.getPrograms().get(i);
 					break;
 				}
+			}
+			if (program == null) {
+				return;
 			}
 			for (int i = 0; i < program.getCourses().size(); i++) {
 				courseOptions.add(program.getCourses().get(i).getID());
@@ -230,7 +239,7 @@ public class EditProfile {
 			Grade[] gradeArray = new Grade[gradeList.getChildren().size()];
 			for (int i = 0; i < gradeList.getChildren().size(); i++) {
 				Pane row = (Pane) gradeList.getChildren().get(i);
-				String courseId = ((Label) ((Pane) wrapper.getChildren().get(0)).getChildren().get(0)).getText();
+				String courseId = ((Label) ((Pane) row.getChildren().get(0)).getChildren().get(0)).getText();
 				double mark = Double.valueOf(((Label) row.getChildren().get(1)).getText());
 				gradeArray[i] = new Grade(courseId, mark);
 			}
