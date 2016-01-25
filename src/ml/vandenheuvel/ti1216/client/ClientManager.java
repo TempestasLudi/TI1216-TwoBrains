@@ -18,6 +18,7 @@ import ml.vandenheuvel.ti1216.data.Credentials;
 import ml.vandenheuvel.ti1216.data.Match;
 import ml.vandenheuvel.ti1216.data.User;
 import ml.vandenheuvel.ti1216.gui.Chat;
+import ml.vandenheuvel.ti1216.gui.EditProfile;
 import ml.vandenheuvel.ti1216.gui.Home;
 import ml.vandenheuvel.ti1216.gui.Login;
 import ml.vandenheuvel.ti1216.gui.Menu;
@@ -250,6 +251,7 @@ public class ClientManager extends Application {
 			logger.info("Registered successfully.");
 			this.setUser(user);
 			this.setCredentials(credentials);
+			this.menuWindow.displaySub(new EditProfile(this).getScene());
 			return true;
 		} else {
 			return false;
