@@ -55,7 +55,7 @@ public class Menu {
 		/**
 		 * Button to go to the EditProfileGUI window.
 		 */
-		Button homeButton = new Button("Home");
+		Button homeButton = new Button("Matches");
 		homeButton.setOnAction(e -> displaySub(new Home(this.manager).getScene()));
 
 		/**

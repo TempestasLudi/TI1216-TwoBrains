@@ -1,19 +1,15 @@
 package ml.vandenheuvel.ti1216.gui;
 
 import java.util.ArrayList;
-import java.util.logging.Logger;
 
 import javafx.application.Platform;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.input.MouseEvent;
-import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
-import javafx.stage.Modality;
-import javafx.stage.Stage;
 import ml.vandenheuvel.ti1216.client.ClientManager;
 import ml.vandenheuvel.ti1216.data.Match;
 
@@ -60,9 +56,7 @@ public class Home {
 		HBox wrapper = new HBox();
 		Label matchLabel = new Label(match.getMatchUsername());
 		matchLabel.setMinWidth(200);
-		matchLabel.setOnMousePressed(e -> {
-			xPress = e.getX();
-		});
+		matchLabel.setOnMousePressed(e -> xPress = e.getX());
 		matchLabel.setOnMouseReleased(e -> {
 			xRelease = e.getX();
 			if(xRelease - xPress < 10) {
@@ -71,9 +65,7 @@ public class Home {
 			}
 		});
 		Button chatButton = new Button("Chat");
-		chatButton.addEventFilter(MouseEvent.MOUSE_CLICKED, e -> {
-			this.manager.openChat(match.getMatchUsername());
-		});
+		chatButton.addEventFilter(MouseEvent.MOUSE_CLICKED, e -> this.manager.openChat(match.getMatchUsername()));
 		Button discardButton = new Button("Discard");
 		discardButton.addEventFilter(MouseEvent.MOUSE_CLICKED, e -> {
 			this.matches.getChildren().remove(wrapper);
