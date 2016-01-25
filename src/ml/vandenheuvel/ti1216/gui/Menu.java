@@ -73,8 +73,8 @@ public class Menu {
 		/**
 		 * Button to go to the Settings window.
 		 */
-		Button settingsButton = new Button("Settings");
-		settingsButton.setOnAction(e -> displaySub(new Settings(this.manager).getScene()));
+//		Button settingsButton = new Button("Settings");
+//		settingsButton.setOnAction(e -> displaySub(new Settings(this.manager).getScene()));
 
 		/**
 		 * Button to log out from this application.
@@ -84,7 +84,7 @@ public class Menu {
 			window.close();
 			this.manager.logout();
 		});
-		topMenu.getChildren().addAll(homeButton, editButton, urgencyButton, settingsButton, logoutButton);
+		topMenu.getChildren().addAll(homeButton, editButton, urgencyButton, logoutButton);
 
 		/**
 		 * Adds all the different components to the BorderPane.
