@@ -170,8 +170,10 @@ public class Match {
 	public double getRating() {
 		DatabaseCommunicator communicator = new DatabaseCommunicator("tempestasludi.com", "TI1216-test", "TI1216",
 				"3t.uGmL365j2f7B");
-		Grade[] gradelist = communicator.getUser(username).getGradeList();
-		Grade[] matchGradelist = communicator.getUser(matchUsername).getGradeList();
+		User user = communicator.getUser(username);
+		Grade[] gradelist = user.getGradeList();
+		User matchUser = communicator.getUser(matchUsername);
+		Grade[] matchGradelist = matchUser.getGradeList();
 		double[] partialRatings = new double[Math.max(gradelist.length, matchGradelist.length)];
 		for (int i = 0; i < gradelist.length; i++) {
 			for (int j = 0; j < matchGradelist.length; j++) {
@@ -210,6 +212,12 @@ public class Match {
 					deletedmin=true;
 				}
 			}
+		}
+		if (user.isUrgent()) {
+			rating = rating * 1.2;
+		}
+		if (matchUser.isUrgent()) {
+			rating = rating * 1.2;
 		}
 		return rating;
 	}
