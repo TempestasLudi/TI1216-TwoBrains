@@ -239,9 +239,9 @@ public class EditProfile {
 			Credentials credentials = new Credentials(this.manager.getCredentials().getUsername(),
 					passInput1.getText());
 			if ((passInput1.getText().equals(passInput2.getText())) && 
-				(manager.updateUser(credentials, user)) && 
+				((oldPassInput.getText()).equals((this.manager.getCredentials().getPassword()))) && 
 				(gradeList.getChildren().size() >= 5) &&
-				((oldPassInput.getText()).equals((this.manager.getCredentials().getPassword())))) {
+				(manager.updateUser(credentials, user))) {
 				logger.fine("Profile successfully updated.");
 				this.manager.showHome();
 			} else {
