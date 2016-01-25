@@ -68,7 +68,7 @@ public class ServerApplication {
 		}
 
 		try {
-			logger.addHandler(new FileHandler("%t/TwoBrains.log"));
+			logger.addHandler(new FileHandler("%t/TwoBrainsServer.log"));
 			logger.info("Logging to " + System.getProperty("java.io.tmpdir") + "/TwoBrains.log" + " using loglevel "
 					+ logger.getLevel().getLocalizedName());
 		} catch (SecurityException e) {
