@@ -72,7 +72,7 @@ public class Home {
 		});
 		Button chatButton = new Button("Chat");
 		chatButton.addEventFilter(MouseEvent.MOUSE_CLICKED, e -> {
-			this.manager.openChat(match.getUsername());
+			this.manager.openChat(match.getMatchUsername());
 		});
 		Button discardButton = new Button("Discard");
 		discardButton.addEventFilter(MouseEvent.MOUSE_CLICKED, e -> {
