@@ -106,7 +106,7 @@ public class EditProfile {
 		oldPassRow.setAlignment(Pos.CENTER);
 		wrapperChildren.add(oldPassRow);
 
-		wrapperChildren.add(new Label("Grades:"));
+		wrapperChildren.add(new Label("Grades (please make sure you add at least five of those):"));
 
 		List<Faculty> faculties = this.manager.communicator.fetchFaculties(this.manager.getCredentials());
 		ObservableList<String> facultyOptions = FXCollections.observableArrayList();
