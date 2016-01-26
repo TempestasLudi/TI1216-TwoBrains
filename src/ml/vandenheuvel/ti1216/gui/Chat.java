@@ -152,7 +152,7 @@ public class Chat {
 	private void newChat(ChatMessage message, boolean mine) {
 		HBox row = new HBox();
 		row.setMaxWidth(280);
-		row.setPadding(new Insets(0, 0, 5, 0));
+		row.setPadding(new Insets(5, 0, 0, 0));
 		Label chatLabel = new Label(message.getMessage());
 		chatLabel.setMaxWidth(250);
 		chatLabel.setPadding(new Insets(5, 10, 5, 10));

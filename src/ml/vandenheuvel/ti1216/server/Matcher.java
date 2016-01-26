@@ -49,7 +49,6 @@ public class Matcher implements Runnable {
 	private void match(String uname1, String uname2) {
 		Match match1 = new Match(-1, uname1, uname2, false, true);
 		Match match2 = new Match(-1, uname2, uname1, false, true);
-
 		if(match1.getRating(this.communicator) >= 15.0){
 			this.communicator.save(match1);
 			this.communicator.save(match2);
