@@ -79,10 +79,10 @@ public class Chat {
 		ArrayList<ChatMessage> messages = this.manager.getMessages();
 		for (int i = 0; i < messages.size(); i++) {
 			if (messages.get(i).getSender().equals(this.username)) {
-				this.newChat(messages.get(i), true);
+				this.newChat(messages.get(i), false);
 			}
 			if (messages.get(i).getReceiver().equals(this.username)) {
-				this.newChat(messages.get(i), false);
+				this.newChat(messages.get(i), true);
 			}
 		}
 		this.scroller.setVvalue(1.0);
@@ -121,15 +121,29 @@ public class Chat {
 		window.show();
 	}
 
+	/**
+	 * Brings the window to the front (in front of any other windows).
+	 */
 	public void toFront() {
 		this.window.show();
 		this.window.toFront();
 	}
 
+	/**
+	 * Puts a new chat message in the message list.
+	 * 
+	 * @param message the message to put
+	 */
 	public void newChat(ChatMessage message) {
 		this.newChat(message, false);
 	}
 
+	/**
+	 * Puts a new chat message in the message list.
+	 * 
+	 * @param message the message to put
+	 * @param mine whether the message is of the user or of someone else
+	 */
 	private void newChat(ChatMessage message, boolean mine) {
 		HBox row = new HBox();
 		row.setMaxWidth(280);
@@ -160,6 +174,11 @@ public class Chat {
 		}
 	}
 
+	/**
+	 * Sends a chat message to the server.
+	 * 
+	 * @param chatInput the message to send
+	 */
 	private void sendChat(TextField chatInput) {
 		if (chatInput.getText().trim().equals("")) {
 			return;
@@ -171,5 +190,12 @@ public class Chat {
 			chatInput.setText("");
 		}
 	}
-
+	
+	/**
+	 * Closes the chat window.
+	 */
+	public void close() {
+		this.window.close();
+	}
+	
 }

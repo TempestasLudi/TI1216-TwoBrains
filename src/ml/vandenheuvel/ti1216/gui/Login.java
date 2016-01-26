@@ -114,6 +114,10 @@ public class Login {
 		scene.getStylesheets().add("ml/vandenheuvel/ti1216/gui/Gui.css");
 		window.setScene(scene);
 		window.showAndWait();
+		
+		window.setOnCloseRequest(e -> {
+			this.manager.stop();
+		});
 	}
 
 	public void close() {

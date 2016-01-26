@@ -350,4 +350,19 @@ public class ClientManager extends Application {
 		this.homeWindow.addMatch(match);
 	}
 
+	/**
+	 * Stops all running processes.
+	 */
+	public void stop() {
+		if (this.chatPoller != null) {
+			this.chatPoller.stop();
+		}
+		if (this.matchPoller != null) {
+			this.matchPoller.stop();
+		}
+		for (int i = 0; i < this.chatWindows.size(); i++) {
+			this.chatWindows.get(i).close();
+		}
+	}
+
 }

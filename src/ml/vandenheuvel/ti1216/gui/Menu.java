@@ -102,6 +102,10 @@ public class Menu {
 		scene.getStylesheets().add("ml/vandenheuvel/ti1216/gui/Gui.css");
 		window.setScene(scene);
 		window.show();
+		
+		window.setOnCloseRequest(e -> {
+			this.manager.stop();
+		});
 	}
 
 	public void displaySub(Scene subscene) {
