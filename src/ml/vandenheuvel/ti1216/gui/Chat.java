@@ -61,6 +61,8 @@ public class Chat {
 		this.window = new Stage();
 		window.initModality(Modality.WINDOW_MODAL);
 		window.setTitle(this.username);
+		window.setResizable(false);
+		window.sizeToScene();
 
 		VBox vbox = new VBox();
 		HBox hbox = new HBox();
@@ -73,6 +75,7 @@ public class Chat {
 		this.messageList = new VBox();
 		this.messageList.getStyleClass().add("message-list");
 		this.messageList.setMinWidth(300);
+		this.messageList.setMinHeight(250);
 		this.scroller.setContent(messageList);
 		this.scroller.setPrefSize(300, 250);
 
@@ -91,7 +94,8 @@ public class Chat {
 		 * InputField to enter the chat messages.
 		 */
 		TextField chatInput = new TextField("Type your text");
-		chatInput.setPrefWidth(245);
+		chatInput.getStyleClass().add("chat-input");
+		chatInput.setPrefSize(245, 30);
 		chatInput.addEventFilter(KeyEvent.KEY_PRESSED, e -> {
 			if (e.getCode().getName().equals("Enter")) {
 				this.sendChat(chatInput);
@@ -103,10 +107,10 @@ public class Chat {
 		 */
 		Button sendButton = new Button("Send");
 		sendButton.setOnAction(e -> {
-			ChatMessage message = new ChatMessage(-1, this.manager.getUser().getUsername(), chatInput.getText(),
-					this.username, false);
 			this.sendChat(chatInput);
 		});
+		sendButton.setPrefSize(55, 30);
+		sendButton.setMinHeight(30);
 
 		hbox.getChildren().addAll(chatInput, sendButton);
 		vbox.setPrefWidth(300);
@@ -115,6 +119,7 @@ public class Chat {
 		BorderPane borderPane = new BorderPane();
 		borderPane.setCenter(vbox);
 
+		borderPane.setStyle("-fx-background-color: #ffffff;");
 		Scene scene = new Scene(borderPane, 300, 280);
 		scene.getStylesheets().add("ml/vandenheuvel/ti1216/gui/Gui.css");
 		window.setScene(scene);

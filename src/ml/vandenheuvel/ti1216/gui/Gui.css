@@ -53,6 +53,16 @@
 	-fx-line-height: 20;
 }
 
+.scroll-pane {
+    -fx-background-insets: 0;
+    -fx-padding: 0;
+	-fx-background-color: #ffffff;
+}
+
+.scroll-pane vbox{
+	-fx-background-color: #ffffff;
+}
+
 .message-list {
 	-fx-background-color: #ffffff;
 }
@@ -83,4 +93,9 @@
 	-fx-border-color: #aaaaaa;
 	-fx-background-radius: 20;
 	-fx-border-radius: 20;
+}
+
+.chat-input {
+	-fx-border-width: 1;
+	-fx-border-color: #92cbde;
 }
