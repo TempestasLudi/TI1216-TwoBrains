@@ -685,8 +685,8 @@ public class DatabaseCommunicator {
 	public void save(Match match) {
 		try {
 			if (match.getId() < 0 || !this.get("SELECT * FROM `match` WHERE ID = " + match.getId()).next()) {
-				this.execute("INSERT INTO `match` (username, matchUsername) VALUES ('" + match.getUsername() + "', '"
-						+ match.getMatchUsername() + "')");
+				this.execute("INSERT INTO `match` (username, matchUsername, seen, approved) VALUES ('" + match.getUsername() + "', '"
+						+ match.getMatchUsername() + "', " + match.isSeen() + ", " + match.isApproved() + ")");
 			} else {
 				String query = "UPDATE `match` SET username = '" + match.getUsername() + "', matchUsername = '"
 						+ match.getMatchUsername() + "', seen=" + match.isSeen() + ", approved=" + match.isApproved()

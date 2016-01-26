@@ -50,12 +50,10 @@ public class Matcher implements Runnable {
 		Match match1 = new Match(-1, uname1, uname2, false, true);
 		Match match2 = new Match(-1, uname2, uname1, false, true);
 
-		boolean approved = match1.getRating(this.communicator) > 17.0;
-
-		match1.setApproved(approved);
-		match2.setApproved(approved);
-		this.communicator.save(match1);
-		this.communicator.save(match2);
+		if(match1.getRating(this.communicator) >= 15.0){
+			this.communicator.save(match1);
+			this.communicator.save(match2);
+		}
 	}
 
 	public void stop() {
