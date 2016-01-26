@@ -59,7 +59,7 @@ public class Home {
 		matchLabel.setOnMousePressed(e -> xPress = e.getX());
 		matchLabel.setOnMouseReleased(e -> {
 			xRelease = e.getX();
-			if(xRelease - xPress < 10) {
+			if(xRelease - xPress > 100) {
 				this.matches.getChildren().remove(wrapper);
 				this.manager.discardMatch(match);
 			}
