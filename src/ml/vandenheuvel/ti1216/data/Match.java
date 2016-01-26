@@ -164,12 +164,11 @@ public class Match {
 
 	/**
 	 * Calculates the rating of a given Match.
+	 * @param communicator TODO
 	 * 
 	 * @return the rating of the Match
 	 */
-	public double getRating() {
-		DatabaseCommunicator communicator = new DatabaseCommunicator("tempestasludi.com", "TI1216-test", "TI1216",
-				"3t.uGmL365j2f7B");
+	public double getRating(DatabaseCommunicator communicator) {
 		User user = communicator.getUser(username);
 		Grade[] gradelist = user.getGradeList();
 		User matchUser = communicator.getUser(matchUsername);
@@ -222,27 +221,27 @@ public class Match {
 		return rating;
 	}
 	
-	/**
-	 * Returns matches above the rating of 10 and above for the username given
-	 * @param username the user that will get the matches
-	 * @return array of matches to show in the GUI
-	 */
-	public static Match[] showMatches(String username){
-		DatabaseCommunicator communicator = new DatabaseCommunicator("tempestasludi.com", "TI1216-test", "TI1216",
-				"3t.uGmL365j2f7B");
-		Match[] matches = communicator.getMatches(username);
-		int counter = 0;
-		Match[] display = new Match[25];
-		
-		for(int i = 0; i < matches.length; i++){
-			if(matches[i].getRating() >= 10.0){
-				display[counter] = matches[i];
-				counter++;
-			}
-		}
-		
-		return display;
-	}
+//	/**
+//	 * Returns matches above the rating of 10 and above for the username given
+//	 * @param username the user that will get the matches
+//	 * @return array of matches to show in the GUI
+//	 */
+//	public static Match[] showMatches(String username){
+//		DatabaseCommunicator communicator = new DatabaseCommunicator("tempestasludi.com", "TI1216-test", "TI1216",
+//				"3t.uGmL365j2f7B");
+//		Match[] matches = communicator.getMatches(username);
+//		int counter = 0;
+//		Match[] display = new Match[25];
+//		
+//		for(int i = 0; i < matches.length; i++){
+//			if(matches[i].getRating() >= 10.0){
+//				display[counter] = matches[i];
+//				counter++;
+//			}
+//		}
+//		
+//		return display;
+//	}
 
 	/**
 	 * checks whether two Matches are equal to each other

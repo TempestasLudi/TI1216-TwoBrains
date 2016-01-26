@@ -87,6 +87,10 @@ public class ServerApplication {
 					+ ", " + args[4]);
 			boolean run = true;
 			logger.info("Accepting messages on port " + args[0]);
+			
+			Matcher matcher = new Matcher(args[1], args[2], args[3], args[4]);
+			new Thread(matcher).start();
+			
 			while (run) {
 				Socket socket = server.accept();
 				logger.finest("A client opened a new connection");
@@ -94,6 +98,7 @@ public class ServerApplication {
 				logger.finer("A new ClientCommunicator based thread has been started.");
 			}
 			try{
+				matcher.stop();
 				server.close();
 			} catch (NullPointerException e){
 				logger.log(Level.SEVERE, "Closed serversocket.", e);

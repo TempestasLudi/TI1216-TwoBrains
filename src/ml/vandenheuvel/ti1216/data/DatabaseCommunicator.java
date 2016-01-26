@@ -468,7 +468,7 @@ public class DatabaseCommunicator {
 					grades.toArray(gradeArray);
 					user.setGradeList(gradeArray);
 					grades = new ArrayList<>();
-					users.add(new User(resultSet.getString("username"), resultSet.getString("postalCode"),
+					users.add(user = new User(resultSet.getString("username"), resultSet.getString("postalCode"),
 							resultSet.getString("userDescription"), new Grade[0], resultSet.getBoolean("urgent")));
 				}
 				if (resultSet.getInt("gradeId") != -1) {

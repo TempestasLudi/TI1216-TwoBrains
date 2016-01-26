@@ -178,18 +178,18 @@ public class MatchTest {
 		Match match41 = new Match(10,"U4","U1",false,false);
 		Match match42 = new Match(11,"U4","U2",false,false);
 		Match match43 = new Match(12,"U4","U3",false,false);
-		assertEquals(7,(int)match12.getRating());
-		assertEquals(14,(int)match13.getRating());
-		assertEquals(12,(int)match14.getRating());
-		assertEquals((int)match12.getRating(),(int)match21.getRating());
-		assertEquals(15,(int)match23.getRating());
-		assertEquals(12,(int)match24.getRating());
-		assertEquals((int)match13.getRating(),(int)match31.getRating());
-		assertEquals((int)match23.getRating(),(int)match32.getRating());
-		assertEquals(25,(int)match34.getRating());
-		assertEquals((int)match14.getRating(),(int)match41.getRating());
-		assertEquals((int)match24.getRating(),(int)match42.getRating());
-		assertEquals((int)match34.getRating(),(int)match43.getRating());
+		assertEquals(7,(int)match12.getRating(communicator));
+		assertEquals(14,(int)match13.getRating(communicator));
+		assertEquals(12,(int)match14.getRating(communicator));
+		assertEquals((int)match12.getRating(communicator),(int)match21.getRating(communicator));
+		assertEquals(15,(int)match23.getRating(communicator));
+		assertEquals(12,(int)match24.getRating(communicator));
+		assertEquals((int)match13.getRating(communicator),(int)match31.getRating(communicator));
+		assertEquals((int)match23.getRating(communicator),(int)match32.getRating(communicator));
+		assertEquals(25,(int)match34.getRating(communicator));
+		assertEquals((int)match14.getRating(communicator),(int)match41.getRating(communicator));
+		assertEquals((int)match24.getRating(communicator),(int)match42.getRating(communicator));
+		assertEquals((int)match34.getRating(communicator),(int)match43.getRating(communicator));
 		communicator.delete(f);
 	}
 	
@@ -262,18 +262,18 @@ public class MatchTest {
 		Match match41 = new Match(10,"U4","U1",false,false);
 		Match match42 = new Match(11,"U4","U2",false,false);
 		Match match43 = new Match(12,"U4","U3",false,false);
-		assertEquals(7,(int)match12.getRating());
-		assertEquals(14,(int)match13.getRating());
-		assertEquals(12,(int)match14.getRating());
-		assertEquals((int)match12.getRating(),(int)match21.getRating());
-		assertEquals(15,(int)match23.getRating());
-		assertEquals(12,(int)match24.getRating());
-		assertEquals((int)match13.getRating(),(int)match31.getRating());
-		assertEquals((int)match23.getRating(),(int)match32.getRating());
-		assertEquals(25,(int)match34.getRating());
-		assertEquals((int)match14.getRating(),(int)match41.getRating());
-		assertEquals((int)match24.getRating(),(int)match42.getRating());
-		assertEquals((int)match34.getRating(),(int)match43.getRating());
+		assertEquals(7,(int)match12.getRating(communicator));
+		assertEquals(14,(int)match13.getRating(communicator));
+		assertEquals(12,(int)match14.getRating(communicator));
+		assertEquals((int)match12.getRating(communicator),(int)match21.getRating(communicator));
+		assertEquals(15,(int)match23.getRating(communicator));
+		assertEquals(12,(int)match24.getRating(communicator));
+		assertEquals((int)match13.getRating(communicator),(int)match31.getRating(communicator));
+		assertEquals((int)match23.getRating(communicator),(int)match32.getRating(communicator));
+		assertEquals(25,(int)match34.getRating(communicator));
+		assertEquals((int)match14.getRating(communicator),(int)match41.getRating(communicator));
+		assertEquals((int)match24.getRating(communicator),(int)match42.getRating(communicator));
+		assertEquals((int)match34.getRating(communicator),(int)match43.getRating(communicator));
 		communicator.delete(f);
 	}
 
